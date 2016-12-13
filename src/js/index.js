@@ -11,8 +11,6 @@ import Search from "./pages/Search";
 // import List from "./pages/List";
 // import Stats from "./pages/Stats";
 
-import Store from "./store"
-
 const App = document.getElementById('app')
 
 ReactDOM.render(
