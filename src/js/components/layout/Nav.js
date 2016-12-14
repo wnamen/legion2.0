@@ -11,11 +11,12 @@ export default class Nav extends React.Component {
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
-              <IndexLink to="/" class="navbar-brand"><strong>William</strong> Analytics</IndexLink>
+              <IndexLink to="/" class="navbar-brand"><strong>Legion</strong> Analytics</IndexLink>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li class="active"><Link to="search">Search <span class="sr-only">(current)</span></Link></li>
+                <li ><Link to="contacts">Contacts</Link></li>
               </ul>
 
               <ul class="nav navbar-nav navbar-right">

@@ -4,9 +4,8 @@ import CSSModules from 'react-css-modules'
 
 export default class ActionBar extends React.Component {
   render(){
-    console.log("actionbar");
     return(
-      <div class="container-fluid">
+      <div class="twelve columns">
         <nav class="navbar navbar-default collapse navbar-collapse">
 
           <ul class="nav navbar-nav navbar-left">

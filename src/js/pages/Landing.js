@@ -8,8 +8,8 @@ export default class Landing extends React.Component {
       <div>
         <div class="container">
           <div class="row">
-            <div class="col-lg-12">
-              <h3>Hello Jamasen!</h3>
+            <div class="sixteen columns">
+              <h3>Welcome to Legion Analytics</h3>
             </div>
           </div>
         </div>

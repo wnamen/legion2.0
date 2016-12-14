@@ -1,14 +1,35 @@
-import React from "react"
+import React, { Component } from "react"
 import CSSModules from 'react-css-modules'
-// import Styles from "./nav.css"
 
-export default class Results extends React.Component {
+export default class Results extends React.Component{
   render(){
-    console.log("results");
+    console.log(this.props);
     return(
-      <div>
+      <tr>
+        <td>
+          <p>{this.props.name}</p>
+        </td>
 
-      </div>
+        <td>
+          <p>{this.props.jobTitle}</p>
+        </td>
+
+        <td>
+          <p>{this.props.company}</p>
+        </td>
+
+        <td>
+          <p>{this.props.employees}</p>
+        </td>
+
+        <td>
+          <p>{this.props.industry}</p>
+        </td>
+
+        <td>
+          <p>{this.props.city}</p>
+        </td>
+      </tr>
     )
   }
 }
