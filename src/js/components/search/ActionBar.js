@@ -1,30 +1,33 @@
 import React from "react"
 import CSSModules from 'react-css-modules'
+import { Dropdown, NavItem } from "react-materialize"
 // import Styles from "./nav.css"
 
 export default class ActionBar extends React.Component {
   render(){
     return(
-      <div class="twelve columns">
-        <nav class="navbar navbar-default collapse navbar-collapse">
+      <div class="ten columns">
+        <nav class="navbar">
+          <div class="nav-wrapper">
+            <ul class="left">
+              <li><a>Showing 5,312 results</a></li>
+            </ul>
 
-          <ul class="nav navbar-nav navbar-left">
-            <li><a>Showing 5,312 results</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add to List <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">My First List</a></li>
-                <li><a href="#">Founder Contacts</a></li>
-                <li><a href="#">Ecommerce Tech Stack</a></li>
-                <li><a href="#">+ Create new list</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Get Contacts</a></li>
-            <li><a href="#">Export CSV</a></li>
-          </ul>
+            <ul class="right">
+              <li>
+                <Dropdown trigger={
+                  <a>Add to list <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                }>
+                  <NavItem>My First List</NavItem>
+                  <NavItem>Founder Contacts</NavItem>
+                  <NavItem>Ecommerce Tech Stack</NavItem>
+                  <NavItem>+ Create new list</NavItem>
+                </Dropdown>
+              </li>
+              <li><a href="#">Get Contacts</a></li>
+              <li><a href="#">Export CSV</a></li>
+            </ul>
+          </div>
 
         </nav>
       </div>

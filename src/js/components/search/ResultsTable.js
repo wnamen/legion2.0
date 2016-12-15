@@ -14,7 +14,7 @@ export default class ResultsTable extends React.Component {
     })
     console.log(results);
     return(
-      <div class="twelve columns">
+      <div class="ten columns">
         <table>
           <thead>
             <tr>
