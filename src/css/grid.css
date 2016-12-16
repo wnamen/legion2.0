@@ -40,3 +40,174 @@
 * html .column-row, * html .row, * html .clearfix { height: 1%; }
 .column-row, .row, .clearfix { display: inline-block; }
 .column-row, .row, .clearfix { display: block; }
+
+
+/*SPACING*/
+
+.small-margin {
+  margin: 5px;
+}
+
+.small-horizontal-margin {
+  margin: auto 5px;
+}
+
+.small-vertical-margin {
+  margin: 5px auto;
+}
+
+.small-top-margin {
+  margin-top: 5px;
+}
+
+.small-bottom-margin {
+  margin-bottom: 5px;
+}
+
+.small-left-margin {
+  margin-left: 5px;
+}
+
+.small-right-margin {
+  margin-right: 5px;
+}
+
+.medium-margin {
+  margin: 10px;
+}
+
+.medium-horizontal-margin {
+  margin: auto 10px;
+}
+
+.medium-vertical-margin {
+  margin: 10px auto;
+}
+
+.medium-top-margin {
+  margin-top: 10px;
+}
+
+.medium-bottom-margin {
+  margin-bottom: 10px;
+}
+
+.medium-left-margin {
+  margin-left: 10px;
+}
+
+.medium-right-margin {
+  margin-right: 10px;
+}
+
+.large-margin {
+  margin: 15px;
+}
+
+.large-horizontal-margin {
+  margin: auto 15px;
+}
+
+.large-vertical-margin {
+  margin: 15px auto;
+}
+
+.large-top-margin {
+  margin-top: 15px;
+}
+
+.large-bottom-margin {
+  margin-bottom: 15px;
+}
+
+.large-left-margin {
+  margin-left: 15px;
+}
+
+.large-right-margin {
+  margin-right: 15px;
+}
+
+.small-padding {
+  padding: 5px;
+}
+
+.small-horizontal-padding {
+  padding: 0 5px;
+}
+
+.small-vertical-padding {
+  padding: 5px 0;
+}
+
+.small-top-padding {
+  padding-top: 5px;
+}
+
+.small-bottom-padding {
+  padding-bottom: 5px;
+}
+
+.small-left-padding {
+  padding-left: 5px;
+}
+
+.small-right-padding {
+  padding-right: 5px;
+}
+
+.medium-padding {
+  padding: 10px;
+}
+
+.medium-horizontal-padding {
+  padding: 0 10px;
+}
+
+.medium-vertical-padding {
+  padding: 10px 0;
+}
+
+.medium-top-padding {
+  padding-top: 10px;
+}
+
+.medium-bottom-padding {
+  padding-bottom: 10px;
+}
+
+.medium-left-padding {
+  padding-left: 10px;
+}
+
+.medium-right-padding {
+  padding-right: 10px;
+}
+
+.large-padding {
+  padding: 15px;
+}
+
+.large-horizontal-padding {
+  padding: 0 15px;
+}
+
+.large-vertical-padding {
+  padding: 15px 0;
+}
+
+.large-top-padding {
+  padding-top: 15px;
+}
+
+.large-bottom-padding {
+  padding-bottom: 15px;
+}
+
+.large-left-padding {
+  padding-left: 15px;
+}
+
+.large-right-padding {
+  padding-right: 15px;
+}

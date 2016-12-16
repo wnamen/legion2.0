@@ -8,7 +8,6 @@ import Results from "./Results"
 export default class ResultsTable extends React.Component {
   render(){
     let mappedResults
-    console.log(this.props);
     if (this.props.results.results !== undefined){
       mappedResults = this.props.results.results.map((result, i) => {
         return (
@@ -19,7 +18,7 @@ export default class ResultsTable extends React.Component {
 
     return(
       <div class="ten columns">
-        <table class="white-background small-border gray-border large-top-margin">
+        <table class="white-background small-border gray-border large-top-margin small-horizontal-padding">
           <thead>
             <tr>
               <th data-field="name">NAME</th>

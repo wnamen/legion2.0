@@ -7,6 +7,70 @@ p {
   font-size: 0.9em;
 }
 
+[type="radio"] + label:before, [type="radio"] + label:after {
+    top: 1px;
+    width: 13px;
+    height: 13px;
+}
+
+[type="radio"]:not(:checked) + label:before, [type="radio"]:not(:checked) + label:after {
+  border: 2px solid #f5f8f9;
+  background-color: #f5f8f9;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
+  border: 2px solid #36b7ea;
+  background-color: #36b7ea;
+}
+
+.input-field label, [type="checkbox"] + label, [type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
+  font-size: 0.8em;
+}
+
+input[type=text]:focus:not([readonly]) + label {
+  color: #647382;
+}
+
+input[type=text], input[type=text]:focus:not([readonly]) {
+  border: 1px solid #36b7ea;
+  box-shadow: none;
+  color: #647382;
+  height: 1rem;
+  font-size: 0.8rem;
+  padding: 3px;
+}
+
+.input-field label {
+  top: 0.2rem;
+  left: 5px;
+  font-size: 0.8rem;
+}
+
+.input-field label.active {
+    transform: translateY(-100%);
+}
+
+[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after {
+  border: 1px solid #36b7ea;
+}
+
+[type="checkbox"]:checked + label:before {
+  border-right: 2px solid #36b7ea;
+  border-bottom: 2px solid #36b7ea;
+}
+
+[type="checkbox"]:checked + label:before {
+    top: 0px;
+    width: 8px;
+    height: 16px;
+}
+
+[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after {
+    top: 3px;
+    width: 13px;
+    height: 13px;
+}
+
 .page-container {
   margin-top: 2em;
 }
@@ -18,11 +82,49 @@ p {
 }
 
 .table-row-styles {
-  padding: 0;
   margin: 0;
 }
 
 .table-content-styles {
   margin: 10px 0;
   font-size: 0.9em;
+}
+
+
+.small-border {
+  border: 1px solid;
+}
+
+.small-left-border {
+  border-left: 1px solid;
+}
+
+.small-top-border {
+  border-top: 1px solid;
+}
+.small-bottom-border {
+  border-bottom: 1px solid;
+}
+
+.small-right-border {
+  border-right: 1px solid;
+}
+
+.medium-border {
+  border: 2px solid;
+}
+
+.medium-left-border {
+  border-left: 2px solid;
+}
+
+.medium-top-border {
+  border-top: 2px solid;
+}
+.medium-bottom-border {
+  border-bottom: 2px solid;
+}
+
+.medium-right-border {
+  border-right: 2px solid;
 }

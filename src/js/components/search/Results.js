@@ -3,7 +3,6 @@ import CSSModules from 'react-css-modules'
 
 export default class Results extends React.Component{
   render(){
-    console.log(this.props);
     return(
       <tr class="small-bottom-border gray-border">
         <td class="table-row-styles">
