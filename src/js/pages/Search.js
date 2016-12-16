@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router"
+import $ from "jquery"
 
 import ActionBar from "../components/search/ActionBar"
 import SearchMenu from "../components/search/SearchMenu"
@@ -12,6 +13,23 @@ export default class Search extends React.Component {
       results: []
     }
   }
+
+  componentWillMount(){
+
+    $.ajax({
+      url:'/test_json',
+      dataType:'json',
+      cache:false,
+      success:function(results){
+        let movies = results.Search
+        this.setState({results:results});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+
+  }
+
 
 
   render() {

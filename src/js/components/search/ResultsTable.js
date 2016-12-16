@@ -7,11 +7,15 @@ import Results from "./Results"
 
 export default class ResultsTable extends React.Component {
   render(){
-      let mappedResults = this.props.results.map((result, i) => {
+    let mappedResults
+    console.log(this.props);
+    if (this.props.results.results !== undefined){
+      mappedResults = this.props.results.results.map((result, i) => {
         return (
-          <Results key={i} name={result.results.name} jobTitle={result.results.job_title} company={result.results.company} employees={result.results.number_of_employees} industry={result.results.company_industry} city={result.results.company_city}/>
+          <Results key={i} name={result.name} jobTitle={result.job_title} company={result.company} employees={result.number_of_employees} industry={result.company_industry} city={result.company_city}/>
         )
       })
+    }
 
     return(
       <div class="ten columns">
