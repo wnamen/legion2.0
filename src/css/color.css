@@ -1,0 +1,233 @@
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Lato', sans-serif;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.9em;
+}
+
+.page-container {
+  margin-top: 2em;
+}
+
+#buy-more {
+  margin: 0;
+  padding: 0;
+}
+
+.table-row-styles {
+  padding: 0;
+  margin: 0;
+}
+
+.table-content-styles {
+  margin: 10px 0;
+  font-size: 0.9em;
+}
+
+/*SPACING*/
+
+.small-margin {
+  margin: 5px;
+}
+
+.small-top-margin {
+  margin-top: 5px;
+}
+
+.small-bottom-margin {
+  margin-bottom: 5px;
+}
+
+.small-left-margin {
+  margin-left: 5px;
+}
+
+.small-right-margin {
+  margin-right: 5px;
+}
+
+.medium-margin {
+  margin: 10px;
+}
+
+.medium-top-margin {
+  margin-top: 10px;
+}
+
+.medium-bottom-margin {
+  margin-bottom: 10px;
+}
+
+.medium-left-margin {
+  margin-left: 10px;
+}
+
+.medium-right-margin {
+  margin-right: 10px;
+}
+
+.large-margin {
+  margin: 15px;
+}
+
+.large-top-margin {
+  margin-top: 15px;
+}
+
+.large-bottom-margin {
+  margin-bottom: 15px;
+}
+
+.large-left-margin {
+  margin-left: 15px;
+}
+
+.large-right-margin {
+  margin-right: 15px;
+}
+
+.small-padding {
+  padding: 5px;
+}
+
+.small-top-padding {
+  padding-top: 5px;
+}
+
+.small-bottom-padding {
+  padding-bottom: 5px;
+}
+
+.small-left-padding {
+  padding-left: 5px;
+}
+
+.small-right-padding {
+  padding-right: 5px;
+}
+
+.medium-padding {
+  padding: 10px;
+}
+
+.medium-top-padding {
+  padding-top: 10px;
+}
+
+.medium-bottom-padding {
+  padding-bottom: 10px;
+}
+
+.medium-left-padding {
+  padding-left: 10px;
+}
+
+.medium-right-padding {
+  padding-right: 10px;
+}
+
+.large-padding {
+  padding: 15px;
+}
+
+.large-top-padding {
+  padding-top: 15px;
+}
+
+.large-bottom-padding {
+  padding-bottom: 15px;
+}
+
+.large-left-padding {
+  padding-left: 15px;
+}
+
+.large-right-padding {
+  padding-right: 15px;
+}
+
+/* FONTS */
+
+.black {
+  color: #1b2733 !important;
+}
+
+.electric-blue {
+  color: #36b7ea !important;
+}
+
+.electric-blue-light {
+  color: #d7f1fb !important;
+}
+
+.green {
+  color: #28c3b5 !important;
+}
+
+.red {
+  color: #fb615d !important;
+}
+
+.gray {
+  color: #647382 !important;
+}
+
+.gray-light {
+  color: #f5f8f9 !important;
+}
+
+/* BORDERS */
+
+.gray-border {
+  border-color: #ececec !important;
+}
+
+.small-border {
+  border: 1px solid;
+}
+
+.small-left-border {
+  border-left: 1px solid;
+}
+
+.small-top-border {
+  border-top: 1px solid;
+}
+.small-bottom-border {
+  border-bottom: 1px solid;
+}
+
+.small-right-border {
+  border-right: 1px solid;
+}
+
+.medium-border {
+  border: 2px solid;
+}
+
+.medium-left-border {
+  border-left: 2px solid;
+}
+
+.medium-top-border {
+  border-top: 2px solid;
+}
+.medium-bottom-border {
+  border-bottom: 2px solid;
+}
+
+.medium-right-border {
+  border-right: 2px solid;
+}
+
+/* BACKGROUNDS */
+
+.gray-light-background {
+  background-color: #f5f8f9 !important;
+}
+
+.white-background {
+  background-color: #ffffff !important;
+}

@@ -7,7 +7,7 @@ export default class ActionBar extends React.Component {
   render(){
     return(
       <div class="ten columns">
-        <nav class="navbar">
+        <nav class="navbar white-background small-border gray-border">
           <div class="nav-wrapper">
             <ul class="left">
               <li><a>Showing 5,312 results</a></li>

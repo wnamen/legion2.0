@@ -34,7 +34,7 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <div class="page-container">
+      <div class="page-container gray-light-background">
         <div class="row">
           <div class="sixteen columns">
             <SearchMenu />

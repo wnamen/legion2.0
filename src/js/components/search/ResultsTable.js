@@ -19,7 +19,7 @@ export default class ResultsTable extends React.Component {
 
     return(
       <div class="ten columns">
-        <table>
+        <table class="white-background small-border gray-border large-top-margin">
           <thead>
             <tr>
               <th data-field="name">NAME</th>

@@ -8,7 +8,7 @@ export default class SearchMenu extends React.Component {
     let less_than = '<'
     return(
       <div class="nav navbar-default offset-by-one three columns">
-        <div class="container-fluid">
+        <div class="container-fluid white-background small-border gray-border">
           <h5>Search Filters</h5>
 
         <form>

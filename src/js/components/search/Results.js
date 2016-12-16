@@ -5,29 +5,29 @@ export default class Results extends React.Component{
   render(){
     console.log(this.props);
     return(
-      <tr>
-        <td>
-          <p>{this.props.name}</p>
+      <tr class="small-bottom-border gray-border">
+        <td class="table-row-styles">
+          <p class="table-content-styles">{this.props.name}</p>
         </td>
 
-        <td>
-          <p>{this.props.jobTitle}</p>
+        <td class="table-row-styles">
+          <p class="table-content-styles">{this.props.jobTitle}</p>
         </td>
 
-        <td>
-          <p>{this.props.company}</p>
+        <td class="table-row-styles">
+          <p class="table-content-styles">{this.props.company}</p>
         </td>
 
-        <td>
-          <p>{this.props.employees}</p>
+        <td class="table-row-styles">
+          <p class="table-content-styles">{this.props.employees}</p>
         </td>
 
-        <td>
-          <p>{this.props.industry}</p>
+        <td class="table-row-styles">
+          <p class="table-content-styles">{this.props.industry}</p>
         </td>
 
-        <td>
-          <p>{this.props.city}</p>
+        <td class="table-row-styles">
+          <p class="table-content-styles">{this.props.city}</p>
         </td>
       </tr>
     )
