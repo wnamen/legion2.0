@@ -14,7 +14,6 @@ export default class Nav extends React.Component {
             <ul>
               <li><IndexLink to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
               <li><Link to="search" activeClassName="active">Search</Link></li>
-              <li><Link to="stats" activeClassName="active">Stats</Link></li>
               <li><Link to="cadence" activeClassName="active">Cadence</Link></li>
               <li><Link to="contacts" activeClassName="active">Contacts</Link></li>
             </ul>
@@ -32,9 +31,7 @@ export default class Nav extends React.Component {
                   </Dropdown>
                 </li>
                 <li>
-                  <a href="#">
-                    IMG HOLDER
-                  </a>
+                  <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
                 </li>
               </ul>
             </div>

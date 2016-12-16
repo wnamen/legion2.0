@@ -1,18 +1,18 @@
 import React from "react"
 import CSSModules from 'react-css-modules'
+
 // import Styles from "./nav.css"
 
 import Results from "./Results"
 
 export default class ResultsTable extends React.Component {
   render(){
-    console.log(this.props.results);
-    let results = this.props.results.map((result, i) => {
-      return (
-        <Results key={i} name={result.name} jobTitle={result.jobTitle} company={result.company} employees={result.employees} industry={result.industry} city={result.city}/>
-      )
-    })
-    console.log(results);
+      let mappedResults = this.props.results.map((result, i) => {
+        return (
+          <Results key={i} name={result.results.name} jobTitle={result.results.job_title} company={result.results.company} employees={result.results.number_of_employees} industry={result.results.company_industry} city={result.results.company_city}/>
+        )
+      })
+
     return(
       <div class="ten columns">
         <table>
@@ -28,7 +28,7 @@ export default class ResultsTable extends React.Component {
           </thead>
 
           <tbody>
-            {results}
+            {mappedResults}
           </tbody>
         </table>
       </div>
