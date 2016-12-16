@@ -1,0 +1,14 @@
+.table-head-styles {
+  padding: 10px 0
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.9em;  
+}
+
+.table-row-styles {
+  margin: 0;
+}
+
+.table-content-styles {
+  margin: 10px 0;
+  font-size: 0.9em;
+}

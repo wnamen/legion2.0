@@ -4,6 +4,10 @@
   color: #1b2733 !important;
 }
 
+.white {
+  color: #ffffff !important;
+}
+
 .electric-blue {
   color: #36b7ea !important;
 }
@@ -28,7 +32,19 @@
   color: #f5f8f9 !important;
 }
 
+.gray-medium-2 {
+  color: #e5e5e5 !important;
+}
+
 /* BACKGROUNDS */
+
+.electric-blue-background {
+  background-color: #36b7ea !important;
+}
+
+.gray-medium-background {
+  background-color: #ececec !important;
+}
 
 .gray-light-background {
   background-color: #f5f8f9 !important;

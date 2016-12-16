@@ -9,13 +9,13 @@ export default class SearchMenu extends React.Component {
     return(
       <div class="nav navbar-default offset-by-one three columns gray">
         <div class="container-fluid white-background small-border large-padding gray-border">
-          <p>Search Filters</p>
+          <p class="margin-none">SEARCH FILTERS</p>
 
         <form>
 
           <div class="filter">
             <label>Type</label>
-            <Input name="type" id="people" value="people" type="radio" label="People"/>
+            <Input name="type" id="people" value="people" type="radio" label="People" defaultChecked/>
             <Input name="type" id="company" value="company" type="radio" label="Company"/>
           </div>
 

@@ -4,8 +4,57 @@
     height: 13px;
 }
 
+[type="radio"]:not(:checked) + label:before, [type="radio"]:not(:checked) + label:after {
+  border: 2px solid #e5e5e5;
+  background-color: #ececec;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
+  border: 2px solid #36b7ea;
+  background-color: #36b7ea;
+}
+
 .input-field label, [type="checkbox"] + label, [type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
   font-size: 0.8em;
+}
+
+input[type=text]:focus:not([readonly]) + label {
+  color: #647382;
+}
+
+input[type=text] {
+  border: 1px solid #e5e5e5;
+  box-shadow: none;
+  color: #647382;
+  height: 1rem;
+  font-size: 0.8rem;
+  padding: 3px;
+  width: 96%;
+}
+
+input[type=text]:focus, input[type=text]:focus:not([readonly]) {
+  border: 1px solid #36b7ea;
+  box-shadow: none;
+}
+
+.input-field label {
+  color: #647382;
+  top: 0.2rem;
+  left: 5px;
+  font-size: 0.8rem;
+}
+
+.input-field label.active {
+    transform: translateY(-100%);
+}
+
+[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after {
+  border: 1px solid #36b7ea;
+}
+
+[type="checkbox"]:checked + label:before {
+  border-right: 2px solid #36b7ea;
+  border-bottom: 2px solid #36b7ea;
 }
 
 [type="checkbox"]:checked + label:before {
@@ -18,4 +67,30 @@
     top: 3px;
     width: 13px;
     height: 13px;
+}
+
+.select-wrapper input.select-dropdown {
+  border: 1px solid #e5e5e5;
+  box-shadow: none;
+  color: #647382;
+  height: 1rem;
+  font-size: 0.8rem;
+  padding: 3px;
+  width: 96%;
+}
+
+.select-wrapper span.caret {
+  right: 3px;
+  color: #647382;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 15px;
+    color: #647382;
+}
+
+.dropdown-content li {
+    min-height: 18px;
 }

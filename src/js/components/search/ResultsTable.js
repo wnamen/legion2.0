@@ -1,4 +1,5 @@
 import React from "react"
+import { Input } from 'react-materialize'
 import CSSModules from 'react-css-modules'
 
 // import Styles from "./nav.css"
@@ -21,6 +22,7 @@ export default class ResultsTable extends React.Component {
         <table class="white-background small-border gray-border large-top-margin small-horizontal-padding">
           <thead>
             <tr>
+              <th><Input name='select-all' type='checkbox' value='select-all' /></th>
               <th data-field="name">NAME</th>
               <th data-field="jobTitle">JOB TITLE</th>
               <th data-field="company">COMPANY</th>

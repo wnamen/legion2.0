@@ -7,89 +7,49 @@ p {
   font-size: 0.9em;
 }
 
-[type="radio"] + label:before, [type="radio"] + label:after {
-    top: 1px;
-    width: 13px;
-    height: 13px;
-}
-
-[type="radio"]:not(:checked) + label:before, [type="radio"]:not(:checked) + label:after {
-  border: 2px solid #f5f8f9;
-  background-color: #f5f8f9;
-}
-
-[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
-  border: 2px solid #36b7ea;
-  background-color: #36b7ea;
-}
-
-.input-field label, [type="checkbox"] + label, [type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
-  font-size: 0.8em;
-}
-
-input[type=text]:focus:not([readonly]) + label {
-  color: #647382;
-}
-
-input[type=text], input[type=text]:focus:not([readonly]) {
-  border: 1px solid #36b7ea;
-  box-shadow: none;
-  color: #647382;
-  height: 1rem;
-  font-size: 0.8rem;
-  padding: 3px;
-}
-
-.input-field label {
-  top: 0.2rem;
-  left: 5px;
-  font-size: 0.8rem;
-}
-
-.input-field label.active {
-    transform: translateY(-100%);
-}
-
-[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after {
-  border: 1px solid #36b7ea;
-}
-
-[type="checkbox"]:checked + label:before {
-  border-right: 2px solid #36b7ea;
-  border-bottom: 2px solid #36b7ea;
-}
-
-[type="checkbox"]:checked + label:before {
-    top: 0px;
-    width: 8px;
-    height: 16px;
-}
-
-[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after {
-    top: 3px;
-    width: 13px;
-    height: 13px;
-}
-
 .page-container {
   margin-top: 2em;
 }
 
+#credit-dropdown span .dropdown-content {
+  width: 200px !important;
+  top: 42px !important;
+  left: 1000px !important;
+  padding: 10px 0;
+}
+
+#credit-dropdown span .dropdown-content li > a {
+  padding: 5px 10px;
+}
+
+.credit-button {
+  float: right;
+  border-radius: 0;
+  font-size: 10px;
+  padding: 0px 20px;
+  border: none;
+  font-weight: 100;
+}
+
+#credit-dropdown {
+  line-height: 15px;
+  margin-right: 40px;
+}
+
+#credit-angle-icon {
+  height: 0;
+}
+
 #buy-more {
+  position: relative;
   display: block;
   margin: 0;
   padding: 0;
+  top: 0;
+  font-size: 10px;
+  right: -50px;
+  font-weight: 100;
 }
-
-.table-row-styles {
-  margin: 0;
-}
-
-.table-content-styles {
-  margin: 10px 0;
-  font-size: 0.9em;
-}
-
 
 .small-border {
   border: 1px solid;
