@@ -1,22 +1,21 @@
 import React from "react"
 import CSSModules from 'react-css-modules'
 import { Dropdown, NavItem } from "react-materialize"
-// import Styles from "./nav.css"
 
 export default class ActionBar extends React.Component {
   render(){
     return(
       <div class="ten columns">
         <nav class="navbar white-background small-border gray-border">
-          <div class="nav-wrapper">
+          <div id="action-bar" class="nav-wrapper">
             <ul class="left">
-              <li><a>Showing 5,312 results</a></li>
+              <li id="results-table-count"><a>Showing 5,312 results</a></li>
             </ul>
 
             <ul class="right">
-              <li>
+              <li id="list-adder-dropdown" class="right-actions">
                 <Dropdown trigger={
-                  <a>Add to list <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                  <a>Add to list <i id="list-adder-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i></a>
                 }>
                   <NavItem>My First List</NavItem>
                   <NavItem>Founder Contacts</NavItem>
@@ -24,8 +23,8 @@ export default class ActionBar extends React.Component {
                   <NavItem>+ Create new list</NavItem>
                 </Dropdown>
               </li>
-              <li><a href="#">Get Contacts</a></li>
-              <li><a href="#">Export CSV</a></li>
+              <li class="right-actions"><a href="#">Get Contacts</a></li>
+              <li class="right-actions"><a href="#">Export CSV</a></li>
             </ul>
           </div>
 

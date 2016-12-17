@@ -1,7 +1,6 @@
 .table-head-styles {
-  padding: 10px 0
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.9em;  
+  padding: 10px 5px;
+  font-size: 0.9em;
 }
 
 .table-row-styles {
@@ -9,6 +8,6 @@
 }
 
 .table-content-styles {
-  margin: 10px 0;
-  font-size: 0.9em;
+  margin: 10px 5px;
+  font-size: 12px;
 }

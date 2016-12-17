@@ -23,12 +23,12 @@ export default class ResultsTable extends React.Component {
           <thead>
             <tr>
               <th><Input name='select-all' type='checkbox' value='select-all' /></th>
-              <th data-field="name">NAME</th>
-              <th data-field="jobTitle">JOB TITLE</th>
-              <th data-field="company">COMPANY</th>
-              <th data-field="employees">EMPLOYEES</th>
-              <th data-field="industry">INDUSTRY</th>
-              <th data-field="city">CITY</th>
+              <th class="table-head-styles" data-field="name">NAME</th>
+              <th class="table-head-styles" data-field="jobTitle">JOB TITLE</th>
+              <th class="table-head-styles" data-field="company">COMPANY</th>
+              <th class="table-head-styles" data-field="employees">EMPLOYEES</th>
+              <th class="table-head-styles" data-field="industry">INDUSTRY</th>
+              <th class="table-head-styles" data-field="city">CITY</th>
             </tr>
           </thead>
 
