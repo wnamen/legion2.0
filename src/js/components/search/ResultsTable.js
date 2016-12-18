@@ -8,11 +8,12 @@ import Results from "./Results"
 
 export default class ResultsTable extends React.Component {
   render(){
+    let data = this.props.results
     let mappedResults
-    if (this.props.results.results !== undefined){
-      mappedResults = this.props.results.results.map((result, i) => {
+    if (data.results !== undefined){
+      mappedResults = data.results.map((result, i) => {
         return (
-          <Results key={i} name={result.name} jobTitle={result.job_title} company={result.company} employees={result.number_of_employees} industry={result.company_industry} city={result.company_city}/>
+          <Results key={result.id} name={result.person.name} age={result.person.age} jobTitle={result.title} companyName={result.company.name}/>
         )
       })
     }
@@ -24,11 +25,9 @@ export default class ResultsTable extends React.Component {
             <tr>
               <th><Input name='select-all' type='checkbox' value='select-all' /></th>
               <th class="table-head-styles" data-field="name">NAME</th>
+              <th class="table-head-styles" data-field="age">AGE</th>
               <th class="table-head-styles" data-field="jobTitle">JOB TITLE</th>
-              <th class="table-head-styles" data-field="company">COMPANY</th>
-              <th class="table-head-styles" data-field="employees">EMPLOYEES</th>
-              <th class="table-head-styles" data-field="industry">INDUSTRY</th>
-              <th class="table-head-styles" data-field="city">CITY</th>
+              <th class="table-head-styles" data-field="companyName">COMPANY NAME</th>
             </tr>
           </thead>
 

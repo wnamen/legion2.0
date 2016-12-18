@@ -12,16 +12,17 @@ export default class Search extends React.Component {
     this.state = {
       results: []
     }
+
+    this.handleSearch = this.handleSearch.bind(this)
   }
 
   componentWillMount(){
-
     $.ajax({
-      url:'/test_json',
+      url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=50',
       dataType:'json',
       cache:false,
       success:function(results){
-        let movies = results.Search
+        console.log(results);
         this.setState({results:results});
       }.bind(this),
       error:function(xhr, status, err){
@@ -30,14 +31,30 @@ export default class Search extends React.Component {
 
   }
 
+  handleSearch(query) {
+    query = query.text
+    console.log(query);
 
+    $.ajax({
+      url:`https://apidev.legionanalytics.com/api/people/?format=json&page_size=50&${query}`,
+      dataType:'json',
+      cache:false,
+      success:function(results){
+        console.log(results);
+        this.setState({results:results});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+
+  }
 
   render() {
     return (
       <div class="page-container gray-light-background">
         <div class="row">
           <div class="sixteen columns">
-            <SearchMenu />
+            <SearchMenu onSearchChange={this.handleSearch}/>
             <ActionBar />
             <ResultsTable results={this.state.results}/>
           </div>

@@ -3,9 +3,9 @@
   line-height: normal;
 }
 
-#results-table-count > a {
+#results-table-count {
   font-size: 12px;
-  padding: 5px;
+  padding: 5px 15px;
 }
 
 .right-actions {
@@ -23,7 +23,7 @@
 #list-adder-dropdown span .dropdown-content {
   width: 200px !important;
   top: 44px !important;
-  left: 294px !important;
+  /*left: 294px !important;*/
   padding: 10px 0;
 }
 

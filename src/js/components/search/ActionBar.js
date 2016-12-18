@@ -9,7 +9,7 @@ export default class ActionBar extends React.Component {
         <nav class="navbar white-background small-border gray-border">
           <div id="action-bar" class="nav-wrapper">
             <ul class="left">
-              <li id="results-table-count"><a>Showing 5,312 results</a></li>
+              <li><span id="results-table-count" class="black">Showing 5,312 results</span></li>
             </ul>
 
             <ul class="right">
@@ -17,14 +17,10 @@ export default class ActionBar extends React.Component {
                 <Dropdown trigger={
                   <a>Add to list <i id="list-adder-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i></a>
                 }>
-                  <NavItem>My First List</NavItem>
-                  <NavItem>Founder Contacts</NavItem>
-                  <NavItem>Ecommerce Tech Stack</NavItem>
+                  <NavItem>My List</NavItem>
                   <NavItem>+ Create new list</NavItem>
                 </Dropdown>
               </li>
-              <li class="right-actions"><a href="#">Get Contacts</a></li>
-              <li class="right-actions"><a href="#">Export CSV</a></li>
             </ul>
           </div>
 

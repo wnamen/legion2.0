@@ -15,23 +15,15 @@ export default class Results extends React.Component{
         </td>
 
         <td class="table-row-styles">
+          <p class="table-content-styles">{this.props.age}</p>
+        </td>
+
+        <td class="table-row-styles">
           <p class="table-content-styles">{this.props.jobTitle}</p>
         </td>
 
         <td class="table-row-styles">
-          <p class="table-content-styles">{this.props.company}</p>
-        </td>
-
-        <td class="table-row-styles">
-          <p class="table-content-styles">{this.props.employees}</p>
-        </td>
-
-        <td class="table-row-styles">
-          <p class="table-content-styles">{this.props.industry}</p>
-        </td>
-
-        <td class="table-row-styles">
-          <p class="table-content-styles">{this.props.city}</p>
+          <p class="table-content-styles">{this.props.companyName}</p>
         </td>
       </tr>
     )
