@@ -11,3 +11,9 @@
   margin: 10px 10px;
   font-size: 12px;
 }
+
+.table-selector div label {
+  height: 18px;
+  line-height: 18px;
+  left: 20px;
+}

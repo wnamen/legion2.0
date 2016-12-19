@@ -55,7 +55,7 @@ export default class Search extends React.Component {
         <div class="row">
           <div class="sixteen columns">
             <SearchMenu onSearchChange={this.handleSearch}/>
-            <ActionBar />
+            <ActionBar results={this.state.results}/>
             <ResultsTable results={this.state.results}/>
           </div>
         </div>

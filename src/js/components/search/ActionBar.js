@@ -4,12 +4,13 @@ import { Dropdown, NavItem } from "react-materialize"
 
 export default class ActionBar extends React.Component {
   render(){
+    let data = this.props.results
     return(
       <div class="ten columns">
         <nav class="navbar white-background small-border gray-border">
           <div id="action-bar" class="nav-wrapper">
             <ul class="left">
-              <li><span id="results-table-count" class="black">Showing 5,312 results</span></li>
+              <li><span id="results-table-count" class="black">Showing {data.count} results</span></li>
             </ul>
 
             <ul class="right">

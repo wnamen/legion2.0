@@ -1,26 +1,28 @@
 import React from "react"
 import CSSModules from 'react-css-modules'
 import { Input, Tag, Chip } from 'react-materialize'
+import { debounce } from 'throttle-debounce';
+import $ from 'jquery'
 
 export default class SearchMenu extends React.Component {
-  constructor(props){
+  constructor(props) {
 		super(props);
 		this.state = {
-			query: ''
+			query: '',
+      multiQuery: []
 		};
 		this.getSearch = this.getSearch.bind(this);
 	}
 
-	getSearch(e){
-		this.setState({query: `${e.target.name}=${e.target.value}`})
+	getSearch(e) {
+    let query = `${e.target.name}=${e.target.value}`.trim();
+		this.setState({ query: query, multiQuery: query });
 
-		let query = this.state.query.trim();
-		if(!query || query == '')
+		if(!query || query === '') {
 			return
+    }
 
-		this.props.onSearchChange({text:query});
-
-		// this.setState({query: ''});
+		this.props.onSearchChange({text:query });
 	}
 
   render(){
@@ -45,7 +47,7 @@ export default class SearchMenu extends React.Component {
             </div>
           </div>
 
-          <Input type='select' name="department" label="Department" multiple>
+          <Input type='select' name="department" label="Department" onFocus={() => console.log('onFocus')} onBlur={() => console.log('onBlur')} multiple>
             <option value="customer-support">Customer Support</option>
             <option value="c-suite">C-Suite</option>
             <option value="engineering">Engineering</option>

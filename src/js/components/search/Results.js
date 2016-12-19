@@ -6,8 +6,8 @@ export default class Results extends React.Component{
   render(){
     return(
       <tr class="small-bottom-border gray-border">
-        <td class="table-row-styles">
-          <Input name='selector' type='checkbox' value='select' class="table-content-styles"/>
+        <td class="table-row-styles table-selector">
+          <Input name='selector' type='checkbox' value='select' class="table-content-styles" label=" "/>
         </td>
 
         <td class="table-row-styles">
