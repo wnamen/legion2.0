@@ -8,31 +8,85 @@ export default class SearchMenu extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {
-			query: '',
-      multiQuery: []
+      keywordTags: [],
+			query: ""
 		};
 		this.getSearch = this.getSearch.bind(this);
+    this.getTag = debounce(750, this.getTag.bind(this));
+    this.removeTag = this.removeTag.bind(this);
+    this.handleDebouncer = this.handleDebouncer.bind(this);
 	}
 
-	getSearch(e) {
-    let query = `${e.target.name}=${e.target.value}`.trim();
-		this.setState({ query: query, multiQuery: query });
+  removeTag(e) {
+    e.preventDefault();
+    let current_tags = this.state.keywordTags;
+    let target_id = parseInt(e.target.id);
+    console.log(target_id);
 
-		if(!query || query === '') {
-			return
+
+    current_tags.forEach((tag, idx) => {
+      if ((tag.id) === target_id) {
+        current_tags.splice(idx, 1);
+      }
+    });
+    console.log(current_tags);
+
+    this.setState({keywordTags: current_tags});
+    this.getSearch(e);
+  }
+
+  getTag(e) {
+    let new_tags = this.state.keywordTags;
+
+    new_tags.push({
+      id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
+      name: e.target.name,
+      value: e.target.value
+    });
+    this.setState({keywordTags: new_tags});
+    this.getSearch(e);
+    e.target.value = "";
+  }
+
+  getSearch(e) {
+    let query = "";
+    this.state.keywordTags.forEach((target) => {
+      query = query + `${target.name}=${target.value}&`;
+    });
+    console.log(query);
+
+    // let query = `${e.target.name}=${e.target.value}`.trim();
+    this.setState({ query: query });
+
+    if(!query || query === '') {
+      return
     }
 
-		this.props.onSearchChange({text:query });
-	}
+    this.props.onSearchChange({ text: query });
+  }
+
+  handleDebouncer(e) {
+    e.persist();
+    this.getTag(e);
+  }
 
   render(){
-    let less_than = '<'
+    let input_tags = this.state.keywordTags;
+    if (input_tags !== undefined){
+      input_tags = input_tags.map((tag) => {
+        return (
+          <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
+        );
+      })
+    }
+    let less_than = '<';
+
     return(
       <div class="nav navbar-default offset-by-one three columns gray">
         <div class="container-fluid white-background small-border large-padding gray-border">
           <p class="margin-none">SEARCH FILTERS</p>
 
-        <form onChange={this.getSearch}>
+        <form>
 
           <div class="filter">
             <label>Type</label>
@@ -42,12 +96,13 @@ export default class SearchMenu extends React.Component {
 
           <div class="filter">
             <label>Keywords</label>
-            <Input name="keyword" id="keywords" />
-            <div id="keywords-container">
+            <Input name="keyword" id="keywords" onChange={this.handleDebouncer} />
+            <div class="tag-container">
+              {input_tags}
             </div>
           </div>
 
-          <Input type='select' name="department" label="Department" onFocus={() => console.log('onFocus')} onBlur={() => console.log('onBlur')} multiple>
+          <Input type='select' name="department" label="Department" onChange={this.handleDebouncer} multiple>
             <option value="customer-support">Customer Support</option>
             <option value="c-suite">C-Suite</option>
             <option value="engineering">Engineering</option>
@@ -60,14 +115,15 @@ export default class SearchMenu extends React.Component {
 
           <div class="filter">
             <label>Job Title</label>
-            <Input name="job_title" id="title"/>
-            <div id="job-title-container"></div>
+            <Input name="job_title" id="title" onChange={this.handleDebouncer} />
+            <div class="tag-container">
+            </div>
           </div>
 
           <div class="filter">
             <label>Company Name</label>
             <Input name="company_name" id="company_name" />
-            <div id="company-name-container"></div>
+            <div class="tag-container"></div>
           </div>
 
           <Input type='select' name="company_size" label="Size of Company" multiple>
@@ -130,13 +186,13 @@ export default class SearchMenu extends React.Component {
           <div class="filter">
             <label>Industry</label>
             <Input name="industry" id="industry"/>
-            <div id="industry-container"></div>
+            <div class="tag-container"></div>
           </div>
 
           <div class="filter">
             <label>Education</label>
             <Input name="education" id="education"/>
-            <div id="education-container"></div>
+            <div class="tag-container"></div>
           </div>
 
           <Input type='select' label="Person's Age" multiple>
@@ -157,7 +213,7 @@ export default class SearchMenu extends React.Component {
           <div class="filter">
             <label>Interests</label>
             <Input name="interests" id="interests"/>
-            <div id="interests-container"></div>
+            <div class="tag-container"></div>
           </div>
 
           <div class="filter">
@@ -174,7 +230,7 @@ export default class SearchMenu extends React.Component {
           <div class="filter">
             <label>Location</label>
             <Input name="location" id="location"/>
-            <div id="location-container"></div>
+            <div class="tag-container"></div>
           </div>
 
         </form>

@@ -14,6 +14,10 @@
   background-color: #36b7ea;
 }
 
+.input-field {
+  margin: 0;
+}
+
 .input-field label, [type="checkbox"] + label, [type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
   font-size: 0.8em;
 }
@@ -29,6 +33,7 @@ input[type=text] {
   height: 1rem;
   font-size: 0.8rem;
   padding: 3px;
+  margin: 0;
   width: 96%;
 }
 
@@ -93,4 +98,17 @@ input[type=text]:focus, input[type=text]:focus:not([readonly]) {
 
 .dropdown-content li {
     min-height: 18px;
+}
+
+.tags {
+  display: inline-block;
+  font-size: 12px;
+  padding: 0 3px;
+  margin-right: 3px;
+  background-color: #e5e5e5;
+  color: #647382;
+}
+
+.tag-container {
+  margin-bottom: 30px;
 }

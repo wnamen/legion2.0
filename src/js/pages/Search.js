@@ -12,7 +12,6 @@ export default class Search extends React.Component {
     this.state = {
       results: []
     }
-
     this.handleSearch = this.handleSearch.bind(this)
   }
 
