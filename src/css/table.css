@@ -1,19 +1,28 @@
 .table-head-styles {
   padding: 10px 10px;
   font-size: 0.9em;
+  width: 135px;
 }
 
 .table-row-styles {
   margin: 0;
+  width: 135px;
 }
 
 .table-content-styles {
   margin: 10px 10px;
   font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .table-selector div label {
   height: 18px;
   line-height: 18px;
   left: 20px;
+}
+
+.results-row:hover {
+  background-color: #d7f1fb;
 }

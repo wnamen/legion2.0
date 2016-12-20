@@ -5,8 +5,8 @@ import CSSModules from 'react-css-modules'
 export default class Results extends React.Component{
   render(){
     return(
-      <tr class="small-bottom-border gray-border">
-        <td class="table-row-styles table-selector">
+      <tr class="results-row small-bottom-border gray-border">
+        <td class="table-selector">
           <Input name='selector' type='checkbox' value='select' class="table-content-styles" label=" "/>
         </td>
 
@@ -25,6 +25,7 @@ export default class Results extends React.Component{
         <td class="table-row-styles">
           <p class="table-content-styles">{this.props.companyName}</p>
         </td>
+        <td></td>
       </tr>
     )
   }
