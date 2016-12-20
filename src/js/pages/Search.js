@@ -10,9 +10,52 @@ export default class Search extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      results: []
+      results: [],
+      checkedAll: false,
+      rowState: []
     }
-    this.handleSearch = this.handleSearch.bind(this)
+    this.handleSearch = this.handleSearch.bind(this);
+    this.checkAll = this.checkAll.bind(this);
+    this.checkRow = this.checkRow.bind(this);
+  }
+
+  setRowState(results) {
+    let rowState =[];
+
+    if (results !== undefined) {
+      results.results.forEach(function(results, index) {
+        rowState[index] = false
+      })
+    }
+    console.log(rowState);
+    this.setState({ rowState: rowState })
+  }
+
+  checkRow(id,value) {
+    this.state.rowState[id] = value;
+    if (this.state.checkAll) {
+      this.state.checkAll = !this.state.checkAll;
+    }
+    this.setState({
+      rowState: this.state.rowState,
+      checkAll: this.state.checkAll
+    });
+  }
+
+  checkAll() {
+    let rowState =[];
+    let checkState = !this.state.checkAll;
+
+    this.state.rowState.forEach(function(results, index) {
+      rowState[index] = checkState;
+    })
+
+    this.state.checkAll = checkState;
+
+    this.setState({
+      rowState: rowState,
+      checkAll: this.state.checkAll
+    });
   }
 
   componentWillMount(){
@@ -22,6 +65,7 @@ export default class Search extends React.Component {
       cache:false,
       success:function(results){
         console.log(results);
+        this.setRowState(results);
         this.setState({results:results});
       }.bind(this),
       error:function(xhr, status, err){
@@ -55,7 +99,7 @@ export default class Search extends React.Component {
           <div class="sixteen columns">
             <SearchMenu onSearchChange={this.handleSearch}/>
             <ActionBar results={this.state.results}/>
-            <ResultsTable results={this.state.results}/>
+            <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
           </div>
         </div>
       </div>

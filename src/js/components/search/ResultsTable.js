@@ -17,16 +17,16 @@ export default class ResultsTable extends React.Component {
 
   componentDidMount() {
     this.setState({ next: this.props.results.next, previous: this.props.results.previous });
-    console.log(this.state);
   }
 
   render() {
     let data = this.props.results;
     let mappedResults;
+
     if (data.results !== undefined) {
-      mappedResults = data.results.map((result) => {
+      mappedResults = data.results.map((result, index) => {
         return (
-          <Results key={result.id} name={result.person.name} age={result.person.age} jobTitle={result.title} companyName={result.company.name}/>
+          <Results index={index} key={result.id} name={result.person.name} age={result.person.age} jobTitle={result.title} companyName={result.company.name} checked={this.props.rowState[index]} callback={this.props.checkRow} />
         );
       })
     }
@@ -36,7 +36,7 @@ export default class ResultsTable extends React.Component {
         <table class="white-background small-border gray-border large-top-margin small-horizontal-padding">
           <thead>
             <tr>
-              <th class="table-selector"><Input name='select-all' type='checkbox' value='select-all' label=' '/></th>
+              <th class="table-selector"><Input name='select-all' type='checkbox' value='select-all' label=' ' checked={this.props.checked} onChange={this.props.checkAll} /></th>
               <th class="table-head-styles" data-field="name">NAME</th>
               <th class="table-head-styles" data-field="age">AGE</th>
               <th class="table-head-styles" data-field="jobTitle">JOB TITLE</th>
