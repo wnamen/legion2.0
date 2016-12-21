@@ -10,6 +10,7 @@
 }
 
 .table-content-styles {
+  width: 135px;
   margin: 10px 10px;
   font-size: 12px;
   white-space: nowrap;

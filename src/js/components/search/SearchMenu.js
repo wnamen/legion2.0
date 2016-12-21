@@ -11,17 +11,31 @@ export default class SearchMenu extends React.Component {
       inputTags: [],
 			query: ""
 		};
+    this.checkIt = this.checkIt.bind(this);
 		this.getSearch = this.getSearch.bind(this);
     this.getTag = debounce(750, this.getTag.bind(this));
     this.removeTag = this.removeTag.bind(this);
     this.handleDebouncer = this.handleDebouncer.bind(this);
 	}
 
+  checkIt(ei) {
+    console.log(this.props.checked);
+    console.log(this.props.id);
+    console.log(this.props.name);
+
+    console.log(e.target);
+    console.log(e.target.checked);
+    console.log(e.target.name);
+
+
+    // this.props.setApiState(this.props.index, !this.props.checked);
+    // return;
+  }
+
   removeTag(e) {
     e.preventDefault();
     let current_tags = this.state.inputTags;
     let target_id = parseInt(e.target.id);
-    console.log(target_id);
 
 
     current_tags.forEach((tag, idx) => {
@@ -29,7 +43,6 @@ export default class SearchMenu extends React.Component {
         current_tags.splice(idx, 1);
       }
     });
-    console.log(current_tags);
 
     this.setState({inputTags: current_tags});
     this.getSearch(e);
@@ -53,7 +66,6 @@ export default class SearchMenu extends React.Component {
     this.state.inputTags.forEach((target) => {
       query = query + `${target.name}=${target.value}&`;
     });
-    console.log(query);
 
     // let query = `${e.target.name}=${e.target.value}`.trim();
     this.setState({ query: query });
@@ -62,22 +74,31 @@ export default class SearchMenu extends React.Component {
 
   handleDebouncer(e) {
     e.persist();
-    console.log(e.target.name);
     this.getTag(e);
   }
 
   render(){
-    let less_than = '<';
-
+    const less_than = '<';
     let input_tags = this.state.inputTags;
+    var tags = {
+      keyword: [],
+      job_title: [],
+      name: [],
+      company_name: [],
+      education: [],
+      location: []
+    }
+
     if (input_tags !== undefined){
-      input_tags = input_tags.map((tag) => {
-        return (
+      console.log(input_tags);
+      input_tags.map((tag) => {
+        tags[tag.name].push(
           <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
         );
       })
     }
-    console.log(input_tags);
+
+    console.log(tags);
 
     return(
       <div class="nav navbar-default offset-by-one three columns gray">
@@ -88,15 +109,15 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Type</label>
-              <Input name="type" id="people" value="people" type="radio" label="People" defaultChecked/>
-              <Input name="type" id="company" value="company" type="radio" label="Company"/>
+              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="people" value="people" type="radio" label="People" />
+              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="company" value="company" type="radio" label="Company"/>
             </div>
 
             <div class="filter">
               <label>Keywords</label>
               <Input name="keyword" id="keywords" onChange={this.handleDebouncer} />
               <div class="tag-container">
-                {input_tags}
+                {tags.keyword}
               </div>
             </div>
 
@@ -115,7 +136,15 @@ export default class SearchMenu extends React.Component {
               <label>Job Title</label>
               <Input name="job_title" id="title" onChange={this.handleDebouncer} />
               <div class="tag-container">
-                {input_tags}
+                {tags.job_title}
+              </div>
+            </div>
+
+            <div class="filter">
+              <label>Name</label>
+              <Input name="name" id="name" onChange={this.handleDebouncer} />
+              <div class="tag-container">
+                {tags.name}
               </div>
             </div>
 
@@ -123,7 +152,7 @@ export default class SearchMenu extends React.Component {
               <label>Company Name</label>
               <Input name="company_name" id="company_name" onChange={this.handleDebouncer} />
               <div class="tag-container">
-                {input_tags}
+                {tags.company_name}
               </div>
             </div>
 
@@ -168,21 +197,11 @@ export default class SearchMenu extends React.Component {
               <option>$1B+</option>
             </Input>
 
-            <Input type='select' label="Technology Stack" multiple>
-              <option>{less_than}$500K</option>
-              <option>$1M-$5M</option>
-              <option>$5M-$10M</option>
-              <option>$10M-$25M</option>
-              <option>$25M-$35M</option>
-              <option>$35M-$50M</option>
-              <option>$50M-$75M</option>
-              <option>$75M-$100M</option>
-              <option>$100M-$200M</option>
-              <option>$200M-$500M</option>
-              <option>$500M-$1B</option>
-              <option>$1B+</option>
-            </Input>
-
+            <div class="filter">
+              <label>Technology Stack</label>
+              <Input name="technology" id="technology"/>
+              <div class="tag-container"></div>
+            </div>
 
             <div class="filter">
               <label>Industry</label>
@@ -194,7 +213,7 @@ export default class SearchMenu extends React.Component {
               <label>Education</label>
               <Input name="education" id="education" onChange={this.handleDebouncer} />
               <div class="tag-container">
-                {input_tags}
+                {tags.education}
               </div>
             </div>
 
@@ -235,7 +254,7 @@ export default class SearchMenu extends React.Component {
               <label>Location</label>
               <Input name="location" id="location" onChange={this.handleDebouncer} />
               <div class="tag-container">
-                {input_tags}
+                {tags.location}
               </div>
             </div>
 
