@@ -16,6 +16,7 @@ export default class Nav extends React.Component {
               <li><Link class="black" to="search" activeClassName="active">Search</Link></li>
               <li><Link class="black" to="cadence" activeClassName="active">Cadence</Link></li>
               <li><Link class="black" to="contacts" activeClassName="active">Contacts</Link></li>
+              <li><Link class="black" to="profile" activeClassName="active">Profile</Link></li>
             </ul>
 
             <div class="right">

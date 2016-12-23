@@ -32,16 +32,10 @@ export default class Search extends React.Component {
 
   setApiState(current_state) {
     console.log(current_state);
-    let people = !this.state.apiState.people;
-    let companies = !this.state.apiState.companies;
-
-    console.log(people);
-    console.log(companies);
-
     this.setState({
       apiState: {
-        people: people,
-        companies: companies
+        people: !this.state.apiState.people,
+        companies: !this.state.apiState.companies
       }
     })
 
@@ -112,7 +106,7 @@ export default class Search extends React.Component {
     });
 
     $.ajax({
-      url: 'https://apidev.legionanalytics.com/api/interests/?format=json&page_size=100',
+      url: 'https://apidev.legionanalytics.com/api/interests/?format=json&page_size=500',
       dataType:'json',
       cache:false,
       success:function(interests){
@@ -123,7 +117,7 @@ export default class Search extends React.Component {
     });
 
     $.ajax({
-      url: 'https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=100',
+      url: 'https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=145',
       dataType:'json',
       cache:false,
       success:function(technologies){
@@ -136,10 +130,14 @@ export default class Search extends React.Component {
 
   handleSearch(query) {
     query = query.text
-    console.log(query);
+
+    let current_state = this.state.apiState.people ? "people" : "companies";
+
+    let url = `https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`;
+    console.log(url);
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/people/?format=json&page_size=50&${query}`,
+      url:`https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`,
       dataType:'json',
       cache:false,
       success:function(results){
@@ -155,7 +153,7 @@ export default class Search extends React.Component {
     query = query.text
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/industries/?format=json&page_size=50&${query}`,
+      url:`https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100&${query}`,
       dataType:'json',
       cache:false,
       success:function(industries){
@@ -170,7 +168,7 @@ export default class Search extends React.Component {
     query = query.text
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/interests/?format=json&page_size=50&${query}`,
+      url:`https://apidev.legionanalytics.com/api/interests/?format=json&page_size=1000&${query}`,
       dataType:'json',
       cache:false,
       success:function(interests){
@@ -185,7 +183,7 @@ export default class Search extends React.Component {
     query = query.text
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=50&${query}`,
+      url:`https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=100&${query}`,
       dataType:'json',
       cache:false,
       success:function(technologies){

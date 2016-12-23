@@ -22,18 +22,30 @@ export default class SearchMenu extends React.Component {
     this.handleDebouncer = this.handleDebouncer.bind(this);
 	}
 
+  componentDidMount(){
+    this.setState({
+      people: this.props.apiState.people,
+      companies: this.props.apiState.companies
+    })
+  }
+
   checkIt(e) {
-    console.log(this.props.checked);
-    console.log(this.props.id);
-    console.log(this.props.name);
+    let current_tags = this.state.inputTags;
+    let status = e.target.checked;
+    let type = e.target.value;
+    const companyCheck = ((type === 'companies') && (this.props.apiState.companies === true));
+    const peopleCheck = ((type === 'people') && (this.props.apiState.people === true));
 
-    console.log(e.target);
-    console.log(e.target.checked);
-    console.log(e.target.name);
+    if (peopleCheck || companyCheck) {
+      return
+    }
 
-
-    // this.props.setApiState(this.props.index, !this.props.checked);
-    // return;
+    this.props.setApiState(!this.props.checked);
+    this.setState({
+      inputTags:[]
+    })
+    console.log(this.state.inputTags);
+    this.getSearch();
   }
 
   removeTag(e) {
@@ -49,7 +61,7 @@ export default class SearchMenu extends React.Component {
     });
 
     this.setState({inputTags: current_tags});
-    this.getSearch(e);
+    this.getSearch();
   }
 
   getTag(e) {
@@ -76,7 +88,7 @@ export default class SearchMenu extends React.Component {
     e.target.value = "";
   }
 
-  getSearch(e) {
+  getSearch() {
     let query = "";
     this.state.inputTags.forEach((target) => {
       if ((target.name === 'industry') || (target.name === 'interest') ||(target.name === 'technology')) {
@@ -85,6 +97,8 @@ export default class SearchMenu extends React.Component {
         query = query + `${target.name}=${target.value}&`;
       }
     });
+
+    console.log(query);
 
     this.setState({ query: query });
     this.props.onSearchChange({ text: query });
@@ -250,8 +264,8 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Type</label>
-              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="people" value="people" type="radio" label="People" />
-              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="company" value="company" type="radio" label="Company"/>
+              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="people" value="people" type="radio" label="People" defaultChecked/>
+              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="companies" value="companies" type="radio" label="Company"/>
             </div>
 
             <div class="filter">
