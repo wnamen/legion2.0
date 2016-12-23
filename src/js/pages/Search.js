@@ -15,12 +15,17 @@ export default class Search extends React.Component {
         companies: false
       },
       results: [],
-      autocomplete: [],
+      industrySuggestions: [],
+      interestSuggestions: [],
+      technologySuggestions: [],
       checkedAll: false,
       rowState: []
     }
     this.setApiState = this.setApiState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleIndustrySearch = this.handleIndustrySearch.bind(this);
+    this.handleInterestSearch = this.handleInterestSearch.bind(this);
+    this.handleTechnologySearch = this.handleTechnologySearch.bind(this);
     this.checkAll = this.checkAll.bind(this);
     this.checkRow = this.checkRow.bind(this);
   }
@@ -95,49 +100,110 @@ export default class Search extends React.Component {
       }.bind(this)
     });
 
+    $.ajax({
+      url: 'https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100',
+      dataType:'json',
+      cache:false,
+      success:function(industries){
+        this.setState({industrySuggestions: industries});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+
+    $.ajax({
+      url: 'https://apidev.legionanalytics.com/api/interests/?format=json&page_size=100',
+      dataType:'json',
+      cache:false,
+      success:function(interests){
+        this.setState({interestSuggestions: interests});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+
+    $.ajax({
+      url: 'https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=100',
+      dataType:'json',
+      cache:false,
+      success:function(technologies){
+        this.setState({technologySuggestions: technologies});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
   }
 
   handleSearch(query) {
     query = query.text
+    console.log(query);
 
     $.ajax({
       url:`https://apidev.legionanalytics.com/api/people/?format=json&page_size=50&${query}`,
       dataType:'json',
       cache:false,
       success:function(results){
+        console.log(results);
         this.setState({results:results});
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
     });
-
   }
 
-  // handleApiSearch(query) {
-  //   query = query.text
-  //
-  //   $.ajax({
-  //     url:`https://apidev.legionanalytics.com/api/${api_filter}/?format=json&page_size=50&${query}`,
-  //     dataType:'json',
-  //     cache:false,
-  //     success:function(results){
-  //       console.log(results);
-  //       this.setState({autocomplete:results});
-  //     }.bind(this),
-  //     error:function(xhr, status, err){
-  //     }.bind(this)
-  //   });
-  //
-  // }
+  handleIndustrySearch(query) {
+    query = query.text
+
+    $.ajax({
+      url:`https://apidev.legionanalytics.com/api/industries/?format=json&page_size=50&${query}`,
+      dataType:'json',
+      cache:false,
+      success:function(industries){
+        this.setState({industrySuggestions: industries});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+  }
+
+  handleInterestSearch(query) {
+    query = query.text
+
+    $.ajax({
+      url:`https://apidev.legionanalytics.com/api/interests/?format=json&page_size=50&${query}`,
+      dataType:'json',
+      cache:false,
+      success:function(interests){
+        this.setState({interestSuggestions: interests});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+  }
+
+  handleTechnologySearch(query) {
+    query = query.text
+
+    $.ajax({
+      url:`https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=50&${query}`,
+      dataType:'json',
+      cache:false,
+      success:function(technologies){
+        this.setState({technologySuggestions: technologies});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+  }
 
   render() {
     return (
       <div class="page-container gray-light-background">
         <div class="row">
           <div class="sixteen columns">
-            <SearchMenu apiState={this.state.apiState} setApiState={this.apiState} onSearchChange={this.handleSearch}/>
+            <SearchMenu industrySuggestions={this.state.industrySuggestions} interestSuggestions={this.state.interestSuggestions} technologySuggestions={this.state.technologySuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onIndustrySearch={this.handleIndustrySearch} onTechnologySearch={this.handleTechnologySearch} onInterestSearch={this.handleInterestSearch}/>
             <ActionBar results={this.state.results}/>
-            <ResultsTable results={this.state.results} autocomplete={this.state.autocomplete} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
+            <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
           </div>
         </div>
       </div>

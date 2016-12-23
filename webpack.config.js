@@ -17,29 +17,21 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'stage-0'],
+          presets: ['react', 'es2015', 'stage-1'],
           plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
         }
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
+        loader: ExtractTextPlugin.extract('style','css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
       }
     ]
   },
-  // output: {
-  //   path: __dirname + "/src/",
-  //   filename: "main.min.js"
-  // },
   output: {
     path: path.resolve('./src/bundles/'),
     filename: "[name]-[hash].js"
   },
   plugins: [
-    // new ExtractTextPlugin("main.min.css"),
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
     new BundleTracker({filename: './webpack-stats.json'}),
   ],
   resolve: {

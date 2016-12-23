@@ -2,6 +2,7 @@ import React from "react"
 import CSSModules from 'react-css-modules'
 import { Input, Tag, Chip } from 'react-materialize'
 import { debounce } from 'throttle-debounce';
+import Autosuggest from 'react-autosuggest';
 import $ from 'jquery'
 
 export default class SearchMenu extends React.Component {
@@ -9,16 +10,19 @@ export default class SearchMenu extends React.Component {
 		super(props);
 		this.state = {
       inputTags: [],
-			query: ""
+      value: "",
+      suggestions: [],
+			query: "",
+      text_search: ""
 		};
+    this.getSearch = this.getSearch.bind(this);
     this.checkIt = this.checkIt.bind(this);
-		this.getSearch = this.getSearch.bind(this);
     this.getTag = debounce(750, this.getTag.bind(this));
     this.removeTag = this.removeTag.bind(this);
     this.handleDebouncer = this.handleDebouncer.bind(this);
 	}
 
-  checkIt(ei) {
+  checkIt(e) {
     console.log(this.props.checked);
     console.log(this.props.id);
     console.log(this.props.name);
@@ -49,13 +53,24 @@ export default class SearchMenu extends React.Component {
   }
 
   getTag(e) {
+    e.persist();
     let new_tags = this.state.inputTags;
 
-    new_tags.push({
-      id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
-      name: e.target.name,
-      value: e.target.value
-    });
+    if ((e.target.title === 'industry') || (e.target.title === 'interest') ||(e.target.title === 'technology')) {
+      new_tags.push({
+        id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
+        name: e.target.title,
+        value: e.target.label,
+        index: e.target.value
+      });
+    } else {
+      new_tags.push({
+        id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
+        name: e.target.name,
+        value: e.target.value
+      });
+    }
+
     this.setState({inputTags: new_tags});
     this.getSearch(e);
     e.target.value = "";
@@ -64,10 +79,13 @@ export default class SearchMenu extends React.Component {
   getSearch(e) {
     let query = "";
     this.state.inputTags.forEach((target) => {
-      query = query + `${target.name}=${target.value}&`;
+      if ((target.name === 'industry') || (target.name === 'interest') ||(target.name === 'technology')) {
+        query = query + `${target.name}=${target.index}&`;
+      } else {
+        query = query + `${target.name}=${target.value}&`;
+      }
     });
 
-    // let query = `${e.target.name}=${e.target.value}`.trim();
     this.setState({ query: query });
     this.props.onSearchChange({ text: query });
   }
@@ -77,28 +95,151 @@ export default class SearchMenu extends React.Component {
     this.getTag(e);
   }
 
+  getIndustrySuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    let text_search = `search_text=${value}`.trim();
+    this.props.onIndustrySearch({ text: text_search });
+
+    return inputLength === 0 ? [] : this.props.industrySuggestions.results.filter(result =>
+      result.name.toLowerCase().slice(0, inputLength) === inputValue
+    );
+  };
+
+  getInterestSuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    let text_search = `search_text=${value}`.trim();
+    this.props.onInterestSearch({ text: text_search });
+
+    return inputLength === 0 ? [] : this.props.interestSuggestions.results.filter(result =>
+      result.name.toLowerCase().slice(0, inputLength) === inputValue
+    );
+  };
+
+  getTechnologySuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    let text_search = `search_text=${value}`.trim();
+    this.props.onTechnologySearch({ text: text_search });
+
+    return inputLength === 0 ? [] : this.props.technologySuggestions.results.filter(result =>
+      result.name.toLowerCase().slice(0, inputLength) === inputValue
+    );
+  };
+
+  getIndustrySuggestionValue = suggestion => "";
+  getInterestSuggestionValue = suggestion => "";
+  getTechnologySuggestionValue = suggestion => "";
+
+  renderIndustrySuggestion = suggestion => (
+      <option value={suggestion.id} title="industry">{suggestion.name}</option>
+  );
+
+  renderInterestSuggestion = suggestion => (
+    <option value={suggestion.id} title="interest">{suggestion.name}</option>
+  );
+
+  renderTechnologySuggestion = suggestion => (
+    <option value={suggestion.id} title="technology">{suggestion.name}</option>
+  );
+
+  onIndustrySuggestionSearch = (event, { newValue }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+
+  onInterestSuggestionSearch = (event, { newValue }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+
+  onTechnologySuggestionSearch = (event, { newValue }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+
+  onIndustrySuggestionsFetchRequested = ({ value }) => {
+     this.setState({
+       suggestions: this.getIndustrySuggestions(value)
+     });
+  };
+
+  onInterestSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: this.getInterestSuggestions(value)
+    });
+  };
+
+  onTechnologySuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: this.getTechnologySuggestions(value)
+    });
+  };
+
+  onIndustrySuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
+
+  onInterestSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
+  onTechnologySuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
   render(){
     const less_than = '<';
-    let input_tags = this.state.inputTags;
-    var tags = {
+
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      industry: {
+        value,
+        onChange: this.onIndustrySuggestionSearch
+      },
+      interest: {
+        value,
+        onChange: this.onInterestSuggestionSearch
+      },
+      technology: {
+        value,
+        onChange: this.onTechnologySuggestionSearch
+      }
+    };
+
+    let tags = {
       keyword: [],
       job_title: [],
       name: [],
       company_name: [],
       education: [],
-      location: []
+      location: [],
+      industry: [],
+      technology: [],
+      interest: []
     }
 
-    if (input_tags !== undefined){
-      console.log(input_tags);
-      input_tags.map((tag) => {
+    if (this.state.inputTags !== undefined){
+      this.state.inputTags.map((tag) => {
         tags[tag.name].push(
-          <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
+          <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
         );
       })
     }
 
-    console.log(tags);
 
     return(
       <div class="nav navbar-default offset-by-one three columns gray">
@@ -182,7 +323,7 @@ export default class SearchMenu extends React.Component {
               <option>$1B+</option>
             </Input>
 
-            <Input type='select' label="Funding" multiple>
+            <Input type='select' label="Funding" >
               <option>{less_than}$500K</option>
               <option>$1M-$5M</option>
               <option>$5M-$10M</option>
@@ -198,15 +339,35 @@ export default class SearchMenu extends React.Component {
             </Input>
 
             <div class="filter">
-              <label>Technology Stack</label>
-              <Input name="technology" id="technology"/>
-              <div class="tag-container"></div>
+              <label>Technology</label>
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionSelected={this.handleDebouncer}
+                onSuggestionsFetchRequested={this.onTechnologySuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onTechnologySuggestionsClearRequested}
+                getSuggestionValue={this.getTechnologySuggestionValue}
+                renderSuggestion={this.renderTechnologySuggestion}
+                inputProps={inputProps.technology}
+              />
+              <div class="tag-container">
+                {tags.technology}
+              </div>
             </div>
 
             <div class="filter">
               <label>Industry</label>
-              <Input name="industry" id="industry"/>
-              <div class="tag-container"></div>
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionSelected={this.handleDebouncer}
+                onSuggestionsFetchRequested={this.onIndustrySuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onIndustrySuggestionsClearRequested}
+                getSuggestionValue={this.getIndustrySuggestionValue}
+                renderSuggestion={this.renderIndustrySuggestion}
+                inputProps={inputProps.industry}
+              />
+              <div class="tag-container">
+                {tags.industry}
+              </div>
             </div>
 
             <div class="filter">
@@ -233,9 +394,18 @@ export default class SearchMenu extends React.Component {
             </Input>
 
             <div class="filter">
-              <label>Interests</label>
-              <Input name="interests" id="interests"/>
+              <label>Interest</label>
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionSelected={this.handleDebouncer}
+                onSuggestionsFetchRequested={this.onInterestSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onInterestSuggestionsClearRequested}
+                getSuggestionValue={this.getInterestSuggestionValue}
+                renderSuggestion={this.renderInterestSuggestion}
+                inputProps={inputProps.interest}
+              />
               <div class="tag-container">
+                {tags.interest}
               </div>
             </div>
 
