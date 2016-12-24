@@ -19,7 +19,7 @@ export default class ColleagueEngagementColumn extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="three columns">
+      <div class="four columns">
         <h5>This is the colleague/engagement column</h5>
         HTML CODE IS IMPORTED FROM COLUMN COMPONENTS
         <ColleagueInfo />

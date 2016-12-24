@@ -23,12 +23,10 @@ export default class Profile extends React.Component {
 
     return (
       <div class="gray-light-background">
-        <div class="row">
-          <div class="sixteen columns">
-            <ContactLocationColumn />
-            <PublicBio />
-            <ColleagueEngagementColumn />
-          </div>
+        <div class="sixteen columns">
+          <ContactLocationColumn />
+          <PublicBio />
+          <ColleagueEngagementColumn />
         </div>
       </div>
     );

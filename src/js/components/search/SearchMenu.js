@@ -20,7 +20,21 @@ export default class SearchMenu extends React.Component {
     this.getTag = debounce(750, this.getTag.bind(this));
     this.removeTag = this.removeTag.bind(this);
     this.handleDebouncer = this.handleDebouncer.bind(this);
+    this.handleSelected = this.handleSelected.bind(this);
 	}
+
+  handleSelected(e) {
+    let selectedLength = e.target.selectedOptions.length;
+    let selectedName = e.target.name;
+    let selected = [];
+
+    for (let i = 0; i < selectedLength; i++) {
+      let option = e.target.selectedOptions[i];
+      selected.push({name: selectedName, value: option.value})
+    }
+
+    console.log(selected);
+  }
 
   componentDidMount(){
     this.setState({
@@ -276,12 +290,12 @@ export default class SearchMenu extends React.Component {
               </div>
             </div>
 
-            <Input type='select' name="department" label="Department" multiple>
+            <Input type='select' name="department" label="Department" onChange={this.handleSelected} multiple>
               <option value="customer-support">Customer Support</option>
-              <option value="c-suite">C-Suite</option>
+              <option value="c_suite">C-Suite</option>
               <option value="engineering">Engineering</option>
               <option value="finance">Finance</option>
-              <option value="human-resources">Human Resources</option>
+              <option value="human_resources">Human Resources</option>
               <option value="marketing">Marketing</option>
               <option value="operations">Operations</option>
               <option value="sales">Sales</option>
@@ -311,45 +325,45 @@ export default class SearchMenu extends React.Component {
               </div>
             </div>
 
-            <Input type='select' name="company_size" label="Size of Company" multiple>
-              <option value="">{less_than}10</option>
-              <option value="">11-50</option>
-              <option value="">51-200</option>
-              <option value="">201-500</option>
-              <option value="">501-1,000</option>
-              <option value="">1,001-5,000</option>
-              <option value="">5,001-10,000</option>
-              <option value="">10,000+</option>
+            <Input type='select' name="company_size" label="Size of Company" onChange={this.handleSelected} multiple>
+              <option value="0-10">{less_than}10</option>
+              <option value="11-50">11-50</option>
+              <option value="51-200">51-200</option>
+              <option value="201-500">201-500</option>
+              <option value="501-1000">501-1,000</option>
+              <option value="1001-5000">1,001-5,000</option>
+              <option value="5001-10000">5,001-10,000</option>
+              <option value="10001">10,000+</option>
             </Input>
 
-            <Input type='select' label="Revenue" multiple>
-              <option>{less_than}$500K</option>
-              <option>$1M-$5M</option>
-              <option>$5M-$10M</option>
-              <option>$10M-$25M</option>
-              <option>$25M-$35M</option>
-              <option>$35M-$50M</option>
-              <option>$50M-$75M</option>
-              <option>$75M-$100M</option>
-              <option>$100M-$200M</option>
-              <option>$200M-$500M</option>
-              <option>$500M-$1B</option>
-              <option>$1B+</option>
+            <Input type='select' name="revenue" label="Revenue" onChange={this.handleSelected} multiple>
+              <option value="0-0.5">{less_than}$500K</option>
+              <option value="1-5">$1M-$5M</option>
+              <option value="5-10">$5M-$10M</option>
+              <option value="10-25">$10M-$25M</option>
+              <option value="25-35">$25M-$35M</option>
+              <option value="35-50">$35M-$50M</option>
+              <option value="50-75">$50M-$75M</option>
+              <option value="75-100">$75M-$100M</option>
+              <option value="100-200">$100M-$200M</option>
+              <option value="200-500">$200M-$500M</option>
+              <option value="500-1000">$500M-$1B</option>
+              <option value="1001">$1B+</option>
             </Input>
 
-            <Input type='select' label="Funding" >
-              <option>{less_than}$500K</option>
-              <option>$1M-$5M</option>
-              <option>$5M-$10M</option>
-              <option>$10M-$25M</option>
-              <option>$25M-$35M</option>
-              <option>$35M-$50M</option>
-              <option>$50M-$75M</option>
-              <option>$75M-$100M</option>
-              <option>$100M-$200M</option>
-              <option>$200M-$500M</option>
-              <option>$500M-$1B</option>
-              <option>$1B+</option>
+            <Input type='select' name="funding" label="Funding" onChange={this.handleSelected} multiple>
+              <option value="0-0.5">{less_than}$500K</option>
+              <option value="1-5">$1M-$5M</option>
+              <option value="5-10">$5M-$10M</option>
+              <option value="10-25">$10M-$25M</option>
+              <option value="25-35">$25M-$35M</option>
+              <option value="35-50">$35M-$50M</option>
+              <option value="50-75">$50M-$75M</option>
+              <option value="75-100">$75M-$100M</option>
+              <option value="100-200">$100M-$200M</option>
+              <option value="200-500">$200M-$500M</option>
+              <option value="500-1000">$500M-$1B</option>
+              <option value="1001">$1B+</option>
             </Input>
 
             <div class="filter">
@@ -392,19 +406,12 @@ export default class SearchMenu extends React.Component {
               </div>
             </div>
 
-            <Input type='select' label="Person's Age" multiple>
-              <option>{less_than}$500K</option>
-              <option>$1M-$5M</option>
-              <option>$5M-$10M</option>
-              <option>$10M-$25M</option>
-              <option>$25M-$35M</option>
-              <option>$35M-$50M</option>
-              <option>$50M-$75M</option>
-              <option>$75M-$100M</option>
-              <option>$100M-$200M</option>
-              <option>$200M-$500M</option>
-              <option>$500M-$1B</option>
-              <option>$1B+</option>
+            <Input type='select' name="person_age" label="Person's Age" onChange={this.handleSelected} multiple>
+              <option value="18-22">18-22</option>
+              <option value="23-30">23-30</option>
+              <option value="31-35">31-35</option>
+              <option value="46-60">46-60</option>
+              <option value="61">60+</option>
             </Input>
 
             <div class="filter">

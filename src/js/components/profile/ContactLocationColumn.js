@@ -19,7 +19,7 @@ export default class ContantLocationColumn extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="three columns">
+      <div class="four columns">
         <h5>This is the contact/location column</h5>
         HTML CODE IS IMPORTED FROM COLUMN COMPONENTS
         <ContactInfo />

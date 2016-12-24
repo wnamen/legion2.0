@@ -32,7 +32,7 @@ export default class ResultsTable extends React.Component {
     }
 
     return(
-      <div class="ten columns">
+      <div class="eleven columns">
         <table class="white-background small-border gray-border large-top-margin small-horizontal-padding">
           <thead>
             <tr>

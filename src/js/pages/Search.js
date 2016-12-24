@@ -197,12 +197,10 @@ export default class Search extends React.Component {
   render() {
     return (
       <div class="page-container gray-light-background">
-        <div class="row">
-          <div class="sixteen columns">
-            <SearchMenu industrySuggestions={this.state.industrySuggestions} interestSuggestions={this.state.interestSuggestions} technologySuggestions={this.state.technologySuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onIndustrySearch={this.handleIndustrySearch} onTechnologySearch={this.handleTechnologySearch} onInterestSearch={this.handleInterestSearch}/>
-            <ActionBar results={this.state.results}/>
-            <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
-          </div>
+        <div class="sixteen columns">
+          <SearchMenu industrySuggestions={this.state.industrySuggestions} interestSuggestions={this.state.interestSuggestions} technologySuggestions={this.state.technologySuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onIndustrySearch={this.handleIndustrySearch} onTechnologySearch={this.handleTechnologySearch} onInterestSearch={this.handleInterestSearch}/>
+          <ActionBar results={this.state.results}/>
+          <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
         </div>
       </div>
     )

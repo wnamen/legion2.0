@@ -10,7 +10,7 @@ export default class Layout extends React.Component {
     return (
       <div class="gray-light-background">
         <Nav location={location} />
-          <div class="row">
+          <div>
               {this.props.children}
           </div>
       </div>
