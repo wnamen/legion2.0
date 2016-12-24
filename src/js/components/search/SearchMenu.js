@@ -16,8 +16,9 @@ export default class SearchMenu extends React.Component {
       text_search: ""
 		};
     this.getSearch = this.getSearch.bind(this);
-    this.checkIt = this.checkIt.bind(this);
-    this.getTag = debounce(750, this.getTag.bind(this));
+    this.typeCheck = this.typeCheck.bind(this);
+    this.socialCheck = this.socialCheck.bind(this);
+    this.getTag = debounce(850, this.getTag.bind(this));
     this.removeTag = this.removeTag.bind(this);
     this.handleDebouncer = this.handleDebouncer.bind(this);
     this.handleSelected = this.handleSelected.bind(this);
@@ -43,8 +44,7 @@ export default class SearchMenu extends React.Component {
     })
   }
 
-  checkIt(e) {
-    let current_tags = this.state.inputTags;
+  typeCheck(e) {
     let status = e.target.checked;
     let type = e.target.value;
     const companyCheck = ((type === 'companies') && (this.props.apiState.companies === true));
@@ -58,8 +58,30 @@ export default class SearchMenu extends React.Component {
     this.setState({
       inputTags:[]
     })
-    console.log(this.state.inputTags);
     this.getSearch();
+  }
+
+  socialCheck(e) {
+    let current_tags = this.state.inputTags;
+    let status = e.target.checked;
+    let name = e.target.name;
+    let target_id = parseInt(e.target.value);
+
+    if (status) {
+      current_tags.push({
+        id: current_tags.length > 0 ? current_tags[current_tags.length-1].id + 1 : 1,
+        name: name,
+        value: status
+      });
+    } else {
+      current_tags.forEach((tag, idx) => {
+        if ((tag.name) === name) {
+          current_tags.splice(idx, 1);
+        }
+      });
+    }
+    this.setState({inputTags: current_tags});
+    getSearch();
   }
 
   removeTag(e) {
@@ -248,24 +270,20 @@ export default class SearchMenu extends React.Component {
       }
     };
 
-    let tags = {
-      keyword: [],
-      job_title: [],
-      name: [],
-      company_name: [],
-      education: [],
-      location: [],
-      industry: [],
-      technology: [],
-      interest: []
-    }
+    let tags = {}
 
     if (this.state.inputTags !== undefined){
       this.state.inputTags.map((tag) => {
-        tags[tag.name].push(
-          <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
-        );
-      })
+        if (tags[tag.name] !== undefined) {
+          tags[tag.name].push(
+            <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
+          )
+        } else {
+          tags[tag.name] = [
+            <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
+          ]
+        };
+      });
     }
 
 
@@ -278,8 +296,8 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Type</label>
-              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="people" value="people" type="radio" label="People" defaultChecked/>
-              <Input checked={this.props.checked} onChange={this.checkIt} name="type" id="companies" value="companies" type="radio" label="Company"/>
+              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="people" value="people" type="radio" label="People" defaultChecked/>
+              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="companies" value="companies" type="radio" label="Company"/>
             </div>
 
             <div class="filter">
@@ -432,13 +450,13 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Social Profiles</label>
-              <Input name='personal_facebook' type='checkbox' value='facebook' label='Facebook' />
-              <Input name='personal_linkedin' type='checkbox' value='linkedin' label='Linkedin' />
-              <Input name='personal_twitter' type='checkbox' value='twitter' label='Twitter' />
-              <Input name='personal_github' type='checkbox' value='github' label='Github' />
-              <Input name='personal_pinterest' type='checkbox' value='pinterest' label='Pinterest' />
-              <Input name='personal_instagram' type='checkbox' value='instagram' label='Instagram' />
-              <Input name='personal_wikipedia' type='checkbox' value='wikipedia' label='Wikipedia' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_facebook' type='checkbox' value="0" label='Facebook' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_linkedin' type='checkbox' value="1" label='Linkedin' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_twitter' type='checkbox' value="2" label='Twitter' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_github' type='checkbox' value="3" label='Github' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_pinterest' type='checkbox' value="4" label='Pinterest' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_instagram' type='checkbox' value="5" label='Instagram' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_wikipedia' type='checkbox' value="6" label='Wikipedia' />
             </div>
 
             <div class="filter">
