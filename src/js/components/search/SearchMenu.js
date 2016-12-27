@@ -5,13 +5,15 @@ import { debounce } from 'throttle-debounce';
 import Autosuggest from 'react-autosuggest';
 import $ from 'jquery'
 
+import IndustrySearch from "../../actions/search/IndustrySearch"
+import InterestSearch from "../../actions/search/InterestSearch"
+import TechnologySearch from "../../actions/search/TechnologySearch"
+
 export default class SearchMenu extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {
       inputTags: [],
-      value: "",
-      suggestions: [],
 			query: "",
       text_search: ""
 		};
@@ -145,118 +147,8 @@ export default class SearchMenu extends React.Component {
     this.getTag(e);
   }
 
-  getIndustrySuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-
-    let text_search = `search_text=${value}`.trim();
-    this.props.onIndustrySearch({ text: text_search });
-
-    return inputLength === 0 ? [] : this.props.industrySuggestions.results.filter(result =>
-      result.name.toLowerCase().slice(0, inputLength) === inputValue
-    );
-  };
-
-  getInterestSuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-
-    let text_search = `search_text=${value}`.trim();
-    this.props.onInterestSearch({ text: text_search });
-
-    return inputLength === 0 ? [] : this.props.interestSuggestions.results.filter(result =>
-      result.name.toLowerCase().slice(0, inputLength) === inputValue
-    );
-  };
-
-  getTechnologySuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-
-    let text_search = `search_text=${value}`.trim();
-    this.props.onTechnologySearch({ text: text_search });
-
-    return inputLength === 0 ? [] : this.props.technologySuggestions.results.filter(result =>
-      result.name.toLowerCase().slice(0, inputLength) === inputValue
-    );
-  };
-
-  getIndustrySuggestionValue = suggestion => "";
-  getInterestSuggestionValue = suggestion => "";
-  getTechnologySuggestionValue = suggestion => "";
-
-  renderIndustrySuggestion = suggestion => (
-      <option value={suggestion.id} title="industry">{suggestion.name}</option>
-  );
-
-  renderInterestSuggestion = suggestion => (
-    <option value={suggestion.id} title="interest">{suggestion.name}</option>
-  );
-
-  renderTechnologySuggestion = suggestion => (
-    <option value={suggestion.id} title="technology">{suggestion.name}</option>
-  );
-
-  onIndustrySuggestionSearch = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  onInterestSuggestionSearch = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  onTechnologySuggestionSearch = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  onIndustrySuggestionsFetchRequested = ({ value }) => {
-     this.setState({
-       suggestions: this.getIndustrySuggestions(value)
-     });
-  };
-
-  onInterestSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getInterestSuggestions(value)
-    });
-  };
-
-  onTechnologySuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getTechnologySuggestions(value)
-    });
-  };
-
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
-
   render(){
     const less_than = '<';
-
-    const { value } = this.state;
-    const inputProps = {
-      industry: {
-        value,
-        onChange: this.onIndustrySuggestionSearch
-      },
-      interest: {
-        value,
-        onChange: this.onInterestSuggestionSearch
-      },
-      technology: {
-        value,
-        onChange: this.onTechnologySuggestionSearch
-      }
-    };
 
     let tags = {}
 
@@ -374,15 +266,7 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Technology</label>
-              <Autosuggest
-                suggestions={this.state.suggestions}
-                onSuggestionSelected={this.handleDebouncer}
-                onSuggestionsFetchRequested={this.onTechnologySuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={this.getTechnologySuggestionValue}
-                renderSuggestion={this.renderTechnologySuggestion}
-                inputProps={inputProps.technology}
-              />
+              <TechnologySearch onDebouncer={this.handleDebouncer} />
               <div class="tag-container">
                 {tags.technology}
               </div>
@@ -390,15 +274,7 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Industry</label>
-              <Autosuggest
-                suggestions={this.state.suggestions}
-                onSuggestionSelected={this.handleDebouncer}
-                onSuggestionsFetchRequested={this.onIndustrySuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={this.getIndustrySuggestionValue}
-                renderSuggestion={this.renderIndustrySuggestion}
-                inputProps={inputProps.industry}
-              />
+              <IndustrySearch onDebouncer={this.handleDebouncer}/>
               <div class="tag-container">
                 {tags.industry}
               </div>
@@ -422,15 +298,7 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Interest</label>
-              <Autosuggest
-                suggestions={this.state.suggestions}
-                onSuggestionSelected={this.handleDebouncer}
-                onSuggestionsFetchRequested={this.onInterestSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={this.getInterestSuggestionValue}
-                renderSuggestion={this.renderInterestSuggestion}
-                inputProps={inputProps.interest}
-              />
+              <InterestSearch onDebouncer={this.handleDebouncer}/>
               <div class="tag-container">
                 {tags.interest}
               </div>

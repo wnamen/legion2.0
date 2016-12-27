@@ -1,7 +1,7 @@
 import React from "react"
 import Autosuggest from 'react-autosuggest';
 
-export default class industrySearch extends React.Component {
+export default class IndustrySearch extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -12,7 +12,18 @@ export default class industrySearch extends React.Component {
     this.handleIndustrySearch = this.handleIndustrySearch.bind(this);
   }
 
-  console.log(this.props);
+  componentWillMount(){
+    $.ajax({
+      url: 'https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100',
+      dataType:'json',
+      cache:false,
+      success:function(industries){
+        this.setState({industrySuggestions: industries});
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+  }
 
   handleIndustrySearch(query) {
     query = query.text
@@ -34,9 +45,9 @@ export default class industrySearch extends React.Component {
     const inputLength = inputValue.length;
 
     let text_search = `search_text=${value}`.trim();
-    this.props.onIndustrySearch({ text: text_search });
+    this.handleIndustrySearch({ text: text_search });
 
-    return inputLength === 0 ? [] : this.props.industrySuggestions.results.filter(result =>
+    return inputLength === 0 ? [] : this.state.industrySuggestions.results.filter(result =>
       result.name.toLowerCase().slice(0, inputLength) === inputValue
     );
   };
@@ -66,14 +77,21 @@ export default class industrySearch extends React.Component {
   };
 
   render(){
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      value,
+      onChange: this.onIndustrySuggestionSearch
+    }
+
     return (
       <Autosuggest
         suggestions={this.state.suggestions}
+        onSuggestionSelected={this.props.onDebouncer}
         onSuggestionsFetchRequested={this.onIndustrySuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={this.getIndustrySuggestionValue}
         renderSuggestion={this.renderIndustrySuggestion}
-        inputProps={inputProps.industry}
+        inputProps={inputProps}
       />
     )
   }

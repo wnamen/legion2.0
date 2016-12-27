@@ -15,31 +15,22 @@ export default class Search extends React.Component {
         companies: false
       },
       results: [],
-      industrySuggestions: [],
-      interestSuggestions: [],
-      technologySuggestions: [],
       checkedAll: false,
       rowState: []
     }
     this.setApiState = this.setApiState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleIndustrySearch = this.handleIndustrySearch.bind(this);
-    this.handleInterestSearch = this.handleInterestSearch.bind(this);
-    this.handleTechnologySearch = this.handleTechnologySearch.bind(this);
     this.checkAll = this.checkAll.bind(this);
     this.checkRow = this.checkRow.bind(this);
   }
 
   setApiState(current_state) {
-    console.log(current_state);
     this.setState({
       apiState: {
         people: !this.state.apiState.people,
         companies: !this.state.apiState.companies
       }
     })
-
-    console.log(this.state.apiState);
   }
 
   setRowState(results) {
@@ -50,7 +41,6 @@ export default class Search extends React.Component {
         rowState[index] = false
       })
     }
-    console.log(rowState);
     this.setState({ rowState: rowState })
   }
 
@@ -93,39 +83,6 @@ export default class Search extends React.Component {
       error:function(xhr, status, err){
       }.bind(this)
     });
-
-    $.ajax({
-      url: 'https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100',
-      dataType:'json',
-      cache:false,
-      success:function(industries){
-        this.setState({industrySuggestions: industries});
-      }.bind(this),
-      error:function(xhr, status, err){
-      }.bind(this)
-    });
-
-    $.ajax({
-      url: 'https://apidev.legionanalytics.com/api/interests/?format=json&page_size=500',
-      dataType:'json',
-      cache:false,
-      success:function(interests){
-        this.setState({interestSuggestions: interests});
-      }.bind(this),
-      error:function(xhr, status, err){
-      }.bind(this)
-    });
-
-    $.ajax({
-      url: 'https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=145',
-      dataType:'json',
-      cache:false,
-      success:function(technologies){
-        this.setState({technologySuggestions: technologies});
-      }.bind(this),
-      error:function(xhr, status, err){
-      }.bind(this)
-    });
   }
 
   handleSearch(query) {
@@ -149,56 +106,11 @@ export default class Search extends React.Component {
     });
   }
 
-  handleIndustrySearch(query) {
-    query = query.text
-
-    $.ajax({
-      url:`https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100&${query}`,
-      dataType:'json',
-      cache:false,
-      success:function(industries){
-        this.setState({industrySuggestions: industries});
-      }.bind(this),
-      error:function(xhr, status, err){
-      }.bind(this)
-    });
-  }
-
-  handleInterestSearch(query) {
-    query = query.text
-
-    $.ajax({
-      url:`https://apidev.legionanalytics.com/api/interests/?format=json&page_size=1000&${query}`,
-      dataType:'json',
-      cache:false,
-      success:function(interests){
-        this.setState({interestSuggestions: interests});
-      }.bind(this),
-      error:function(xhr, status, err){
-      }.bind(this)
-    });
-  }
-
-  handleTechnologySearch(query) {
-    query = query.text
-
-    $.ajax({
-      url:`https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=100&${query}`,
-      dataType:'json',
-      cache:false,
-      success:function(technologies){
-        this.setState({technologySuggestions: technologies});
-      }.bind(this),
-      error:function(xhr, status, err){
-      }.bind(this)
-    });
-  }
-
   render() {
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
-          <SearchMenu industrySuggestions={this.state.industrySuggestions} interestSuggestions={this.state.interestSuggestions} technologySuggestions={this.state.technologySuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onIndustrySearch={this.handleIndustrySearch} onTechnologySearch={this.handleTechnologySearch} onInterestSearch={this.handleInterestSearch}/>
+          <SearchMenu interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch}/>
           <ActionBar results={this.state.results}/>
           <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
         </div>
