@@ -1,30 +1,49 @@
 import React from "react"
 import CSSModules from 'react-css-modules'
-// import Styles from "./nav.css"
+import { Dropdown, NavItem, Input } from "react-materialize"
 
 export default class ContactsBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+
+    // this.getTag = debounce(850, this.getTag.bind(this));
+    this.handleDebouncer = this.handleDebouncer.bind(this);
+  }
+
+  handleDebouncer(e) {
+    e.persist();
+  }
+
   render(){
+    let data = this.props.results;
+    let result_count = 50;
+    if (result_count !== undefined) {
+      result_count = result_count.toLocaleString();
+    }
+
     return(
       <div class="sixteen columns">
-        <nav class="navbar navbar-default collapse navbar-collapse">
-          <ul class="nav navbar-nav navbar-left">
-            <li><a>Showing 5,312 results</a></li>
-          </ul>
+        <nav class="navbar white-background small-border gray-border">
+          <div id="action-bar" class="nav-wrapper">
+            <ul class="left">
+              <li id="list-adder-dropdown" class="right-actions">
+                <Dropdown trigger={
+                  <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i></a>
+                }>
+                  <NavItem>All My Contacts</NavItem>
+                  <NavItem>+ Create new list</NavItem>
+                </Dropdown>
+              </li>
+              <Input name="contacts_search" id="contacts-search" placeholder="Search ${result_count} Contacts" onChange={this.handleDebouncer} />
+            </ul>
 
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add to List <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">My First List</a></li>
-                <li><a href="#">Founder Contacts</a></li>
-                <li><a href="#">Ecommerce Tech Stack</a></li>
-                <li><a href="#">+ Create new list</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Get Contacts</a></li>
-            <li><a href="#">Export CSV</a></li>
-          </ul>
-
+            <ul class="right">
+              <li><a href="#">Delete List</a></li>
+              <li><a href="#">Export CSV</a></li>
+              <li><a href="#">Upload Contacts</a></li>
+            </ul>
+          </div>
         </nav>
       </div>
     )

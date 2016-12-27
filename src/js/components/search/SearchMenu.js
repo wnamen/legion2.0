@@ -81,7 +81,7 @@ export default class SearchMenu extends React.Component {
       });
     }
     this.setState({inputTags: current_tags});
-    getSearch();
+    this.getSearch();
   }
 
   removeTag(e) {
@@ -233,28 +233,16 @@ export default class SearchMenu extends React.Component {
     });
   };
 
-  onIndustrySuggestionsClearRequested = () => {
+  onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
-    });
-  };
-
-  onInterestSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: [],
-    });
-  };
-
-  onTechnologySuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: [],
     });
   };
 
   render(){
     const less_than = '<';
 
-    const { value, suggestions } = this.state;
+    const { value } = this.state;
     const inputProps = {
       industry: {
         value,
@@ -387,10 +375,10 @@ export default class SearchMenu extends React.Component {
             <div class="filter">
               <label>Technology</label>
               <Autosuggest
-                suggestions={suggestions}
+                suggestions={this.state.suggestions}
                 onSuggestionSelected={this.handleDebouncer}
                 onSuggestionsFetchRequested={this.onTechnologySuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onTechnologySuggestionsClearRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                 getSuggestionValue={this.getTechnologySuggestionValue}
                 renderSuggestion={this.renderTechnologySuggestion}
                 inputProps={inputProps.technology}
@@ -403,10 +391,10 @@ export default class SearchMenu extends React.Component {
             <div class="filter">
               <label>Industry</label>
               <Autosuggest
-                suggestions={suggestions}
+                suggestions={this.state.suggestions}
                 onSuggestionSelected={this.handleDebouncer}
                 onSuggestionsFetchRequested={this.onIndustrySuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onIndustrySuggestionsClearRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                 getSuggestionValue={this.getIndustrySuggestionValue}
                 renderSuggestion={this.renderIndustrySuggestion}
                 inputProps={inputProps.industry}
@@ -435,10 +423,10 @@ export default class SearchMenu extends React.Component {
             <div class="filter">
               <label>Interest</label>
               <Autosuggest
-                suggestions={suggestions}
+                suggestions={this.state.suggestions}
                 onSuggestionSelected={this.handleDebouncer}
                 onSuggestionsFetchRequested={this.onInterestSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onInterestSuggestionsClearRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                 getSuggestionValue={this.getInterestSuggestionValue}
                 renderSuggestion={this.renderInterestSuggestion}
                 inputProps={inputProps.interest}
