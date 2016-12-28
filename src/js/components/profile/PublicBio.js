@@ -77,7 +77,7 @@ export default class ContantLocationColumn extends React.Component {
           <p class="profile-body gray thick-line-height">Managing Partner at Y Combinator. I run the Fellowship. Founded Wufoo. Find my dream journal over @dreamface. And yes, I like vests. Holla.</p>
           <p class="profile-body gray thick-line-height"> Kevin Hale is a partner at Y Combinator, which provides seed funding to startups. He works with their portfolio of companies on user experience design, product development and customer support. In 2006,he co-founded Wufoo, which was one of the earliest Y Combinator funded startups. The online form builder was ranked by Jakob Nielson as one of the best application UIs of 2008 and later acquired by SurveyMonkey in 2011.</p>
           <br></br>
-          
+          <div class="lgnBtn lgnBtn-lg white electric-blue-background text-center">Create my account</div>
         </div>
       </div>
     )
