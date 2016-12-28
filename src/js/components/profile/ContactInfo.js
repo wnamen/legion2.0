@@ -19,10 +19,19 @@ export default class ContactInfo extends React.Component {
 
 
     return(
-      <div>
-        <h5>This is the contact info box</h5>
-        HTML CODE HERE
+      <div class="profile-card whiteCard" id="contact-card">
+        <div></div>
+        <h1 class="adjustedH1">Kevin Hale</h1>
+        <p class="gray meta">Partner at Y Combinator</p>
+        <h6 class="gray meta local">San Francisco Bay Area</h6>
 
+        <div class="lgnBtn electric-blue-light-background electric-blue-border black lgnBtnUp">Get Kevin's Email</div>
+        <hr></hr>
+        <div class="thumbs">
+          <i class="fa fa-thumbs-up thumb-icon electric-blue"></i>
+          <i class="fa fa-thumbs-o-down thumb-icon"></i>
+        </div>
+        
       </div>
     )
   }

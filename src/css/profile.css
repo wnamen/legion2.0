@@ -1,0 +1,124 @@
+.profile-card{
+	padding: 30px 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	overflow: hidden;
+}
+.noaccount{
+	padding: 70px 125px;
+}
+#kylieCard{
+	padding:0;
+}
+.colleagues,.engagement{
+	padding: 10px 20px 10px 20px;
+    white-space: nowrap;
+}
+.colleagues{
+	margin-top: 5em;
+}
+.colleagues>a{
+	display: block;
+    text-overflow: ellipsis;
+    line-height: 3em;
+    font-size: .8em;
+    overflow: hidden;
+}
+.whiteCard{
+	background-color: #fff;
+	border: 1px solid #ececec;
+}
+.thick-line-height{
+	line-height: 2em;
+}
+.profile-body{
+	font-size: .8em;
+}
+.tag{
+	padding:3px 7px;
+	background-color: #f8f8f8;
+	display: inline-block;
+	margin: 2px;
+}
+.splink{
+	padding:1px 10px;
+}
+.splink:not(:last-of-type){
+	border-right: 1px solid #647382;
+}
+a.active:hover{
+	text-decoration: underline;
+}
+.edu{
+	display: inline-flex;
+	display: -webkit-inline-flex;
+}
+#contact-card{
+	padding:40px;
+	text-align: center;
+}
+.inactive:hover{
+	cursor:default;
+}
+.meta{
+	position: relative;
+	top: -1.6em;
+	font-size: .9em;
+}
+.meta.local{
+	top:-2.5em;
+}
+.lgnBtn{
+	padding:7px 10px;
+	border:1px solid;
+	cursor: pointer;
+	opacity: .8;
+}
+.lgnBtn-lg{
+	padding:20px 50px;
+	border:1px solid;
+	cursor: pointer;
+	opacity: .8;
+}
+.lgnBtn:hover{
+	opacity: 1;
+}
+.lgnBtnUp{
+	position: relative;
+	top:-1.5em;
+}
+.thumbs{
+	font-size: 1.5em;
+}
+.thumb-icon{
+	margin: 0 10px;
+	cursor: pointer;
+}
+.adjustedH1{
+	margin-top: .7em;
+}
+.locationH1{
+	font-family: "Lato";
+	font-weight: 300;
+	line-height: 1em;
+	font-size: 1.5em;
+}
+.actionIcon{
+    width: .35em;
+    height: .35em;
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    margin: 0 10px 0 -15px;
+}
+.activityDetails{
+	display: inline;
+    display: -webkit-inline;
+    overflow: hidden;
+    white-space: normal;
+    font-size: .8em;
+}
+.kylieAd{
+	width: 100%;
+}
+
+

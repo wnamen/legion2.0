@@ -2,6 +2,7 @@
 .column-row, .row { margin: 0 0 18px -10px; }
 .column, .columns { float: left; display: inline; margin: 0 0 0 15px; }
 
+.half { width: 3.125%; }
 .one { width: 6.25%; }
 .two { width: 12.5%; }
 .three { width: 18.75%; }
@@ -19,7 +20,7 @@
 .fifteen { width: 93.75%; }
 .sixteen { width: 100%; }
 
-.offset-by-one-half { margin-left: 45px; }
+.offset-by-one-half { margin-left: 3.125%; }
 .offset-by-one { margin-left: 90px; }
 .offset-by-two { margin-left: 160px; }
 .offset-by-three { margin-left: 230px; }
