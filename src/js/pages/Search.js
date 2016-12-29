@@ -91,7 +91,7 @@ export default class Search extends React.Component {
     let current_state = this.state.apiState.people ? "people" : "companies";
 
     let url = `https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`;
-    console.log(url);
+    console.log("sent to: ", url);
 
     $.ajax({
       url:`https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`,
