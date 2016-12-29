@@ -17,10 +17,33 @@ export default class EngagementInfo extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div>
-        <h5>This is the engagement info box</h5>
-          HTML CODE HERE
-
+      <div class="profile-card engagement">
+        <h6 class="black">Engagement</h6>
+        <div class="activityAction">
+          <div class="actionIcon red-background"></div>
+          <p class="activityDetails gray">- Clicked <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
+        </div>
+        <br></br>
+        <div class="activityAction">
+          <div class="actionIcon electric-blue-background"></div>
+          <p class="activityDetails gray">- Opened <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
+        </div>
+        <br></br>
+        <div class="activityAction">
+          <div class="actionIcon red-background"></div>
+          <p class="activityDetails gray">- Clicked <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
+        </div>
+        <br></br>
+        <div class="activityAction">
+          <div class="actionIcon electric-blue-background"></div>
+          <p class="activityDetails gray">- Opened <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
+        </div>
+        <br></br>
+        <div class="activityAction">
+          <div class="actionIcon red-background"></div>
+          <p class="activityDetails gray">- Clicked <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
+        </div>
+        <br></br>
       </div>
     )
   }

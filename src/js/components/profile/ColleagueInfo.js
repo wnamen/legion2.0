@@ -18,9 +18,21 @@ export default class ColleagueInfo extends React.Component {
 
     return(
       <div>
-        <h5>This is the colleague info box</h5>
-        HTML CODE HERE
+        <div class="profile-card whiteCard" id="kylieCard">
+          <a href="https://www.kylie.ai" target="_blank">
+            <img src="src/img/kylieAd.png" class="kylieAd"></img>
+          </a>
+        </div>
 
+        <div class="profile-card colleagues">
+          <h6 class="black">Colleagues</h6>
+          <a href="#" class="active">Kat Mañalac, Partner</a>
+          <a href="#" class="active">Quasar Younis, Partner & COO </a>
+          <a href="#" class="active">Sam Altman, Partner & President</a>
+          <a href="#" class="active">Matt Krisolof, Managing Director of Basic Income Project</a>
+          <a href="#" class="active">Kat Mañalac, Partner</a>
+          <a href="#" class="active">Kat Mañalac, Partner</a>
+        </div>
       </div>
     )
   }

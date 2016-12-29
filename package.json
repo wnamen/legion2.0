@@ -42,7 +42,8 @@
     "require": "^2.4.20",
     "throttle-debounce": "^1.0.1",
     "webpack": "^1.14.0",
-    "webpack-bundle-tracker": "^0.1.0"
+    "webpack-bundle-tracker": "^0.1.0",
+    "webpack-dev-server": "^1.16.2"
   },
   "devDependencies": {
     "webpack-dev-server": "^1.16.2"

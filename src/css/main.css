@@ -1,11 +1,28 @@
-h1,h2,h3,h4,h5,h6 {
+h1,h2,h3 {
   font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 2em;
 }
-
+h4,h5,h6{
+  font-size: 1em;
+  font-family: "Lato";
+  font-weight: 300;
+}
+hr{
+  opacity: .3;
+}
+a{
+  color: #36b7ea;
+}
 body {
   font-family: 'Open Sans', sans-serif;
 }
-
+strong{
+  font-weight: 700 !important;
+}
+.text-center{
+  text-align: center !important;
+}
 .page-container {
   margin-top: 2em;
 }
