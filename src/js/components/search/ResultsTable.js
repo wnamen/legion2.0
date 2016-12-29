@@ -3,6 +3,8 @@ import { Dropdown, NavItem, Input } from 'react-materialize';
 import {Table, Column, Cell} from 'fixed-data-table-2';
 // import CSSModules from 'react-css-modules';
 
+import no_results_img from "../../../images/no_search_results.png"
+
 // import Styles from "./nav.css"
 
 import Results from './Results';
@@ -24,12 +26,16 @@ export default class ResultsTable extends React.Component {
     let data = this.props.results;
     let mappedResults;
 
-    if (data.results !== undefined) {
+    if ((data.results !== undefined) && (data.results.length > 0)) {
       mappedResults = data.results.map((result, index) => {
         return (
           <Results index={index} key={result.id} name={result.person.name} age={result.person.age} jobTitle={result.title} companyName={result.company.name} checked={this.props.rowState[index]} callback={this.props.checkRow} />
         );
       })
+    } else if (data.results !== undefined) {
+      return (
+        <img src={no_results_img} />
+      )
     }
 
     return(

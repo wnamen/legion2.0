@@ -22,6 +22,13 @@ module.exports = {
         }
       },
       {
+        test: /\.(jpg|png)$/i,
+        loaders: [
+          "file-loader?name=[sha512:hash:base64:7].[ext]",
+          "image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false"
+        ]
+      },
+      {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style','css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
       }
