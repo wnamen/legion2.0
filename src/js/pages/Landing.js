@@ -6,10 +6,8 @@ export default class Landing extends React.Component {
     console.log("landing");
     return (
       <div class="container gray-light-background">
-        <div class="row">
-          <div class="sixteen columns">
-            <h3>Welcome to Legion Analytics</h3>
-          </div>
+        <div class="sixteen columns">
+          <h3>Welcome to Legion Analytics</h3>
         </div>
       </div>
 

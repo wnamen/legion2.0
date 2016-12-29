@@ -11,7 +11,7 @@ export default class ActionBar extends React.Component {
     }
 
     return(
-      <div class="ten columns">
+      <div class="eleven columns">
         <nav class="navbar white-background small-border gray-border">
           <div id="action-bar" class="nav-wrapper">
             <ul class="left">

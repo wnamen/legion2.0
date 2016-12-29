@@ -1,6 +1,11 @@
 /* GRID SYSTEM */
 .column-row, .row { margin: 0 0 18px -10px; }
-.column, .columns { float: left; display: inline; margin: 0 0 0 15px; }
+.column, .columns {
+  float: left;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0 10px;
+}
 
 .half { width: 3.125%; }
 .one { width: 6.25%; }

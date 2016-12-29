@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dropdown, NavItem, Input } from 'react-materialize';
+import {Table, Column, Cell} from 'fixed-data-table-2';
 // import CSSModules from 'react-css-modules';
 
 // import Styles from "./nav.css"
@@ -32,7 +33,7 @@ export default class ResultsTable extends React.Component {
     }
 
     return(
-      <div class="ten columns">
+      <div class="eleven columns">
         <table class="white-background small-border gray-border large-top-margin small-horizontal-padding">
           <thead>
             <tr>
@@ -48,6 +49,21 @@ export default class ResultsTable extends React.Component {
                   <NavItem>Add Column</NavItem>
                   <NavItem>Add Column</NavItem>
                 </Dropdown>
+                <Input type='select' name="column_selector" onChange={this.handleSelected} multiple>
+                  <option value="name">Name</option>
+                  <option value="person_age">Age</option>
+                  <option value="job_title">Job Title</option>
+                  <option value="department">Department</option>
+                  <option value="company_name">Company Name</option>
+                  <option value="company_size">Size of Company</option>
+                  <option value="revenue">Revenue</option>
+                  <option value="funding">Funding</option>
+                  <option value="technology">Technology</option>
+                  <option value="industry">Industry</option>
+                  <option value="interest">Interest</option>
+                  <option value="social_profiles">Social Profiles</option>
+                  <option value="location">Location</option>
+                </Input>
               </th>
             </tr>
           </thead>

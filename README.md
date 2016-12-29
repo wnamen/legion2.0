@@ -1,5 +1,9 @@
 # legion2.0
 
+### Production Management
+
+Trello: https://trello.com/b/QMEb0hwA/legion-v2
+
 ### React/Redux Info Series
 
 1. React Tutorial Series: https://www.youtube.com/watch?v=MhkGQAoc7bc&list=PLoYCgNOIyGABj2GQSlDRjgvXtqfDxKm5b
@@ -11,3 +15,15 @@
 7. ES6 Cheat Sheet: https://www.youtube.com/watch?v=AfWYO8t7ed4&list=PLoYCgNOIyGACDQLaThEEKBAlgs4OIUGif&index=1
 8. Webpack Cheat Sheet: https://www.youtube.com/watch?v=9kJVYpOqcVU
 9. Scalability: https://www.smashingmagazine.com/2016/09/how-to-scale-react-applications/
+
+
+### Feature Resources
+
+1. Debouncer: http://blog.revathskumar.com/2016/02/reactjs-using-debounce-in-react-components.html
+2. React-Materialize: https://react-materialize.github.io/forms.html
+3. React-Infinite: https://github.com/seatgeek/react-infinite
+4. Check All: http://stackoverflow.com/questions/29242048/how-do-you-implement-check-all-in-react-with-child-components
+5. Reactabular: https://reactabular.js.org/#/
+6. Fixed Data Table 2: http://schrodinger.github.io/fixed-data-table-2/
+7. React Modal: https://github.com/reactjs/react-modal
+8. React Tooltip: http://wwayne.com/react-tooltip/
