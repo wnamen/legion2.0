@@ -2,7 +2,7 @@ import React from "react"
 import { IndexLink, Link } from "react-router"
 import CSSModules from 'react-css-modules'
 import { Dropdown, NavItem, Button } from 'react-materialize'
-// import Styles from "./nav.css"
+// import styles from "./nav.css"
 
 export default class Nav extends React.Component {
   render() {
@@ -16,7 +16,6 @@ export default class Nav extends React.Component {
               <li><Link class="black" to="search" activeClassName="active">Search</Link></li>
               <li><Link class="black" to="cadence" activeClassName="active">Cadence</Link></li>
               <li><Link class="black" to="contacts" activeClassName="active">Contacts</Link></li>
-              <li><Link class="black" to="profile" activeClassName="active">Profile</Link></li>
             </ul>
 
             <div class="right">
@@ -32,7 +31,7 @@ export default class Nav extends React.Component {
                   </Dropdown>
                 </li>
                 <li class="large-right-margin">
-                  <i class="gray-medium-2 fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                  <Link class="black" to="profile" activeClassName="active"><i class="gray-medium-2 fa fa-user-circle fa-2x" aria-hidden="true"></i></Link>
                 </li>
               </ul>
             </div>

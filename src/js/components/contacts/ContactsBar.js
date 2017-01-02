@@ -19,7 +19,7 @@ export default class ContactsBar extends React.Component {
     let data = this.props.results;
     let result_count = 50;
     if (result_count !== undefined) {
-      result_count = result_count.toLocaleString();
+      result_count = "Search " + result_count.toLocaleString() + " Contacts";
     }
 
     return(
@@ -35,7 +35,9 @@ export default class ContactsBar extends React.Component {
                   <NavItem>+ Create new list</NavItem>
                 </Dropdown>
               </li>
-              <Input name="contacts_search" id="contacts-search" placeholder="Search ${result_count} Contacts" onChange={this.handleDebouncer} />
+              <li>
+                <Input name="contacts_search" id="contacts-search" placeholder={result_count} onChange={this.handleDebouncer} />
+              </li>
             </ul>
 
             <ul class="right">

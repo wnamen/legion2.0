@@ -3,8 +3,6 @@ import { Dropdown, NavItem, Input } from 'react-materialize';
 import {Table, Column, Cell} from 'fixed-data-table-2';
 // import CSSModules from 'react-css-modules';
 
-import no_results_img from "../../../images/no_search_results.png"
-
 // import Styles from "./nav.css"
 
 import Results from './Results';
@@ -34,7 +32,7 @@ export default class ResultsTable extends React.Component {
       })
     } else if (data.results !== undefined) {
       return (
-        <img src={no_results_img} />
+        <img class="eleven columns" src="src/img/no_search_results.png" />
       )
     }
 
