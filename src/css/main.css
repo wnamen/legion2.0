@@ -7,7 +7,9 @@
 /* COMPONENTS */
 @import url("./search/actionBar.css");
 @import url("./search/modal.css");
-
+@import url("./profile.css");
+@import url("./landing.css");
+@import url("./nav.css");
 
 h1,h2,h3 {
   font-family: 'Lato', sans-serif;

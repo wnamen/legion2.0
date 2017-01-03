@@ -16,9 +16,33 @@ export default class Options extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the Premium Options Component</h5>
-        HTML CODE HERE
+      <div class="sixteen columns optionCont">
+        <div class="planOptions">
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails"><strong>Everything in Standard</strong></p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">10 Connected Email Accounts</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray"><em>Kylie.ai Features</em></p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray"><em>Unlimited Drafts</em></p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray"><em>Autopilot</em></p>
+          </div>
+        </div>
       </div>
     )
   }

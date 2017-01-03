@@ -19,9 +19,7 @@ export default class PayAsYouGo extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="four columns">
-        <h5>This is the PayAsYouGo Component</h5>
-        HTML CODE IS IMPORTED FROM CHILD COMPONENTS
+      <div class="five columns offset-by-half text-center">
         <Pricing />
         <Options />
       </div>

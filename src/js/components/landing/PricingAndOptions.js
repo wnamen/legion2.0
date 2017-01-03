@@ -20,9 +20,8 @@ export default class PricingAndOptions extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the PricingAndOptions Component</h5>
-        HTML CODE IS IMPORTED FROM CHILD COMPONENTS
+      <div class="sixteen columns white-background">
+        <h6 class="fH6 pH6 gray text-center">Grow Faster with Legion Analytics</h6>
         <PayAsYouGo />
         <Standard />
         <Premium />

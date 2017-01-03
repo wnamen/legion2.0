@@ -16,9 +16,14 @@ export default class FilterAd extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the FilterAd Component</h5>
-        HTML CODE HERE
+      <div class="sixteen columns gray-light-background text-center">
+        <div class="twelve columns offset-by-two">
+          <h6 class="fH6 pH6 gray">Look Up Millions of People & Companies</h6>
+          <h6 class="fH6 smaller gray">Using the Following Filters:</h6>
+          <h6 class="fH6 smaller gray">Keywords, Job Title, Company Name, Technology Used, Age, Revenue, Funding, Social Media Profiles, Location, Industry, Interests, Education, Employee Size, & More...</h6>
+          <br></br>
+          <img class="filterIcon" src="src/img/no_search_results.png"></img>
+        </div>
       </div>
     )
   }

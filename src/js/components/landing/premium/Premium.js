@@ -19,9 +19,7 @@ export default class Premium extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="four columns">
-        <h5>This is the Premium Component</h5>
-        HTML CODE IS IMPORTED FROM CHILD COMPONENTS
+      <div class="five columns text-center">
         <Pricing />
         <Options />
       </div>

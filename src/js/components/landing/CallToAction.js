@@ -16,10 +16,7 @@ export default class CallToAction extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the CallToAction Component</h5>
-        HTML CODE HERE
-      </div>
+        <div class="lgnBtn smoothBkgd white electric-blue-background electric-blue-border cta">Create My Free Account</div>
     )
   }
 }
