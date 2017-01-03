@@ -19,7 +19,7 @@ export default class ContantLocationColumn extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="three columns offset-by-one-half">
+      <div class="four columns offset-by-one-half">
         <ContactInfo />
         <LocationInfo />
       </div>

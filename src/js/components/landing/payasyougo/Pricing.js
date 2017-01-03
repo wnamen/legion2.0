@@ -16,9 +16,21 @@ export default class Pricing extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the PayAsYouGo Pricing Component</h5>
-        HTML CODE HERE
+      <div class="sixteen gray-light-border pborder">
+        <div class="pgHeader gray-light-background">
+          <h3 class="gray pH3">Pay-As-You-Go</h3>
+        </div>
+
+        <div class="text-center gray pricingTable">
+          <small class="pricingRow">Starting at</small>
+          <h1 class="priceNumber pricingRow">$0.25</h1>
+          <small class="pricingRow">/credit</small>
+          <br></br>
+          <div class="pricingDescription gray">Access Email Data, Phone Numbers, Facebook, Linkedin, Twitter, & more! Use credits to run sales campaigns with unlimited touches and contacts.</div>
+          <br></br>
+          <div class="lgnBtn lgnBtnLg smoothBkgd electric-blue white-background electric-blue-border">Create My Free Account</div>
+
+        </div>
       </div>
     )
   }

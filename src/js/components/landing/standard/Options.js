@@ -16,9 +16,58 @@ export default class Options extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the Standard Options Component</h5>
-        HTML CODE HERE
+      <div class="sixteen columns optionCont">
+        <div class="planOptions standardAdjust">
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails"><strong>Everything in Pay-As-You-Go</strong></p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Unlimited Search Queries/Month</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Unlimited Search Results/Month</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Unlimited Uploaded Contacts Limit</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Create Unlimited Lists</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Unlimited Touches per Campaign</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">5 Connected Email Account</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Live Campaign Activity Stream</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Advanced Search Filters</p>
+          </div>
+          <br></br>
+          <div class="activityAction">
+            <div class="actionIcon electric-blue-background"></div>
+            <p class="activityDetails pricingDetails gray">Export CSV</p>
+          </div>
+        </div>
       </div>
     )
   }

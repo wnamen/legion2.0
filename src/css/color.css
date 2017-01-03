@@ -31,7 +31,9 @@
 .gray-light {
   color: #f5f8f9 !important;
 }
-
+.gray-medium-1 {
+  color: #cccccc !important;
+}
 .gray-medium-2 {
   color: #e5e5e5 !important;
 }
@@ -65,6 +67,9 @@
 
 .gray-border {
   border-color: #ececec !important;
+}
+.gray-light-border {
+  border-color: #f5f8f9 !important;
 }
 .electric-blue-border {
   border-color: #36b7ea !important;

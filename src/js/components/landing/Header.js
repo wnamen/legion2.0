@@ -20,9 +20,13 @@ export default class Header extends React.Component {
 
     return(
       <div class="sixteen columns">
-        <h5>This is the Header Component</h5>
-        HTML CODE IS IMPORTED FROM CHILD COMPONENTS
-        <CallToAction />
+        <section class="hero electric-blue-light-background text-center">
+          <h1 class="hh heroH1">Lead Generation & Outreach</h1>
+          <h3 class="hh heroH3">powered by Machine Learning</h3>
+          <h6 class="gray text-center hh heroH6">Create an account now and <br></br> instantly receive $100 in credits</h6>
+          <CallToAction />
+        </section>
+        
         <Features />
       </div>
     )

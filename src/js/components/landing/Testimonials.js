@@ -16,9 +16,16 @@ export default class Testimonials extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the Testimonials Component</h5>
-        HTML CODE HERE
+      <div class="sixteen columns white-background text-center">
+        <br></br>
+        <br></br>
+        <h6 class="fH6 smaller gray-medium-1">Trusted by Sales Reps Everywhere</h6>
+        <div class="eight columns offset-by-four">
+          <img class="clicon" src="src/img/c1.png"></img>
+          <img class="clicon" src="src/img/c2.png"></img>
+          <img class="clicon" src="src/img/c3.png"></img>
+          <img class="clicon" src="src/img/c4.png"></img>
+        </div>
       </div>
     )
   }

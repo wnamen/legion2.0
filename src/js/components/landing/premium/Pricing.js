@@ -16,9 +16,19 @@ export default class Pricing extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        <h5>This is the Premium Pricing Component</h5>
-        HTML CODE HERE
+      <div class="sixteen columns gray-light-border pborder">
+        <div class="pgHeader gray-light-background">
+          <h3 class="gray pH3">Premium</h3>
+        </div>
+        <div class="text-center gray pricingTable">
+          <small class="pricingRow">&nbsp;</small>
+          <h1 class="priceNumber pricingRow">$300</h1>
+          <small class="pricingRow">/month</small>
+          <br></br>
+          <div class="pricingDescription gray">Looking to automate your entire sales outreach? Get access to everything in the Standard plan & get instant access to Kylie.ai, our ai sales rep.</div>
+          <br></br>
+          <div class="lgnBtn lgnBtnLg smoothBkgd electric-blue white-background electric-blue-border">Contact Us</div>
+        </div>
       </div>
     )
   }
