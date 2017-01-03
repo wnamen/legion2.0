@@ -1,3 +1,14 @@
+@import url("./color.css");
+@import url("./grid.css");
+@import url("./forms.css");
+@import url("./profile.css");
+@import url("./table.css");
+
+/* COMPONENTS */
+@import url("./search/actionBar.css");
+@import url("./search/modal.css");
+
+
 h1,h2,h3 {
   font-family: 'Lato', sans-serif;
   font-weight: 700;
