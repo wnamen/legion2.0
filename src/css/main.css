@@ -64,3 +64,6 @@ strong{
 .medium-right-border {
   border-right: 2px solid;
 }
+.inline-block{
+  display: inline-block;
+}
