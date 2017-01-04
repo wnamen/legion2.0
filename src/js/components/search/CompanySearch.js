@@ -203,6 +203,17 @@ export default class CompanySearch extends React.Component {
             </div>
 
             <div class="filter">
+              <label>Social Profiles</label>
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='github' type='checkbox' value="3" label='Github' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='pinterest' type='checkbox' value="4" label='Pinterest' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' />
+            </div>
+
+            <div class="filter">
               <label>Location</label>
               <Input name="location" id="location" onChange={this.handleDebouncer} />
               <div class="tag-container">

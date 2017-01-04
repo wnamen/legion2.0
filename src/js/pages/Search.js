@@ -10,6 +10,7 @@ export default class Search extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      loading: true,
       apiState: {
         people: true,
         companies: false
@@ -78,7 +79,10 @@ export default class Search extends React.Component {
       cache:false,
       success:function(results){
         this.setRowState(results);
-        this.setState({results:results});
+        this.setState({
+          results:results,
+          loading: false
+        });
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
@@ -99,7 +103,10 @@ export default class Search extends React.Component {
       cache:false,
       success:function(results){
         console.log(results);
-        this.setState({results:results});
+        this.setState({
+          results:results,
+          loading: false
+        });
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
@@ -112,7 +119,7 @@ export default class Search extends React.Component {
         <div class="sixteen columns">
           <SearchMenu interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch}/>
           <ActionBar results={this.state.results}/>
-          <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
+          <ResultsTable results={this.state.results} loading={this.state.loading} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
         </div>
       </div>
     )

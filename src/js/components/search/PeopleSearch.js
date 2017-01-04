@@ -219,13 +219,13 @@ export default class PeopleSearch extends React.Component {
 
             <div class="filter">
               <label>Social Profiles</label>
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_facebook' type='checkbox' value="0" label='Facebook' />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_linkedin' type='checkbox' value="1" label='Linkedin' />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_twitter' type='checkbox' value="2" label='Twitter' />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_github' type='checkbox' value="3" label='Github' />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_pinterest' type='checkbox' value="4" label='Pinterest' />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_instagram' type='checkbox' value="5" label='Instagram' />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='personal_wikipedia' type='checkbox' value="6" label='Wikipedia' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='github' type='checkbox' value="3" label='Github' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='pinterest' type='checkbox' value="4" label='Pinterest' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' />
             </div>
 
             <div class="filter">

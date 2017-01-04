@@ -22,7 +22,7 @@ export default class Landing extends React.Component {
   render() {
     return (
       <div class="gray-light-background">
-        <div class="sixteen columns">
+        <div class="sixteen">
           <Header />
           <PricingAndOptions />
           <FilterAd />

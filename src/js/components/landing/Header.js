@@ -26,7 +26,7 @@ export default class Header extends React.Component {
           <h6 class="gray text-center hh heroH6">Create an account now and <br></br> instantly receive $100 in credits</h6>
           <CallToAction />
         </section>
-        
+
         <Features />
       </div>
     )

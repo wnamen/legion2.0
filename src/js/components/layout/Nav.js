@@ -16,6 +16,7 @@ export default class Nav extends React.Component {
               <li><Link class="black" to="search" activeClassName="active">Search</Link></li>
               <li><Link class="black" to="cadence" activeClassName="active">Cadence</Link></li>
               <li><Link class="black" to="contacts" activeClassName="active">Contacts</Link></li>
+              <li><Link class="black" to="profile" activeClassName="active">Profile</Link></li>
             </ul>
 
             <div class="right">
@@ -31,7 +32,7 @@ export default class Nav extends React.Component {
                   </Dropdown>
                 </li>
                 <li class="large-right-margin">
-                  <Link class="black" to="profile" activeClassName="active"><i class="gray-medium-2 fa fa-user-circle fa-2x" aria-hidden="true"></i></Link>
+                  <Link class="black" to="settings" activeClassName="active"><i class="gray-medium-2 fa fa-user-circle fa-2x" aria-hidden="true"></i></Link>
                 </li>
               </ul>
             </div>

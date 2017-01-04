@@ -9,6 +9,7 @@ import Landing from "./pages/Landing"
 import Search from "./pages/Search"
 import Cadence from "./pages/Cadence"
 import Profile from "./pages/Profile"
+import Settings from "./pages/Settings"
 
 const App = document.getElementById('app')
 
@@ -20,6 +21,7 @@ ReactDOM.render(
       <Route path="/contacts" name="contacts" component={Contacts}></Route>
       <Route path="/cadence" name="cadence" component={Cadence}></Route>
       <Route path="/profile" name="profile" component={Profile}></Route>
+      <Route path="/settings" name="settings" component={Settings}></Route>
     </Route>
   </Router>, App
 );
