@@ -1,13 +1,19 @@
 import React from "react";
 import { Link } from "react-router";
 
+import CadenceMenu from "../components/cadence/CadenceMenu"
+import CadenceView from "../components/cadence/CadenceView"
+import CampaignEngagment from "../components/cadence/CampaignEngagement"
+
 export default class Cadence extends React.Component {
 
   render() {
     return (
-        <div class="container gray-light-background">
+        <div class="gray-light-background">
           <div class="sixteen columns">
-            <h3>Cadence</h3>
+            <CadenceMenu />
+            <CadenceView />
+            <CampaignEngagment />
           </div>
         </div>
 

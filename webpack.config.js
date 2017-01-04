@@ -22,16 +22,12 @@ module.exports = {
         }
       },
       {
-        test: /\.(jpg|png)$/i,
-        loaders: [
-          "file-loader?name=[sha512:hash:base64:7].[ext]",
-          "image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false"
-        ]
+        test: /\.(png|jpg|)$/,
+        loader: 'url-loader?limit=200000'
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style','css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
-      }
+        loader: 'style-loader!css-loader?modules=true&localIdentName=[name]__[local]___[hash:base64:5]'      }
     ]
   },
   output: {
@@ -40,6 +36,7 @@ module.exports = {
   },
   plugins: [
     new BundleTracker({filename: './webpack-stats.json'}),
+    new ExtractTextPlugin("styles.css")
   ],
   resolve: {
     modulesDirectories: ['node_modules'],

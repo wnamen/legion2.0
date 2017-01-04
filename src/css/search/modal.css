@@ -1,0 +1,108 @@
+.modal {
+  max-height: none;
+  width: 50%;
+}
+
+.modalContainer, #purchaseModal, #billingModal, .contentImage {
+  float: none;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+
+.contentImage {
+  height: 175px;
+  width: 175px;
+}
+
+.contentHeader {
+  font-size: 24px;
+  margin: 0;
+}
+
+.contentHr {
+  width: 100%;
+  margin-top: 0;
+}
+
+.content {
+  font-size: 14px;
+  margin-top: 0;
+}
+
+.creditDetails {
+  font-size: 12px;
+}
+
+.creditOptionsDropdown {
+  margin: 25px 0 10px 0;
+  line-height: normal;
+}
+
+.creditOptionsDropdown span > a, .creditOptionsDropdown > a {
+  background-color: #36b7ea;
+  color: #ffffff;
+  padding: 10px 30px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#purchaseDropdown span .dropdown-content {
+  padding: 10px 0;
+  top: 348.172px !important;
+}
+
+#billingDropdown span .dropdown-content {
+  padding: 10px 0;
+  top: 447px !important;
+}
+
+.creditOptionsDropdown span .dropdown-content li > a {
+  padding: 5px 10px;
+  line-height: normal;
+}
+
+.creditOptionsAngleIcon {
+  height: inherit;
+  line-height: normal;
+}
+
+.billingDates {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  justify-content: space-between;;
+  -webkit-justify-content: space-between;
+}
+
+.billingDates > div {
+  width: 47.5%;
+}
+
+#billingModalForm div > input[type=text], #billingModalForm > input[type=text] {
+  text-indent: 5px;
+  padding: 3px 0;
+  margin: 5px 0;
+  border-color: #36b7ea;
+}
+
+.cardNumber {
+  color: #36b7ea;
+}
+
+.billingClosedPagination {
+  color: #36b7ea;
+  margin: 20px 3px 0 3px;
+
+}
+
+.billingOpenPagination {
+  color: #ececec;
+  margin: 20px 3px 0 3px;
+}
