@@ -26,7 +26,7 @@ export default class Search extends React.Component {
     this.checkRow = this.checkRow.bind(this);
   }
 
-  setApiState(current_state) {
+  setApiState() {
     this.setState({
       apiState: {
         people: !this.state.apiState.people,
@@ -75,6 +75,10 @@ export default class Search extends React.Component {
 
   componentWillMount(){
     this.setState({loading:true});
+    let current_state = this.state.apiState.people ? "people" : "companies";
+
+    console.log(current_state);
+
 
     $.ajax({
       url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=50',
@@ -92,11 +96,17 @@ export default class Search extends React.Component {
     });
   }
 
-  handleSearch(query) {
+  handleSearch(query, apiState) {
     this.setState({loading:true});
-    query = query.text
+    query = query.text;
+    let current_state;
 
-    let current_state = this.state.apiState.people ? "people" : "companies";
+console.log(apiState);
+    if (apiState !== undefined) {
+      current_state = apiState
+    } else {
+      current_state = this.state.apiState.people ? "people" : "companies";
+    }
 
     let url = `https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`;
     console.log("sent to: ", url);
@@ -118,18 +128,16 @@ export default class Search extends React.Component {
   }
 
   render() {
+    console.log(this.state.apiState);
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
           <SearchMenu interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch}/>
           <ActionBar results={this.state.results}/>
           { this.state.loading ?
-            <div class="eleven columns">
-              <div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
-                <CubeGrid size={50} color="#36b7ea" />
-              </div>
-            </div> :
-            <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/> }
+            <div class="eleven columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
+            <ResultsTable results={this.state.results} apiState={this.state.apiState} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
+          }
         </div>
       </div>
     )

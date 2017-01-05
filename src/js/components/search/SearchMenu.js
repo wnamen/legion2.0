@@ -37,15 +37,15 @@ export default class SearchMenu extends React.Component {
       return
     }
 
-    this.props.setApiState(this.props.checked);
+    this.props.setApiState();
     this.setState({
       menuView: type,
       inputTags:[]
     })
-    this.getSearch();
+    this.getSearch(type);
   }
 
-  getSearch() {
+  getSearch(apiState) {
     let query = "";
     this.state.inputTags.forEach((target) => {
       if ((target.name === 'industry') || (target.name === 'interest') ||(target.name === 'technology')) {
@@ -56,7 +56,7 @@ export default class SearchMenu extends React.Component {
     });
 
     this.setState({ query: query });
-    this.props.onSearchChange({ text: query });
+    this.props.onSearchChange({ text: query }, apiState);
   }
 
   render(){

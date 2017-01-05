@@ -9,9 +9,6 @@ export default class ResultsTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      next: "",
-      previous: "",
-      showToolPanel: false,
       icons: {
         sortAscending: '<i class="fa fa-long-arrow-down"/>',
         sortDescending: '<i class="fa fa-long-arrow-up"/>',
@@ -44,18 +41,11 @@ export default class ResultsTable extends React.Component {
       console.log('onRowSelected: ' + event.node.data.name);
   }
 
-  // componentDidMount() {
-  //   this.setState({ next: this.props.results.next, previous: this.props.results.previous });
-  // }
-
   render() {
-    // const peopleTitles = ["name","company_name","job_title","industry","department","education","age","interest","social_profiles","location"];
-    // const companyTitle = ["company_name","industry","department","company_size","revenue","funding","technology","social_profiles","location"];
-
     let data = this.props.results;
     let mappedResults;
     const peopleHeader = [
-      {headerName:"CheckBox", field:"chck", width: 30, cellStyle:{"text-align":"center"},
+      {headerName:"CheckBox", field:"chck", width: 30, class:"noBorder", cellStyle:{"text-align":"center"},
         checkboxSelection:true, headerCellTemplate: function() {
           var cb = document.createElement('input');
           cb.setAttribute('type', 'checkbox');
@@ -77,7 +67,7 @@ export default class ResultsTable extends React.Component {
           return eHeader;
         }
       },
-      {headerName:"Name", field:"name", width: 130, enableRowGroup: true },
+      {headerName:"Name", field:"name", width: 130, tooltipField:"name", class:"noBorder", enableRowGroup: true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
       {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
       {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
@@ -134,32 +124,56 @@ export default class ResultsTable extends React.Component {
       {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true}
     ];
 
+    let currentHeader;
+
+    if (this.props.apiState.people === true) {
+      currentHeader = peopleHeader;
+    } else {
+      currentHeader = companyHeader;
+    }
+
     if ((data.results !== undefined) && (data.results.length > 0)) {
       mappedResults = data.results.map((result, index) => {
-        return (
-          {
-            name: result.person.name,
-            jobTitle: result.title,
-            education: result.person.education,
-            age: result.person.age,
-            interests: result.person.interests,
-            phone: result.has_phone ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            email: result.has_email  ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            linkedin: result.person.personal_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            facebook: result.person.personal_facebook ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            twitter: result.person.personal_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            crunchbase: result.person.personal_crunchbase ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            homePage: result.person.personal_homePage ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            companyName: result.company.name,
-            industry: result.company.industries,
-            revenue: result.company.revenue,
-            funding: result.company.funding,
-            companySize: result.company.number_of_employees,
-            companyLinkedin: result.company.company_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            companyTwitter: result.company.company_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-            companyHomePage: result.company.company_home_page ? "<i class='fa fa-check' aria-hidden=true></i>" : ""
-          }
-        );
+        if (this.props.apiState.people === true) {
+          return (
+            {
+              name: result.person.name,
+              jobTitle: result.title,
+              education: result.person.education,
+              age: result.person.age,
+              interests: result.person.interests,
+              phone: result.has_phone ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              email: result.has_email  ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              linkedin: result.person.personal_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              facebook: result.person.personal_facebook ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              twitter: result.person.personal_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              crunchbase: result.person.personal_crunchbase ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              homePage: result.person.personal_homePage ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              companyName: result.company.name,
+              industry: result.company.industries,
+              revenue: result.company.revenue,
+              funding: result.company.funding,
+              companySize: result.company.number_of_employees,
+              companyLinkedin: result.company.company_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              companyTwitter: result.company.company_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              companyHomePage: result.company.company_home_page ? "<i class='fa fa-check' aria-hidden=true></i>" : ""
+            }
+          );
+        } else {
+          return (
+            {
+              companyName: result.name,
+              industry: result.industries,
+              revenue: result.revenue,
+              funding: result.funding,
+              companySize: result.number_of_employees,
+              companyLinkedin: result.company_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              companyTwitter: result.company_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              companyHomePage: result.company_home_page ? "<i class='fa fa-check' aria-hidden=true></i>" : ""
+            }
+          )
+        }
+
 
         // return (
         //   <Results index={index} key={result.id} name={result.person.name} age={result.person.age} jobTitle={result.title} companyName={result.company.name} checked={this.props.rowState[index]} callback={this.props.checkRow} />
@@ -189,7 +203,7 @@ export default class ResultsTable extends React.Component {
 
             icons={this.state.icons}
 
-            columnDefs={peopleHeader}
+            columnDefs={currentHeader}
             rowData={mappedResults}
 
             suppressCellSelection="true"
