@@ -63,7 +63,7 @@ export default class ConfigurationForm extends React.Component {
               <tr>
                 <td class="text-right">Primary Account: </td>
                 <td class="text-left gray">
-                  <Input checked={this.props.checked} onChange={this.socialCheck} name='primary' type='checkbox' label="" value="0" />
+                  <Input checked={this.props.checked} onChange={this.socialCheck} name='primary' type='checkbox' label=" " value="0" />
                 </td>
               </tr>
               <tr>
