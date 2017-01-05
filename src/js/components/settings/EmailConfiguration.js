@@ -18,10 +18,14 @@ export default class EmailConfiguration extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        EmailConfiguration Input Select Dropdown here
+      <div class="sixteen columns lgbufferMargin">
+        <h5 class="settingsSubTitles">Email Configuration</h5>
         <ConfigurationForm />
-        EmailConfiguration buttons here
+        <div class="btnContainer five columns offset-by-two">
+          <div class="lgnBtn settingsBtn smoothBkgd electric-blue-background white">Save</div>
+          <div class="lgnBtn settingsBtn smoothBkgd white-background small-border gray-border">Remove</div>
+        </div>
+        
       </div>
     )
   }

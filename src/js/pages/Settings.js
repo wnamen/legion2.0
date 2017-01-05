@@ -19,8 +19,9 @@ export default class Settings extends React.Component {
 
   render() {
     return (
-      <div class="sixteen white-background">
-        Settings
+      <div class="ten offset-by-three white-background settingsCard">
+        <h6>Settings</h6>
+        <br></br>
         <MyAccount />
         <Integrations />
         <EmailConfiguration />

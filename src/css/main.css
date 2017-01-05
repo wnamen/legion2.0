@@ -10,6 +10,7 @@
 @import url("./profile.css");
 @import url("./landing.css");
 @import url("./nav.css");
+@import url("./settings.css");
 
 h1,h2,h3 {
   font-family: 'Lato', sans-serif;
@@ -35,6 +36,12 @@ strong{
 }
 .text-center{
   text-align: center !important;
+}
+.text-left{
+  text-align: left !important;
+}
+.text-right{
+  text-align: right !important;
 }
 .page-container {
   margin-top: 2em;

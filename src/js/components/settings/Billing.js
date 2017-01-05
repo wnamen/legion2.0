@@ -18,7 +18,8 @@ export default class Billing extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
+      <div class="sixteen columns lgbufferMargin">
+      <h5 class="settingsSubTitles">Billing</h5>
         <BillingForm />
         <PlanSettings />
       </div>

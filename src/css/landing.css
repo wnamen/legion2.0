@@ -106,7 +106,7 @@
     margin: 0 1em;
     font-size: 1.2em;
 }
-.lgnBtnLg.white-background:hover{
+.lgnBtn.white-background:hover{
     background-color: #d7f1fb !important;
     opacity: 1;
 }
