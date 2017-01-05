@@ -10,14 +10,25 @@ export default class ResultsTable extends React.Component {
     super(props);
     this.state = {
       icons: {
-        sortAscending: '<i class="fa fa-long-arrow-down"/>',
-        sortDescending: '<i class="fa fa-long-arrow-up"/>',
-        groupExpanded: '<i class="fa fa-minus-square-o"/>',
-        groupContracted: '<i class="fa fa-plus-square-o"/>',
-        columnGroupOpened: '<i class="fa fa-minus-square-o"/>',
-        columnGroupClosed: '<i class="fa fa-plus-square-o"/>'
+        sortAscending: "<i class='fa fa-long-arrow-down'/>",
+        sortDescending: "<i class='fa fa-long-arrow-up'/>",
+        groupExpanded: "<i class='fa fa-minus-square-o'/>",
+        groupContracted: "<i class='fa fa-plus-square-o'/>",
+        columnGroupOpened: "<i class='fa fa-minus-square-o'/>",
+        columnGroupClosed: "<i class='fa fa-plus-square-o'/>",
+        optionAvailable: "<i class='fa fa-check' aria-hidden=true></i>"
       }
     };
+    this.arrayConvert = this.arrayConvert.bind(this);
+  }
+
+  arrayConvert(arr) {
+    let endIdx = arr.length - 1;
+    let convertedString = "";
+    arr.forEach((item, idx) => {
+      idx === endIdx ? convertedString = convertedString + item.name : convertedString = convertedString + item.name + ", " ;
+    });
+    return convertedString;
   }
 
   onGridReady(params) {
@@ -45,28 +56,7 @@ export default class ResultsTable extends React.Component {
     let data = this.props.results;
     let mappedResults;
     const peopleHeader = [
-      {headerName:"CheckBox", field:"chck", width: 30, class:"noBorder", cellStyle:{"text-align":"center"},
-        checkboxSelection:true, headerCellTemplate: function() {
-          var cb = document.createElement('input');
-          cb.setAttribute('type', 'checkbox');
-          cb.setAttribute('id', 'selectAllCheckbox');
-
-          var label = document.createElement('label');
-          var eHeader = document.createElement('div')
-          eHeader.appendChild(cb);
-          eHeader.appendChild(label);
-
-          cb.addEventListener('change', function (e) {
-              if ($(this)[0].checked) {
-                  this.api.selectAll();
-              } else {
-                  this.api.deselectAll();
-              }
-          });
-
-          return eHeader;
-        }
-      },
+      {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
       {headerName:"Name", field:"name", width: 130, tooltipField:"name", class:"noBorder", enableRowGroup: true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
       {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
@@ -91,28 +81,7 @@ export default class ResultsTable extends React.Component {
     ];
 
     const companyHeader = [
-      {headerName:"CheckBox", field:"chck", width: 30, cellStyle:{"text-align":"center"},
-        checkboxSelection:true, headerCellTemplate: function() {
-          var cb = document.createElement('input');
-          cb.setAttribute('type', 'checkbox');
-          cb.setAttribute('id', 'selectAllCheckbox');
-
-          var label = document.createElement('label');
-          var eHeader = document.createElement('div')
-          eHeader.appendChild(cb);
-          eHeader.appendChild(label);
-
-          cb.addEventListener('change', function (e) {
-              if ($(this)[0].checked) {
-                  this.api.selectAll();
-              } else {
-                  this.api.deselectAll();
-              }
-          });
-
-          return eHeader;
-        }
-      },
+      {headerName:"", field:"chck", width: 30, checkboxSelection:true },
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
       {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
       {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
@@ -139,24 +108,24 @@ export default class ResultsTable extends React.Component {
             {
               name: result.person.name,
               jobTitle: result.title,
-              education: result.person.education,
+              education: this.arrayConvert(result.person.education),
               age: result.person.age,
-              interests: result.person.interests,
-              phone: result.has_phone ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              email: result.has_email  ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              linkedin: result.person.personal_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              facebook: result.person.personal_facebook ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              twitter: result.person.personal_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              crunchbase: result.person.personal_crunchbase ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              homePage: result.person.personal_homePage ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+              interests: this.arrayConvert(result.person.interests),
+              phone: result.has_phone ? true : false,
+              email: result.has_email  ? true : false,
+              linkedin: result.person.personal_linkedin ? true : false,
+              facebook: result.person.personal_facebook ? true : false,
+              twitter: result.person.personal_twitter ? true : false,
+              crunchbase: result.person.personal_crunchbase ? true : false,
+              homePage: result.person.personal_homePage ? true : false,
               companyName: result.company.name,
-              industry: result.company.industries,
-              revenue: result.company.revenue,
-              funding: result.company.funding,
-              companySize: result.company.number_of_employees,
-              companyLinkedin: result.company.company_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              companyTwitter: result.company.company_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              companyHomePage: result.company.company_home_page ? "<i class='fa fa-check' aria-hidden=true></i>" : ""
+              industry: this.arrayConvert(result.company.industries),
+              revenue: (result.company.revenue).toLocaleString(),
+              funding: (result.company.funding).toLocaleString(),
+              companySize: (result.company.number_of_employees).toLocaleString(),
+              companyLinkedin: result.company.company_linkedin ? true : false,
+              companyTwitter: result.company.company_twitter ? true : false,
+              companyHomePage: result.company.company_home_page ? true : false
             }
           );
         } else {
@@ -164,12 +133,12 @@ export default class ResultsTable extends React.Component {
             {
               companyName: result.name,
               industry: result.industries,
-              revenue: result.revenue,
-              funding: result.funding,
-              companySize: result.number_of_employees,
-              companyLinkedin: result.company_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              companyTwitter: result.company_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
-              companyHomePage: result.company_home_page ? "<i class='fa fa-check' aria-hidden=true></i>" : ""
+              revenue: (result.revenue).toLocaleString(),
+              funding: (result.funding).toLocaleString(),
+              companySize: (result.number_of_employees).toLocaleString(),
+              companyLinkedin: result.company_linkedin ? true : false,
+              companyTwitter: result.company_twitter ? true : false,
+              companyHomePage: result.company_home_page ? true : false
             }
           )
         }

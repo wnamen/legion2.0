@@ -63,7 +63,7 @@ export default class SearchMenu extends React.Component {
     return(
       <div class="nav navbar-default offset-by-one three columns gray">
         <div class="container-fluid white-background small-border large-padding gray-border">
-          <p class="margin-none">SEARCH FILTERS</p>
+          <p class="no-margin">SEARCH FILTERS</p>
 
           <form>
 

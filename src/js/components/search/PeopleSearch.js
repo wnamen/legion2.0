@@ -81,7 +81,7 @@ export default class PeopleSearch extends React.Component {
     if ((e.target.value).length === 0) {
       return
     }
-    
+
     if ((e.target.title === 'industry') || (e.target.title === 'interest') ) {
       new_tags.push({
         id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
@@ -195,6 +195,47 @@ export default class PeopleSearch extends React.Component {
               <option value="marketing">Marketing</option>
               <option value="operations">Operations</option>
               <option value="sales">Sales</option>
+            </Input>
+
+            <Input type='select' name="company_size" label="Size of Company" onChange={this.handleSelected} multiple>
+              <option value="0-10">{less_than}10</option>
+              <option value="11-50">11-50</option>
+              <option value="51-200">51-200</option>
+              <option value="201-500">201-500</option>
+              <option value="501-1000">501-1,000</option>
+              <option value="1001-5000">1,001-5,000</option>
+              <option value="5001-10000">5,001-10,000</option>
+              <option value="10001">10,000+</option>
+            </Input>
+
+            <Input type='select' name="revenue" label="Revenue" onChange={this.handleSelected} multiple>
+              <option value="0-0.5">{less_than}$500K</option>
+              <option value="1-5">$1M-$5M</option>
+              <option value="5-10">$5M-$10M</option>
+              <option value="10-25">$10M-$25M</option>
+              <option value="25-35">$25M-$35M</option>
+              <option value="35-50">$35M-$50M</option>
+              <option value="50-75">$50M-$75M</option>
+              <option value="75-100">$75M-$100M</option>
+              <option value="100-200">$100M-$200M</option>
+              <option value="200-500">$200M-$500M</option>
+              <option value="500-1000">$500M-$1B</option>
+              <option value="1001">$1B+</option>
+            </Input>
+
+            <Input type='select' name="funding" label="Funding" onChange={this.handleSelected} multiple>
+              <option value="0-0.5">{less_than}$500K</option>
+              <option value="1-5">$1M-$5M</option>
+              <option value="5-10">$5M-$10M</option>
+              <option value="10-25">$10M-$25M</option>
+              <option value="25-35">$25M-$35M</option>
+              <option value="35-50">$35M-$50M</option>
+              <option value="50-75">$50M-$75M</option>
+              <option value="75-100">$75M-$100M</option>
+              <option value="100-200">$100M-$200M</option>
+              <option value="200-500">$200M-$500M</option>
+              <option value="500-1000">$500M-$1B</option>
+              <option value="1001">$1B+</option>
             </Input>
 
             <div class="filter">

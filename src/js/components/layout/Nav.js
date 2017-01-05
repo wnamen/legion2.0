@@ -31,7 +31,7 @@ export default class Nav extends React.Component {
                     <NavItem>50 Credits - $50 <button class="credit-button electric-blue-background white">Buy</button></NavItem>
                   </Dropdown>
                 </li>
-                <li class="large-right-margin">
+                <li id="settings-button" class="large-right-margin">
                   <Link class="black" to="settings" activeClassName="active"><i class="gray-medium-2 fa fa-user-circle fa-2x" aria-hidden="true"></i></Link>
                 </li>
               </ul>
