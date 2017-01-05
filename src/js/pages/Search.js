@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router"
+import { CubeGrid } from "better-react-spinkit"
 import $ from "jquery"
 
 import ActionBar from "../components/search/ActionBar"
@@ -10,7 +11,7 @@ export default class Search extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      loading: true,
+      loading: false,
       apiState: {
         people: true,
         companies: false
@@ -73,6 +74,8 @@ export default class Search extends React.Component {
   }
 
   componentWillMount(){
+    this.setState({loading:true});
+
     $.ajax({
       url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=50',
       dataType:'json',
@@ -90,6 +93,7 @@ export default class Search extends React.Component {
   }
 
   handleSearch(query) {
+    this.setState({loading:true});
     query = query.text
 
     let current_state = this.state.apiState.people ? "people" : "companies";
@@ -119,7 +123,13 @@ export default class Search extends React.Component {
         <div class="sixteen columns">
           <SearchMenu interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch}/>
           <ActionBar results={this.state.results}/>
-          <ResultsTable results={this.state.results} loading={this.state.loading} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
+          { this.state.loading ?
+            <div class="eleven columns">
+              <div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
+                <CubeGrid size={50} color="#36b7ea" />
+              </div>
+            </div> :
+            <ResultsTable results={this.state.results} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/> }
         </div>
       </div>
     )

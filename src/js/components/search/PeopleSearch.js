@@ -18,7 +18,7 @@ export default class PeopleSearch extends React.Component {
 		};
     this.getSearch = this.getSearch.bind(this);
     this.socialCheck = this.socialCheck.bind(this);
-    this.getTag = debounce(850, this.getTag.bind(this));
+    this.getTag = debounce(1000, this.getTag.bind(this));
     this.removeTag = this.removeTag.bind(this);
     this.handleDebouncer = this.handleDebouncer.bind(this);
     this.handleSelected = this.handleSelected.bind(this);
@@ -78,6 +78,10 @@ export default class PeopleSearch extends React.Component {
     e.persist();
     let new_tags = this.state.inputTags;
 
+    if ((e.target.value).length === 0) {
+      return
+    }
+    
     if ((e.target.title === 'industry') || (e.target.title === 'interest') ) {
       new_tags.push({
         id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,

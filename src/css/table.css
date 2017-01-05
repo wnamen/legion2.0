@@ -34,6 +34,35 @@
   height: 150vh;
 }
 
+/*#selectAllCheckbox {
+  opacity: 1;
+  left: 0;
+}*/
+
+.ag-header-cell label {
+  height: 18px;
+  line-height: 18px;
+  left: 8px;
+  border: none;
+
+}
+
+.ag-header-cell input {
+  left: 8px;
+  top: 5px;
+  z-index: 99;
+}
+
+
+
+.ag-cell {
+  display: flex;
+  align-items: center;
+}
+
+.ag-header-cell {
+  border-left: 2px solid #ececec;
+}
 
 
 /*.table-head-styles {
@@ -66,7 +95,8 @@
   background-color: #d7f1fb;
 }*/
 
-#noResultsContainer {
+#noResultsContainer, #loaderContainer {
+  height:100vh;
   display: flex;
   display: -webkit-flex;
   align-items: center;

@@ -2,7 +2,6 @@ import React from "react";
 import { Dropdown, NavItem, Input } from "react-materialize";
 import { AgGrid } from 'ag-grid/main';
 import { AgGridReact } from 'ag-grid-react';
-import Spinner from "react-spinkit";
 
 // import Results from "./Results";
 
@@ -12,9 +11,8 @@ export default class ResultsTable extends React.Component {
     this.state = {
       next: "",
       previous: "",
+      showToolPanel: false,
       icons: {
-        columnRemoveFromGroup: '<i class="fa fa-remove"/>',
-        filter: '<i class="fa fa-filter"/>',
         sortAscending: '<i class="fa fa-long-arrow-down"/>',
         sortDescending: '<i class="fa fa-long-arrow-up"/>',
         groupExpanded: '<i class="fa fa-minus-square-o"/>',
@@ -56,12 +54,111 @@ export default class ResultsTable extends React.Component {
 
     let data = this.props.results;
     let mappedResults;
-    let peopleHeader = [{headerName: '', width: 30, checkboxSelection: true, suppressSorting: true, suppressMenu: true, pinned: true},{headerName:"Name", field:"name", width: 130}, {headerName:"Age", field:"age", width: 130}, {headerName:"Job Title", field:"jobTitle", width: 130}, {headerName:"Company",field:"companyName", width: 130}];
+    const peopleHeader = [
+      {headerName:"CheckBox", field:"chck", width: 30, cellStyle:{"text-align":"center"},
+        checkboxSelection:true, headerCellTemplate: function() {
+          var cb = document.createElement('input');
+          cb.setAttribute('type', 'checkbox');
+          cb.setAttribute('id', 'selectAllCheckbox');
+
+          var label = document.createElement('label');
+          var eHeader = document.createElement('div')
+          eHeader.appendChild(cb);
+          eHeader.appendChild(label);
+
+          cb.addEventListener('change', function (e) {
+              if ($(this)[0].checked) {
+                  this.api.selectAll();
+              } else {
+                  this.api.deselectAll();
+              }
+          });
+
+          return eHeader;
+        }
+      },
+      {headerName:"Name", field:"name", width: 130, enableRowGroup: true },
+      {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
+      {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
+      {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
+      {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true},
+      {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true},
+      {headerName:"Email", field:"email", width: 130, enableRowGroup: true},
+      {headerName:"Linkedin", field:"linkedin", width: 130, enableRowGroup: true},
+      {headerName:"Facebook", field:"facebook", width: 130, enableRowGroup: true},
+      {headerName:"Twitter", field:"twitter", width: 130, enableRowGroup: true},
+      {headerName:"Crunchbase", field:"crunchbase", width: 130, enableRowGroup: true},
+      {headerName:"Home Page", field:"homePage", width: 130, enableRowGroup: true},
+      {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
+      {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
+      {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
+      {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
+      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
+      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true},
+      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true},
+      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true},
+      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true}
+    ];
+
+    const companyHeader = [
+      {headerName:"CheckBox", field:"chck", width: 30, cellStyle:{"text-align":"center"},
+        checkboxSelection:true, headerCellTemplate: function() {
+          var cb = document.createElement('input');
+          cb.setAttribute('type', 'checkbox');
+          cb.setAttribute('id', 'selectAllCheckbox');
+
+          var label = document.createElement('label');
+          var eHeader = document.createElement('div')
+          eHeader.appendChild(cb);
+          eHeader.appendChild(label);
+
+          cb.addEventListener('change', function (e) {
+              if ($(this)[0].checked) {
+                  this.api.selectAll();
+              } else {
+                  this.api.deselectAll();
+              }
+          });
+
+          return eHeader;
+        }
+      },
+      {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
+      {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
+      {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
+      {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
+      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
+      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true},
+      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true},
+      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true},
+      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true}
+    ];
 
     if ((data.results !== undefined) && (data.results.length > 0)) {
       mappedResults = data.results.map((result, index) => {
         return (
-          {name: result.person.name, age: result.person.age, jobTitle:result.title, companyName:result.company.name}
+          {
+            name: result.person.name,
+            jobTitle: result.title,
+            education: result.person.education,
+            age: result.person.age,
+            interests: result.person.interests,
+            phone: result.has_phone ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            email: result.has_email  ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            linkedin: result.person.personal_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            facebook: result.person.personal_facebook ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            twitter: result.person.personal_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            crunchbase: result.person.personal_crunchbase ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            homePage: result.person.personal_homePage ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            companyName: result.company.name,
+            industry: result.company.industries,
+            revenue: result.company.revenue,
+            funding: result.company.funding,
+            companySize: result.company.number_of_employees,
+            companyLinkedin: result.company.company_linkedin ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            companyTwitter: result.company.company_twitter ? "<i class='fa fa-check' aria-hidden=true></i>" : "",
+            companyHomePage: result.company.company_home_page ? "<i class='fa fa-check' aria-hidden=true></i>" : ""
+          }
         );
 
         // return (
@@ -77,10 +174,6 @@ export default class ResultsTable extends React.Component {
           </div>
         </div>
       )
-    } else {
-      return (
-        <Spinner spinnerName="cube-grid" />
-      )
     }
 
     console.log(mappedResults);
@@ -92,18 +185,22 @@ export default class ResultsTable extends React.Component {
             onGridReady={this.onGridReady.bind(this)}
             onRowSelected={this.onRowSelected.bind(this)}
             onCellClicked={this.onCellClicked.bind(this)}
+            showToolPanel={this.state.showToolPanel}
 
             icons={this.state.icons}
 
             columnDefs={peopleHeader}
             rowData={mappedResults}
 
+            suppressCellSelection="true"
             rowSelection="multiple"
+            groupSelectsChildren="true"
             enableColResize="true"
             enableSorting="true"
             groupHeaders="true"
-            rowHeight="30"
+            rowHeight="35"
             rowWidth="130"
+            debug="true"
           />
       </div>
     </div>

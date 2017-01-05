@@ -17,7 +17,7 @@ export default class CompanySearch extends React.Component {
       text_search: ""
 		};
     this.getSearch = this.getSearch.bind(this);
-    this.getTag = debounce(850, this.getTag.bind(this));
+    this.getTag = debounce(1000, this.getTag.bind(this));
     this.removeTag = this.removeTag.bind(this);
     this.handleDebouncer = this.handleDebouncer.bind(this);
     this.handleSelected = this.handleSelected.bind(this);
@@ -53,6 +53,10 @@ export default class CompanySearch extends React.Component {
   getTag(e) {
     e.persist();
     let new_tags = this.state.inputTags;
+
+    if ((e.target.value).length === 0) {
+      return
+    }
 
     if ((e.target.title === 'industry') || (e.target.title === 'interest') ||(e.target.title === 'technology')) {
       new_tags.push({
