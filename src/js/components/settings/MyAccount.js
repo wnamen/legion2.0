@@ -17,7 +17,23 @@ export default class MyAccount extends React.Component {
 
     return(
       <div class="sixteen columns">
-        Account Information Here
+        <h5 class="settingsSubTitles">My Account</h5>
+        <table>
+          <tbody class="myAccountTable">
+            <tr>
+              <td class="text-right gray">Name: </td>
+              <td class="text-left gray">Jamasen Rodriguez</td>
+            </tr>
+            <tr>
+              <td class="text-right gray">Email: </td>
+              <td class="text-left gray">jamasen@legionanalytics.com</td>
+            </tr>
+            <tr>
+              <td class="text-right newPassword electric-blue">Get New Password</td>
+              <td class="text-left"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     )
   }

@@ -16,7 +16,7 @@ export default class CallToAction extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-        <div class="lgnBtn smoothBkgd white electric-blue-background electric-blue-border cta">Create My Free Account</div>
+        <div class="lgnBtn lgnBtnLg smoothBkgd white electric-blue-background electric-blue-border cta">Create My Free Account</div>
     )
   }
 }

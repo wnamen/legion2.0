@@ -16,8 +16,18 @@ export default class Integrations extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        Integrations here
+      <div class="sixteen columns lgbufferMargin">
+        <h5 class="settingsSubTitles">Integrations</h5>
+        <div class="thirteen columns offset-by-one small-border gray-border integrationRow">
+          <img class="integrationIcon one columns" src="/src/img/gmail-icon.png"></img>
+          <div class="gray one columns">Gmail</div>
+          <a href="#" class="offset-by-five one columns">Connect</a>
+        </div>
+        <div class="thirteen columns offset-by-one small-border gray-border integrationRow">
+          <img class="integrationIcon one columns" src="/src/img/outlook-icon.png"></img>
+          <div class="gray one columns">Outlook</div>
+          <a href="#" class="offset-by-five one columns">Connect</a>
+        </div>
       </div>
     )
   }

@@ -19,7 +19,7 @@ export default class Header extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
+      <div class="sixteen">
         <section class="hero electric-blue-light-background text-center">
           <h1 class="hh heroH1">Lead Generation & Outreach</h1>
           <h3 class="hh heroH3">powered by Machine Learning</h3>
