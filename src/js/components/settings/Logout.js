@@ -17,8 +17,8 @@ export default class Logout extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns">
-        Logout Button Here
+      <div class="sixteen columns lgbufferMargin">
+        <a href="#" class="active">Logout</a>
       </div>
     )
   }

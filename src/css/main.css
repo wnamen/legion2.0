@@ -10,6 +10,7 @@
 @import url("./profile.css");
 @import url("./landing.css");
 @import url("./nav.css");
+@import url("./settings.css");
 
 @import url("../vendors/cube-grid.css");
 
@@ -38,6 +39,12 @@ strong{
 }
 .text-center{
   text-align: center !important;
+}
+.text-left{
+  text-align: left !important;
+}
+.text-right{
+  text-align: right !important;
 }
 .page-container {
   margin-top: 2em;
@@ -79,4 +86,7 @@ strong{
 
 .medium-right-border {
   border-right: 2px solid;
+}
+.inline-block{
+  display: inline-block;
 }
