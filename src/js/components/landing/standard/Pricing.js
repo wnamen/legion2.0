@@ -1,5 +1,6 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { Component } from "react";
+import { Modal } from "react-materialize";
+import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
@@ -28,7 +29,14 @@ export default class Pricing extends React.Component {
           <div class="pricingDescription gray">Sales campaign master? Want to run multiple A/B split tests? Get unlimited campaigns with no limit on touches or contacts to send to!</div>
           <br></br>
           <br></br>
-          <div class="lgnBtn lgnBtnLg smoothBkgd white electric-blue-background electric-blue-border">Purchase Now</div>
+            <Modal
+              trigger={
+                <div class="lgnBtn lgnBtnLg smoothBkgd white electric-blue-background electric-blue-border">Purchase Now</div>
+              }>
+              <div class="sixteen modalContainer">
+                Modal Code Here
+              </div>
+            </Modal>
         </div>
       </div>
     )

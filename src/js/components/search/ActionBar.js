@@ -43,7 +43,6 @@ export default class ActionBar extends React.Component {
                   }>
                   <div class="sixteen modalContainer">
                     <img class="contentImage" src="src/img/credit_empty_state.png" />
-                    <hr class="contentHr"/>
                     <p class="contentHeader">You don't have enough credits to do that.</p>
                     <p class="content">You need 48 more credits</p>
 

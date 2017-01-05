@@ -1,5 +1,6 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { Component } from "react";
+import { Modal } from "react-materialize";
+import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
@@ -16,7 +17,15 @@ export default class CallToAction extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-        <div class="lgnBtn lgnBtnLg smoothBkgd white electric-blue-background electric-blue-border cta">Create My Free Account</div>
+
+      <Modal
+        trigger={
+          <div class="lgnBtn lgnBtnLg smoothBkgd white electric-blue-background electric-blue-border cta">Create My Free Account</div>
+        }>
+        <div class="sixteen modalContainer">
+          Modal Code Here
+        </div>
+      </Modal>
     )
   }
 }

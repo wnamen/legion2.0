@@ -1,6 +1,6 @@
 import React from "react"
 import CSSModules from 'react-css-modules'
-import { Dropdown, NavItem, Input } from "react-materialize"
+import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize"
 
 export default class ContactsBar extends React.Component {
   constructor(props) {
@@ -41,9 +41,18 @@ export default class ContactsBar extends React.Component {
             </ul>
 
             <ul class="right">
-              <li><a href="#">Delete List</a></li>
-              <li><a href="#">Export CSV</a></li>
-              <li><a href="#">Upload Contacts</a></li>
+              <li><a>Delete List</a></li>
+              <li><a>Export CSV</a></li>
+              <li>
+                <Modal
+                  trigger={
+                    <a>Upload Contacts</a>
+                  }>
+                  <div class="sixteen modalContainer">
+                    Modal Code Here
+                  </div>
+                </Modal>
+              </li>
             </ul>
           </div>
         </nav>
