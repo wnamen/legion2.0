@@ -1,5 +1,6 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { Component } from "react";
+import { Modal } from "react-materialize";
+import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
@@ -28,7 +29,14 @@ export default class Pricing extends React.Component {
           <br></br>
           <div class="pricingDescription gray">Access Email Data, Phone Numbers, Facebook, Linkedin, Twitter, & more! Use credits to run sales campaigns with unlimited touches and contacts.</div>
           <br></br>
-          <div class="lgnBtn lgnBtnLg smoothBkgd electric-blue white-background electric-blue-border">Create My Free Account</div>
+          <Modal
+            trigger={
+              <div class="lgnBtn lgnBtnLg smoothBkgd electric-blue white-background electric-blue-border">Create My Free Account</div>
+            }>
+            <div class="sixteen modalContainer">
+              Modal Code Here
+            </div>
+          </Modal>
 
         </div>
       </div>

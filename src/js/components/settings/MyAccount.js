@@ -1,5 +1,6 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { Component } from "react";
+import { Modal } from "react-materialize";
+import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
@@ -29,7 +30,14 @@ export default class MyAccount extends React.Component {
               <td class="text-left gray">jamasen@legionanalytics.com</td>
             </tr>
             <tr>
-              <td class="text-right newPassword electric-blue">Get New Password</td>
+              <Modal
+                trigger={
+                  <td class="text-right newPassword electric-blue">Get New Password</td>
+                }>
+                <div class="sixteen modalContainer">
+                  Modal Code Here
+                </div>
+              </Modal>
               <td class="text-left"></td>
             </tr>
           </tbody>
