@@ -12,13 +12,13 @@ export default class GuestNav extends React.Component {
 
     return (
         <div class="nav-wrapper medium-vertical-padding">
-          <ul>
-            <li><IndexLink class="black medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
+          <ul id="nav-links" class="nav-hover">
+            <li><IndexLink class="medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
           </ul>
 
           <div class="right">
             <ul>
-              <li>
+              <li class="nav-hover">
                 <a href="https://www.kylie.ai" target="_blank" class="electric-blue">Looking for our ai, Kylie?</a>
               </li>
               <li>
@@ -26,7 +26,7 @@ export default class GuestNav extends React.Component {
                   <SignUpModal />
                 </Modal>
               </li>
-              <li class="large-right-margin">
+              <li class="large-right-margin nav-hover">
                 <Modal trigger={modalTrigger2}>
                   <SignInModal />
                 </Modal>

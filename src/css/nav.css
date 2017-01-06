@@ -65,7 +65,7 @@
   font-weight: 100;
 }
 
-#settings-button a:hover, #credit-dropdown span > a:hover, #nav-links li a:hover {
+.nav-hover a:hover, .nav-hover span > a:hover, .nav-hover li a:hover, #nav-links li a:hover {
   background-color: white;
   color: #36b7ea;
   text-decoration: none;
