@@ -1,8 +1,8 @@
 import React from "react";
 import { Dropdown, NavItem, Modal, Input } from "react-materialize";
 
-import PurchaseModal from "./modals/PurchaseModal"
-import BillingModal from "./modals/BillingModal"
+import PurchaseModal from "../modals/PurchaseModal"
+import BillingModal from "../modals/BillingModal"
 
 export default class ActionBar extends React.Component {
   constructor(props) {

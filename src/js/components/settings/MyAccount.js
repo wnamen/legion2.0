@@ -3,6 +3,7 @@ import { Modal } from "react-materialize";
 import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+import PasswordResetModal from "../modals/PasswordResetModal";
 
 export default class MyAccount extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export default class MyAccount extends React.Component {
 
   render(){
     //RENDER LOGIC HERE
+    const modalTrigger = <td class="text-right newPassword electric-blue">Get New Password</td>;
 
     return(
       <div class="sixteen columns">
@@ -30,13 +32,8 @@ export default class MyAccount extends React.Component {
               <td class="text-left gray">jamasen@legionanalytics.com</td>
             </tr>
             <tr>
-              <Modal
-                trigger={
-                  <td class="text-right newPassword electric-blue">Get New Password</td>
-                }>
-                <div class="sixteen modalContainer">
-                  Modal Code Here
-                </div>
+              <Modal trigger={modalTrigger}>
+                <PasswordResetModal />
               </Modal>
               <td class="text-left"></td>
             </tr>

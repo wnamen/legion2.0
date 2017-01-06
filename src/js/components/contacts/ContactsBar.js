@@ -2,6 +2,8 @@ import React from "react"
 import CSSModules from 'react-css-modules'
 import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize"
 
+import UploadContactsModal from "../modals/UploadContactsModal";
+
 export default class ContactsBar extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +18,7 @@ export default class ContactsBar extends React.Component {
   }
 
   render(){
+    const modalTrigger = <a>Upload Contacts</a>;
     let data = this.props.results;
     let result_count = 50;
     if (result_count !== undefined) {
@@ -44,13 +47,8 @@ export default class ContactsBar extends React.Component {
               <li><a>Delete List</a></li>
               <li><a>Export CSV</a></li>
               <li>
-                <Modal
-                  trigger={
-                    <a>Upload Contacts</a>
-                  }>
-                  <div class="sixteen modalContainer">
-                    Modal Code Here
-                  </div>
+                <Modal trigger={modalTrigger}>
+                  <UploadContactsModal />
                 </Modal>
               </li>
             </ul>
