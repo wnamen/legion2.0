@@ -20,6 +20,16 @@
   font-size: 12px;
 }
 
+#listAdderButton {
+  opacity: 0.8;
+}
+
+#listAdderButton:hover {
+  background-color: #36b7ea;
+  opacity: 1;
+  text-decoration: none;
+}
+
 #listAdderDropdown span .dropdown-content {
   width: 200px !important;
   top: 44px !important;

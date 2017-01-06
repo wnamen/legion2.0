@@ -35,7 +35,7 @@ export default class ActionBar extends React.Component {
             <ul class="right">
               <li id="listAdderDropdown" class="rightActions">
                 <Dropdown trigger={
-                  <a>Add to list <i id="listAdderAngleIcon" class="fa fa-angle-down" aria-hidden="true"></i></a>
+                  <a id="listAdderButton" class="smoothBkgd">Add to list <i id="listAdderAngleIcon" class="fa fa-angle-down" aria-hidden="true"></i></a>
                 }>
                 <Modal
                   trigger={
@@ -51,7 +51,7 @@ export default class ActionBar extends React.Component {
 
                   </div>
                   </Modal>
-                  <NavItem><Input type="text" placeholder="+ Create new list" /></NavItem>
+                  <NavItem>+ Create new list</NavItem>
                 </Dropdown>
               </li>
             </ul>
