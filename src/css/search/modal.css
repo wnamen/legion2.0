@@ -85,7 +85,7 @@
   width: 47.5%;
 }
 
-#billingModalForm div > input[type=text], #billingModalForm > input[type=text] {
+#billingModalForm div > input[type=text], #billingModalForm > input[type=text],#billingModalForm div> input[type=email],#billingModalForm div> input[type=password],#billingModalForm div> input[type=tel] {
   text-indent: 5px;
   padding: 3px 0;
   margin: 5px 0;
@@ -101,8 +101,17 @@
   margin: 20px 3px 0 3px;
 
 }
-
+.modalTitle{
+  font-weight: 200;
+}
+.modalIcon{
+  width: 90%;
+}
+.modalIcon.smallerIcon{
+  width: 50%;
+}
 .billingOpenPagination {
   color: #ececec;
   margin: 20px 3px 0 3px;
 }
+

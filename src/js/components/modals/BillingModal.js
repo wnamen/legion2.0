@@ -24,7 +24,6 @@ export default class BillingModal extends React.Component {
             <NavItem>50 Credits - $50</NavItem>
           </Dropdown>
         </div>
-        <span class="creditDetails">Your card ending in <span class="cardNumber">3347</span> will be charged $50</span>
         <div>
           <i class="fa fa-circle billingOpenPagination" aria-hidden="true"></i>
           <i class="fa fa-circle billingClosedPagination" aria-hidden="true"></i>
