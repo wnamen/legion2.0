@@ -7,12 +7,12 @@ export default class UserNav extends React.Component {
 
     return (
         <div class="nav-wrapper medium-vertical-padding">
-          <ul>
-            <li><IndexLink class="black medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
-            <li><Link class="black" to="search" activeClassName="active">Search</Link></li>
-            <li><Link class="black" to="cadence" activeClassName="active">Cadence</Link></li>
-            <li><Link class="black" to="contacts" activeClassName="active">Contacts</Link></li>
-            <li><Link class="black" to="profile" activeClassName="active">Profile</Link></li>
+          <ul id="nav-links">
+            <li><IndexLink class="medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
+            <li><Link to="search" activeClassName="active">Search</Link></li>
+            <li><Link to="cadence" activeClassName="active">Cadence</Link></li>
+            <li><Link to="contacts" activeClassName="active">Contacts</Link></li>
+            <li><Link to="profile" activeClassName="active">Profile</Link></li>
           </ul>
 
           <div class="right">

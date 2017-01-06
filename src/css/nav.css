@@ -12,9 +12,13 @@
     opacity: 1;
 }
 
+#nav-links li a {
+  color: #1b2733;
+}
+
 .dropdown-content li > a:hover {
   color: #36b7ea !important;
-  background-color: #ececec;
+  background-color: #f8f8f8;
 }
 
 #credit-dropdown span .dropdown-content {
@@ -61,7 +65,12 @@
   font-weight: 100;
 }
 
-#settings-button a:hover {
+#settings-button a:hover, #credit-dropdown span > a:hover, #nav-links li a:hover {
   background-color: white;
+  color: #36b7ea;
+  text-decoration: none;
+}
 
+#settings-button a > i {
+  height: 44px;
 }

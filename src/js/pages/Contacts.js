@@ -65,7 +65,7 @@ export default class Contacts extends React.Component {
 
   render() {
     return (
-        <div class="gray-light-background">
+        <div class="page-container gray-light-background">
           <div class="sixteen columns">
             <ContactsBar />
           </div>

@@ -20,9 +20,6 @@
   display: -webkit-flex;
   margin: 10px 10px;
   font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   border-top: 1px solid #ececec;
 }
 
@@ -53,15 +50,16 @@
   z-index: 99;
 }
 
-
-
 .ag-cell {
-  display: flex;
-  align-items: center;
+  padding: 10px 5px 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
 }
 
 .ag-header-cell {
-  border-left: 2px solid #ececec;
+  border-right: 1px solid #ececec;
 }
 
 
