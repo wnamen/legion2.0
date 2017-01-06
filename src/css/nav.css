@@ -1,3 +1,16 @@
+.smlBtnLg {
+  padding: 0px 15px;
+  border: 1px solid;
+  cursor: pointer;
+  opacity: .8;
+  margin: 0 1em;
+  font-size: 1em;
+}
+
+.smlBtn.white-background:hover {
+    background-color: #d7f1fb !important;
+    opacity: 1;
+}
 
 .dropdown-content li > a:hover {
   color: #36b7ea !important;
