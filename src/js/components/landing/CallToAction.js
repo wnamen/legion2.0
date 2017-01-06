@@ -3,6 +3,7 @@ import { Modal } from "react-materialize";
 import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+import SignUpModal from "../modals/SignUpModal"
 
 export default class CallToAction extends React.Component {
   constructor(props) {
@@ -15,16 +16,11 @@ export default class CallToAction extends React.Component {
 
   render(){
     //RENDER LOGIC HERE
+    const modalTrigger = <div class="lgnBtn lgnBtnLg smoothBkgd white electric-blue-background electric-blue-border cta">Create My Free Account</div>
 
     return(
-
-      <Modal
-        trigger={
-          <div class="lgnBtn lgnBtnLg smoothBkgd white electric-blue-background electric-blue-border cta">Create My Free Account</div>
-        }>
-        <div class="sixteen modalContainer">
-          Modal Code Here
-        </div>
+      <Modal trigger={modalTrigger}>
+        <SignUpModal />
       </Modal>
     )
   }

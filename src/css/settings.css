@@ -92,3 +92,8 @@ table>tbody>tr>td.text-left{
 .lgbufferMargin{
 	margin-top: 4em;
 }
+.signupBtn{
+    font-size: .8em;
+    padding: 15px 50px;
+    margin-top: 2em;
+}
