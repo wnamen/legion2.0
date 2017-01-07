@@ -11,6 +11,7 @@ import Cadence from "./pages/Cadence";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Onboarding from "./pages/Onboarding";
+import TOS from "./pages/TOS";
 
 const App = document.getElementById('app')
 
@@ -24,6 +25,7 @@ ReactDOM.render(
       <Route path="/profile" name="profile" component={Profile}></Route>
       <Route path="/settings" name="settings" component={Settings}></Route>
       <Route path="/onboarding" name="onboarding" component={Onboarding}></Route>
+      <Route path="/tos" name="tos" component={TOS}></Route>         
     </Route>
   </Router>, App
 );

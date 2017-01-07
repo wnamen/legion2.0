@@ -11,6 +11,7 @@
 @import url("./landing.css");
 @import url("./nav.css");
 @import url("./settings.css");
+@import url("./onboarding.css");
 
 @import url("../vendors/cube-grid.css");
 
@@ -89,4 +90,10 @@ strong{
 }
 .inline-block{
   display: inline-block;
+}
+.hidden{
+  display: none;
+}
+.hundredHeight{
+  height: 100%;
 }

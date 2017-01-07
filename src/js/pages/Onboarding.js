@@ -1,6 +1,5 @@
 import React, { Component }       from "react";
 import { Link }                   from "react-router";
-import { Button }                 from "react-materialize";
 
 import ConnectEmail               from "../components/onboarding/ConnectEmail";
 import UploadLeads                from "../components/onboarding/UploadLeads";
@@ -23,8 +22,8 @@ export default class Onboarding extends React.Component {
 
   render() {
     return (
-      <div class="ten offset-by-three white-background settingsCard">
-        <Button onClick={this.nextStep}>Skip</Button>
+      <div class="ten offset-by-three white-background onboardingCard">
+        { this.state.currentStep === 3 ? "" : <div class="skipBtn electric-blue"  onClick={this.nextStep}>Skip</div> }
         { this.state.currentStep === 1 && <ConnectEmail />}
         { this.state.currentStep === 2 && <UploadLeads />}
         { this.state.currentStep === 3 && <DataShare />}
