@@ -57,7 +57,7 @@ export default class ResultsTable extends React.Component {
     let mappedResults;
     const peopleHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
-      {headerName:"Name", field:"name", width: 130, enableRowGroup: true },
+      {headerName:"Name", field:"name", width: 130, enableRowGroup: true, enableColResize:true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
       {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
       {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
@@ -175,15 +175,13 @@ export default class ResultsTable extends React.Component {
             columnDefs={currentHeader}
             rowData={mappedResults}
 
+            suppressDragLeaveHidesColumns="true"
             suppressCellSelection="true"
             rowSelection="multiple"
-            groupSelectsChildren="true"
             enableColResize="true"
             enableSorting="true"
-            groupHeaders="true"
             rowHeight="35"
             rowWidth="130"
-            debug="true"
           />
       </div>
     </div>
