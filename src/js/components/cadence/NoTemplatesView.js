@@ -17,8 +17,9 @@ export default class NoTemplatesView extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen">
-        NoTemplates here
+      <div class="sixteen text-center">
+        <img src="/src/img/campaign_illustration.png" class="emptyCampaignView"></img>
+        <div class="emptyCampaignText electric-blue">Get more customers with effective email campaigns!</div>
       </div>
     )
   }

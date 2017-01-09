@@ -82,7 +82,7 @@
 
 #billingModalForm div > input[type=text], #billingModalForm > input[type=text],#billingModalForm div> input[type=email],#billingModalForm div> input[type=password],#billingModalForm div> input[type=tel] {
   text-indent: 5px;
-  padding: 3px 0;
+  padding: 10px 0;
   margin: 5px 0;
   border-color: #36b7ea;
   width: 100%;
@@ -101,7 +101,7 @@
   font-weight: 200;
 }
 .modalIcon{
-  width: 90%;
+  width: 70%;
 }
 .modalIcon.smallerIcon{
   width: 50%;

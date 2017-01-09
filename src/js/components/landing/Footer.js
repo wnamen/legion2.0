@@ -1,5 +1,6 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { Component } from "react";
+import { IndexLink, Link } from "react-router";
+import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
@@ -75,7 +76,7 @@ export default class Footer extends React.Component {
             <a href="#" class="directoryLink active">Z</a>
           </div>
           <div class="legalRow">
-            <a href="/tos" class="directoryLink active">Terms of Service</a>
+            <Link to="tos" class="directoryLink active">Terms of Service</Link>
             <div class="directoryLink active electric-blue">Copyright © 2014 - 2017 Tier5International, Inc.</div>
             <a href="http://www.twitter2email.com" class="directoryLink active">Twitter2Email</a>
             <a href="mailto:support@legionanalytics.com" class="directoryLink active">support@legionanalytics.com</a>

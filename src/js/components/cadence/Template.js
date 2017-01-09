@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Dropdown, NavItem, Input } from "react-materialize"
 import $ from "jquery"
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
@@ -17,7 +18,54 @@ export default class Template extends React.Component {
 
     return(
       <div class="sixteen">
-        Template
+        <div class="gray-border small-border workingTemplate">
+            <div class="gray small-bottom-border gray-border workingRow">
+              <div class="inline-block">Template Name: </div>
+              <div class="inline-block templateNameContainer">
+                <Input type='text' name="newTemplateName">
+                </Input>
+              </div>
+              <div class="working chooseTemplate">
+                <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+                  <option value="">Choose Existing</option>
+                  <option value="123455">Follow Up</option>
+                  <option value="213445">Missed Call</option>
+                  <option value="123435">Break-Up Email</option>
+                  <option value="213415">Sandler First Email</option>
+                </Input>
+              </div>
+            </div>
+            <div class="gray small-bottom-border gray-border workingRow">
+              <div class="inline-block">Subject: </div>
+              <div class="inline-block templateNameContainer">
+                <Input type='text' name="newSubjectName">
+                </Input>
+              </div>
+            </div>
+            <div class="">
+              <textarea noresize class="editableText"></textarea>
+            </div>
+            <div class="gray small-bottom-border gray-border workingRow bottomRow">
+              <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp">Save</div>
+              <div class="working chooseTemplate pTags">
+                <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+                  <option value="">Personalized Tags</option>
+                  <option value="123455">contact.first_name</option>
+                  <option value="213445">contact.last_name</option>
+                  <option value="123455">contact.age</option>
+                  <option value="213445">contact.city</option>
+                  <option value="213445">contact.state</option>
+                  <option value="213445">contact.email_address</option>
+                  <option value="123435">company.name</option>
+                  <option value="213415">company.city</option>                  
+                  <option value="123435">company.state</option>
+                  <option value="213415">company.phone_number</option>
+                </Input>
+              </div>
+              <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn">Delete</div>
+              <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
+            </div>
+        </div>
       </div>
     )
   }

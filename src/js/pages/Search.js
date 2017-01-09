@@ -82,7 +82,7 @@ export default class Search extends React.Component {
     console.log(current_state);
 
     $.ajax({
-      url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=50',
+      url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=30',
       dataType:'json',
       cache:false,
       success:function(results){

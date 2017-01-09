@@ -30,14 +30,17 @@ export default class CadenceMenu extends React.Component {
     let current_view = this.state.currentView;
 
     return(
-      <div class="four columns">
-        New Campaign Button here
-        <div>
-          <a onClick={this.renderCampaigns}>Campaigns</a>
-          <a onClick={this.renderTemplates}>Templates</a>
+      <div class="four columns offset-by-one-half">
+        <div class="profile-card whiteCard cadenceMenu">
+          <div class="lgnBtn smoothBkgd electric-blue-background electric-blue-border white lgnBtnUp newCampaignBtn">New Campaign (20 Credits)</div>
+          <div class="cadenceToggleContainer">
+            <a onClick={this.renderCampaigns} class="cadenceToggle text-left medium-bottom-border electric-blue-border gray">Campaigns</a>
+            <a onClick={this.renderTemplates} class="cadenceToggle text-right gray">Templates</a>
+          </div>
+          <hr class="no-margin"></hr>
+          { current_view === "campaigns" ? <CampaignMenu /> : <TemplateMenu /> }
+          <a class="cadenceToggle newBtnBuffer">Create New Campaign</a>
         </div>
-        { current_view === "campaigns" ? <CampaignMenu /> : <TemplateMenu /> }
-        Create button here
       </div>
     )
   }

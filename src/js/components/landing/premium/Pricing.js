@@ -27,7 +27,7 @@ export default class Pricing extends React.Component {
           <br></br>
           <div class="pricingDescription gray">Looking to automate your entire sales outreach? Get access to everything in the Standard plan & get instant access to Kylie.ai, our ai sales rep.</div>
           <br></br>
-          <div class="lgnBtn lgnBtnLg smoothBkgd electric-blue white-background electric-blue-border">Contact Us</div>
+          <a href="mailto:support@legionanalytics.com?subject=Premium Account Request&body=Hi there, I'm interested in the premium package you have to offer. Could you have someone reach out to me to set up a call to discuss further?" target="_blank"><div class="lgnBtn lgnBtnLg smoothBkgd electric-blue white-background electric-blue-border">Contact Us</div></a>
         </div>
       </div>
     )
