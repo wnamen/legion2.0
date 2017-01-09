@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import $ from "jquery"
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+import TemplateListing from "./TemplateListing"
 
 export default class TemplateMenu extends React.Component {
   constructor(props) {
@@ -18,6 +19,9 @@ export default class TemplateMenu extends React.Component {
     return(
       <div class="sixteen">
         TemplateMenu here
+        <TemplateListing />
+        <TemplateListing />
+        <TemplateListing />
       </div>
     )
   }

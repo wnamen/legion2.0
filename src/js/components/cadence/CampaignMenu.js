@@ -3,6 +3,7 @@ import { Button } from "react-materialize"
 import $ from "jquery"
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+import CampaignListing from "./CampaignListing"
 
 export default class CampaignMenu extends React.Component {
   constructor(props) {
@@ -19,6 +20,9 @@ export default class CampaignMenu extends React.Component {
     return(
       <div class="sixteen">
         CampaignMenu here
+        <CampaignListing />
+        <CampaignListing />
+        <CampaignListing />
       </div>
     )
   }
