@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
+import { CubeGrid } from "better-react-spinkit"
 
 // import ContactResults from "../components/contacts/ContactResults"
 import ContactsBar from "../components/contacts/ContactsBar";
-// import ContactsTable from "../components/contacts/ContactsTable";
+import ContactsTable from "../components/contacts/ContactsTable";
 import MapBar from "../components/contacts/MapBar";
 import MapTable from "../components/contacts/MapTable";
 import MapResults from "../components/contacts/MapResults";
@@ -13,7 +14,9 @@ export default class Contacts extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      mapping: true,
+      loading: false,
+      mapping: false,
+      results: "",
       contacts: [
         {
           id:1865,
@@ -104,6 +107,24 @@ export default class Contacts extends React.Component {
     this.isMapping = this.isMapping.bind(this);
   }
 
+  componentWillMount(){
+    this.setState({loading:true});
+
+    $.ajax({
+      url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=50',
+      dataType:'json',
+      cache:false,
+      success:function(results){
+        this.setState({
+          results:results,
+          loading: false
+        });
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+  }
+
   isMapping() {
     if (this.state.mapping) {
       return (
@@ -117,6 +138,10 @@ export default class Contacts extends React.Component {
       return (
         <div class="sixteen columns">
           <ContactsBar />
+            { this.state.loading ?
+              <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
+              <ContactsTable results={this.state.results} />
+            }
         </div>
       )
     }
