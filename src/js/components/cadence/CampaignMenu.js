@@ -18,8 +18,8 @@ export default class CampaignMenu extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen">
-        CampaignMenu here
+      <div class="sixteen text-left">
+        <CampaignListing />
         <CampaignListing />
         <CampaignListing />
         <CampaignListing />

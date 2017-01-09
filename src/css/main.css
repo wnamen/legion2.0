@@ -12,6 +12,7 @@
 @import url("./nav.css");
 @import url("./settings.css");
 @import url("./onboarding.css");
+@import url("./cadence.css");
 
 @import url("../vendors/cube-grid.css");
 
@@ -96,4 +97,7 @@ strong{
 }
 .hundredHeight{
   height: 100%;
+}
+.full-width{
+  width: 100%;
 }

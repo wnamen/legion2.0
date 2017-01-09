@@ -1,0 +1,116 @@
+.newCampaignBtn{
+	margin-top: 1em;
+	font-size: .8em;
+	text-align: center;
+}
+.cadenceMenu{
+	height: 80vh;
+	min-height: 560px;
+	padding: 30px 25px;
+	text-align: center;
+}
+.cadenceToggleContainer{
+	padding: 0 15px;
+}
+.cadenceToggle{
+	font-size: .9em;
+	margin: 0 15px;
+}
+.cadenceToggle:hover{
+	color: #36b7ea !important;
+	cursor: pointer;
+}
+.campaignListing{
+	padding: 10px;
+	padding-bottom: 5px;
+    font-size: 0.8em;
+    border-bottom: 1px solid #ececec;
+}
+.campaignListing:hover{
+	background-color: #f8f8f8;
+	cursor: pointer;
+}
+.newBtnBuffer{
+	position: relative;
+    top: 1em;
+}
+.campaignListing>div>span{
+	float: right;
+}
+.campaignListing>div>span:hover{
+	color: #fb615d;
+	cursor: pointer;
+}
+.running{
+	color: #36b7ea !important;
+}
+.incomplete{
+	color: #fb615d !important;
+}
+.paused{
+	color: #647382 !important;
+}
+.stats{
+	padding-top: 5px;
+}
+.stats>span{
+}
+.stats>img{
+    margin-right: 17px;
+    position: relative;
+    top: 5px;
+    width: 18px;
+}
+.delete{
+    position: relative;
+    top: -3em;
+    float: right;
+}
+.delete:hover{
+	color: #fb615d;
+	cursor: pointer;
+}
+.clickImg{
+	width: 16px !important;
+    top: 4px !important;
+}
+.pauseBtn{
+    display: inline-flex;
+    padding: 6px 6px;
+    font-size: .8em;
+}
+.topCampaignBtns{
+	float: right;
+    display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+.saveCampaignBtn{
+	font-size: 0.7em;
+    margin-left: .5em;
+    color: #fff;
+    padding: 5px 10px;
+}
+.campaignEditorCard{
+	height: 100%;
+	min-height: 560px;
+}
+.activityAction{
+	font-size: .9em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

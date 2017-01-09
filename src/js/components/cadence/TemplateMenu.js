@@ -17,8 +17,8 @@ export default class TemplateMenu extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen">
-        TemplateMenu here
+      <div class="sixteen text-left">
+        <TemplateListing />
         <TemplateListing />
         <TemplateListing />
         <TemplateListing />

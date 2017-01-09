@@ -16,8 +16,11 @@ export default class CampaignListing extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen">
-        CampaignListing 
+      <div class="sixteen campaignListing gray">
+        <div class="text-left inline-block full-width">
+          My First Campaign <small class="running">(running)</small>
+          <span class="text-right">&times;</span>
+        </div>
       </div>
     )
   }
