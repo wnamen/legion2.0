@@ -22,6 +22,7 @@ export default class Search extends React.Component {
     }
     this.setApiState = this.setApiState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.nextSearch = this.nextSearch.bind(this);
     this.checkAll = this.checkAll.bind(this);
     this.checkRow = this.checkRow.bind(this);
   }
@@ -101,7 +102,6 @@ export default class Search extends React.Component {
     query = query.text;
     let current_state;
 
-console.log(apiState);
     if (apiState !== undefined) {
       current_state = apiState
     } else {
@@ -109,10 +109,28 @@ console.log(apiState);
     }
 
     let url = `https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`;
-    console.log("sent to: ", url);
 
     $.ajax({
       url:`https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`,
+      dataType:'json',
+      cache:false,
+      success:function(results){
+        console.log(results);
+        this.setState({
+          results:results,
+          loading: false
+        });
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+  }
+
+  nextSearch(query) {
+    this.setState({loading:true});
+
+    $.ajax({
+      url:query,
       dataType:'json',
       cache:false,
       success:function(results){
@@ -136,7 +154,7 @@ console.log(apiState);
           <ActionBar results={this.state.results}/>
           { this.state.loading ?
             <div class="eleven columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
-            <ResultsTable results={this.state.results} apiState={this.state.apiState} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
+            <ResultsTable results={this.state.results} apiState={this.state.apiState} nextSearch={this.nextSearch} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
           }
         </div>
       </div>

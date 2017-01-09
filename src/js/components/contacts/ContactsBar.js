@@ -7,7 +7,9 @@ import UploadContactsModal from "../modals/UploadContactsModal";
 export default class ContactsBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isSelected:false
+    };
 
     // this.getTag = debounce(850, this.getTag.bind(this));
     this.handleDebouncer = this.handleDebouncer.bind(this);
@@ -46,6 +48,17 @@ export default class ContactsBar extends React.Component {
             <ul class="right">
               <li><a>Delete List</a></li>
               <li><a>Export CSV</a></li>
+
+              { this.state.isSelected &&
+                <li><Dropdown trigger={
+                <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i></a>
+              }>
+                <NavItem>All My Contacts</NavItem>
+                <NavItem>+ Create new list</NavItem>
+              </Dropdown></li>
+              }
+              { this.state.isSelected && <li><a>Remove</a></li> }
+
               <li>
                 <Modal trigger={modalTrigger}>
                   <UploadContactsModal />

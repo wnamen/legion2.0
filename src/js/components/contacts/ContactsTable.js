@@ -2,7 +2,7 @@ import React from "react"
 import CSSModules from 'react-css-modules'
 // import Styles from "./nav.css"
 
-import ContactResults from "./ContactResults"
+// import ContactResults from "./ContactResults"
 
 export default class ContactsTable extends React.Component {
   render(){
@@ -12,7 +12,7 @@ export default class ContactsTable extends React.Component {
       )
     })
     return(
-      <div class="twelve columns">
+      <div class="sixteen columns">
         <table>
           <thead>
             <tr>

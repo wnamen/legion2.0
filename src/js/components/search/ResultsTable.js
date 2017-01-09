@@ -36,6 +36,9 @@ export default class ResultsTable extends React.Component {
       this.columnApi = params.columnApi;
   }
 
+  getRows() {
+  }
+
   selectAll() {
       this.api.selectAll();
   }
@@ -54,6 +57,7 @@ export default class ResultsTable extends React.Component {
 
   render() {
     let data = this.props.results;
+    console.log(this.props);
     let mappedResults;
     const peopleHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
@@ -100,6 +104,15 @@ export default class ResultsTable extends React.Component {
     } else {
       currentHeader = companyHeader;
     }
+
+    let dataSource = {
+      rowCount: null, // behave as infinite scroll
+      getRows: function (params) {
+        if ((data.results !== undefined) && (data.results.length > 0)) {
+          this.props.nextSearch(data.next);
+        }
+      }
+    };
 
     if ((data.results !== undefined) && (data.results.length > 0)) {
       mappedResults = data.results.map((result, index) => {
@@ -174,7 +187,9 @@ export default class ResultsTable extends React.Component {
 
             columnDefs={currentHeader}
             rowData={mappedResults}
+            datasource={dataSource}
 
+            rowModelType="virtual"
             suppressDragLeaveHidesColumns="true"
             suppressCellSelection="true"
             rowSelection="multiple"
