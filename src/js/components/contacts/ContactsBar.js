@@ -7,7 +7,9 @@ import UploadContactsModal from "../modals/UploadContactsModal";
 export default class ContactsBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isSelected:true
+    };
 
     // this.getTag = debounce(850, this.getTag.bind(this));
     this.handleDebouncer = this.handleDebouncer.bind(this);
@@ -18,7 +20,7 @@ export default class ContactsBar extends React.Component {
   }
 
   render(){
-    const modalTrigger = <a>Upload Contacts</a>;
+    const modalTrigger = <a class="contact-upload">Upload Contacts</a>;
     let data = this.props.results;
     let result_count = 50;
     if (result_count !== undefined) {
@@ -28,11 +30,11 @@ export default class ContactsBar extends React.Component {
     return(
       <div class="sixteen columns">
         <nav class="navbar white-background small-border gray-border">
-          <div id="action-bar" class="nav-wrapper">
+          <div id="contacts-bar" class="nav-wrapper">
             <ul class="left">
-              <li id="list-adder-dropdown" class="right-actions">
+              <li id="contacts-list-main-selector" class="right-actions">
                 <Dropdown trigger={
-                  <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i></a>
+                  <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"line-height":"normal"}} aria-hidden="true"></i></a>
                 }>
                   <NavItem>All My Contacts</NavItem>
                   <NavItem>+ Create new list</NavItem>
@@ -44,8 +46,18 @@ export default class ContactsBar extends React.Component {
             </ul>
 
             <ul class="right">
-              <li><a>Delete List</a></li>
-              <li><a>Export CSV</a></li>
+              <li class="small-border gray-border medium-right-margin"><a class="red">Delete List</a></li>
+              <li class="small-border gray-border medium-right-margin"><a>Export CSV</a></li>
+
+              { this.state.isSelected &&
+                <li id="contacts-list-selector" class="small-border gray-border medium-right-margin"><Dropdown trigger={
+                <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"line-height":"normal"}} aria-hidden="true"></i></a>
+              }>
+                <NavItem>All My Contacts</NavItem>
+              </Dropdown></li>
+              }
+              { this.state.isSelected && <li class="small-border gray-border medium-right-margin"><a>Remove</a></li> }
+
               <li>
                 <Modal trigger={modalTrigger}>
                   <UploadContactsModal />

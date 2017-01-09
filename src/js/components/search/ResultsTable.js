@@ -4,6 +4,7 @@ import { AgGrid } from 'ag-grid/main';
 import { AgGridReact } from 'ag-grid-react';
 
 // import Results from "./Results";
+import CheckMarkRenderer from "./CheckMarkRenderer"
 
 export default class ResultsTable extends React.Component {
   constructor(props) {
@@ -15,8 +16,7 @@ export default class ResultsTable extends React.Component {
         groupExpanded: "<i class='fa fa-minus-square-o'/>",
         groupContracted: "<i class='fa fa-plus-square-o'/>",
         columnGroupOpened: "<i class='fa fa-minus-square-o'/>",
-        columnGroupClosed: "<i class='fa fa-plus-square-o'/>",
-        optionAvailable: "<i class='fa fa-check' aria-hidden=true></i>"
+        columnGroupClosed: "<i class='fa fa-plus-square-o'/>"
       }
     };
     this.arrayConvert = this.arrayConvert.bind(this);
@@ -34,6 +34,9 @@ export default class ResultsTable extends React.Component {
   onGridReady(params) {
       this.api = params.api;
       this.columnApi = params.columnApi;
+  }
+
+  getRows() {
   }
 
   selectAll() {
@@ -54,30 +57,31 @@ export default class ResultsTable extends React.Component {
 
   render() {
     let data = this.props.results;
+    console.log(this.props);
     let mappedResults;
     const peopleHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
-      {headerName:"Name", field:"name", width: 130, tooltipField:"name", class:"noBorder", enableRowGroup: true },
+      {headerName:"Name", field:"name", width: 130, enableRowGroup: true, enableColResize:true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
       {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
       {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
       {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true},
-      {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true},
-      {headerName:"Email", field:"email", width: 130, enableRowGroup: true},
-      {headerName:"Linkedin", field:"linkedin", width: 130, enableRowGroup: true},
-      {headerName:"Facebook", field:"facebook", width: 130, enableRowGroup: true},
-      {headerName:"Twitter", field:"twitter", width: 130, enableRowGroup: true},
-      {headerName:"Crunchbase", field:"crunchbase", width: 130, enableRowGroup: true},
-      {headerName:"Home Page", field:"homePage", width: 130, enableRowGroup: true},
+      {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Email", field:"email", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Linkedin", field:"linkedin", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Facebook", field:"facebook", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Twitter", field:"twitter", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Crunchbase", field:"crunchbase", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Home Page", field:"homePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
       {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
       {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
       {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
       {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
-      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true},
-      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true},
-      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true},
-      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true}
+      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer}
     ];
 
     const companyHeader = [
@@ -100,6 +104,15 @@ export default class ResultsTable extends React.Component {
     } else {
       currentHeader = companyHeader;
     }
+
+    // let dataSource = {
+    //   rowCount: null, // behave as infinite scroll
+    //   getRows: function (params) {
+    //     if ((data.results !== undefined) && (data.results.length > 0)) {
+    //       this.props.nextSearch(data.next);
+    //     }
+    //   }
+    // };
 
     if ((data.results !== undefined) && (data.results.length > 0)) {
       mappedResults = data.results.map((result, index) => {
@@ -174,16 +187,16 @@ export default class ResultsTable extends React.Component {
 
             columnDefs={currentHeader}
             rowData={mappedResults}
+            // datasource={dataSource}
 
+            // rowModelType="virtual"
+            suppressDragLeaveHidesColumns="true"
             suppressCellSelection="true"
             rowSelection="multiple"
-            groupSelectsChildren="true"
             enableColResize="true"
             enableSorting="true"
-            groupHeaders="true"
             rowHeight="35"
             rowWidth="130"
-            debug="true"
           />
       </div>
     </div>

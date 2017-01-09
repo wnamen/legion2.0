@@ -18,6 +18,7 @@ export default class TemplateViewHeader extends React.Component {
 
     return(
       <div class="sixteen">
+          <div class="gray activeCampaignName">My Campaign</div>
           <div class="topCampaignBtns">
             <div class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn"><i class="fa fa-pause electric-blue"></i></div>
             <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn">Save Campaign</div>

@@ -13,6 +13,7 @@
 @import url("./settings.css");
 @import url("./onboarding.css");
 @import url("./cadence.css");
+@import url("./contacts.css");
 
 @import url("../vendors/cube-grid.css");
 
@@ -100,4 +101,7 @@ strong{
 }
 .full-width{
   width: 100%;
+}
+.pushRight{
+  float: right;
 }

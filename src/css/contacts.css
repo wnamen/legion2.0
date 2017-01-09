@@ -1,0 +1,47 @@
+#map-bar .left, #contacts-bar .left {
+  font-size: 2em;
+  margin: 9px 30px;
+  font-weight: 100;
+}
+
+#map-bar .right, #contacts-bar .right {
+  margin: 16px;
+}
+
+#map-bar .right li, #contacts-bar .right li {
+  padding: 0;
+  line-height: 30px;
+  font-size: 12px;
+}
+
+#map-bar .right li a, #contacts-bar .right li .contact-upload {
+  background-color: #36b7ea;
+  color: #ffffff;
+  padding: 0 10px;
+  margin: 0px;
+}
+
+#contacts-bar .right li a, #contacts-bar .right li span .dropdown-button {
+  font-size: 12px;
+}
+
+#contacts-list-selector {
+  height: 32px;
+}
+
+#contacts-list-main-selector {
+  height: 30px;
+  font-size: 0.8em;
+}
+
+#contacts-bar .left li div {
+  line-height: 30px;
+}
+
+#contacts-search {
+  margin: 9px;
+  border: 1px solid;
+  width: 200%;
+  font-size: 12px;
+  line-height: normal;
+}

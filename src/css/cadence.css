@@ -100,17 +100,107 @@
 .activityAction{
 	font-size: .9em;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.emptyCampaignView{
+	width: 15em;
+    margin-top: 3em;
+}
+.emptyCampaignText{
+	text-align: center;
+    font-size: 1.5em;
+    margin: 0 1em;
+    padding: 1em 4em;
+    font-weight: 200;
+}
+.activeCampaignName{
+	padding:5px;
+	display: inline-block;
+}
+.tempGen{
+	padding: 3em;
+	margin: 2em 0;
+}
+.chooseTemplate{
+	width: 48%;
+    display: block;
+    margin-left: 7.2em;
+    margin-top: .5em;
+}
+.chooseTemplate .select-dropdown, .chooseTemplate .select-wrapper input.select-dropdown{
+	padding: .3em .5em;
+}
+.templateHolder{
+	margin-top:2em;
+}
+.workingTemplate{
+	padding:.5em;
+	margin:2em 0;
+}
+.workingRow{
+	padding: .5em 1em;
+    font-size: .7em;
+}
+.templateNameContainer{
+	font-size: .7em;
+    width: 50%;
+}
+.working.chooseTemplate{
+	width: 28%;
+    margin-left: 0;
+    float: right;
+    margin-top: 0;
+}
+.working.chooseTemplate .select-dropdown, .working .chooseTemplate .select-wrapper input.select-dropdown{
+	padding: 0.3em 0.5em;
+    font-size: 9px;
+}
+.working.chooseTemplate.pTags{
+    margin-left: .5em;
+    display: inline-block;
+    max-height: 23px;
+    float:none;
+}
+input[name=newTemplateName],
+input[name=newSubjectName]{
+	font-size: 1.8em;
+    border: none;
+    padding: .5em;
+    width: 100%;
+    outline:none;
+}
+input[name=newTemplateName]:focus,
+input[name=newTemplateName]:focus:not([readonly]),
+input[name=newSubjectName]:focus,
+input[name=newSubjectName]:focus:not([readonly]){
+	border: none;
+    box-shadow: none;
+    outline: none;
+}
+.workingRow.bottomRow{
+	padding-left:0;
+}
+.saveTempTemp{
+	font-size: 1em;
+    margin: 0;
+    display: inline-block;
+}
+.clearBtn{
+	display: inline-flex;
+	display: -webkit-inline-flex;
+    padding: .27em 1em;
+    font-size: 1em;
+    margin-left: 1em;
+}
+.sendTestEmail{
+	font-size: 1.2em;
+    position: relative;
+    top: .5em;
+}
+.editableText{
+	margin: 0px;
+    height: 198px;
+    width: 491px;
+    border: none;
+    resize: none;
+    outline: none;
+    font-size: 1em;
+}

@@ -31,6 +31,10 @@
   height: 150vh;
 }
 
+tr th, tr td {
+  padding: 0 10px;
+}
+
 /*#selectAllCheckbox {
   opacity: 1;
   left: 0;
@@ -62,6 +66,27 @@
   border-right: 1px solid #ececec;
 }
 
+.map-cell, .map-head-cell input {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+  width: 130px;
+  padding: 0 10px;
+}
+
+.map-head-cell input {
+  border: none !important;
+  font-size: 1.1em !important;
+  font-family: "Open Sans";
+  font-weight: normal;
+  margin: 10px 0 !important;
+  color: #1b2733 !important;
+}
+
+.map-head-cell {
+  padding: 0 10px;
+}
 
 /*.table-head-styles {
   padding: 10px 10px;

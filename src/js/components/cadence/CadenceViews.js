@@ -27,7 +27,7 @@ export default class CadenceViews extends React.Component {
     return(
       <div class="eight columns">
         <div class="profile-card whiteCard campaignEditorCard">
-          <a onClick={this.toggleView}>My Campaign Toggle</a>
+          <a onClick={this.toggleView}>Toggle</a>
           { current_view ? <TemplatesView /> : <NoTemplatesView /> }
         </div>
       </div>

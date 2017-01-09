@@ -22,8 +22,10 @@ export default class TemplateViews extends React.Component {
     return(
       <div class="sixteen">
         <TemplateViewHeader />
-        <Template />
-        <TemplateGenerator />
+        <div class="sixteen templateHolder">
+          <Template />
+          <TemplateGenerator />
+        </div>
       </div>
     )
   }
