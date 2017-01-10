@@ -17,6 +17,7 @@ export default class Search extends React.Component {
         companies: false
       },
       results: [],
+      resultsArray: [],
       checkedAll: false,
       rowState: []
     }
@@ -80,15 +81,14 @@ export default class Search extends React.Component {
 
     console.log(current_state);
 
-
     $.ajax({
       url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=30',
       dataType:'json',
       cache:false,
       success:function(results){
-        this.setRowState(results);
         this.setState({
           results:results,
+          resultsArray: this.state.resultsArray.concat(results.results),
           loading: false
         });
       }.bind(this),
@@ -98,7 +98,7 @@ export default class Search extends React.Component {
   }
 
   handleSearch(query, apiState) {
-    this.setState({loading:true});
+    this.setState({loading:true, resultsArray: []});
     query = query.text;
     let current_state;
 
@@ -117,7 +117,8 @@ export default class Search extends React.Component {
       success:function(results){
         console.log(results);
         this.setState({
-          results:results,
+          results: results,
+          resultsArray: this.state.resultsArray.concat(results.results),
           loading: false
         });
       }.bind(this),
@@ -127,7 +128,6 @@ export default class Search extends React.Component {
   }
 
   nextSearch(query) {
-    this.setState({loading:true});
 
     $.ajax({
       url:query,
@@ -136,8 +136,8 @@ export default class Search extends React.Component {
       success:function(results){
         console.log(results);
         this.setState({
-          results:results,
-          loading: false
+          results: results,
+          resultsArray: this.state.resultsArray.concat(results.results)
         });
       }.bind(this),
       error:function(xhr, status, err){
@@ -154,7 +154,7 @@ export default class Search extends React.Component {
           <ActionBar results={this.state.results}/>
           { this.state.loading ?
             <div class="eleven columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
-            <ResultsTable results={this.state.results} apiState={this.state.apiState} nextSearch={this.nextSearch} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
+            <ResultsTable results={this.state.results} resultsArray={this.state.resultsArray} apiState={this.state.apiState} nextSearch={this.nextSearch} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
           }
         </div>
       </div>

@@ -3,6 +3,18 @@
   line-height: normal;
 }
 
+#load-more-bar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#load-more-bar a {
+  line-height: 20px;
+  font-size: 12px;
+}
+
 #resultsTableCount {
   font-size: 12px;
   padding: 5px 15px;

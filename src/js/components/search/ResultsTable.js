@@ -20,6 +20,7 @@ export default class ResultsTable extends React.Component {
       }
     };
     this.arrayConvert = this.arrayConvert.bind(this);
+    this.handleNextSearch = this.handleNextSearch.bind(this);
   }
 
   arrayConvert(arr) {
@@ -31,12 +32,15 @@ export default class ResultsTable extends React.Component {
     return convertedString;
   }
 
+  handleNextSearch(){
+    const next = this.props.results.next;
+    this.props.nextSearch(next);
+    this.forceUpdate();
+  }
+
   onGridReady(params) {
       this.api = params.api;
       this.columnApi = params.columnApi;
-  }
-
-  getRows() {
   }
 
   selectAll() {
@@ -56,8 +60,8 @@ export default class ResultsTable extends React.Component {
   }
 
   render() {
-    let data = this.props.results;
-    console.log(this.props);
+    let data = this.props.resultsArray;
+    console.log(data);
     let mappedResults;
     const peopleHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
@@ -105,17 +109,8 @@ export default class ResultsTable extends React.Component {
       currentHeader = companyHeader;
     }
 
-    // let dataSource = {
-    //   rowCount: null, // behave as infinite scroll
-    //   getRows: function (params) {
-    //     if ((data.results !== undefined) && (data.results.length > 0)) {
-    //       this.props.nextSearch(data.next);
-    //     }
-    //   }
-    // };
-
-    if ((data.results !== undefined) && (data.results.length > 0)) {
-      mappedResults = data.results.map((result, index) => {
+    if ((data !== undefined) && (data.length > 0)) {
+      mappedResults = data.map((result, index) => {
         if (this.props.apiState.people === true) {
           return (
             {
@@ -155,13 +150,8 @@ export default class ResultsTable extends React.Component {
             }
           )
         }
-
-
-        // return (
-        //   <Results index={index} key={result.id} name={result.person.name} age={result.person.age} jobTitle={result.title} companyName={result.company.name} checked={this.props.rowState[index]} callback={this.props.checkRow} />
-        // );
       })
-    } else if (data.results !== undefined) {
+    } else if (data !== undefined) {
       return (
         <div class="eleven columns">
           <div id="noResultsContainer" class="white-background">
@@ -187,11 +177,10 @@ export default class ResultsTable extends React.Component {
 
             columnDefs={currentHeader}
             rowData={mappedResults}
-            // datasource={dataSource}
 
-            // rowModelType="virtual"
             suppressDragLeaveHidesColumns="true"
             suppressCellSelection="true"
+            suppressRowClickSelection="true"
             rowSelection="multiple"
             enableColResize="true"
             enableSorting="true"
@@ -199,50 +188,10 @@ export default class ResultsTable extends React.Component {
             rowWidth="130"
           />
       </div>
+      <div id="load-more-bar" class="navbar white-background small-border gray-border large-top-margin small-horizontal-padding">
+        <a class="lgnBtn smoothBkgd white electric-blue-background electric-blue-border" onClick={this.handleNextSearch}>Load More Results</a>
+      </div>
     </div>
     );
   }
 }
-
-
-
-// <div class="eleven columns">
-//   <table class="white-background small-border gray-border large-top-margin small-horizontal-padding">
-//     <thead>
-//       <tr>
-//         <th class="table-selector"><Input name='select-all' type='checkbox' value='select-all' label=' ' checked={this.props.checked} onChange={this.props.checkAll} /></th>
-//         <th class="table-head-styles" data-field="name">NAME</th>
-//         <th class="table-head-styles" data-field="age">AGE</th>
-//         <th class="table-head-styles" data-field="jobTitle">JOB TITLE</th>
-//         <th class="table-head-styles" data-field="companyName">COMPANY NAME</th>
-//         <th class="table-head-styles" id="column-adder">
-//           <Dropdown trigger={
-//               <a><i class="fa fa-bars" aria-hidden="true"></i></a>
-//             }>
-//             <NavItem>Add Column</NavItem>
-//             <NavItem>Add Column</NavItem>
-//           </Dropdown>
-//           <Input type='select' name="column_selector" onChange={this.handleSelected} multiple>
-//             <option value="name">Name</option>
-//             <option value="person_age">Age</option>
-//             <option value="job_title">Job Title</option>
-//             <option value="department">Department</option>
-//             <option value="company_name">Company Name</option>
-//             <option value="company_size">Size of Company</option>
-//             <option value="revenue">Revenue</option>
-//             <option value="funding">Funding</option>
-//             <option value="technology">Technology</option>
-//             <option value="industry">Industry</option>
-//             <option value="interest">Interest</option>
-//             <option value="social_profiles">Social Profiles</option>
-//             <option value="location">Location</option>
-//           </Input>
-//         </th>
-//       </tr>
-//     </thead>
-//
-//     <tbody>
-//       {mappedResults}
-//     </tbody>
-//   </table>
-// </div>
