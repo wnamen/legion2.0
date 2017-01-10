@@ -197,10 +197,26 @@ input[name=newSubjectName]:focus:not([readonly]){
 }
 .editableText{
 	margin: 0px;
-    height: 198px;
-    width: 491px;
-    border: none;
-    resize: none;
-    outline: none;
-    font-size: 1em;
+  height: 198px;
+  width: 491px;
+  border: none;
+  resize: none;
+  outline: none;
+  font-size: 1em;
+	overflow: scroll;
+	padding: .5em 1em;
+
+}
+
+.tempIcon {
+	margin: 0 1em;
+	cursor: pointer;
+}
+
+.custom-theme.fr-toolbar {
+	border-top: 5px solid #36b7ea !important;
+}
+
+.custom-theme.fr-toolbar .fr-command.fr-btn {
+ 	color: #647382 !important;
 }

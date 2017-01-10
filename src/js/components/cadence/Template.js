@@ -1,6 +1,7 @@
-import React, { Component } from "react"
-import { Dropdown, NavItem, Input } from "react-materialize"
-import $ from "jquery"
+import React, { Component } from "react";
+import { Input } from "react-materialize";
+import FroalaEditor from "react-froala-wysiwyg";
+import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
@@ -9,6 +10,11 @@ export default class Template extends React.Component {
     super(props);
     this.state = {
       // COMPONENT STATE DECLARTION HERE
+      config: {
+        toolbarInline: true,
+        charCounterCount: false,
+        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', '-', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', '-', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink']
+      }
     }
   }
   //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
@@ -42,8 +48,11 @@ export default class Template extends React.Component {
                 </Input>
               </div>
             </div>
-            <div class="">
-              <textarea noresize class="editableText"></textarea>
+            <div class="editableText">
+              <FroalaEditor
+                config={this.state.config}
+                tag="textarea"
+              />
             </div>
             <div class="gray small-bottom-border gray-border workingRow bottomRow">
               <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp">Save</div>
@@ -57,12 +66,13 @@ export default class Template extends React.Component {
                   <option value="213445">contact.state</option>
                   <option value="213445">contact.email_address</option>
                   <option value="123435">company.name</option>
-                  <option value="213415">company.city</option>                  
+                  <option value="213415">company.city</option>
                   <option value="123435">company.state</option>
                   <option value="213415">company.phone_number</option>
                 </Input>
               </div>
               <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn">Delete</div>
+              <i class="fa fa-font tempIcon"></i>
               <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
             </div>
         </div>
@@ -70,3 +80,10 @@ export default class Template extends React.Component {
     )
   }
 }
+
+// noresize
+// class="editableText"
+// tag="textarea"
+// config={this.config}
+// model={this.state.model}
+// onModelChange={this.handleModelChange}
