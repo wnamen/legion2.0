@@ -45,3 +45,9 @@
   font-size: 12px;
   line-height: normal;
 }
+.contactsBtn>div{
+  padding:0 15px;
+}
+nav ul a:hover {
+  background-color: transparent; !important;
+}
