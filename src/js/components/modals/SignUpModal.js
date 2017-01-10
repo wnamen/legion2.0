@@ -2,11 +2,13 @@ import React from "react"
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
 import SignInModal from "../modals/SignInModal"
 export default class SignUpModal extends React.Component {
+
   render() {
-    const modalTrigger = <div><small class="text-center"><a href="#" class="active" >Already have an account?</a></small></div>
+
+    const modalTrigger = <div><small class="text-center"><a href="#" class="active" id="hideclick">Already have an account?</a></small></div>
 
     return (
-        <div class="sixteen modalContainer" >
+        <div class="sixteen modalContainer" id="hidemodal">
         	<div class="eight columns offset-by-two text-center">
         		<img class="modalIcon" src="/src/img/signUpIcon.png"></img>
         		<h1 class="modalTitle gray">You're Almost In!</h1>
