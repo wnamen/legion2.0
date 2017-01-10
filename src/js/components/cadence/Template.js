@@ -3,21 +3,20 @@ import { Input } from "react-materialize";
 import FroalaEditor from "react-froala-wysiwyg";
 import $ from "jquery";
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
-
 export default class Template extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
       config: {
+        pluginsEnabled: ['image', 'link', "align", "charCounter", "codeBeautifier", "codeView", "colors", "draggable", "emoticons", "entities", "file", "fontFamily", "fontSize", "fullscreen", "image", "imageManager", "inlineStyle", "lineBreaker", "link", "lists", "paragraphFormat", "paragraphStyle", "quote", "save", "table", "url", "video"],
+        quickInsert: false,
         toolbarInline: true,
+        toolbarVisibleWithoutSelection: true,
         charCounterCount: false,
         toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', '-', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', '-', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink']
       }
     }
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
 
   render(){
     //RENDER LOGIC HERE
@@ -72,7 +71,6 @@ export default class Template extends React.Component {
                 </Input>
               </div>
               <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn">Delete</div>
-              <i class="fa fa-font tempIcon"></i>
               <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
             </div>
         </div>
