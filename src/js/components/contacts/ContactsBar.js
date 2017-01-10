@@ -53,7 +53,7 @@ export default class ContactsBar extends React.Component {
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={
                 <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"line-height":"normal"}} aria-hidden="true"></i></a>
               }>
-                <NavItem>All My Contacts</NavItem>
+                <NavItem>Copy to list</NavItem>
               </Dropdown></li>
               }
               { this.state.isSelected && <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Remove</div></li> }
