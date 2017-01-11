@@ -32,7 +32,7 @@ export default class DirectoryMenu extends React.Component {
 
     return(
       <div class="sixteen">
-        <div class="navbar white-background small-border gray-border text-center fpng">
+        <div class="navbar text-center fpng">
           <div onClick={this.handlePeopleClick}>People Directory :
             <a href="#" class="directoryLink active">A</a>
             <a href="#" class="directoryLink active">B</a>
