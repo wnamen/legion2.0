@@ -26,20 +26,21 @@
 .sixteen { width: 100%; }
 
 .offset-by-one-half { margin-left: 3.125%; }
-.offset-by-one { margin-left: 90px; }
-.offset-by-two { margin-left: 160px; }
-.offset-by-three { margin-left: 230px; }
-.offset-by-four { margin-left: 310px; }
-.offset-by-five { margin-left: 370px; }
-.offset-by-six { margin-left: 440px; }
-.offset-by-seven { margin-left: 510px; }
-.offset-by-eight { margin-left: 580px; }
-.offset-by-nine { margin-left: 650px; }
-.offset-by-ten { margin-left: 720px; }
-.offset-by-eleven { margin-left: 790px; }
-.offset-by-twelve { margin-left: 860px; }
-.offset-by-thirteen { margin-left: 930px; }
-.offset-by-fourteen { margin-left: 1000px; }
+.offset-by-one { margin-left: 6.25%; }
+.offset-by-two { margin-left: 12.5%; }
+.offset-by-three { margin-left: 18.75%; }
+.offset-by-four { margin-left: 25%; }
+.offset-by-five { margin-left: 31.25%; }
+.offset-by-six { margin-left: 37.5%; }
+.offset-by-seven { margin-left: 43.75%; }
+.offset-by-eight { margin-left: 50%; }
+.offset-by-nine { margin-left: 56.25%; }
+.offset-by-ten { margin-left: 62.5%; }
+.offset-by-eleven { margin-left: 68.75%; }
+.offset-by-twelve { margin-left: 75%; }
+.offset-by-thirteen { margin-left: 81.25%; }
+.offset-by-fourteen { margin-left: 87.5%; }
+
 
 /* Clear the columns automagically, thanks @kneath */
 .column-row:after, .row:after, .clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }

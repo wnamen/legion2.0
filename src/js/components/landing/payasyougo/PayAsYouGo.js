@@ -19,7 +19,7 @@ export default class PayAsYouGo extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="five columns offset-by-half text-center">
+      <div class="five columns offset-by-half text-center payCell">
         <Pricing />
         <Options />
       </div>

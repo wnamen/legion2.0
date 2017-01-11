@@ -32,7 +32,7 @@ export default class UploadLeads extends React.Component {
 
     return(
       <div class="sixteen columns">
-        <div class="nine columns offset-by-two text-center">
+        <div class="nine columns onbMargin text-center">
           <img class="modalIcon smallerIcon" src="/src/img/upload_cloud_asset.png"></img>
           <h1 class="modalTitle gray onbTitle">Upload Your Current Leads</h1>
           <form id="billingModalForm" class="">

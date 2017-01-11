@@ -22,7 +22,7 @@ export default class ContantLocationColumn extends React.Component {
     const modalTrigger2 = <div class="lgnBtn lgnBtn-lg white electric-blue-background text-center">Create my account</div>;
 
     return(
-      <div class="eight columns">
+      <div class="eight columns smScreenWhiteCard smScreenMarginLeft">
 
         <div class="profile-card whiteCard noaccount text-center">
           <h2>Get $100 in credits when you create an account</h2>

@@ -5,7 +5,7 @@ export default class PasswordResetModal extends React.Component {
   render() {
     return (
         <div class="sixteen modalContainer">
-         	<div class="eight columns offset-by-two text-center">
+         	<div class="eight columns text-center smallModal">
         		<img class="modalIcon smallerIcon" src="/src/img/emailIcon.png"></img>
         		<h1 class="modalTitle gray">Check Your Email For a Unique Code</h1>
         		<form id="billingModalForm" class="">

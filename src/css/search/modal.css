@@ -110,3 +110,13 @@
   color: #ececec;
   margin: 20px 3px 0 3px;
 }
+@media screen and (max-width:800px){
+  .smallModal{
+      margin: 0;
+      width: 75%;
+  }
+  .modal {
+    max-height: none;
+    width: 80%;
+  }
+}

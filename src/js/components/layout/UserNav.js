@@ -47,7 +47,6 @@ export default class UserNav extends React.Component {
             <li><Link to="search" activeClassName="active">Search</Link></li>
             <li><Link to="cadence" activeClassName="active">Cadence</Link></li>
             <li><Link to="contacts" activeClassName="active">Contacts</Link></li>
-            <li><Link to="profile" activeClassName="active">Profile</Link></li>
           </ul>
 
           <div class="right">

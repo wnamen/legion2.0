@@ -19,7 +19,7 @@ export default class ContantLocationColumn extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="four columns offset-by-one-half">
+      <div class="four columns offset-by-one-half smScreenWhiteCard">
         <ContactInfo />
         <LocationInfo />
       </div>

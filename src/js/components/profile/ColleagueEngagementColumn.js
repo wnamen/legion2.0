@@ -19,7 +19,7 @@ export default class ColleagueEngagementColumn extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="three columns">
+      <div class="three columns noShow">
         <ColleagueInfo />
         <EngagementInfo />
       </div>
