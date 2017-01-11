@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router"
+import React      from "react"
+import { Link }   from "react-router"
 
 import Nav from "../components/layout/Nav"
 

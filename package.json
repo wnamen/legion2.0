@@ -40,6 +40,7 @@
     "materialize-css": "^0.97.8",
     "react": "^15.4.2",
     "react-autosuggest": "^7.0.2",
+    "react-cookie": "^1.0.4",
     "react-css-modules": "^4.1.0",
     "react-dom": "^15.4.1",
     "react-froala-wysiwyg": "^2.4.0",

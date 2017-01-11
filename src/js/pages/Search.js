@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import { Link } from "react-router"
-import { CubeGrid } from "better-react-spinkit"
-import $ from "jquery"
+import React, { Component }   from "react"
+import { Link }               from "react-router"
+import { CubeGrid }           from "better-react-spinkit"
+import $                      from "jquery"
 
-import ActionBar from "../components/search/ActionBar"
-import SearchMenu from "../components/search/SearchMenu"
-import ResultsTable from "../components/search/ResultsTable"
+import ActionBar              from "../components/search/ActionBar"
+import SearchMenu             from "../components/search/SearchMenu"
+import ResultsTable           from "../components/search/ResultsTable"
 
 export default class Search extends React.Component {
   constructor(props){

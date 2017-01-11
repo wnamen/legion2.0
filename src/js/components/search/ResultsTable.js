@@ -3,7 +3,6 @@ import { Dropdown, NavItem, Input } from "react-materialize";
 import { AgGrid } from 'ag-grid/main';
 import { AgGridReact } from 'ag-grid-react';
 
-// import Results from "./Results";
 import CheckMarkRenderer from "./CheckMarkRenderer"
 
 export default class ResultsTable extends React.Component {
@@ -67,38 +66,38 @@ export default class ResultsTable extends React.Component {
       {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
       {headerName:"Name", field:"name", width: 130, enableRowGroup: true, enableColResize:true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
-      {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
-      {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
-      {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true},
-      {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
+      {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
+      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
+      {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
+      {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
       {headerName:"Email", field:"email", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Website", field:"homePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Website", field:"companyHomePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Linkedin", field:"linkedin", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Facebook", field:"facebook", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Twitter", field:"twitter", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Crunchbase", field:"crunchbase", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
-      {headerName:"Home Page", field:"homePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
-      {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
-      {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
-      {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
-      {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
-      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
-      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
-      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer}
+      {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
+      {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
+      {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true}
     ];
 
     const companyHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true },
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
       {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
+      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
       {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
       {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
-      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
       {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true},
+      {headerName:"Company Website", field:"companyHomePage", width: 130, enableRowGroup: true},
       {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true},
-      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true},
-      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true}
+      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true}
     ];
 
     let currentHeader;

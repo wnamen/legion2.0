@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router";
+import React                from "react";
+import { Link }             from "react-router";
 
-import CadenceMenu from "../components/cadence/CadenceMenu"
-import CadenceViews from "../components/cadence/CadenceViews"
-import CampaignEngagment from "../components/cadence/CampaignEngagement"
+import CadenceMenu          from "../components/cadence/CadenceMenu"
+import CadenceViews         from "../components/cadence/CadenceViews"
+import CampaignEngagment    from "../components/cadence/CampaignEngagement"
 
 export default class Cadence extends React.Component {
 

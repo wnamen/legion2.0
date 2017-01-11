@@ -1,13 +1,13 @@
-import React from "react";
-import { Link } from "react-router";
-import { CubeGrid } from "better-react-spinkit"
+import React            from "react";
+import { Link }         from "react-router";
+import { CubeGrid }     from "better-react-spinkit"
 
 // import ContactResults from "../components/contacts/ContactResults"
-import ContactsBar from "../components/contacts/ContactsBar";
-import ContactsTable from "../components/contacts/ContactsTable";
-import MapBar from "../components/contacts/MapBar";
-import MapTable from "../components/contacts/MapTable";
-import MapResults from "../components/contacts/MapResults";
+import ContactsBar      from "../components/contacts/ContactsBar";
+import ContactsTable    from "../components/contacts/ContactsTable";
+import MapBar           from "../components/contacts/MapBar";
+import MapTable         from "../components/contacts/MapTable";
+import MapResults       from "../components/contacts/MapResults";
 
 
 export default class Contacts extends React.Component {

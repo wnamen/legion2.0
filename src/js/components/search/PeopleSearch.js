@@ -171,6 +171,14 @@ export default class PeopleSearch extends React.Component {
             </div>
 
             <div class="filter">
+              <label>Location</label>
+              <Input name="location" id="location" onChange={this.handleDebouncer} />
+              <div class="tag-container">
+                {tags.location}
+              </div>
+            </div>
+
+            <div class="filter">
               <label>Company Name</label>
               <Input name="company_name" id="company_name" onChange={this.handleDebouncer} />
               <div class="tag-container">
@@ -271,14 +279,6 @@ export default class PeopleSearch extends React.Component {
               <Input checked={this.props.checked} onChange={this.socialCheck} name='pinterest' type='checkbox' value="4" label='Pinterest' />
               <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' />
               <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' />
-            </div>
-
-            <div class="filter">
-              <label>Location</label>
-              <Input name="location" id="location" onChange={this.handleDebouncer} />
-              <div class="tag-container">
-                {tags.location}
-              </div>
             </div>
           </div>
     )

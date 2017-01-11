@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router";
+import React        from "react";
+import { Link }     from "react-router";
 
 
 export default class TOS extends React.Component {
@@ -16,7 +16,7 @@ export default class TOS extends React.Component {
         <p>Please read this agreement carefully to ensure that you understand each provision. This Agreement contains a mandatory individual arbitration and class action/jury trial waiver provision that requires the use of arbitration on an individual basis to resolve disputes, rather than jury trials or class actions.</p>
 
         <div class="big-text">1. DEFINITIONS</div>
-        
+
         <p>1.1  <strong>“API(s)”</strong> means the application programming interface(s) made available by Legion Analytics on the Site and in connection with the Services.</p>
 
 
