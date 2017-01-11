@@ -1,6 +1,7 @@
 .modal {
   max-height: none;
   width: 50%;
+  overflow: visible;
 }
 
 .modalContainer, #purchaseModal, #billingModal, .contentImage {

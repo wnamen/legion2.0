@@ -220,3 +220,41 @@ input[name=newSubjectName]:focus:not([readonly]){
 .custom-theme.fr-toolbar .fr-command.fr-btn {
  	color: #647382 !important;
 }
+.inlineFlex{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-inline-flex;
+	display: inline-flex;
+}
+.preText{
+	display: inline-table;
+    margin-right: 1em;
+}
+.datePicker{
+	width: 29% !important;
+    margin-right: 1em !important;
+}
+.advancedSettingsBtn{
+	margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
