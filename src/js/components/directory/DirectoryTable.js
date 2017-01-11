@@ -39,7 +39,7 @@ export default class DirectoryTable extends React.Component {
     return(
       <div class="sixteen">
         <div class="white-background small-border gray-border large-top-margin small-horizontal-padding">
-          <div style={{"columnCount":2}}>
+          <div class="text-center directPadding">
             { this.props.groupView ? <DirectoryListings /> : mappedSections }
           </div>
         </div>

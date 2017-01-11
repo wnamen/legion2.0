@@ -159,11 +159,13 @@ export default class CompanySearch extends React.Component {
               <option value="engineering">Engineering</option>
               <option value="finance">Finance</option>
               <option value="human_resources">Human Resources</option>
+              <option value="legal">Legal</option>
               <option value="marketing">Marketing</option>
               <option value="operations">Operations</option>
+              <option value="purchasing">Purchasing</option>
+              <option value="r&d">R&D</option>
               <option value="sales">Sales</option>
             </Input>
-
 
             <Input type='select' name="company_size" label="Size of Company" onChange={this.handleSelected} multiple>
               <option value="0-10">{less_than}10</option>
@@ -207,7 +209,7 @@ export default class CompanySearch extends React.Component {
             </Input>
 
             <div class="filter">
-              <label>Technology</label>
+              <label>Technology <small>Advanced Filter</small></label>
               <TechnologySearch onDebouncer={this.handleDebouncer} />
               <div class="tag-container">
                 {tags.technology}

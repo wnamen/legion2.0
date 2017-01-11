@@ -1,3 +1,8 @@
 .subDirectoryContainer {
   text-align: center;
+  margin:.5em;
+  cursor: pointer;
+}
+.directPadding{
+	padding:3em;
 }

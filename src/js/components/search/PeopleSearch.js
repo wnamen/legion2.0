@@ -200,8 +200,11 @@ export default class PeopleSearch extends React.Component {
               <option value="engineering">Engineering</option>
               <option value="finance">Finance</option>
               <option value="human_resources">Human Resources</option>
+              <option value="legal">Legal</option>
               <option value="marketing">Marketing</option>
               <option value="operations">Operations</option>
+              <option value="purchasing">Purchasing</option>
+              <option value="r&d">R&D</option>
               <option value="sales">Sales</option>
             </Input>
 
@@ -247,7 +250,7 @@ export default class PeopleSearch extends React.Component {
             </Input>
 
             <div class="filter">
-              <label>Education</label>
+              <label>Education <small>Advanced Filter</small></label>
               <Input name="education" id="education" onChange={this.handleDebouncer} />
               <div class="tag-container">
                 {tags.education}
@@ -263,7 +266,7 @@ export default class PeopleSearch extends React.Component {
             </Input>
 
             <div class="filter">
-              <label>Interest</label>
+              <label>Interest <small>Advanced Filter</small></label>
               <InterestSearch onDebouncer={this.handleDebouncer}/>
               <div class="tag-container">
                 {tags.interest}

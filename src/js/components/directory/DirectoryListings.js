@@ -14,7 +14,7 @@ export default class DirectoryListings extends React.Component {
     return(
       <div class="sixteen">
         <div class="navbar white-background small-border gray-border text-center fpng">
-          DIRECTORY LISTINGS!!!!
+          <a href="#" class="active">Person's Name</a>
         </div>
       </div>
     )
