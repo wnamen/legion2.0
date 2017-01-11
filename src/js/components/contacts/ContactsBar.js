@@ -34,7 +34,7 @@ export default class ContactsBar extends React.Component {
             <ul class="left">
               <li id="contacts-list-main-selector" class="right-actions">
                 <Dropdown trigger={
-                  <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"line-height":"30px", "height": "30px"}} aria-hidden="true"></i></a>
+                  <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"30px", "height": "30px"}} aria-hidden="true"></i></a>
                 }>
                   <NavItem>All My Contacts</NavItem>
                   <NavItem>+ Create new list</NavItem>
@@ -51,7 +51,7 @@ export default class ContactsBar extends React.Component {
 
               { this.state.isSelected &&
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={
-                <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"line-height":"normal"}} aria-hidden="true"></i></a>
+                <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"normal"}} aria-hidden="true"></i></a>
               }>
                 <NavItem>Copy to list</NavItem>
               </Dropdown></li>

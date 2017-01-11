@@ -11,10 +11,17 @@ export default class ActionBar extends React.Component {
       currentModal: true
     }
     this.renderBilling = this.renderBilling.bind(this);
+    this.createList = this.createList.bind(this);
   }
 
   renderBilling() {
     this.setState({ currentModal: !this.state.currentModal })
+  }
+
+  createList(e) {
+    e.preventDefault();
+    console.log("clicked");
+
   }
 
   render(){
@@ -51,7 +58,7 @@ export default class ActionBar extends React.Component {
 
                   </div>
                   </Modal>
-                  <NavItem>+ Create new list</NavItem>
+                  <NavItem><div onClick={this.createList}>+ Create new list</div></NavItem>
                 </Dropdown>
               </li>
             </ul>
