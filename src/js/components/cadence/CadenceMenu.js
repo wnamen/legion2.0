@@ -29,17 +29,24 @@ export default class CadenceMenu extends React.Component {
     //RENDER LOGIC HERE
     let current_view = this.state.currentView;
 
+    const createCampaign = <a class="cadenceToggle newBtnBuffer">Create New Campaign</a>;
+    const createTemplate = <a class="cadenceToggle newBtnBuffer">Create New Template</a>;
+    const activeCampaign = <a onClick={this.renderCampaigns} class="cadenceToggle text-left medium-bottom-border electric-blue-border gray">Campaigns</a>;
+    const unactiveCampaign = <a onClick={this.renderCampaigns} class="cadenceToggle text-left gray">Campaigns</a>;
+    const activeTemplate = <a onClick={this.renderTemplates} class="cadenceToggle text-right medium-bottom-border electric-blue-border gray">Templates</a>;
+    const unactiveTemplate = <a onClick={this.renderTemplates} class="cadenceToggle text-right gray">Templates</a>;
+
     return(
       <div class="four columns offset-by-one-half">
         <div class="profile-card whiteCard cadenceMenu">
           <div class="lgnBtn smoothBkgd electric-blue-background electric-blue-border white lgnBtnUp newCampaignBtn">New Campaign (20 Credits)</div>
           <div class="cadenceToggleContainer">
-            <a onClick={this.renderCampaigns} class="cadenceToggle text-left medium-bottom-border electric-blue-border gray">Campaigns</a>
-            <a onClick={this.renderTemplates} class="cadenceToggle text-right gray">Templates</a>
+            { current_view === "campaigns" ? activeCampaign : unactiveCampaign }
+            { current_view === "templates" ? activeTemplate : unactiveTemplate }
           </div>
           <hr class="no-margin"></hr>
           { current_view === "campaigns" ? <CampaignMenu /> : <TemplateMenu /> }
-          <a class="cadenceToggle newBtnBuffer">Create New Campaign</a>
+          { current_view === "campaigns" ? createCampaign : createTemplate }
         </div>
       </div>
     )

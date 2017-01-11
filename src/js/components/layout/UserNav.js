@@ -45,7 +45,7 @@ export default class UserNav extends React.Component {
           <ul id="nav-links" class="nav-hover">
             <li><IndexLink class="medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
             <li><Link to="search" activeClassName="active">Search</Link></li>
-            <li><Link to="cadence" activeClassName="active">Cadence</Link></li>
+            <li><Link to="campaigns" activeClassName="active">Campaigns</Link></li>
             <li><Link to="contacts" activeClassName="active">Contacts</Link></li>
           </ul>
 
