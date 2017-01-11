@@ -10,19 +10,26 @@ export default class TemplateViewHeader extends React.Component {
     super(props);
     this.state = {
       // COMPONENT STATE DECLARTION HERE
+      campaignActivated: true
     }
+    this.onCampaignToggle = this.onCampaignToggle.bind(this);
   }
   //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+  onCampaignToggle = () => {
+    this.setState({campaignActivated: !this.state.campaignActivated});
+  }
 
   render(){
     //RENDER LOGIC HERE
     const modalTrigger = <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn">Save Campaign</div>;
+    const play = <i class="fa fa-play electric-blue"></i>;
+    const pause = <i class="fa fa-pause electric-blue"></i>;
 
     return(
       <div class="sixteen">
           <div class="gray activeCampaignName">My Campaign</div>
           <div class="topCampaignBtns">
-            <div class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn"><i class="fa fa-pause electric-blue"></i></div>
+            <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
             <Modal trigger={modalTrigger}>
               <SaveCampaignModal />
             </Modal>
