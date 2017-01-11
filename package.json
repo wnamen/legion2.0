@@ -48,6 +48,7 @@
     "react-materialize": "^0.17.6",
     "react-redux": "^5.0.1",
     "react-router": "^3.0.0",
+    "react-router-redux": "^4.0.7",
     "redux-thunk": "^2.1.0",
     "require": "^2.4.20",
     "style-loader": "^0.13.1",
