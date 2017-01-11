@@ -16,7 +16,7 @@ export default class DataShare extends React.Component {
 
     return(
       <div class="sixteen columns">
-        <div class="nine columns offset-by-two text-center">
+        <div class="nine columns onbMargin text-center">
           <img class="modalIcon smallerIcon" src="/src/img/credit_empty_state.png"></img>
           <h1 class="modalTitle gray onbTitle">Would you like to earn 100 more credits by sharing your data with the Legion Analytics community?</h1>
           <div id="billingModalForm" class="">

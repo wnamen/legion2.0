@@ -9,7 +9,7 @@ export default class SignInModal extends React.Component {
 
     return (
         <div class="sixteen modalContainer">
-          <div class="eight columns offset-by-two text-center">
+          <div class="eight columns text-center smallModal">
           		<img class="modalIcon" src="/src/img/logInIcon.png"></img>
           		<h1 class="modalTitle gray">Secure Sign In</h1>
           		<form id="billingModalForm" class="">

@@ -16,7 +16,7 @@ export default class FilterAd extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="sixteen columns gray-light-background text-center">
+      <div class="sixteen columns gray-light-background text-center filterContainer">
         <div class="twelve columns offset-by-two">
           <h6 class="fH6 pH6 gray">Look Up Millions of People & Companies</h6>
           <h6 class="fH6 smaller gray">Using the Following Filters:</h6>

@@ -120,5 +120,21 @@ a.active:hover{
 .kylieAd{
 	width: 100%;
 }
-
+.smScreenImg{
+	width: 100%;
+}
+@media screen and (max-width:800px){
+    .smScreenWhiteCard{
+    	width: 95%
+    }
+    .smScreenImg{
+    	width: 25%
+    }
+    .smScreenMarginLeft{
+    	margin-left: 3.125%;
+    }
+    .noShow{
+    	display: none;
+    }
+}
 

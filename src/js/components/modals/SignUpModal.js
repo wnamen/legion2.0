@@ -9,7 +9,7 @@ export default class SignUpModal extends React.Component {
 
     return (
         <div class="sixteen modalContainer" id="hidemodal">
-        	<div class="eight columns offset-by-two text-center">
+        	<div class="eight columns text-center smallModal">
         		<img class="modalIcon" src="/src/img/signUpIcon.png"></img>
         		<h1 class="modalTitle gray">You're Almost In!</h1>
         		<form id="billingModalForm" class="">

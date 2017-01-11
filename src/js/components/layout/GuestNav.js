@@ -18,7 +18,7 @@ export default class GuestNav extends React.Component {
 
           <div class="right">
             <ul>
-              <li class="nav-hover">
+              <li class="nav-hover smHide">
                 <a href="https://www.kylie.ai" target="_blank" class="electric-blue">Looking for our ai, Kylie?</a>
               </li>
               <li>
@@ -26,7 +26,7 @@ export default class GuestNav extends React.Component {
                   <SignUpModal />
                 </Modal>
               </li>
-              <li class="large-right-margin nav-hover">
+              <li class="large-right-margin nav-hover smHide">
                 <Modal trigger={modalTrigger2}>
                   <SignInModal />
                 </Modal>

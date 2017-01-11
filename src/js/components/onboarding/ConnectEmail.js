@@ -16,7 +16,7 @@ export default class ConnectEmail extends React.Component {
 
     return(
       <div class="sixteen columns">
-        <div class="nine columns offset-by-two text-center">
+        <div class="nine columns onbMargin text-center">
           <img class="modalIcon smallerIcon" src="/src/img/emailIcon.png"></img>
           <h1 class="modalTitle gray onbTitle">Connect Your Email Account</h1>
           <div id="billingModalForm" class="">

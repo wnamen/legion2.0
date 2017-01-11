@@ -19,7 +19,7 @@ export default class LocationInfo extends React.Component {
 
     return(
       <div class="profile-card whiteCard text-center">
-        <img src="src/img/svg/san-francisco.svg" width="100%" class="electric-blue" alt="Kevin Hale lives in San Francisco"></img>
+        <img src="src/img/svg/san-francisco.svg" class="electric-blue smScreenImg" alt="Kevin Hale lives in San Francisco"></img>
         <h6 class="gray locationH1">Location:<br></br>San Francisco</h6>
       </div>
     )

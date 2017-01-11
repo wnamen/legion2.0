@@ -19,7 +19,7 @@ export default class Premium extends React.Component {
     //RENDER LOGIC HERE
 
     return(
-      <div class="five columns text-center">
+      <div class="five columns text-center payCell">
         <Pricing />
         <Options />
       </div>
