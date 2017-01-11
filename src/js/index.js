@@ -23,7 +23,7 @@ ReactDOM.render(
       <IndexRoute component={Landing}></IndexRoute>
       <Route path="/search" name="search" component={Search}></Route>
       <Route path="/contacts" name="contacts" component={Contacts}></Route>
-      <Route path="/cadence" name="cadence" component={Cadence}></Route>
+      <Route path="/campaigns" name="cadence" component={Cadence}></Route>
       <Route path="/profile" name="profile" component={Profile}></Route>
       <Route path="/settings" name="settings" component={Settings}></Route>
       <Route path="/onboarding" name="onboarding" component={Onboarding}></Route>
