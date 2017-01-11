@@ -42,6 +42,15 @@ input[type=text]:focus, input[type=text]:focus:not([readonly]) {
   box-shadow: none;
 }
 
+input[type=text]:disabled {
+  color: rgba(0, 0, 0, 0.3) !important;
+  cursor: default !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
 .input-field label {
   color: #647382;
   top: 0.2rem;

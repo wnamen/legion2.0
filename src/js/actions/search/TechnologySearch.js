@@ -80,7 +80,8 @@ export default class TechonologySearch extends React.Component {
     const { value, suggestions } = this.state;
     const inputProps = {
       value,
-      onChange: this.onTechnologySuggestionSearch
+      onChange: this.onTechnologySuggestionSearch,
+      disabled: this.props.disabled
     }
 
     return (
