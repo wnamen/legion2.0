@@ -5,7 +5,7 @@ export default class ServerError extends React.Component {
 
   render() {
     return (
-      <div>404 NOT FOUND</div>
+      <div>Opps, Server Error</div>
     );
   }
 }

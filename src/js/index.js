@@ -14,6 +14,7 @@ import Settings                                     from "./pages/Settings";
 import Onboarding                                   from "./pages/Onboarding";
 import TOS                                          from "./pages/TOS";
 import Directory                                    from "./pages/Directory";
+import ServerError                                  from "./pages/ServerError";
 import NotFound                                     from "./pages/NotFound";
 
 const App = document.getElementById('app');
@@ -67,7 +68,8 @@ ReactDOM.render(
       <Route path="/onboarding" name="onboarding" component={Onboarding} onEnter={requireAuth}></Route>
       <Route path="/tos" name="tos" component={TOS}></Route>
       <Route path="/directory" name="directory" component={Directory}></Route>
-      <Route path='*' name="NotFound" component={NotFound} />
+      <Route path="/500" name="serverError" component={ServerError} />
+      <Route path="*" name="notFound" component={NotFound} />
     </Route>
   </Router>, App
 );
