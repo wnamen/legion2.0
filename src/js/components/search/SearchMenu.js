@@ -73,8 +73,8 @@ export default class SearchMenu extends React.Component {
               <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="companies" value="companies" type="radio" label="Company"/>
             </div>
 
-            { this.state.menuView === "people" && <PeopleSearch onSearchChange={this.props.onSearchChange} /> }
-            { this.state.menuView === "companies" && <CompanySearch onSearchChange={this.props.onSearchChange} /> }
+            { this.state.menuView === "people" && <PeopleSearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
+            { this.state.menuView === "companies" && <CompanySearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
 
           </form>
         </div>

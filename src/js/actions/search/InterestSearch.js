@@ -1,7 +1,7 @@
 import React from "react"
 import Autosuggest from 'react-autosuggest';
 
-export default class TechonologySearch extends React.Component {
+export default class InterestSearch extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -13,8 +13,11 @@ export default class TechonologySearch extends React.Component {
   }
 
   componentWillMount(){
+    let tokenHeader = `Token ${this.props.token}`;
+
     $.ajax({
-      url: 'https://apidev.legionanalytics.com/api/interests/?format=json&page_size=500',
+      url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=500',
+      headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
       success:function(interests){

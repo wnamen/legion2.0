@@ -20,22 +20,24 @@ import NotFound                                     from "./pages/NotFound";
 const App = document.getElementById('app');
 
 const loginCheck = () => {
-  const token = cookie.load("token");
+  let token = cookie.load("token");
 
   if (token !== undefined) {
     let tokenHeader = `Token ${token}`;
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
-      dataType: "JSONP",
-      headers: {"Authorization": tokenHeader, 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE" },
+      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me?format=json",
+      dataType: "JSON",
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
       success: (response) => {
         console.log(response);
-        return true;
       },
       error: (response) => {
         console.log(response);
+
       }
     })
+    return true;
   };
   return false;
 }
