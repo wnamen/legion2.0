@@ -54,13 +54,13 @@
 }
 .pborder{
 	border: 3px solid;
-    height: 65vh;
+    height: 70vh;
     padding: 0;
     margin-left: 10%;
     overflow: hidden;
 }
 .pborder.extended{
-	height: 75vh;
+	height: 80vh;
     position: relative;
     top: -5vh;
 }

@@ -151,7 +151,7 @@
 }
 .working.chooseTemplate .select-dropdown, .working .chooseTemplate .select-wrapper input.select-dropdown{
 	padding: 0.3em 0.5em;
-    font-size: 9px;
+    font-size: 10px;
 }
 .working.chooseTemplate.pTags{
     margin-left: .5em;
@@ -197,12 +197,13 @@ input[name=newSubjectName]:focus:not([readonly]){
 }
 .editableText{
 	margin: 0px;
-  height: 198px;
-  width: 491px;
-  border: none;
-  resize: none;
-  outline: none;
-  font-size: 1em;
+	height: auto;
+	min-height: 198px;
+	width: 491px;
+	border: none;
+	resize: none;
+	outline: none;
+	font-size: 1em;
 	overflow: scroll;
 	padding: .5em 1em;
 

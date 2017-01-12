@@ -105,7 +105,7 @@ export default class SaveCampaignModal extends React.Component {
 	        			<Input type='text' name="createName" placeholder="My Campaign" onChange={this.handleSelected}>
 			            </Input>
 	        		</div>
-	        		<div class="advancedSettingsBtn"><small class="text-center"><a href="#" class="active">Advanced Settings</a></small></div>
+	        		<div class="advancedSettingsBtn"><small class="text-center"><a class="active">Advanced Settings</a></small></div>
 
 
 			        <div class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</div>
