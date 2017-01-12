@@ -16,6 +16,7 @@ export default class SignInModal extends React.Component {
     this.signIn = this.signIn.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.successRedirect = this.successRedirect.bind(this);
   }
 
   handleEmailChange = (e) => {
@@ -38,7 +39,7 @@ export default class SignInModal extends React.Component {
       data: {username: email, password: password},
       success: (response) => {
         console.log(response);
-        cookie.save("token", response.token, { path: "/" })
+        cookie.save("token", response.token, { path: "/" });
         this.context.router.push("/search");
       },
       error: (response) => {
@@ -46,6 +47,9 @@ export default class SignInModal extends React.Component {
       }
     })
 
+  }
+
+  successRedirect = () => {
   }
 
 

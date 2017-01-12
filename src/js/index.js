@@ -17,10 +17,10 @@ import Directory                                    from "./pages/Directory";
 
 
 const App = document.getElementById('app');
-const token = cookie.load("token");
 
 const loginCheck = () => {
-  console.log(token);
+  const token = cookie.load("token");
+
   if (token !== undefined) {
     $.ajax({
       type: "GET",
