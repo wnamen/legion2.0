@@ -1,6 +1,7 @@
 import React                                        from "react";
 import ReactDOM                                     from "react-dom";
 import { Router, Route, IndexRoute, hashHistory }   from "react-router";
+import cookie                                       from "react-cookie";
 import $                                            from "jquery";
 
 import Contacts                                     from "./pages/Contacts";
@@ -16,13 +17,27 @@ import Directory                                    from "./pages/Directory";
 
 
 const App = document.getElementById('app');
+const token = cookie.load("token");
 
-const loggedIn = () => {
-  return true;
+const loginCheck = () => {
+  console.log(token);
+  if (token !== undefined) {
+    $.ajax({
+      type: "GET",
+      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      dataType: 'jsonp',
+      headers: {"Authorization": "Token "+token},
+      success: (response) => {
+        console.log(response);
+      }
+    })
+    return true;
+  };
+  return false;
 }
 
 const requireAuth = (nextState, replace) => {
-  if (!loggedIn()) {
+  if (!loginCheck()) {
     replace({
       pathname: '/'
     })
@@ -30,7 +45,7 @@ const requireAuth = (nextState, replace) => {
 }
 
 const guestsOnly = (nextState, replace) => {
-  if (loggedIn()) {
+  if (loginCheck()) {
     replace({
       pathname: '/search'
     })

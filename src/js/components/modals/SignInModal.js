@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
-import { Redirect } from "react-router"
+import { Redirect } from "react-router";
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize';
+import cookie from "react-cookie";
 import $ from "jquery";
 
 import PasswordResetModal from "../modals/PasswordResetModal"
@@ -9,7 +10,7 @@ export default class SignInModal extends React.Component {
     super(props);
     this.state = {
       email: "",
-      passowrd: ""
+      password: ""
     }
 
     this.signIn = this.signIn.bind(this);
@@ -37,7 +38,8 @@ export default class SignInModal extends React.Component {
       data: {username: email, password: password},
       success: (response) => {
         console.log(response);
-        this.context.router.push('/search');
+        cookie.save("token", response.token, { path: "/" })
+        this.context.router.push("/search");
       },
       error: (response) => {
         console.log(response);
