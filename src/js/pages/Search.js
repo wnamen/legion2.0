@@ -1,4 +1,5 @@
-import React, { Component }   from "react"
+import React, { Component }   from "react";
+import cookie                 from "react-cookie";
 import { Link }               from "react-router"
 import { CubeGrid }           from "better-react-spinkit"
 import $                      from "jquery"
@@ -11,6 +12,7 @@ export default class Search extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      token: cookie.load("token"),
       loading: false,
       apiState: {
         people: true,
@@ -77,13 +79,17 @@ export default class Search extends React.Component {
 
   componentWillMount(){
     this.setState({loading:true});
-    let current_state = this.state.apiState.people ? "people" : "companies";
+    let current_state = this.state.apiState.people ? "job" : "company";
+    let tokenHeader = `Token ${this.state.token}`;
+    console.log(tokenHeader);
 
     console.log(current_state);
 
     $.ajax({
-      url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=30',
+      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/job/?page_size=50',
+      headers: {"Authorization": tokenHeader },
       dataType:'json',
+      crossDomain: true,
       cache:false,
       success:function(results){
         this.setState({
@@ -105,13 +111,14 @@ export default class Search extends React.Component {
     if (apiState !== undefined) {
       current_state = apiState
     } else {
-      current_state = this.state.apiState.people ? "people" : "companies";
+      current_state = this.state.apiState.people ? "job" : "company";
     }
 
-    let url = `https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`;
+    let url = `https://legionv2-api.us-west-2.elasticbeanstalk.com/search/${current_state}/?format=json&page_size=50&${query}`;
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/${current_state}/?format=json&page_size=50&${query}`,
+      url: url,
+      headers: {"Authorization": tokenHeader, 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE" },
       dataType:'json',
       cache:false,
       success:function(results){
@@ -150,7 +157,7 @@ export default class Search extends React.Component {
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
-          <SearchMenu interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch}/>
+          <SearchMenu interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch} userToken={this.state.token}/>
           <ActionBar results={this.state.results}/>
           { this.state.loading ?
             <div class="eleven columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :

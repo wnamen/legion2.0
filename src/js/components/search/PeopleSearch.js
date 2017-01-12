@@ -190,7 +190,7 @@ export default class PeopleSearch extends React.Component {
 
             <div class="filter">
               <label>Industry</label>
-              <IndustrySearch onDebouncer={this.handleDebouncer}/>
+              <IndustrySearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} />
               <div class="tag-container">
                 {tags.industry}
               </div>
@@ -274,7 +274,7 @@ export default class PeopleSearch extends React.Component {
 
             <div class="filter" >
               <label>Interest <small>Advanced Filter</small></label>
-              <InterestSearch onDebouncer={this.handleDebouncer} disabled={this.state.PAYG} />
+              <InterestSearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} disabled={this.state.PAYG} />
               <div class="tag-container">
                 {tags.interest}
               </div>
