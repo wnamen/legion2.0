@@ -22,16 +22,19 @@ const loginCheck = () => {
   const token = cookie.load("token");
 
   if (token !== undefined) {
-    $.ajax({
-      type: "GET",
+    let tokenHeader = `Token ${token}`;
+    $.get({
       url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
-      dataType: 'jsonp',
-      headers: {"Authorization": "Token "+token},
+      dataType: "JSONP",
+      headers: {"Authorization": tokenHeader, 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE" },
       success: (response) => {
+        console.log(response);
+        return true;
+      },
+      error: (response) => {
         console.log(response);
       }
     })
-    return true;
   };
   return false;
 }
