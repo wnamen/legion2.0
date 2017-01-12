@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"main-ef69cc863dcf6d00bef4.js","path":"/Users/wnamen/programming/freelance/legion2.0/src/bundles/main-ef69cc863dcf6d00bef4.js"}]}}
+{"status":"error","error":"ModuleNotFoundError","message":"Module not found: Error: Cannot resolve 'file' or 'directory' ./pages/NotFound in /Users/jamasenrodriguez/Desktop/legion2.0/src/js"}
