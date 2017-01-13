@@ -54,7 +54,7 @@ export default class SignUpModal extends React.Component {
 
   cookieSaver = (response) => {
     console.log(response);
-    // cookie.save("token", response.token, { path: "/" });
+    cookie.save("token", response.token, { path: "/" });
     hashHistory.push("/search")
   }
 
