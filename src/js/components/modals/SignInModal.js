@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from "react";
-import { Redirect } from "react-router";
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize';
 import cookie from "react-cookie";
 import $ from "jquery";

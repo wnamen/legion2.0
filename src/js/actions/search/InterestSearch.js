@@ -16,7 +16,7 @@ export default class InterestSearch extends React.Component {
     let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
-      url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=500',
+      url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=500&num_people__gt=0&',
       headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
@@ -33,7 +33,7 @@ export default class InterestSearch extends React.Component {
     query = query.text
 
     $.ajax({
-      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=1000&${query}`,
+      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=1000&num_people__gt=0&${query}`,
       headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,

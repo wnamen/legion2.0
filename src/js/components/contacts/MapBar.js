@@ -8,12 +8,14 @@ export default class ContactsBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalOpen: true,
       isSelected:false
     };
 
     // this.getTag = debounce(850, this.getTag.bind(this));
     this.handleDebouncer = this.handleDebouncer.bind(this);
     this.completeMapping = this.completeMapping.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   handleDebouncer(e) {
@@ -24,8 +26,18 @@ export default class ContactsBar extends React.Component {
     this.props.updateMappingStatus();
   }
 
+  closeModal = () => {
+    this.setState({
+      modalOpen:false
+    })
+  }
+
   render(){
-    const modalTrigger = <a class="contact-upload">Upload Contacts</a>;
+    const uploadModal = (
+            <Modal trigger="">
+              <UploadContactsModal onModalClose={this.closeModal}/>
+            </Modal>
+          );
     let data = this.props.results;
     let result_count = 50;
     if (result_count !== undefined) {
@@ -34,9 +46,7 @@ export default class ContactsBar extends React.Component {
 
     return(
       <div class="sixteen columns">
-        <Modal>
-          <UploadContactsModal />
-        </Modal>
+
         <nav class="navbar white-background small-border gray-border">
           <div id="map-bar" class="nav-wrapper">
             <ul class="left">

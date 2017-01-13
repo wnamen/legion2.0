@@ -130,7 +130,7 @@ export default class Contacts extends React.Component {
     });
 
     $.get({
-      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/tm-list/?page_size=1000',
+      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/contacts/1895/?page_size=1000',
       headers: {"Authorization": tokenHeader },
       dataType:'json',
       crossDomain: true,

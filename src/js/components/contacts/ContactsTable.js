@@ -26,7 +26,7 @@ export default class ContactsTable extends React.Component {
     let endIdx = arr.length - 1;
     let convertedString = "";
     arr.forEach((item, idx) => {
-      idx === endIdx ? convertedString = convertedString + item : convertedString = convertedString + item + ", " ;
+      idx === endIdx ? convertedString = convertedString + item.name : convertedString = convertedString + item.name + ", " ;
     });
     return convertedString;
   }
@@ -64,61 +64,60 @@ export default class ContactsTable extends React.Component {
       {headerName:"Name", field:"name", width: 130, enableRowGroup: true, enableColResize:true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
-      {headerName:"location", field:"location", width: 130, enableRowGroup: true},
-      {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
-      {headerName:"Technology", field:"technologies", width: 130, enableRowGroup: true},
-      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
-      {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
-      {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
-      {headerName:"Email", field:"email", width: 130, enableRowGroup: true},
-      {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true},
-      {headerName:"Website", field:"homePage", width: 130, enableRowGroup: true},
-      {headerName:"Angellist", field:"angellist", width: 130, enableRowGroup: true},
+      {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
+      {headerName:"Location", field:"location", width: 130, enableRowGroup: true},
+      // {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
+      {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true},
+      // {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true},
+      // {headerName:"Email", field:"email", width: 130, enableRowGroup: true},
       {headerName:"Linkedin", field:"linkedin", width: 130, enableRowGroup: true},
       {headerName:"Facebook", field:"facebook", width: 130, enableRowGroup: true},
       {headerName:"Twitter", field:"twitter", width: 130, enableRowGroup: true},
-      {headerName:"Instragram", field:"instagram", width: 130, enableRowGroup: true},
       {headerName:"Crunchbase", field:"crunchbase", width: 130, enableRowGroup: true},
-      {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
-      {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
-      {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true}
+      {headerName:"Angellist", field:"angellist", width: 130, enableRowGroup: true},
+      {headerName:"Wikipedia", field:"wikipedia", width: 130, enableRowGroup: true},
+      {headerName:"Home Page", field:"homePage", width: 130, enableRowGroup: true},
+      {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
+      {headerName:"Techonology", field:"technologies", width: 130, enableRowGroup: true},
+      {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
+      {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
+      {headerName:"Company Location", field:"companyLocation", width: 130, enableRowGroup: true},
+      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
+      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true},
+      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true},
+      {headerName:"Company Facebook", field:"companyFacebook", width: 130, enableRowGroup: true},
+      {headerName:"Company Wikipedia", field:"companyWikipedia", width: 130, enableRowGroup: true},
+      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true}
     ];
-
-    let dataSource = {
-      rowCount: null, // behave as infinite scroll
-      getRows: function (params) {
-        if ((data.results !== undefined) && (data.results.length > 0)) {
-          this.props.nextSearch(data.next);
-        }
-      }
-    };
 
     if ((data.results !== undefined) && (data.results.length > 0)) {
       mappedResults = data.results.map((result, index) => {
         return (
           {
-            name: result.person_name,
-            jobTitle: result.title,
-            education: this.arrayConvert(result.education),
-            age: result.age,
-            interests: this.arrayConvert(result.interests),
-            phone: result.has_phone,
-            email: result.has_email ,
-            linkedin: result.has_linkedin,
-            angellist: result.has_angellist,
-            facebook: result.has_facebook,
-            instagram: result.has_instagram,
-            twitter: result.has_twitter,
-            crunchbase: result.has_crunchbase,
-            homePage: result.has_home_page,
-            wikipedia: result.has_wikipedia,
-            companyName: result.company_name,
-            location: result.location,
-            industry: this.arrayConvert(result.industries),
-            revenue: (result.revenue).toLocaleString(),
-            funding: (result.funding).toLocaleString(),
-            technologies: this.arrayConvert(result.technologies),
-            companySize: (result.company_size).toLocaleString()
+            name: result.person.name,
+            jobTitle: result.job.title,
+            companyName: result.company.name,
+            age: result.person.age,
+            location: result.person.location,
+            interests: this.arrayConvert(result.person.interests),
+            linkedin: result.person.personal_linkedin,
+            facebook: result.person.personal_facebook,
+            twitter: result.person.personal_twitter,
+            crunchbase: result.person.personal_crunchbase,
+            angellist: result.person.personal_angellist,
+            wikipedia: result.person.personal_wikipedia,
+            homePage: result.person.personal_homePage,
+            industry: this.arrayConvert(result.company.industries),
+            technologies: this.arrayConvert(result.company.technologies),
+            companyLocation: result.company.location,
+            revenue: (result.company.revenue).toLocaleString(),
+            funding: (result.company.funding).toLocaleString(),
+            companySize: (result.company.number_of_employees).toLocaleString(),
+            companyLinkedin: result.company.company_linkedin,
+            companyTwitter: result.company.company_twitter,
+            companyFacebook: result.company.company_facebook,
+            companyWikipedia: result.company.company_wikipedia,
+            companyHomePage: result.company.company_home_page
           }
         );
 
@@ -152,9 +151,7 @@ export default class ContactsTable extends React.Component {
 
             columnDefs={tableHeader}
             rowData={mappedResults}
-            datasource={dataSource}
 
-            rowModelType="virtual"
             suppressDragLeaveHidesColumns="true"
             suppressCellSelection="true"
             rowSelection="multiple"

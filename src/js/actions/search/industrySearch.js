@@ -16,7 +16,7 @@ export default class IndustrySearch extends React.Component {
     let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
-      url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=100',
+      url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=100&num_companies__gt=0',
       headers: {"Authorization": tokenHeader},
       dataType:'json',
       crossDomain:true,
@@ -33,7 +33,7 @@ export default class IndustrySearch extends React.Component {
     query = query.text
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100&${query}`,
+      url:`https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100&num_companies__gt=0&${query}`,
       dataType:'json',
       cache:false,
       success:function(industries){
