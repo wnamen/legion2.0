@@ -40,7 +40,7 @@ export default class SignUpModal extends React.Component {
 
     $.post({
       url: url,
-      data: {username: email, password: password, name: name, phone: phone},
+      data: {email: email, password: password, name: name, phone: phone},
       success: (response) => {
         this.cookieSaver(response);
       },

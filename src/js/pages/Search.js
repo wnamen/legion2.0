@@ -138,6 +138,7 @@ export default class Search extends React.Component {
 
   nextSearch(url) {
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(url);
 
     $.ajax({
       url:url,
