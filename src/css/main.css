@@ -34,6 +34,7 @@ hr{
 }
 a{
   color: #36b7ea;
+  cursor: pointer;
 }
 body {
   font-family: 'Open Sans', sans-serif;
@@ -105,4 +106,7 @@ strong{
 }
 .pushRight{
   float: right;
+}
+strong.largeText{
+  font-size: 2em;
 }
