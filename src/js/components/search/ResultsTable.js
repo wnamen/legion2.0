@@ -67,6 +67,7 @@ export default class ResultsTable extends React.Component {
       {headerName:"Name", field:"name", width: 130, enableRowGroup: true, enableColResize:true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
+      {headerName:"location", field:"location", width: 130, enableRowGroup: true},
       {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
       {headerName:"Technology", field:"technologies", width: 130, enableRowGroup: true},
       {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
@@ -89,6 +90,7 @@ export default class ResultsTable extends React.Component {
     const companyHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true },
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
+      {headerName:"location", field:"location", width: 130, enableRowGroup: true},
       {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
       {headerName:"Technology", field:"technologies", width: 130, enableRowGroup: true},
       {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
@@ -133,6 +135,7 @@ export default class ResultsTable extends React.Component {
               homePage: result.has_home_page ? true : false,
               wikipedia: result.has_wikipedia ? true : false,
               companyName: result.company_name,
+              location: result.location,
               industry: this.arrayConvert(result.industries),
               revenue: (result.revenue).toLocaleString(),
               funding: (result.funding).toLocaleString(),
@@ -144,6 +147,7 @@ export default class ResultsTable extends React.Component {
           return (
             {
               companyName: result.company_name,
+              location: result.location,
               industry: this.arrayConvert(result.industries),
               revenue: (result.revenue).toLocaleString(),
               funding: (result.funding).toLocaleString(),

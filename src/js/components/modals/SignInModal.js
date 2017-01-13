@@ -3,6 +3,8 @@ import { Redirect } from "react-router";
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize';
 import cookie from "react-cookie";
 import $ from "jquery";
+import { hashHistory } from 'react-router';
+
 
 import PasswordResetModal from "../modals/PasswordResetModal"
 export default class SignInModal extends React.Component {
@@ -12,8 +14,8 @@ export default class SignInModal extends React.Component {
       email: "",
       password: ""
     }
-
     this.signIn = this.signIn.bind(this);
+    this.cookieSaver = this.cookieSaver.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
@@ -38,14 +40,19 @@ export default class SignInModal extends React.Component {
       data: {username: email, password: password},
       success: (response) => {
         console.log(response);
-        cookie.save("token", response.token, { path: "/" });
-        this.context.router.push("/search");
+        this.cookieSaver(response);
       },
       error: (response) => {
         console.log(response);
       }
     })
 
+    // this.context.router.transitionTo("/search");
+  }
+
+  cookieSaver = (response) => {
+    cookie.save("token", response.token, { path: "/" });
+    hashHistory.push("/search")
   }
 
   render() {

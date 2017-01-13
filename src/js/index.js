@@ -20,7 +20,7 @@ import NotFound                                     from "./pages/NotFound";
 
 const App = document.getElementById('app');
 
-let loggedIn = true;
+let loggedIn = false;
 
 const updateLogin = (status) => {
   if (status) {
@@ -41,31 +41,39 @@ const updateLogin = (status) => {
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         console.log(response);
-        return updateLogin(true);
+        updateLogin(true);
       },
       error: (response) => {
         console.log(response);
         cookie.remove("token", { path: "/" })
-        return updateLogin(false);
+        updateLogin(false);
       }
     })
   };
-})
+})();
 
-const requireAuth = (nextState, replace) => {
-  if (!loggedIn) {
-    replace({
-      pathname: '/'
-    })
+const requireAuth = (nextState, replace, cb) => {
+  setTimeout(()=> {
+    if (!loggedIn) {
+      replace({
+        pathname: '/'
+      })
+    }
+    return cb();
   }
+  , 700);
 }
 
-const guestsOnly = (nextState, replace) => {
-  if (loggedIn) {
-    replace({
-      pathname: '/search'
-    })
+const guestsOnly = (nextState, replace, cb) => {
+  setTimeout(()=> {
+    if (loggedIn) {
+      replace({
+        pathname: '/search'
+      })
+    }
+    return cb();
   }
+  , 700);
 }
 
 ReactDOM.render(

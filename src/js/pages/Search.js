@@ -136,10 +136,12 @@ export default class Search extends React.Component {
     });
   }
 
-  nextSearch(query) {
+  nextSearch(url) {
+    let tokenHeader = `Token ${this.state.token}`;
 
     $.ajax({
-      url:query,
+      url:url,
+      headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
       success:function(results){
