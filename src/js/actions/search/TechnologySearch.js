@@ -13,7 +13,7 @@ export default class TechonologySearch extends React.Component {
   }
 
   componentWillMount(){
-    let tokenHeader = `Token ${this.props.token}`;
+    let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
       url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/technology/?page_size=150',

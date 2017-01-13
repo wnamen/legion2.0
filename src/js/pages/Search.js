@@ -15,8 +15,8 @@ export default class Search extends React.Component {
       token: cookie.load("token"),
       loading: false,
       apiState: {
-        people: true,
-        companies: false
+        job: true,
+        company: false
       },
       results: [],
       resultsArray: [],
@@ -33,8 +33,8 @@ export default class Search extends React.Component {
   setApiState() {
     this.setState({
       apiState: {
-        people: !this.state.apiState.people,
-        companies: !this.state.apiState.companies
+        job: !this.state.apiState.job,
+        company: !this.state.apiState.company
       }
     })
   }
@@ -79,7 +79,7 @@ export default class Search extends React.Component {
 
   componentWillMount(){
     this.setState({loading:true});
-    let current_state = this.state.apiState.people ? "job" : "company";
+    let current_state = this.state.apiState.job ? "job" : "company";
     let tokenHeader = `Token ${this.state.token}`;
     console.log(tokenHeader);
 
@@ -111,14 +111,16 @@ export default class Search extends React.Component {
     if (apiState !== undefined) {
       current_state = apiState
     } else {
-      current_state = this.state.apiState.people ? "job" : "company";
+      current_state = this.state.apiState.job ? "job" : "company";
     }
 
     let url = `https://legionv2-api.us-west-2.elasticbeanstalk.com/search/${current_state}/?format=json&page_size=50&${query}`;
+    let tokenHeader = `Token ${this.state.token}`;
+    console.log(url);
 
     $.ajax({
       url: url,
-      headers: {"Authorization": tokenHeader, 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE" },
+      headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
       success:function(results){

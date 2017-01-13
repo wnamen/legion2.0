@@ -16,7 +16,6 @@ export default class SignInModal extends React.Component {
     this.signIn = this.signIn.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.successRedirect = this.successRedirect.bind(this);
   }
 
   handleEmailChange = (e) => {
@@ -48,10 +47,6 @@ export default class SignInModal extends React.Component {
     })
 
   }
-
-  successRedirect = () => {
-  }
-
 
   render() {
     const modalTrigger = <div><small class="text-center"><a href="#" class="active">Forgot Password</a></small></div>

@@ -155,21 +155,6 @@ export default class CompanySearch extends React.Component {
               </div>
             </div>
 
-            <label>Department {advanced_filter}</label>
-            <Input type='select' name="department" onChange={this.handleSelected} disabled={this.state.PAYG} multiple>
-              <option value="customer-support">Customer Support</option>
-              <option value="c_suite">C-Suite</option>
-              <option value="engineering">Engineering</option>
-              <option value="finance">Finance</option>
-              <option value="human_resources">Human Resources</option>
-              <option value="legal">Legal</option>
-              <option value="marketing">Marketing</option>
-              <option value="operations">Operations</option>
-              <option value="purchasing">Purchasing</option>
-              <option value="r&d">R&D</option>
-              <option value="sales">Sales</option>
-            </Input>
-
             <label>Company Size {advanced_filter}</label>
             <Input type='select' name="company_size" onChange={this.handleSelected} disabled={this.state.PAYG} multiple>
               <option value="0-10">{less_than}10</option>

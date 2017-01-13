@@ -13,12 +13,13 @@ export default class IndustrySearch extends React.Component {
   }
 
   componentWillMount(){
-    let tokenHeader = `Token ${this.props.token}`;
+    let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
       url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=100',
-      headers: {"Authorization": tokenHeader, 'Access-Control-Allow-Origin': '*', "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE" },
-      dataType:'jsonp',
+      headers: {"Authorization": tokenHeader},
+      dataType:'json',
+      crossDomain:true,
       cache:false,
       success:function(industries){
         this.setState({industrySuggestions: industries});

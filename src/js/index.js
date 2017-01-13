@@ -19,31 +19,40 @@ import NotFound                                     from "./pages/NotFound";
 
 const App = document.getElementById('app');
 
-const loginCheck = () => {
+let loggedIn = true;
+
+const updateLogin = (status) => {
+  if (status) {
+    return loggedIn = true;
+  }
+  return loggedIn = false;
+}
+
+(() => {
   let token = cookie.load("token");
 
   if (token !== undefined) {
     let tokenHeader = `Token ${token}`;
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me?format=json",
+      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
       dataType: "JSON",
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         console.log(response);
+        return updateLogin(true);
       },
       error: (response) => {
         console.log(response);
-
+        cookie.remove("token", { path: "/" })
+        return updateLogin(false);
       }
     })
-    return true;
   };
-  return false;
-}
+})
 
 const requireAuth = (nextState, replace) => {
-  if (!loginCheck()) {
+  if (!loggedIn) {
     replace({
       pathname: '/'
     })
@@ -51,7 +60,7 @@ const requireAuth = (nextState, replace) => {
 }
 
 const guestsOnly = (nextState, replace) => {
-  if (loginCheck()) {
+  if (loggedIn) {
     replace({
       pathname: '/search'
     })
