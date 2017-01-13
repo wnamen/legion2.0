@@ -1,8 +1,11 @@
 import React from "react"
-import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
+import { Dropdown, NavItem, Button, Modal, Input, Collapsible, CollapsibleItem } from 'react-materialize'
 
 export default class SaveCampaignModal extends React.Component {
   render() {
+    const advancedSettingsHeader = <div class="advancedSettingsBtn"><small class="text-center"><a class="active">Advanced Settings</a></small></div>;
+
+
     return (
         <div class="sixteen modalContainer">
          	<div class="thirteen columns text-center smallModal">
@@ -11,7 +14,7 @@ export default class SaveCampaignModal extends React.Component {
         		<form>
 	        		<div class="gray inlineFlex">
 	        			<div class="preText">Start this campaign on</div>
-	        			<input type="text" placeholder="MM/DD/YYYY" class="datePicker inline-block"></input> 
+	        			<input type="text" placeholder="MM/DD/YYYY" class="datePicker inline-block"></input>
 	        			at
 	        			<Input type='select' name="whatHour" id="hour" onChange={this.handleSelected}>
 			                <option value="1">1</option>
@@ -94,20 +97,26 @@ export default class SaveCampaignModal extends React.Component {
 			                <option value="pm">PM</option>
 			            </Input>
 	        		</div>
-	        		<div class="gray inlineFlex bigger">Send this campaign to 
+	        		<div class="gray inlineFlex bigger">Send this campaign to
 	        			<Input type='select' name="chooseList" onChange={this.handleSelected}>
 			                <option value="">Choose List</option>
 			                <option value="13">My first List</option>
 			                <option value="1234">Other List</option>
 			            </Input>
 	        		</div>
-	        		<div class="gray inlineFlex bigger">Name this campaign 
+	        		<div class="gray inlineFlex bigger">Name this campaign
 	        			<Input type='text' name="createName" placeholder="My Campaign" onChange={this.handleSelected}>
 			            </Input>
 	        		</div>
-	        		<div class="advancedSettingsBtn"><small class="text-center"><a class="active">Advanced Settings</a></small></div>
-
-
+                <Collapsible>
+                  <CollapsibleItem header={advancedSettingsHeader}>
+                    <div class="opSlider">
+                      <div class="gray">&nbsp; 500 Search Queries/Month</div>
+                      <div class="gray">&nbsp; 50,000 Search Results/Month</div>
+                      <div class="gray">&nbsp; 10,000 Uploaded Contacts</div>
+                    </div>
+                  </CollapsibleItem>
+                </ Collapsible>
 			        <div class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</div>
 		        </form>
         	</div>
