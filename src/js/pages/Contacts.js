@@ -1,5 +1,6 @@
 import React            from "react";
 import { Link }         from "react-router";
+import cookie           from "react-cookie";
 import { CubeGrid }     from "better-react-spinkit"
 
 // import ContactResults from "../components/contacts/ContactResults"
@@ -14,6 +15,7 @@ export default class Contacts extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      token: cookie.load("token"),
       loading: false,
       mapping: false,
       results: "",
@@ -104,15 +106,34 @@ export default class Contacts extends React.Component {
         }
       ]
     }
-    this.isMapping = this.isMapping.bind(this);
+    this.updateMappingStatus = this.updateMappingStatus.bind(this);
   }
 
-  componentWillMount(){
+  componentWillMount = () =>{
     this.setState({loading:true});
+    let tokenHeader = `Token ${this.state.token}`;
 
-    $.ajax({
-      url:'https://apidev.legionanalytics.com/api/people/?format=json&page_size=50',
+    $.get({
+      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/tm-list/?page_size=1000',
+      headers: {"Authorization": tokenHeader },
       dataType:'json',
+      crossDomain: true,
+      cache:false,
+      success:function(results){
+        this.setState({
+          tmLists:results,
+          loading: false
+        });
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
+
+    $.get({
+      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/tm-list/?page_size=1000',
+      headers: {"Authorization": tokenHeader },
+      dataType:'json',
+      crossDomain: true,
       cache:false,
       success:function(results){
         this.setState({
@@ -125,19 +146,26 @@ export default class Contacts extends React.Component {
     });
   }
 
-  isMapping() {
+  updateMappingStatus = () => {
+    this.setState({mapping: !this.state.mapping})
+  }
+
+  render() {
+    console.log(this.state.mapping);
+
+    let currentView;
     if (this.state.mapping) {
-      return (
+      currentView = (
         <div class="sixteen columns">
-          <MapBar />
+          <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus}/>
           <MapTable contacts={this.state.contacts}/>
           <MapResults />
         </div>
       )
     } else {
-      return (
+      currentView = (
         <div class="sixteen columns">
-          <ContactsBar />
+          <ContactsBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
               <ContactsTable results={this.state.results} />
@@ -145,13 +173,11 @@ export default class Contacts extends React.Component {
         </div>
       )
     }
-  }
 
-  render() {
     return (
         <div class="page-container gray-light-background">
           <div class="sixteen columns">
-            { this.isMapping() }
+            { currentView }
           </div>
         </div>
 

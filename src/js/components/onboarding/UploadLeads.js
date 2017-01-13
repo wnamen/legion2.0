@@ -11,7 +11,7 @@ export default class UploadLeads extends React.Component {
     this.clickTrigger = this.clickTrigger.bind(this)
   }
   //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
-    clickTrigger(e){
+    clickTrigger = (e) => {
       var holder;
       var filename;
       $("#hiddenInput").trigger("click");

@@ -85,7 +85,7 @@ export default class Search extends React.Component {
 
     console.log(current_state);
 
-    $.ajax({
+    $.get({
       url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/job/?page_size=50',
       headers: {"Authorization": tokenHeader },
       dataType:'json',
@@ -118,7 +118,7 @@ export default class Search extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
     console.log(url);
 
-    $.ajax({
+    $.get({
       url: url,
       headers: {"Authorization": tokenHeader},
       dataType:'json',
@@ -140,7 +140,7 @@ export default class Search extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
     console.log(url);
 
-    $.ajax({
+    $.get({
       url:url,
       headers: {"Authorization": tokenHeader},
       dataType:'json',

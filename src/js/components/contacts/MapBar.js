@@ -13,10 +13,15 @@ export default class ContactsBar extends React.Component {
 
     // this.getTag = debounce(850, this.getTag.bind(this));
     this.handleDebouncer = this.handleDebouncer.bind(this);
+    this.completeMapping = this.completeMapping.bind(this);
   }
 
   handleDebouncer(e) {
     e.persist();
+  }
+
+  completeMapping = () => {
+    this.props.updateMappingStatus();
   }
 
   render(){
@@ -29,6 +34,9 @@ export default class ContactsBar extends React.Component {
 
     return(
       <div class="sixteen columns">
+        <Modal>
+          <UploadContactsModal />
+        </Modal>
         <nav class="navbar white-background small-border gray-border">
           <div id="map-bar" class="nav-wrapper">
             <ul class="left">
@@ -36,11 +44,7 @@ export default class ContactsBar extends React.Component {
             </ul>
 
             <ul class="right">
-              <li>
-                <Modal trigger={modalTrigger}>
-                  <UploadContactsModal />
-                </Modal>
-              </li>
+              <li><a class="contact-upload" onClick={this.completeMapping}>Upload Contacts</a></li>
             </ul>
           </div>
         </nav>
