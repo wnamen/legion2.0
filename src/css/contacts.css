@@ -32,6 +32,7 @@
 #contacts-list-main-selector {
   height: 30px;
   font-size: 0.8em;
+  min-width: 215px;
 }
 
 #contacts-bar .left li div {

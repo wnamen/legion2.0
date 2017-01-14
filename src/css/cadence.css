@@ -239,10 +239,27 @@ input[name=newSubjectName]:focus:not([readonly]){
 .advancedSettingsBtn{
 	margin-top: 1em;
 }
-
-
-
-
+.thirteen.columns.text-center.smallModal .collapsible-header{
+	background: none;
+}
+.thirteen.columns.text-center.smallModal .collapsible-body{
+	border-bottom: none;
+}
+.gray.inlineFlex.bigger > .col{
+	margin:0 1em;
+}
+.gray.inlineFlex.bigger.whatEmailSend {
+    display: -webkit-box;
+    width: 100%;
+    text-align: center;
+    padding: 0 4em;
+}
+.gray.inlineFlex.bigger.whatEmailSend > .col.input-field {
+    width: 64% !important;
+}
+.topMargin1em{
+	margin-top: 1em;
+}
 
 
 
