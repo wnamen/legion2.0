@@ -3,7 +3,6 @@ import { Dropdown, NavItem, Button, Modal, Input, Collapsible, CollapsibleItem }
 
 export default class SaveCampaignModal extends React.Component {
   render() {
-    const advancedSettingsHeader = <div class="advancedSettingsBtn"><small class="text-center"><a class="active">Advanced Settings</a></small></div>;
 
 
     return (
@@ -108,15 +107,16 @@ export default class SaveCampaignModal extends React.Component {
 	        			<Input type='text' name="createName" placeholder="My Campaign" onChange={this.handleSelected}>
 			            </Input>
 	        		</div>
-                <Collapsible>
-                  <CollapsibleItem header={advancedSettingsHeader}>
-                    <div class="opSlider">
-                      <div class="gray">&nbsp; 500 Search Queries/Month</div>
-                      <div class="gray">&nbsp; 50,000 Search Results/Month</div>
-                      <div class="gray">&nbsp; 10,000 Uploaded Contacts</div>
-                    </div>
-                  </CollapsibleItem>
-                </ Collapsible>
+	        		<div class="gray inlineFlex bigger topMargin1em">
+	        			Send this campaign on Saturday & Sunday
+		        		<Input checked={this.props.checked} onChange={this.socialCheck} name='primary' type='checkbox' label=" " value="0" />
+		        	</div>
+	        		<div class="gray inlineFlex bigger whatEmailSend topMargin1em">Send with
+				        <Input type='select' name="whatEmailToSend" id="chooseEmail" onChange={this.handleSelected}>
+			                <option value="jamasen@legionanalytics.com">jamasen@legionanalytics.com</option>
+			                <option value="jamasen@kylie.ai">jamasen@kylie.ai</option>
+			            </Input>
+	        		</div>
 			        <div class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</div>
 		        </form>
         	</div>

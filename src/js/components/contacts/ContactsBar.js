@@ -1,8 +1,8 @@
 import React from "react"
-import CSSModules from 'react-css-modules'
 import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize"
-
+import $ from 'jquery'
 import UploadContactsModal from "../modals/UploadContactsModal";
+import NewListModal from "../modals/NewListModal";
 
 export default class ContactsBar extends React.Component {
   constructor(props) {
@@ -16,6 +16,7 @@ export default class ContactsBar extends React.Component {
     this.getCSV = this.getCSV.bind(this);
     this.beginMapping = this.beginMapping.bind(this);
     this.handleNewListView = this.handleNewListView.bind(this);
+    this.createNewList = this.createNewList.bind(this);
   }
 
   handleDebouncer = (e) => {
@@ -47,7 +48,14 @@ export default class ContactsBar extends React.Component {
     // this.props.onCopyToList(e.target.text, this.state.selected);
   }
 
+  createNewList = (e) => {
+    e.stopPropagation();
+  }
+
   render(){
+
+    const modalTrigger = <NavItem><div>+ Create new list</div></NavItem>;
+
     let listData = this.props.lists;
     let data = this.props.results;
     let userLists;
@@ -82,7 +90,9 @@ export default class ContactsBar extends React.Component {
                   <a>{ this.state.selectedListView } <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"30px", "height": "30px"}} aria-hidden="true"></i></a>
                 }>
                   { userLists }
-                  <NavItem>+ Create new list</NavItem>
+                  <Modal trigger={modalTrigger}>
+                    <NewListModal />
+                  </Modal>
                 </Dropdown>
               </li>
               { this.props.isSelected &&

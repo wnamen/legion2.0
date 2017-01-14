@@ -3,6 +3,7 @@ import { Dropdown, NavItem, Modal, Input } from "react-materialize";
 
 import PurchaseModal from "../modals/PurchaseModal"
 import BillingModal from "../modals/BillingModal"
+import NewListModal from "../modals/NewListModal";
 
 export default class ActionBar extends React.Component {
   constructor(props) {
@@ -21,10 +22,11 @@ export default class ActionBar extends React.Component {
   createList(e) {
     e.preventDefault();
     console.log("clicked");
-
   }
 
   render(){
+    const modalTrigger = <NavItem><div>+ Create new list</div></NavItem>;
+
     let data = this.props.results;
     let result_count = data.count;
     if (result_count !== undefined) {
@@ -58,7 +60,9 @@ export default class ActionBar extends React.Component {
 
                   </div>
                   </Modal>
-                  <NavItem><div onClick={this.createList}>+ Create new list</div></NavItem>
+                  <Modal trigger={modalTrigger}>
+                    <NewListModal />
+                  </Modal>
                 </Dropdown>
               </li>
             </ul>
