@@ -57,7 +57,7 @@ export default class UserNav extends React.Component {
                   trigger={
                   <a>12,450 credits <i id ="credit-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i><span id="buy-more" class="electric-blue">Buy More</span></a>
                 }>
-                  <NavItem>25k Credits - $6,250 { buttonRender }</NavItem>
+                  <NavItem>25k Credits - $6,250 <div class="inline electric-blue-background white" buy="true">Buy</div> <div class="hidden green-background" confirmBuy="false" priceVal="6250" numCredits="25000" id="25KCredits">Confirm?</div></NavItem>
                   <NavItem>10k Credits - $3,300 { buttonRender }</NavItem>
                   <NavItem>5k Credits - $2,500 { buttonRender }</NavItem>
                   <NavItem>3k Credits - $1,800 { buttonRender }</NavItem>
