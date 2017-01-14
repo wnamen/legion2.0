@@ -35,22 +35,25 @@ export default class CompanyBio extends React.Component {
           <h1 class="gray">*****@**********.***</h1>
           <h1 class="gray">(***) ***-****</h1>
           <br></br>
-          <h6 class="black">JOB TITLE</h6>
-          <p class="profile-body gray thick-line-height">Managing Partner at Y Combinator.</p>
+          <h6 class="black">Company Size</h6>
+          <p class="profile-body gray thick-line-height">11-50 employees</p>
           <br></br>
-          <h6 class="black">AGE</h6>
-          <p class="profile-body gray thick-line-height">32 years old</p>
+          <h6 class="black">Revenue</h6>
+          <p class="profile-body gray thick-line-height">$1,500,000-$5,000,000</p>
           <br></br>
-          <h6 class="black">INTERESTS</h6>
+          <h6 class="black">Funding</h6>
+          <p class="profile-body gray thick-line-height">$300,000,000</p>
+          <br></br>
+          <h6 class="black">Technologies used at Y Combinator</h6>
           <p class="profile-body gray thick-line-height">
-            <div class="tag gray">User Design</div>
-            <div class="tag gray">User Interface Design</div>
-            <div class="tag gray">Design</div>
-            <div class="tag gray">Photoshop</div>
-            <div class="tag gray">User Design</div>
-            <div class="tag gray">User Interface Design</div>
-            <div class="tag gray">Design</div>
-            <div class="tag gray">Photoshop</div>
+            <div class="tag gray">Google Analytics</div>
+            <div class="tag gray">Algolia</div>
+            <div class="tag gray">Segment</div>
+            <div class="tag gray">Wufoo</div>
+            <div class="tag gray">Stripe</div>
+            <div class="tag gray">Clerky</div>
+            <div class="tag gray">Python</div>
+            <div class="tag gray">React</div>
           </p>
           <br></br>
           <h6 class="black">PUBLIC PROFILES</h6>
@@ -71,12 +74,6 @@ export default class CompanyBio extends React.Component {
             <div class="tag gray">Venture Capital</div>
             <div class="tag gray">Angel Investing</div>
             <div class="tag gray">Marketing/Advertising</div>
-          </p>
-          <br></br>
-          <h6 class="black">EDUCATION</h6>
-          <p class="profile-body gray thick-line-height">
-            <div class="splink edu">The Johns Hopkins University</div>
-            <div class="splink edu">Modesto High School</div>
           </p>
           <br></br>
           <h6 class="black">PUBLIC BIO</h6>

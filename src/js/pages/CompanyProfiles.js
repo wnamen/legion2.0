@@ -3,7 +3,8 @@ import { Link }                   from "react-router";
 import $                          from "jquery";
 
 import CompanyLocationColumn      from "../components/companyProfiles/CompanyLocationColumn";
-import CompanyBio                  from "../components/companyProfiles/CompanyBio";
+import CompanyBio                 from "../components/companyProfiles/CompanyBio";
+import KylieAdColumn              from "../components/companyProfiles/KylieAdColumn";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
@@ -25,6 +26,7 @@ export default class CompanyProfiles extends React.Component {
         <div class="sixteen columns">
           <CompanyLocationColumn />
           <CompanyBio />
+          <KylieAdColumn />
         </div>
       </div>
     );

@@ -25,12 +25,7 @@ export default class Options extends React.Component {
           <br></br>
           <div class="activityAction">
             <div class="actionIcon electric-blue-background"></div>
-            <p class="activityDetails pricingDetails gray">500 Search Queries/Month</p>
-          </div>
-          <br></br>
-          <div class="activityAction">
-            <div class="actionIcon electric-blue-background"></div>
-            <p class="activityDetails pricingDetails gray">50,000 Search Results/Month</p>
+            <p class="activityDetails pricingDetails gray">25,000 Search Results/Month</p>
           </div>
           <br></br>
           <div class="activityAction">
