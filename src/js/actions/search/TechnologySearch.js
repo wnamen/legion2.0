@@ -32,7 +32,8 @@ export default class TechonologySearch extends React.Component {
     query = query.text
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/technologies/?format=json&page_size=100&${query}`,
+      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/search/technology/?page_size=100&${query}`,
+      headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
       success:function(technologies){

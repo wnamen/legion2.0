@@ -26,7 +26,7 @@ export default class ContactsTable extends React.Component {
     let endIdx = arr.length - 1;
     let convertedString = "";
     arr.forEach((item, idx) => {
-      idx === endIdx ? convertedString = convertedString + item.name : convertedString = convertedString + item.name + ", " ;
+      idx === endIdx ? convertedString = convertedString + item : convertedString = convertedString + item + ", " ;
     });
     return convertedString;
   }
@@ -47,17 +47,13 @@ export default class ContactsTable extends React.Component {
       this.api.deselectAll();
   }
 
-  onCellClicked(event) {
-      console.log('onCellClicked: ' + event.data.name + ', col ' + event.colIndex);
-  }
-
   onRowSelected(event) {
       console.log('onRowSelected: ' + event.node.data.name);
   }
 
   render() {
     let data = this.props.results;
-    console.log(this.props);
+
     let mappedResults;
     const tableHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
@@ -94,43 +90,39 @@ export default class ContactsTable extends React.Component {
       mappedResults = data.results.map((result, index) => {
         return (
           {
-            name: result.person.name,
-            jobTitle: result.job.title,
-            companyName: result.company.name,
-            age: result.person.age,
-            location: result.person.location,
-            interests: this.arrayConvert(result.person.interests),
-            linkedin: result.person.personal_linkedin,
-            facebook: result.person.personal_facebook,
-            twitter: result.person.personal_twitter,
-            crunchbase: result.person.personal_crunchbase,
-            angellist: result.person.personal_angellist,
-            wikipedia: result.person.personal_wikipedia,
-            homePage: result.person.personal_homePage,
-            industry: this.arrayConvert(result.company.industries),
-            technologies: this.arrayConvert(result.company.technologies),
-            companyLocation: result.company.location,
-            revenue: (result.company.revenue).toLocaleString(),
-            funding: (result.company.funding).toLocaleString(),
-            companySize: (result.company.number_of_employees).toLocaleString(),
-            companyLinkedin: result.company.company_linkedin,
-            companyTwitter: result.company.company_twitter,
-            companyFacebook: result.company.company_facebook,
-            companyWikipedia: result.company.company_wikipedia,
-            companyHomePage: result.company.company_home_page
+            name: result.person.name ? result.person.name : "",
+            jobTitle: result.job.title ? result.job.title : "",
+            companyName: result.company.name ? result.company.name : "",
+            age: result.person.age ? result.person.age : "",
+            location: result.person.location ? result.person.location : "",
+            interests: result.person.interests ? this.arrayConvert(result.person.interests) : "",
+            linkedin: result.person.personal_linkedin ? result.person.personal_linkedin : "",
+            facebook: result.person.personal_facebook ? result.person.personal_facebook : "",
+            twitter: result.person.personal_twitter ? result.person.personal_twitter : "",
+            crunchbase: result.person.personal_crunchbase ? result.person.personal_crunchbase : "",
+            angellist: result.person.personal_angellist ? result.person.personal_angellist : "",
+            wikipedia: result.person.personal_wikipedia ? result.person.personal_wikipedia : "",
+            homePage: result.person.personal_homePage ? result.person.personal_homePage : "",
+            industry: result.company.industries ? this.arrayConvert(result.company.industries) : "",
+            technologies: result.company.technologies ? this.arrayConvert(result.company.technologies) : "",
+            companyLocation: result.company.location ? result.company.location : "",
+            revenue: (result.company.revenue).toLocaleString() ? (result.company.revenue).toLocaleString() : "",
+            funding: (result.company.funding).toLocaleString() ? (result.company.funding).toLocaleString() : "",
+            companySize: (result.company.number_of_employees).toLocaleString() ? (result.company.number_of_employees).toLocaleString() : "",
+            companyLinkedin: result.company.company_linkedin ? result.company.company_linkedin : "",
+            companyTwitter: result.company.company_twitter ? result.company.company_twitter : "",
+            companyFacebook: result.company.company_facebook ? result.company.company_facebook : "",
+            companyWikipedia: result.company.company_wikipedia ? result.company.company_wikipedia : "",
+            companyHomePage: result.company.company_home_page ? result.company.company_home_page : ""
           }
         );
-
-        // return (
-        //   <Results index={index} key={result.id} name={result.person.name} age={result.person.age} jobTitle={result.title} companyName={result.company.name} checked={this.props.rowState[index]} callback={this.props.checkRow} />
-        // );
       })
-    } else if (data.results !== undefined) {
+    } else if (data.results === undefined) {
       return (
         <div class="sixteen columns">
           <div id="noResultsContainer" class="white-background">
             <img id="noResultsImg" src="src/img/no_search_results.png" />
-            <span id="noResultsMessage" class="electric-blue">No Search Results</span>
+            <span id="noResultsMessage" class="electric-blue">So Much Empty!</span>
           </div>
         </div>
       )
@@ -144,7 +136,6 @@ export default class ContactsTable extends React.Component {
           <AgGridReact
             onGridReady={this.onGridReady.bind(this)}
             onRowSelected={this.onRowSelected.bind(this)}
-            onCellClicked={this.onCellClicked.bind(this)}
             showToolPanel={this.state.showToolPanel}
 
             icons={this.state.icons}

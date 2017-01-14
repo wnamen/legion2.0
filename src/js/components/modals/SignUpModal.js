@@ -1,6 +1,8 @@
 import React from "react"
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
+import cookie from "react-cookie";
 import SignInModal from "../modals/SignInModal"
+
 export default class SignUpModal extends React.Component {
   constructor(props) {
     super(props);
@@ -53,9 +55,7 @@ export default class SignUpModal extends React.Component {
   }
 
   cookieSaver = (response) => {
-    console.log(response);
     cookie.save("token", response.token, { path: "/" });
-    hashHistory.push("/search")
   }
 
   render() {

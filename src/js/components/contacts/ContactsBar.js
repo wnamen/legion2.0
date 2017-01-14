@@ -8,6 +8,7 @@ export default class ContactsBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedListView: "All My Contacts",
       isSelected:true
     };
 
@@ -15,6 +16,7 @@ export default class ContactsBar extends React.Component {
     this.handleDebouncer = this.handleDebouncer.bind(this);
     this.getCSV = this.getCSV.bind(this);
     this.beginMapping = this.beginMapping.bind(this);
+    this.handleNewListView = this.handleNewListView.bind(this);
   }
 
   handleDebouncer = (e) => {
@@ -36,14 +38,28 @@ export default class ContactsBar extends React.Component {
     this.props.updateMappingStatus();
   }
 
+  handleNewListView = (e) => {
+    this.props.onNewListView(e.target.text);
+    this.setState({selectedListView: e.target.text})
+  }
 
   render(){
+    let listData = this.props.lists;
     let data = this.props.results;
+    let userLists;
+
     let result_count = 50;
     if (result_count !== undefined) {
       result_count = "Search " + result_count.toLocaleString() + " Contacts";
     }
-    console.log(this.props);
+
+    if ((listData !== undefined) && (listData.length > 0)) {
+      userLists = listData.map((list, index) => {
+        return (
+          <NavItem key={index} id={list.id} onClick={this.handleNewListView}>{list.name}</NavItem>
+        )
+      });
+    }
 
     return(
       <div class="sixteen columns">
@@ -52,9 +68,9 @@ export default class ContactsBar extends React.Component {
             <ul class="left">
               <li id="contacts-list-main-selector" class="right-actions">
                 <Dropdown trigger={
-                  <a>All My Contacts <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"30px", "height": "30px"}} aria-hidden="true"></i></a>
+                  <a>{ this.state.selectedListView } <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"30px", "height": "30px"}} aria-hidden="true"></i></a>
                 }>
-                  <NavItem>All My Contacts</NavItem>
+                  { userLists }
                   <NavItem>+ Create new list</NavItem>
                 </Dropdown>
               </li>

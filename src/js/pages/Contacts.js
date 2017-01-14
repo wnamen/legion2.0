@@ -18,7 +18,9 @@ export default class Contacts extends React.Component {
       token: cookie.load("token"),
       loading: false,
       mapping: false,
-      results: "",
+      results: [],
+      tmLists: [],
+      defaultListView: "All My Contacts",
       contacts: [
         {
           id:1865,
@@ -107,6 +109,8 @@ export default class Contacts extends React.Component {
       ]
     }
     this.updateMappingStatus = this.updateMappingStatus.bind(this);
+    this.changeListView = this.changeListView.bind(this);
+    this.getNewListView = this.getNewListView.bind(this);
   }
 
   componentWillMount = () =>{
@@ -119,18 +123,46 @@ export default class Contacts extends React.Component {
       dataType:'json',
       crossDomain: true,
       cache:false,
-      success:function(results){
+      success:function(response){
+        console.log(response);
         this.setState({
-          tmLists:results,
-          loading: false
+          tmLists:response.results
         });
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
     });
 
+    console.log(this.state.tmLists);
+
+    this.state.tmLists.forEach((list) => {
+      if (list.name === this.state.defaultListView) {
+        $.get({
+          url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/contacts/${list.id}/?page_size=50`,
+          headers: {"Authorization": tokenHeader },
+          dataType:'json',
+          crossDomain: true,
+          cache:false,
+          success:function(results){
+            this.setState({
+              results:results,
+              loading: false
+            });
+          }.bind(this),
+          error:function(xhr, status, err){
+          }.bind(this)
+        });
+      }
+    });
+
+  }
+
+  getNewListView = (listID) => {
+    this.setState({loading:true});
+    let tokenHeader = `Token ${this.state.token}`;
+
     $.get({
-      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/contacts/1895/?page_size=1000',
+      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/contacts/${listID}/?page_size=50`,
       headers: {"Authorization": tokenHeader },
       dataType:'json',
       crossDomain: true,
@@ -150,6 +182,16 @@ export default class Contacts extends React.Component {
     this.setState({mapping: !this.state.mapping})
   }
 
+  changeListView = (selectedList) => {
+    this.state.tmLists.forEach((list) => {
+      if (list.name === selectedList) {
+        console.log(list.id);
+        this.getNewListView(list.id);
+      }
+    });
+
+  }
+
   render() {
     console.log(this.state.mapping);
 
@@ -165,7 +207,7 @@ export default class Contacts extends React.Component {
     } else {
       currentView = (
         <div class="sixteen columns">
-          <ContactsBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
+          <ContactsBar lists={this.state.tmLists} onNewListView={this.changeListView} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
               <ContactsTable results={this.state.results} />

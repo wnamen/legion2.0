@@ -30,11 +30,14 @@ export default class IndustrySearch extends React.Component {
   }
 
   handleIndustrySearch(query) {
+    let tokenHeader = `Token ${this.props.userToken}`;
     query = query.text
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/industries/?format=json&page_size=100&num_companies__gt=0&${query}`,
+      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=100&num_companies__gt=0&${query}`,
+      headers: {"Authorization": tokenHeader},
       dataType:'json',
+      crossDomain:true,
       cache:false,
       success:function(industries){
         this.setState({industrySuggestions: industries});
@@ -59,7 +62,7 @@ export default class IndustrySearch extends React.Component {
   getIndustrySuggestionValue = suggestion => "";
 
   renderIndustrySuggestion = suggestion => (
-      <option value={suggestion.id} title="industry">{suggestion.name}</option>
+      <option value={suggestion.industry_id} title="industry">{suggestion.name}</option>
   );
 
   onIndustrySuggestionSearch = (event, { newValue }) => {

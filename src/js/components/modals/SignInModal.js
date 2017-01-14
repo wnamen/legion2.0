@@ -2,17 +2,12 @@ import React, { Component, PropTypes } from "react";
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize';
 import cookie from "react-cookie";
 import $ from "jquery";
-import { hashHistory } from 'react-router';
-
 
 import PasswordResetModal from "../modals/PasswordResetModal"
 export default class SignInModal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: "",
-      password: ""
-    }
+    this.state = {}
     this.signIn = this.signIn.bind(this);
     this.cookieSaver = this.cookieSaver.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -46,12 +41,11 @@ export default class SignInModal extends React.Component {
       }
     })
 
-    // this.context.router.transitionTo("/search");
   }
 
   cookieSaver = (response) => {
     cookie.save("token", response.token, { path: "/" });
-    hashHistory.push("/search")
+    this.context.router.transitionTo("/search");
   }
 
   render() {
