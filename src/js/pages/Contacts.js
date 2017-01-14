@@ -10,7 +10,6 @@ import MapBar           from "../components/contacts/MapBar";
 import MapTable         from "../components/contacts/MapTable";
 import MapResults       from "../components/contacts/MapResults";
 
-
 export default class Contacts extends React.Component {
   constructor(props){
     super(props)
@@ -113,6 +112,7 @@ export default class Contacts extends React.Component {
     this.changeListView = this.changeListView.bind(this);
     this.getNewListView = this.getNewListView.bind(this);
     this.captureSelected = this.captureSelected.bind(this);
+    this.loadInitialListView = this.loadInitialListView.bind(this);
   }
 
   componentWillMount = () =>{
@@ -127,6 +127,7 @@ export default class Contacts extends React.Component {
       cache:false,
       success:function(response){
         console.log(response);
+        this.loadInitialListView(response.results);
         this.setState({
           tmLists:response.results
         });
@@ -136,9 +137,14 @@ export default class Contacts extends React.Component {
     });
 
     console.log(this.state.tmLists);
+  }
 
-    this.state.tmLists.forEach((list) => {
+  loadInitialListView = (lists) => {
+    console.log(lists);
+    lists.forEach((list) => {
       if (list.name === this.state.defaultListView) {
+        let tokenHeader = `Token ${this.state.token}`;
+
         $.get({
           url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/contacts/${list.id}/?page_size=50`,
           headers: {"Authorization": tokenHeader },
@@ -156,7 +162,6 @@ export default class Contacts extends React.Component {
         });
       }
     });
-
   }
 
   getNewListView = (listID) => {
