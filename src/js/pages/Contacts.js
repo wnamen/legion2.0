@@ -16,6 +16,7 @@ export default class Contacts extends React.Component {
     super(props)
     this.state = {
       token: cookie.load("token"),
+      isSelected: false,
       loading: false,
       mapping: false,
       results: [],
@@ -111,6 +112,7 @@ export default class Contacts extends React.Component {
     this.updateMappingStatus = this.updateMappingStatus.bind(this);
     this.changeListView = this.changeListView.bind(this);
     this.getNewListView = this.getNewListView.bind(this);
+    this.captureSelected = this.captureSelected.bind(this);
   }
 
   componentWillMount = () =>{
@@ -189,7 +191,11 @@ export default class Contacts extends React.Component {
         this.getNewListView(list.id);
       }
     });
+  }
 
+  captureSelected = (data) => {
+    console.log(data);
+    this.setState({isSelected: true});
   }
 
   render() {
@@ -207,10 +213,10 @@ export default class Contacts extends React.Component {
     } else {
       currentView = (
         <div class="sixteen columns">
-          <ContactsBar lists={this.state.tmLists} onNewListView={this.changeListView} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
+          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} isSelected={this.state.isSelected} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
-              <ContactsTable results={this.state.results} />
+              <ContactsTable results={this.state.results} captureSelected={this.captureSelected} />
             }
         </div>
       )

@@ -47,8 +47,9 @@ export default class ContactsTable extends React.Component {
       this.api.deselectAll();
   }
 
-  onRowSelected(event) {
-      console.log('onRowSelected: ' + event.node.data.name);
+  onRowSelected(e) {
+      console.log('onRowSelected: ' + e.node.data.name);
+      this.props.captureSelected(e.node.data);
   }
 
   render() {

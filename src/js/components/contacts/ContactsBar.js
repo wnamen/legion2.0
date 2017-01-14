@@ -8,8 +8,7 @@ export default class ContactsBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedListView: "All My Contacts",
-      isSelected:true
+      selectedListView: "All My Contacts"
     };
 
     // this.getTag = debounce(850, this.getTag.bind(this));
@@ -43,12 +42,18 @@ export default class ContactsBar extends React.Component {
     this.setState({selectedListView: e.target.text})
   }
 
+  handleCopySelectedToList = (e) => {
+
+    // this.props.onCopyToList(e.target.text, this.state.selected);
+  }
+
   render(){
     let listData = this.props.lists;
     let data = this.props.results;
     let userLists;
+    let copyLists;
 
-    let result_count = 50;
+    let result_count = this.props.resultsCount;
     if (result_count !== undefined) {
       result_count = "Search " + result_count.toLocaleString() + " Contacts";
     }
@@ -56,7 +61,13 @@ export default class ContactsBar extends React.Component {
     if ((listData !== undefined) && (listData.length > 0)) {
       userLists = listData.map((list, index) => {
         return (
-          <NavItem key={index} id={list.id} onClick={this.handleNewListView}>{list.name}</NavItem>
+          <NavItem key={index} onClick={this.handleNewListView}>{list.name}</NavItem>
+        )
+      });
+
+      copyLists = listData.map((list, index) => {
+        return (
+          <NavItem key={index} onClick={this.handleCopySelectedToList}>{list.name}</NavItem>
         )
       });
     }
@@ -74,23 +85,25 @@ export default class ContactsBar extends React.Component {
                   <NavItem>+ Create new list</NavItem>
                 </Dropdown>
               </li>
-              <li>
-                <Input name="contacts_search" id="contacts-search" placeholder={result_count} onChange={this.handleDebouncer} />
-              </li>
+              { this.props.isSelected &&
+                <li>
+                  <Input name="contacts_search" id="contacts-search" placeholder={result_count} onChange={this.handleDebouncer} />
+                </li>
+              }
             </ul>
 
             <ul class="right">
               <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
               <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Export CSV</div></li>
 
-              { this.state.isSelected &&
+              { this.props.isSelected &&
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={
                 <a>Copy to List <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"normal"}} aria-hidden="true"></i></a>
               }>
                 <NavItem>My List</NavItem>
               </Dropdown></li>
               }
-              { this.state.isSelected && <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Remove</div></li> }
+              { this.props.isSelected && <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Remove</div></li> }
 
               <li><a class="contact-upload" onClick={this.getCSV}>Upload Contacts</a></li>
               <input onChange={this.beginMapping} type="file" accept=".csv" id="hiddenInput" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn hidden"></input>
