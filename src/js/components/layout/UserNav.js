@@ -57,10 +57,15 @@ export default class UserNav extends React.Component {
                   trigger={
                   <a>12,450 credits <i id ="credit-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i><span id="buy-more" class="electric-blue">Buy More</span></a>
                 }>
+                  <NavItem>25,000 Credits - $6,250 { buttonRender }</NavItem>
+                  <NavItem>10,000 Credits - $3,300 { buttonRender }</NavItem>
+                  <NavItem>5,000 Credits - $2,500 { buttonRender }</NavItem>
+                  <NavItem>3000 Credits - $1,800 { buttonRender }</NavItem>
+                  <NavItem>1,000 Credits - $750 { buttonRender }</NavItem>
                   <NavItem>500 Credits - $400 { buttonRender }</NavItem>
                   <NavItem>200 Credits - $170 { buttonRender }</NavItem>
-                  <NavItem>100 Credits - $90 { buttonRender }</NavItem>
-                  <NavItem>50 Credits - $50 { buttonRender }</NavItem>
+                  <NavItem>100 Credits - $100 { buttonRender }</NavItem>
+                  <NavItem>50 Credits - $60 { buttonRender }</NavItem>
                 </Dropdown>
               </li>
               <li id="settings-button" class="large-right-margin nav-hover">

@@ -26,7 +26,7 @@ export default class ResultsTable extends React.Component {
     let endIdx = arr.length - 1;
     let convertedString = "";
     arr.forEach((item, idx) => {
-      idx === endIdx ? convertedString = convertedString + item.name : convertedString = convertedString + item.name + ", " ;
+      idx === endIdx ? convertedString = convertedString + item : convertedString = convertedString + item + ", " ;
     });
     return convertedString;
   }
@@ -67,21 +67,21 @@ export default class ResultsTable extends React.Component {
       {headerName:"Name", field:"name", width: 130, enableRowGroup: true, enableColResize:true },
       {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
+      {headerName:"location", field:"location", width: 130, enableRowGroup: true},
       {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
+      {headerName:"Technology", field:"technologies", width: 130, enableRowGroup: true},
       {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
       {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
       {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
       {headerName:"Email", field:"email", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
-      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Website", field:"homePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
-      {headerName:"Company Website", field:"companyHomePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Angellist", field:"angellist", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Linkedin", field:"linkedin", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Facebook", field:"facebook", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Twitter", field:"twitter", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Instragram", field:"instagram", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Crunchbase", field:"crunchbase", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
-      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
-      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
       {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
       {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true}
@@ -90,19 +90,25 @@ export default class ResultsTable extends React.Component {
     const companyHeader = [
       {headerName:"", field:"chck", width: 30, checkboxSelection:true },
       {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
+      {headerName:"location", field:"location", width: 130, enableRowGroup: true},
       {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
+      {headerName:"Technology", field:"technologies", width: 130, enableRowGroup: true},
       {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
       {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
       {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
-      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true},
-      {headerName:"Company Website", field:"companyHomePage", width: 130, enableRowGroup: true},
-      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true},
-      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true}
+      {headerName:"Company Phone", field:"companyPhone", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Website", field:"companyHomePage", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Angellist", field:"companyAngellist", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Crunchbase", field:"companyCrunchbase", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Instagram", field:"companyInstagram", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer},
+      {headerName:"Company Wikipedia", field:"companyWikipedia", width: 130, enableRowGroup: true, cellRendererFramework: CheckMarkRenderer}
     ];
 
     let currentHeader;
 
-    if (this.props.apiState.people === true) {
+    if (this.props.apiState.job === true) {
       currentHeader = peopleHeader;
     } else {
       currentHeader = companyHeader;
@@ -110,42 +116,51 @@ export default class ResultsTable extends React.Component {
 
     if ((data !== undefined) && (data.length > 0)) {
       mappedResults = data.map((result, index) => {
-        if (this.props.apiState.people === true) {
+        if (this.props.apiState.job === true) {
           return (
             {
-              name: result.person.name,
+              name: result.person_name,
               jobTitle: result.title,
-              education: this.arrayConvert(result.person.education),
-              age: result.person.age,
-              interests: this.arrayConvert(result.person.interests),
+              education: this.arrayConvert(result.education),
+              age: result.age,
+              interests: this.arrayConvert(result.interests),
               phone: result.has_phone ? true : false,
               email: result.has_email  ? true : false,
-              linkedin: result.person.personal_linkedin ? true : false,
-              facebook: result.person.personal_facebook ? true : false,
-              twitter: result.person.personal_twitter ? true : false,
-              crunchbase: result.person.personal_crunchbase ? true : false,
-              homePage: result.person.personal_homePage ? true : false,
-              companyName: result.company.name,
-              industry: this.arrayConvert(result.company.industries),
-              revenue: (result.company.revenue).toLocaleString(),
-              funding: (result.company.funding).toLocaleString(),
-              companySize: (result.company.number_of_employees).toLocaleString(),
-              companyLinkedin: result.company.company_linkedin ? true : false,
-              companyTwitter: result.company.company_twitter ? true : false,
-              companyHomePage: result.company.company_home_page ? true : false
+              linkedin: result.has_linkedin ? true : false,
+              angellist: result.has_angellist ? true : false,
+              facebook: result.has_facebook ? true : false,
+              instagram: result.has_instagram ? true : false,
+              twitter: result.has_twitter ? true : false,
+              crunchbase: result.has_crunchbase ? true : false,
+              homePage: result.has_home_page ? true : false,
+              wikipedia: result.has_wikipedia ? true : false,
+              companyName: result.company_name,
+              location: result.location,
+              industry: this.arrayConvert(result.industries),
+              revenue: (result.revenue).toLocaleString(),
+              funding: (result.funding).toLocaleString(),
+              technologies: this.arrayConvert(result.technologies),
+              companySize: (result.company_size).toLocaleString()
             }
           );
         } else {
           return (
             {
-              companyName: result.name,
-              industry: result.industries,
+              companyName: result.company_name,
+              location: result.location,
+              industry: this.arrayConvert(result.industries),
               revenue: (result.revenue).toLocaleString(),
               funding: (result.funding).toLocaleString(),
-              companySize: (result.number_of_employees).toLocaleString(),
-              companyLinkedin: result.company_linkedin ? true : false,
-              companyTwitter: result.company_twitter ? true : false,
-              companyHomePage: result.company_home_page ? true : false
+              technologies: this.arrayConvert(result.technologies),
+              companySize: (result.company_size).toLocaleString(),
+              companyPhone: result.has_phone ? true : false,
+              companyLinkedin: result.has_linkedin ? true : false,
+              companyAngellist: result.has_angellist ? true : false,
+              companyCrunchbase: result.has_crunchbase ? true : false,
+              companyTwitter: result.has_twitter ? true : false,
+              companyInstagram: result.has_instagram ? true : false,
+              companyHomePage: result.has_home_page ? true : false,
+              companyWikipedia: result.has_wikipedia ? true : false
             }
           )
         }

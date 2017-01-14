@@ -12,7 +12,7 @@ export default class SearchMenu extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {
-      menuView: "people",
+      menuView: "job",
       inputTags: [],
 			query: "",
       text_search: ""
@@ -21,17 +21,10 @@ export default class SearchMenu extends React.Component {
     this.typeCheck = this.typeCheck.bind(this);
 	}
 
-  componentDidMount(){
-    this.setState({
-      people: this.props.apiState.people,
-      companies: this.props.apiState.companies
-    })
-  }
-
   typeCheck(e) {
     let type = e.target.value;
-    const companyCheck = ((type === 'companies') && (this.props.apiState.companies === true));
-    const peopleCheck = ((type === 'people') && (this.props.apiState.people === true));
+    const companyCheck = ((type === 'company') && (this.props.apiState.company === true));
+    const peopleCheck = ((type === 'job') && (this.props.apiState.job === true));
 
     if (peopleCheck || companyCheck) {
       return
@@ -69,12 +62,12 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Type</label>
-              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="people" value="people" type="radio" label="People" defaultChecked/>
-              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="companies" value="companies" type="radio" label="Company"/>
+              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="job" value="job" type="radio" label="People" defaultChecked/>
+              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="company" value="company" type="radio" label="Company"/>
             </div>
 
-            { this.state.menuView === "people" && <PeopleSearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
-            { this.state.menuView === "companies" && <CompanySearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
+            { this.state.menuView === "job" && <PeopleSearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
+            { this.state.menuView === "company" && <CompanySearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
 
           </form>
         </div>

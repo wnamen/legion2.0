@@ -30,17 +30,12 @@ export default class Options extends React.Component {
           <br></br>
           <div class="activityAction">
             <div class="actionIcon electric-blue-background"></div>
-            <p class="activityDetails pricingDetails gray"><em>Kylie.ai Features</em></p>
+            <p class="activityDetails pricingDetails gray">1 Email Strategy Session/Month</p>
           </div>
           <br></br>
           <div class="activityAction">
             <div class="actionIcon electric-blue-background"></div>
-            <p class="activityDetails pricingDetails gray"><em>Unlimited Drafts</em></p>
-          </div>
-          <br></br>
-          <div class="activityAction">
-            <div class="actionIcon electric-blue-background"></div>
-            <p class="activityDetails pricingDetails gray"><em>Autopilot</em></p>
+            <p class="activityDetails pricingDetails gray">Phone Support</p>
           </div>
         </div>
       </div>

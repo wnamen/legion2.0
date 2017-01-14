@@ -9,7 +9,8 @@ import Layout                                       from "./pages/Layout";
 import Landing                                      from "./pages/Landing";
 import Search                                       from "./pages/Search";
 import Cadence                                      from "./pages/Cadence";
-import Profile                                      from "./pages/Profile";
+import PeopleProfiles                               from "./pages/PeopleProfiles";
+import CompanyProfiles                              from "./pages/CompanyProfiles";
 import Settings                                     from "./pages/Settings";
 import Onboarding                                   from "./pages/Onboarding";
 import TOS                                          from "./pages/TOS";
@@ -19,43 +20,60 @@ import NotFound                                     from "./pages/NotFound";
 
 const App = document.getElementById('app');
 
-const loginCheck = () => {
+let loggedIn = false;
+
+const updateLogin = (status) => {
+  if (status) {
+    return loggedIn = true;
+  }
+  return loggedIn = false;
+}
+
+(() => {
   let token = cookie.load("token");
 
   if (token !== undefined) {
     let tokenHeader = `Token ${token}`;
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me?format=json",
+      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
       dataType: "JSON",
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         console.log(response);
+        updateLogin(true);
       },
       error: (response) => {
         console.log(response);
-
+        cookie.remove("token", { path: "/" })
+        updateLogin(false);
       }
     })
-    return true;
   };
-  return false;
+})();
+
+const requireAuth = (nextState, replace, cb) => {
+  setTimeout(()=> {
+    if (!loggedIn) {
+      replace({
+        pathname: '/'
+      })
+    }
+    return cb();
+  }
+  , 700);
 }
 
-const requireAuth = (nextState, replace) => {
-  if (!loginCheck()) {
-    replace({
-      pathname: '/'
-    })
+const guestsOnly = (nextState, replace, cb) => {
+  setTimeout(()=> {
+    if (loggedIn) {
+      replace({
+        pathname: '/search'
+      })
+    }
+    return cb();
   }
-}
-
-const guestsOnly = (nextState, replace) => {
-  if (loginCheck()) {
-    replace({
-      pathname: '/search'
-    })
-  }
+  , 700);
 }
 
 ReactDOM.render(
@@ -65,7 +83,8 @@ ReactDOM.render(
       <Route path="/search" name="search" component={Search} onEnter={requireAuth}></Route>
       <Route path="/contacts" name="contacts" component={Contacts} onEnter={requireAuth}></Route>
       <Route path="/campaigns" name="cadence" component={Cadence} onEnter={requireAuth}></Route>
-      <Route path="/profile" name="profile" component={Profile}></Route>
+      <Route path="/people-profiles" name="peopleProfiles" component={PeopleProfiles}></Route>
+      <Route path="/company-profiles" name="companyProfiles" component={CompanyProfiles}></Route>
       <Route path="/settings" name="settings" component={Settings} onEnter={requireAuth}></Route>
       <Route path="/onboarding" name="onboarding" component={Onboarding} onEnter={requireAuth}></Route>
       <Route path="/tos" name="tos" component={TOS}></Route>

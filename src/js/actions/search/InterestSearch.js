@@ -13,7 +13,7 @@ export default class InterestSearch extends React.Component {
   }
 
   componentWillMount(){
-    let tokenHeader = `Token ${this.props.token}`;
+    let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
       url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=500',
@@ -29,10 +29,12 @@ export default class InterestSearch extends React.Component {
   }
 
   handleInterestSearch(query) {
+    let tokenHeader = `Token ${this.props.userToken}`;
     query = query.text
 
     $.ajax({
-      url:`https://apidev.legionanalytics.com/api/interests/?format=json&page_size=1000&${query}`,
+      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/search/industry/?page_size=1000&${query}`,
+      headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
       success:function(interests){
