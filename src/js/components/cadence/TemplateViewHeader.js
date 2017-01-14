@@ -13,14 +13,18 @@ export default class TemplateViewHeader extends React.Component {
       campaignActivated: true
     }
     this.onCampaignToggle = this.onCampaignToggle.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+
+  handleModalClose = () => {
+    $(".modal-close").trigger("click");
+  }
+
   onCampaignToggle = () => {
     this.setState({campaignActivated: !this.state.campaignActivated});
   }
 
   render(){
-    //RENDER LOGIC HERE
     const modalTrigger = <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn">Save Campaign</div>;
     const play = <i class="fa fa-play electric-blue"></i>;
     const pause = <i class="fa fa-pause electric-blue"></i>;
@@ -31,7 +35,7 @@ export default class TemplateViewHeader extends React.Component {
           <div class="topCampaignBtns">
             <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
             <Modal trigger={modalTrigger}>
-              <SaveCampaignModal />
+              <SaveCampaignModal handleModalClose={this.handleModalClose}/>
             </Modal>
           </div>
       </div>

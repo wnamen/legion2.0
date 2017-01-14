@@ -1,5 +1,6 @@
 import React from "react"
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
+import $ from "jquery";
 
 export default class UploadContactsModal extends React.Component {
   constructor(props) {
@@ -7,12 +8,13 @@ export default class UploadContactsModal extends React.Component {
     this.state=({
 
     })
-    this.handleModalClose = this.handleModalClose.bind(this);
+    this.triggerModalClose = this.triggerModalClose.bind(this);
   }
 
-  handleModalClose = () => {
-    this.props.onModalClose();
+  triggerModalClose = () => {
+    this.props.handleModalClose();
   }
+
 
   render() {
     return (
@@ -21,7 +23,7 @@ export default class UploadContactsModal extends React.Component {
         		<img class="modalIcon smallerIcon" src="/src/img/upload_cloud_asset.png"></img>
         		<h1 class="modalTitle gray">Almost Done!</h1>
         		<h5>Please map your contacts to the correct column name</h5>
-		        <div onClick={this.handleModalClose} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Map My Contacts</div>
+		        <div onClick={this.triggerModalClose} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Map My Contacts</div>
         	</div>
         </div>
     )

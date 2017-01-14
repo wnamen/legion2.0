@@ -4,6 +4,10 @@
   overflow: visible;
 }
 
+.modal-footer {
+  display: none;
+}
+
 .modalContainer, #purchaseModal, #billingModal, .contentImage {
   float: none;
   display: flex;

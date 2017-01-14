@@ -9,13 +9,16 @@ export default class MyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
     }
+    this.handleModalClose = this.handleModalClose.bind(this);
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+
+  handleModalClose = () => {
+    console.log("clicked");
+    $(".modal-close").trigger("click");
+  }
 
   render(){
-    //RENDER LOGIC HERE
     const modalTrigger = <td class="text-right newPassword electric-blue">Get New Password</td>;
 
     return(
@@ -33,7 +36,7 @@ export default class MyAccount extends React.Component {
             </tr>
             <tr>
               <Modal trigger={modalTrigger}>
-                <PasswordResetModal />
+                <PasswordResetModal handleModalClose={this.handleModalClose}/>
               </Modal>
               <td class="text-left"></td>
             </tr>

@@ -45,6 +45,7 @@ export default class SignInModal extends React.Component {
 
   cookieSaver = (response) => {
     cookie.save("token", response.token, { path: "/" });
+    location.reload();
     this.context.router.transitionTo("/search");
   }
 

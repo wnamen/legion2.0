@@ -2,6 +2,16 @@ import React from "react"
 import { Dropdown, NavItem, Button, Modal, Input, Collapsible, CollapsibleItem } from 'react-materialize'
 
 export default class SaveCampaignModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.triggerModalClose = this.triggerModalClose.bind(this);
+  }
+
+  triggerModalClose = () => {
+    this.props.handleModalClose();
+  }
+  
   render() {
     const advancedSettingsHeader = <div class="advancedSettingsBtn"><small class="text-center"><a class="active">Advanced Settings</a></small></div>;
 
@@ -117,7 +127,7 @@ export default class SaveCampaignModal extends React.Component {
                     </div>
                   </CollapsibleItem>
                 </ Collapsible>
-			        <div class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</div>
+			        <div onClick={this.triggerModalClose} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</div>
 		        </form>
         	</div>
         </div>

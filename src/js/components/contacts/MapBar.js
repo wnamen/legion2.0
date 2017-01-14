@@ -1,6 +1,6 @@
-import React from "react"
-import CSSModules from 'react-css-modules'
-import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize"
+import React from "react";
+import $ from "jquery";
+import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize";
 
 import UploadContactsModal from "../modals/UploadContactsModal";
 
@@ -8,14 +8,22 @@ export default class ContactsBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: true,
       isSelected:false
     };
 
     // this.getTag = debounce(850, this.getTag.bind(this));
     this.handleDebouncer = this.handleDebouncer.bind(this);
     this.completeMapping = this.completeMapping.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+  }
+
+  componentDidMount = () => {
+    $("#uploadOpen").trigger("click");
+  }
+
+  handleModalClose = () => {
+    console.log("clicked");
+    $(".modal-close").trigger("click");
   }
 
   handleDebouncer(e) {
@@ -26,16 +34,10 @@ export default class ContactsBar extends React.Component {
     this.props.updateMappingStatus();
   }
 
-  closeModal = () => {
-    this.setState({
-      modalOpen:false
-    })
-  }
-
   render(){
     const uploadModal = (
-            <Modal trigger="">
-              <UploadContactsModal onModalClose={this.closeModal}/>
+            <Modal trigger={<div id="uploadOpen"></div>}>
+              <UploadContactsModal handleModalClose={this.handleModalClose}/>
             </Modal>
           );
     let data = this.props.results;
@@ -52,6 +54,7 @@ export default class ContactsBar extends React.Component {
             <ul class="left">
               <li id="upload-file-name" class="right-actions black">my_contacts.csv</li>
             </ul>
+            { uploadModal }
 
             <ul class="right">
               <li><a class="contact-upload" onClick={this.completeMapping}>Upload Contacts</a></li>

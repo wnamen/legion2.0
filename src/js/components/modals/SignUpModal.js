@@ -7,7 +7,12 @@ export default class SignUpModal extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      errorReceived: false
+    }
+
     this.signUp = this.signUp.bind(this);
+    this.signIn = this.signIn.bind(this);
     this.cookieSaver = this.cookieSaver.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -32,13 +37,13 @@ export default class SignUpModal extends React.Component {
   }
 
   signUp = () => {
+    this.setState({errorReceived: false});
+
     const email = this.state.email;
     const password = this.state.password;
     const name = this.state.name;
     const phone = this.state.phone;
     const url = "https://legionv2-api.us-west-2.elasticbeanstalk.com/users/register";
-
-    console.log(email, password, url, phone, name);
 
     $.post({
       url: url,
@@ -50,12 +55,32 @@ export default class SignUpModal extends React.Component {
         console.log(response);
       }
     })
-
-    // this.context.router.transitionTo("/search");
   }
 
   cookieSaver = (response) => {
-    cookie.save("token", response.token, { path: "/" });
+    if (response.success === false) {
+      this.setState({errorReceived: true})
+    } else {
+      this.signIn();
+    }
+  }
+
+  signIn = () => {
+    const email = this.state.email;
+    const password = this.state.password;
+    const url = "https://legionv2-api.us-west-2.elasticbeanstalk.com/login";
+
+    $.post({
+      url: url,
+      data: {username: email, password: password},
+      success: (response) => {
+        cookie.save("token", response.token, { path: "/" });
+        location.reload();
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    })
   }
 
   render() {
@@ -72,11 +97,12 @@ export default class SignUpModal extends React.Component {
 		          <Input type="email" placeholder="Email Address" onChange={this.handleEmailChange} required />
 		          <Input type="tel" placeholder="Phone Number" onChange={this.handlePhoneChange} required />
 		          <Input type="password" placeholder="Password" onChange={this.handlePasswordChange} required />
+              { this.state.errorReceived && <div><small class="red">It looks like this email is already in use. Please Try a different Email.</small></div> }
 		          <div onClick={this.signUp} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Create My Free Account Now!</div>
 		          <Modal trigger={modalTrigger}>
-                    <SignInModal />
-                  </Modal>
-                </form>
+                <SignInModal />
+              </Modal>
+            </form>
         	</div>
         </div>
     )

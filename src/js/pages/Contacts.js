@@ -1,7 +1,8 @@
 import React            from "react";
 import { Link }         from "react-router";
 import cookie           from "react-cookie";
-import { CubeGrid }     from "better-react-spinkit"
+import { CubeGrid }     from "better-react-spinkit";
+import $                from "jquery";
 
 // import ContactResults from "../components/contacts/ContactResults"
 import ContactsBar      from "../components/contacts/ContactsBar";
@@ -200,7 +201,7 @@ export default class Contacts extends React.Component {
 
   captureSelected = (data) => {
     console.log(data);
-    this.setState({isSelected: true});
+    // this.setState({isSelected: true});
   }
 
   render() {

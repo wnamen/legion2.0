@@ -2,6 +2,16 @@ import React from "react"
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
 
 export default class PasswordResetModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.triggerModalClose = this.triggerModalClose.bind(this);
+  }
+
+  triggerModalClose = () => {
+    this.props.handleModalClose();
+  }
+
   render() {
     return (
         <div class="sixteen modalContainer">
@@ -12,7 +22,7 @@ export default class PasswordResetModal extends React.Component {
 		          <Input type="text" placeholder="Unique Code" />
 		          <Input type="password" placeholder="New Password" />
 		          <Input type="password" placeholder="Confirm Password" />
-		          <div class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Change Password</div>
+		          <div onClick={this.triggerModalClose} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Change Password</div>
 		        </form>
         	</div>
         </div>

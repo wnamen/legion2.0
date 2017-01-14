@@ -14,9 +14,10 @@ export default class Logout extends React.Component {
     this.logout = this.logout.bind(this);
   }
 
-  logout = () => {
+  logout = (e) => {
+    e.preventDefault();
     cookie.remove("token", { path: '/' });
-    this.context.router.push("/");
+    location.reload();
   }
   //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
 
