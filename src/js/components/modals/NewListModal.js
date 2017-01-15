@@ -27,6 +27,7 @@ export default class UploadContactsModal extends React.Component {
       data: {name: listName},
       success: (response) => {
         console.log(response);
+        this.props.loadAvailableLists();
       },
       error: (response) => {
         console.log(response);

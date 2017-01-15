@@ -50,7 +50,6 @@ export default class ContactsBar extends React.Component {
 
   handleModalClose = (e) => {
     $(".modal-close").trigger("click");
-    this.props.loadAvailableLists();
   }
 
   render(){
@@ -92,7 +91,7 @@ export default class ContactsBar extends React.Component {
                 }>
                   { userLists }
                   <Modal trigger={modalTrigger}>
-                    <NewListModal handleModalClose={this.handleModalClose}/>
+                    <NewListModal handleModalClose={this.handleModalClose} loadAvailableLists={this.props.loadAvailableLists}/>
                   </Modal>
                 </Dropdown>
               </li>
@@ -111,7 +110,7 @@ export default class ContactsBar extends React.Component {
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={
                 <a>Copy to List <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"normal"}} aria-hidden="true"></i></a>
               }>
-                <NavItem>My List</NavItem>
+                { copyLists }
               </Dropdown></li>
               }
               { this.props.isSelected && <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Remove</div></li> }
