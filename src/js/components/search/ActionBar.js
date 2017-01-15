@@ -13,6 +13,7 @@ export default class ActionBar extends React.Component {
     }
     this.renderBilling = this.renderBilling.bind(this);
     this.createList = this.createList.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
   }
 
   renderBilling() {
@@ -21,7 +22,11 @@ export default class ActionBar extends React.Component {
 
   createList(e) {
     e.preventDefault();
-    console.log("clicked");
+  }
+
+  handleModalClose = (e) => {
+    $(".modal-close").trigger("click");
+    this.forceUpdate();
   }
 
   render(){
@@ -61,7 +66,7 @@ export default class ActionBar extends React.Component {
                   </div>
                   </Modal>
                   <Modal trigger={modalTrigger}>
-                    <NewListModal />
+                    <NewListModal handleModalClose={this.handleModalClose}/>
                   </Modal>
                 </Dropdown>
               </li>

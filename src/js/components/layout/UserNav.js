@@ -1,35 +1,54 @@
 import React from "react"
 import { IndexLink, Link } from "react-router"
 import { Dropdown, NavItem, Button, Modal } from 'react-materialize'
+import cookie from "react-cookie";
 
 export default class UserNav extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      buttonStatus: "buy"
+      buttonStatus: "buy",
+      token: cookie.load("token"),
+      currentCredits: 0
     }
     this.preventClose = this.preventClose.bind(this);
     this.handleBuy = this.handleBuy.bind(this);
     this.handleConfirm = this.handleConfirm.bind(this);
   }
 
-  preventClose(e) {
+  componentWillMount = () => {
+    let tokenHeader = `Token ${this.state.token}`;
+    $.get({
+      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      dataType: "JSON",
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(response);
+        this.setState({currentCredits: response.credits})
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    })
+  }
+
+  preventClose = (e) => {
     e.stopPropagation();
   }
 
-  handleBuy(e) {
-    console.log(e);
+  handleBuy = (e) => {
     e.stopPropagation();
     this.setState({buttonStatus: "confirm"});
   }
 
-  handleConfirm(e) {
-    console.log(e);
+  handleConfirm = (e) => {
     e.stopPropagation();
     this.setState({buttonStatus: "buy"});
   }
 
   render() {
+    let currentCredits = (this.state.currentCredits).toLocaleString();
 
     let buttonStatus = this.state.buttonStatus;
     let buttonRender;
@@ -39,6 +58,7 @@ export default class UserNav extends React.Component {
     } else {
       buttonRender = <button onClick={this.handleConfirm} name="confirm" value="500" class="credit-button green-background white">Confirm</button>
     }
+    // <NavItem>25k Credits - $6,250 <div class="inline electric-blue-background white" buy="true">Buy</div> <div class="hidden green-background" confirmBuy="false" priceVal="6250" numCredits="25000" id="25KCredits">Confirm?</div></NavItem>
 
     return (
         <div class="nav-wrapper medium-vertical-padding">
@@ -55,9 +75,8 @@ export default class UserNav extends React.Component {
                 <Dropdown
                   options={{hover:true}}
                   trigger={
-                  <a>12,450 credits <i id ="credit-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i><span id="buy-more" class="electric-blue">Buy More</span></a>
+                  <a>{ currentCredits } credits <i id ="credit-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i><span id="buy-more" class="electric-blue">Buy More</span></a>
                 }>
-                  <NavItem>25k Credits - $6,250 <div class="inline electric-blue-background white" buy="true">Buy</div> <div class="hidden green-background" confirmBuy="false" priceVal="6250" numCredits="25000" id="25KCredits">Confirm?</div></NavItem>
                   <NavItem>10k Credits - $3,300 { buttonRender }</NavItem>
                   <NavItem>5k Credits - $2,500 { buttonRender }</NavItem>
                   <NavItem>3k Credits - $1,800 { buttonRender }</NavItem>

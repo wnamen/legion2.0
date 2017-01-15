@@ -16,7 +16,7 @@ export default class ContactsBar extends React.Component {
     this.getCSV = this.getCSV.bind(this);
     this.beginMapping = this.beginMapping.bind(this);
     this.handleNewListView = this.handleNewListView.bind(this);
-    this.createNewList = this.createNewList.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
   }
 
   handleDebouncer = (e) => {
@@ -48,8 +48,9 @@ export default class ContactsBar extends React.Component {
     // this.props.onCopyToList(e.target.text, this.state.selected);
   }
 
-  createNewList = (e) => {
-    e.stopPropagation();
+  handleModalClose = (e) => {
+    $(".modal-close").trigger("click");
+    this.props.loadAvailableLists();
   }
 
   render(){
@@ -91,7 +92,7 @@ export default class ContactsBar extends React.Component {
                 }>
                   { userLists }
                   <Modal trigger={modalTrigger}>
-                    <NewListModal />
+                    <NewListModal handleModalClose={this.handleModalClose}/>
                   </Modal>
                 </Dropdown>
               </li>

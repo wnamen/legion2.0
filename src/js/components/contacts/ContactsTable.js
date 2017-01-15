@@ -118,7 +118,7 @@ export default class ContactsTable extends React.Component {
           }
         );
       })
-    } else if (data.results === undefined) {
+    } else if ((data.results === undefined) || (data.results.length === 0)){
       return (
         <div class="sixteen columns">
           <div id="noResultsContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
