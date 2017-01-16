@@ -22,6 +22,7 @@ export default class ContactsTable extends React.Component {
     this.arrayConvert = this.arrayConvert.bind(this);
   }
 
+  // FLATTENS GIVEN ARRAY AND RETURNS A STRING
   arrayConvert(arr) {
     let endIdx = arr.length - 1;
     let convertedString = "";
@@ -31,33 +32,22 @@ export default class ContactsTable extends React.Component {
     return convertedString;
   }
 
+  // REQUIRED APIS TO RUN AG-GRID
   onGridReady(params) {
       this.api = params.api;
       this.columnApi = params.columnApi;
   }
 
-  getRows() {
-  }
-
-  selectAll() {
-      this.api.selectAll();
-  }
-
-  deselectAll() {
-      this.api.deselectAll();
-  }
-
-  onRowSelected(e) {
-      console.log('onRowSelected: ' + e.node.data.name);
-      this.props.captureSelected(e.node.data);
-  }
 
   render() {
     let data = this.props.results;
-
     let mappedResults;
+
+    console.log(this.props);
+
+    // TABLE HEADER FOR AG-GRID COLUMNS
     const tableHeader = [
-      {headerName:"", field:"chck", width: 30, cellRendererFramework: CheckBoxRenderer },
+      {headerName:"", field:"id", width: 30, cellRendererFramework: CheckBoxRenderer },
       {headerName:"Name", field:"name", width: 130 },
       {headerName:"Job Title", field:"jobTitle", width: 130 },
       {headerName:"Company", field:"companyName", width: 130 },
@@ -87,10 +77,12 @@ export default class ContactsTable extends React.Component {
       {headerName:"Company Home Page", field:"companyHomePage", width: 130 }
     ];
 
+    // CHECKS IF DATA IS PRESENT TO DISPLAY IN GRID AND MAPS EACH RESULT TO THE COLUMNS
     if ((data.results !== undefined) && (data.results.length > 0)) {
       mappedResults = data.results.map((result, index) => {
         return (
           {
+            id: result.person.id,
             name: result.person.name ? result.person.name : "",
             jobTitle: result.job.title ? result.job.title : "",
             companyName: result.company.name ? result.company.name : "",
@@ -119,6 +111,7 @@ export default class ContactsTable extends React.Component {
         );
       })
     } else if ((data.results === undefined) || (data.results.length === 0)){
+      // RETURNS AN IMAGE PLACEHOLDER IF NO DATA IS PRESENT TO DISPLAY
       return (
         <div class="sixteen columns">
           <div id="noResultsContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
@@ -129,24 +122,20 @@ export default class ContactsTable extends React.Component {
       )
     }
 
-    console.log(mappedResults);
-
     return(
       <div class="sixteen columns">
         <div id="resultTable" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
           <AgGridReact
             onGridReady={this.onGridReady.bind(this)}
-            onRowSelected={this.onRowSelected.bind(this)}
-            showToolPanel={this.state.showToolPanel}
-
             icons={this.state.icons}
 
             columnDefs={tableHeader}
             rowData={mappedResults}
 
+            captureSelected={this.props.captureSelected}
+
             suppressDragLeaveHidesColumns="true"
             suppressCellSelection="true"
-            rowSelection="multiple"
             enableColResize="true"
             enableSorting="true"
             rowHeight="35"

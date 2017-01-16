@@ -4,7 +4,6 @@ import cookie           from "react-cookie";
 import { CubeGrid }     from "better-react-spinkit";
 import $                from "jquery";
 
-// import ContactResults from "../components/contacts/ContactResults"
 import ContactsBar      from "../components/contacts/ContactsBar";
 import ContactsTable    from "../components/contacts/ContactsTable";
 import MapBar           from "../components/contacts/MapBar";
@@ -118,11 +117,13 @@ export default class Contacts extends React.Component {
     this.deleteCurrentList = this.deleteCurrentList.bind(this);
   }
 
+  // INITALIZE LOADING ICON AND CALL FN TO CAPTURE THE USER'S LISTS
   componentWillMount = () =>{
     this.setState({loading:true});
     this.loadAvailableLists();
   }
 
+  // CAPTURE ALL AVAILABLE LISTS
   loadAvailableLists = () => {
     let tokenHeader = `Token ${this.state.token}`;
 
@@ -144,6 +145,7 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // LOAD THE DEFAULT LIST VIEW
   loadInitialListView = (lists) => {
     lists.forEach((list) => {
       if (list.name === this.state.defaultListView) {
@@ -169,6 +171,7 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // UPDATE AND LOAD THE NEW SELECTED LIST VIEW
   getNewListView = (listID) => {
     this.setState({loading:true});
     let tokenHeader = `Token ${this.state.token}`;
@@ -190,6 +193,7 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // DELETE THE CURRENT LIST VIEW
   deleteCurrentList = (selectedList) => {
     this.state.tmLists.forEach((list) => {
       if (list.name === selectedList) {
@@ -197,7 +201,7 @@ export default class Contacts extends React.Component {
 
 
         $.post({
-          url: `https://legionv2-api.us-west-d2.elasticbeanstalk.com/delete-tm`,
+          url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/delete-tm",
           headers: {"Authorization": tokenHeader },
           data: {id: list.id},
           success: (response) => {
@@ -213,10 +217,12 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // TOGGLE FOR MAPPING NEW CSVS
   updateMappingStatus = () => {
     this.setState({mapping: !this.state.mapping})
   }
 
+  // FINDS THE NEW SELECTED LIST VIEW AND CALLS THE FN TO UPDATE THE VIEW
   changeListView = (selectedList) => {
     this.state.tmLists.forEach((list) => {
       if (list.name === selectedList) {
@@ -225,14 +231,16 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // CAPTURES THE SELECTED DATA ROWS
   captureSelected = (data) => {
     console.log(data);
     // this.setState({isSelected: true});
   }
 
   render() {
-
     let currentView;
+
+    // TOGGLES VIEW BETWEEN MAPPING AND CONTACTS LISTS
     if (this.state.mapping) {
       currentView = (
         <div class="sixteen columns">
@@ -263,6 +271,3 @@ export default class Contacts extends React.Component {
     );
   }
 }
-
-// <ContactsTable />
-// <ContactResults contacts={this.state.contacts}/>
