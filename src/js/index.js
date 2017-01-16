@@ -1,6 +1,6 @@
 import React                                        from "react";
 import ReactDOM                                     from "react-dom";
-import { Router, Route, IndexRoute, hashHistory }   from "react-router";
+import { Router, Route, IndexRoute, browserHistory }   from "react-router";
 import cookie                                       from "react-cookie";
 import $                                            from "jquery";
 
@@ -77,7 +77,7 @@ const guestsOnly = (nextState, replace, cb) => {
 }
 
 ReactDOM.render(
-  <Router history={hashHistory}>
+  <Router history={browserHistory}>
     <Route path="/" component={Layout}>
       <IndexRoute component={Landing} onEnter={guestsOnly}></IndexRoute>
       <Route path="/search" name="search" component={Search} onEnter={requireAuth}></Route>

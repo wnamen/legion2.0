@@ -3,8 +3,8 @@ import { Dropdown, NavItem, Input } from "react-materialize";
 import { AgGrid } from 'ag-grid/main';
 import { AgGridReact } from 'ag-grid-react';
 
-// import ContactResults from "./ContactResults"
-import CheckMarkRenderer from "../search/CheckMarkRenderer"
+import CheckMarkRenderer from "../search/CheckMarkRenderer";
+import CheckBoxRenderer from "../search/CheckBoxRenderer";
 
 export default class ContactsTable extends React.Component {
   constructor(props) {
@@ -57,34 +57,34 @@ export default class ContactsTable extends React.Component {
 
     let mappedResults;
     const tableHeader = [
-      {headerName:"", field:"chck", width: 30, checkboxSelection:true, enableColResize:false },
-      {headerName:"Name", field:"name", width: 130, enableRowGroup: true, enableColResize:true },
-      {headerName:"Job Title", field:"jobTitle", width: 130, enableRowGroup: true},
-      {headerName:"Company", field:"companyName", width: 130, enableRowGroup: true},
-      {headerName:"Age", field:"age", width: 130, enableRowGroup: true},
-      {headerName:"Location", field:"location", width: 130, enableRowGroup: true},
-      // {headerName:"Education", field:"education", width: 130, enableRowGroup: true},
-      {headerName:"Interests", field:"interests", width: 130, enableRowGroup: true},
-      // {headerName:"Phone", field:"phone", width: 130, enableRowGroup: true},
-      // {headerName:"Email", field:"email", width: 130, enableRowGroup: true},
-      {headerName:"Linkedin", field:"linkedin", width: 130, enableRowGroup: true},
-      {headerName:"Facebook", field:"facebook", width: 130, enableRowGroup: true},
-      {headerName:"Twitter", field:"twitter", width: 130, enableRowGroup: true},
-      {headerName:"Crunchbase", field:"crunchbase", width: 130, enableRowGroup: true},
-      {headerName:"Angellist", field:"angellist", width: 130, enableRowGroup: true},
-      {headerName:"Wikipedia", field:"wikipedia", width: 130, enableRowGroup: true},
-      {headerName:"Home Page", field:"homePage", width: 130, enableRowGroup: true},
-      {headerName:"Industry", field:"industry", width: 130, enableRowGroup: true},
-      {headerName:"Techonology", field:"technologies", width: 130, enableRowGroup: true},
-      {headerName:"Revenue", field:"revenue", width: 130, enableRowGroup: true},
-      {headerName:"Funding", field:"funding", width: 130, enableRowGroup: true},
-      {headerName:"Company Location", field:"companyLocation", width: 130, enableRowGroup: true},
-      {headerName:"Company Size", field:"companySize", width: 130, enableRowGroup: true},
-      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, enableRowGroup: true},
-      {headerName:"Company Twitter", field:"companyTwitter", width: 130, enableRowGroup: true},
-      {headerName:"Company Facebook", field:"companyFacebook", width: 130, enableRowGroup: true},
-      {headerName:"Company Wikipedia", field:"companyWikipedia", width: 130, enableRowGroup: true},
-      {headerName:"Company Home Page", field:"companyHomePage", width: 130, enableRowGroup: true}
+      {headerName:"", field:"chck", width: 30, cellRendererFramework: CheckBoxRenderer },
+      {headerName:"Name", field:"name", width: 130 },
+      {headerName:"Job Title", field:"jobTitle", width: 130 },
+      {headerName:"Company", field:"companyName", width: 130 },
+      {headerName:"Age", field:"age", width: 130 },
+      {headerName:"Location", field:"location", width: 130 },
+      // {headerName:"Education", field:"education", width: 130 },
+      {headerName:"Interests", field:"interests", width: 130 },
+      // {headerName:"Phone", field:"phone", width: 130 },
+      // {headerName:"Email", field:"email", width: 130 },
+      {headerName:"Linkedin", field:"linkedin", width: 130 },
+      {headerName:"Facebook", field:"facebook", width: 130 },
+      {headerName:"Twitter", field:"twitter", width: 130 },
+      {headerName:"Crunchbase", field:"crunchbase", width: 130 },
+      {headerName:"Angellist", field:"angellist", width: 130 },
+      {headerName:"Wikipedia", field:"wikipedia", width: 130 },
+      {headerName:"Home Page", field:"homePage", width: 130 },
+      {headerName:"Industry", field:"industry", width: 130 },
+      {headerName:"Techonology", field:"technologies", width: 130 },
+      {headerName:"Revenue", field:"revenue", width: 130 },
+      {headerName:"Funding", field:"funding", width: 130 },
+      {headerName:"Company Location", field:"companyLocation", width: 130 },
+      {headerName:"Company Size", field:"companySize", width: 130 },
+      {headerName:"Company Linkedin", field:"companyLinkedin", width: 130 },
+      {headerName:"Company Twitter", field:"companyTwitter", width: 130 },
+      {headerName:"Company Facebook", field:"companyFacebook", width: 130 },
+      {headerName:"Company Wikipedia", field:"companyWikipedia", width: 130 },
+      {headerName:"Company Home Page", field:"companyHomePage", width: 130 }
     ];
 
     if ((data.results !== undefined) && (data.results.length > 0)) {
