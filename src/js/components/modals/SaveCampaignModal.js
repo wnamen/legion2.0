@@ -118,7 +118,7 @@ export default class SaveCampaignModal extends React.Component {
 	        		</div>
 	        		<div class="gray inlineFlex bigger topMargin1em">
 	        			Send this campaign on Saturday & Sunday
-		        		<Input checked={this.props.checked} onChange={this.socialCheck} name='primary' type='checkbox' label=" " value="0" />
+		        		<Input class="medium-left-margin" checked={this.props.checked} onChange={this.socialCheck} name='primary' type='checkbox' label=" " value="0" />
 		        	</div>
 	        		<div class="gray inlineFlex bigger whatEmailSend topMargin1em">Send with
 				        <Input type='select' name="whatEmailToSend" id="chooseEmail" onChange={this.handleSelected}>

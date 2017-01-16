@@ -1,5 +1,6 @@
 import React from "react";
 import { Dropdown, NavItem, Modal, Input } from "react-materialize";
+import cookie from "react-cookie";
 
 import PurchaseModal from "../modals/PurchaseModal"
 import BillingModal from "../modals/BillingModal"
@@ -9,10 +10,37 @@ export default class ActionBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: cookie.load("token"),
+      tmLists: [],
       currentModal: true
     }
     this.renderBilling = this.renderBilling.bind(this);
     this.createList = this.createList.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.loadAvailableLists = this.loadAvailableLists.bind(this);
+  }
+
+  componentWillMount = () =>{
+    this.loadAvailableLists();
+  }
+
+  loadAvailableLists = () => {
+    console.log("called");
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.get({
+      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/tm-list/?page_size=1000',
+      headers: {"Authorization": tokenHeader },
+      dataType:'json',
+      crossDomain: true,
+      cache:false,
+      success:function(response){
+        console.log(response);
+        this.updateLists(response.results);
+      }.bind(this),
+      error:function(xhr, status, err){
+      }.bind(this)
+    });
   }
 
   renderBilling() {
@@ -21,7 +49,16 @@ export default class ActionBar extends React.Component {
 
   createList(e) {
     e.preventDefault();
-    console.log("clicked");
+  }
+
+  updateLists = (lists) => {
+    this.setState({
+      tmLists:lists
+    });
+  }
+
+  handleModalClose = (e) => {
+    $(".modal-close").trigger("click");
   }
 
   render(){
@@ -31,6 +68,17 @@ export default class ActionBar extends React.Component {
     let result_count = data.count;
     if (result_count !== undefined) {
       result_count = result_count.toLocaleString();
+    }
+
+    let copyLists;
+    let listData = this.state.tmLists;
+
+    if ((listData !== undefined) && (listData.length > 0)) {
+      copyLists = listData.map((list, index) => {
+        return (
+          <NavItem key={index} onClick={this.handleCopySelectedToList}>{list.name}</NavItem>
+        )
+      });
     }
 
     return(
@@ -46,30 +94,36 @@ export default class ActionBar extends React.Component {
                 <Dropdown trigger={
                   <a id="listAdderButton" class="smoothBkgd">Add to list <i id="listAdderAngleIcon" class="fa fa-angle-down" aria-hidden="true"></i></a>
                 }>
-                <Modal
-                  trigger={
-                    <NavItem>My List</NavItem>
-                  }>
-                  <div class="sixteen modalContainer">
-                    <img class="contentImage" src="src/img/credit_empty_state.png" />
-                    <p class="contentHeader">You don't have enough credits to do that.</p>
-                    <p class="content">You need 48 more credits</p>
-
-                    { this.state.currentModal === true && <PurchaseModal renderBilling={this.renderBilling} /> }
-                    { this.state.currentModal === false && <BillingModal renderBilling={this.renderBilling} /> }
-
-                  </div>
-                  </Modal>
+                  { copyLists }
                   <Modal trigger={modalTrigger}>
-                    <NewListModal />
+                    <NewListModal handleModalClose={this.handleModalClose} loadAvailableLists={this.loadAvailableLists}/>
                   </Modal>
                 </Dropdown>
               </li>
             </ul>
           </div>
-
         </nav>
       </div>
     )
   }
 }
+
+
+
+
+
+
+// <Modal
+//   trigger={
+//     <NavItem>My List</NavItem>
+//   }>
+//   <div class="sixteen modalContainer">
+//     <img class="contentImage" src="src/img/credit_empty_state.png" />
+//     <p class="contentHeader">You don't have enough credits to do that.</p>
+//     <p class="content">You need 48 more credits</p>
+//
+//     { this.state.currentModal === true && <PurchaseModal renderBilling={this.renderBilling} /> }
+//     { this.state.currentModal === false && <BillingModal renderBilling={this.renderBilling} /> }
+//
+//   </div>
+//   </Modal>

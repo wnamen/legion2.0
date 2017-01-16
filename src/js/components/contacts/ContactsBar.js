@@ -16,7 +16,8 @@ export default class ContactsBar extends React.Component {
     this.getCSV = this.getCSV.bind(this);
     this.beginMapping = this.beginMapping.bind(this);
     this.handleNewListView = this.handleNewListView.bind(this);
-    this.createNewList = this.createNewList.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.deleteCurrentList = this.deleteCurrentList.bind(this);
   }
 
   handleDebouncer = (e) => {
@@ -43,13 +44,17 @@ export default class ContactsBar extends React.Component {
     this.setState({selectedListView: e.target.text})
   }
 
+  deleteCurrentList = (e) => {
+    this.props.deleteCurrentList(this.state.selectedListView)
+  }
+
   handleCopySelectedToList = (e) => {
 
     // this.props.onCopyToList(e.target.text, this.state.selected);
   }
 
-  createNewList = (e) => {
-    e.stopPropagation();
+  handleModalClose = (e) => {
+    $(".modal-close").trigger("click");
   }
 
   render(){
@@ -91,7 +96,7 @@ export default class ContactsBar extends React.Component {
                 }>
                   { userLists }
                   <Modal trigger={modalTrigger}>
-                    <NewListModal />
+                    <NewListModal handleModalClose={this.handleModalClose} loadAvailableLists={this.props.loadAvailableLists}/>
                   </Modal>
                 </Dropdown>
               </li>
@@ -103,14 +108,14 @@ export default class ContactsBar extends React.Component {
             </ul>
 
             <ul class="right">
-              <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
+              <li onClick={this.deleteCurrentList} class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
               <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Export CSV</div></li>
 
               { this.props.isSelected &&
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={
                 <a>Copy to List <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"normal"}} aria-hidden="true"></i></a>
               }>
-                <NavItem>My List</NavItem>
+                { copyLists }
               </Dropdown></li>
               }
               { this.props.isSelected && <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Remove</div></li> }

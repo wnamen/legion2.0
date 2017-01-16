@@ -1,5 +1,4 @@
 import React from "react"
-import CSSModules from 'react-css-modules'
 import { Input, Tag, Chip } from 'react-materialize'
 import { debounce } from 'throttle-debounce';
 import Autosuggest from 'react-autosuggest';
@@ -66,8 +65,8 @@ export default class SearchMenu extends React.Component {
               <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="company" value="company" type="radio" label="Company"/>
             </div>
 
-            { this.state.menuView === "job" && <PeopleSearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
-            { this.state.menuView === "company" && <CompanySearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} /> }
+            { this.state.menuView === "job" && <PeopleSearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} searchFilters={this.props.searchFilters} /> }
+            { this.state.menuView === "company" && <CompanySearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} searchFilters={this.props.searchFilters} /> }
 
           </form>
         </div>
