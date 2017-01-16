@@ -6,14 +6,20 @@ import $ from "jquery"
 export default class Integrations extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
+
+    this.handleOutlookIntegration = this.handleOutlookIntegration.bind(this);
+    this.handleGmailIntegration = this.handleGmailIntegration.bind(this);
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+
+  handleGmailIntegration = (e) => {
+    e.preventDefault();
+  }
+
+  handleOutlookIntegration = (e) => {
+    e.preventDefault();
+  }
 
   render(){
-    //RENDER LOGIC HERE
 
     return(
       <div class="sixteen columns lgbufferMargin">
@@ -21,12 +27,12 @@ export default class Integrations extends React.Component {
         <div class="thirteen columns offset-by-one small-border gray-border integrationRow">
           <img class="integrationIcon one columns" src="/src/img/gmail-icon.png"></img>
           <div class="gray one columns">Gmail</div>
-          <a href="#" class="offset-by-twelve one columns">Connect</a>
+          <a onClick={this.handleGmailIntegration} class="offset-by-twelve one columns">Connect</a>
         </div>
         <div class="thirteen columns offset-by-one small-border gray-border integrationRow">
           <img class="integrationIcon one columns" src="/src/img/outlook-icon.png"></img>
           <div class="gray one columns">Outlook</div>
-          <a href="#" class="offset-by-twelve one columns">Connect</a>
+          <a onClick={this.handleOutlookIntegration} class="offset-by-twelve one columns">Connect</a>
         </div>
       </div>
     )
