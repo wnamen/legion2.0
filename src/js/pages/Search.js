@@ -23,6 +23,7 @@ export default class Search extends React.Component {
       checkedAll: false,
       rowState: []
     }
+    this.setFilterAccess = this.setFilterAccess.bind(this);
     this.setApiState = this.setApiState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.nextSearch = this.nextSearch.bind(this);
@@ -81,9 +82,19 @@ export default class Search extends React.Component {
     this.setState({loading:true});
     let current_state = this.state.apiState.job ? "job" : "company";
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(tokenHeader);
 
-    console.log(current_state);
+    $.get({
+      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      dataType: "JSON",
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        this.setFilterAccess(response.settings.plan.search_filters);
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
 
     $.get({
       url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/job/?page_size=50',
@@ -103,6 +114,10 @@ export default class Search extends React.Component {
     });
   }
 
+  setFilterAccess = (filterStatus) => {
+    filterStatus === "basic" ? this.setState({searchFilters: true}) : this.setState({searchFilters: false});
+  }
+
   handleSearch(query, apiState) {
     this.setState({loading:true, resultsArray: []});
     query = query.text;
@@ -116,7 +131,6 @@ export default class Search extends React.Component {
 
     let url = `https://legionv2-api.us-west-2.elasticbeanstalk.com/search/${current_state}/?format=json&page_size=50&${query}`;
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(url);
 
     $.get({
       url: url,
@@ -124,7 +138,6 @@ export default class Search extends React.Component {
       dataType:'json',
       cache:false,
       success:function(results){
-        console.log(results);
         this.setState({
           results: results,
           resultsArray: this.state.resultsArray.concat(results.results),
@@ -138,7 +151,6 @@ export default class Search extends React.Component {
 
   nextSearch(url) {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(url);
 
     $.get({
       url:url,
@@ -146,7 +158,6 @@ export default class Search extends React.Component {
       dataType:'json',
       cache:false,
       success:function(results){
-        console.log(results);
         this.setState({
           results: results,
           resultsArray: this.state.resultsArray.concat(results.results)
@@ -158,11 +169,10 @@ export default class Search extends React.Component {
   }
 
   render() {
-    console.log(this.state.apiState);
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
-          <SearchMenu interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch} userToken={this.state.token}/>
+          <SearchMenu searchFilters={this.state.searchFilters} interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch} userToken={this.state.token}/>
           <ActionBar results={this.state.results}/>
           { this.state.loading ?
             <div class="eleven columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :

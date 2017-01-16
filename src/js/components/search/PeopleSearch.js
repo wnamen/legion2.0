@@ -14,8 +14,7 @@ export default class PeopleSearch extends React.Component {
 		this.state = {
       inputTags: [],
 			query: "",
-      text_search: "",
-      PAYG: true
+      text_search: ""
 		};
     this.getSearch = this.getSearch.bind(this);
     this.socialCheck = this.socialCheck.bind(this);
@@ -126,14 +125,11 @@ export default class PeopleSearch extends React.Component {
 
   render(){
     const less_than = '<';
-
     let tags = {}
-    console.log(this.state.inputTags);
 
     if (this.state.inputTags !== undefined){
       this.state.inputTags.map((tag) => {
-        console.log(tag);
-        console.log(tags[tag.name]);
+
         if (tags[tag.name] !== undefined) {
           tags[tag.name].push(
             <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
@@ -199,7 +195,7 @@ export default class PeopleSearch extends React.Component {
             </div>
 
             <label>Department {advanced_filter}</label>
-            <Input type='select' name="department" onChange={this.handleSelected} disabled={this.state.PAYG} multiple>
+            <Input type='select' name="department" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="customer-support">Customer Support</option>
               <option value="c_suite">C-Suite</option>
               <option value="engineering">Engineering</option>
@@ -214,7 +210,7 @@ export default class PeopleSearch extends React.Component {
             </Input>
 
             <label>Company Size {advanced_filter}</label>
-            <Input type='select' name="company_size" onChange={this.handleSelected} disabled={this.state.PAYG} multiple>
+            <Input type='select' name="company_size" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="0-10">{less_than}10</option>
               <option value="11-50">11-50</option>
               <option value="51-200">51-200</option>
@@ -226,7 +222,7 @@ export default class PeopleSearch extends React.Component {
             </Input>
 
             <label>Revenue {advanced_filter}</label>
-            <Input type='select' name="revenue" onChange={this.handleSelected} disabled={this.state.PAYG} multiple>
+            <Input type='select' name="revenue" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="0-0.5">{less_than}$500K</option>
               <option value="1-5">$1M-$5M</option>
               <option value="5-10">$5M-$10M</option>
@@ -242,7 +238,7 @@ export default class PeopleSearch extends React.Component {
             </Input>
 
             <label>Funding {advanced_filter}</label>
-            <Input type='select' name="funding" onChange={this.handleSelected} disabled={this.state.PAYG} multiple>
+            <Input type='select' name="funding" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="0-0.5">{less_than}$500K</option>
               <option value="1-5">$1M-$5M</option>
               <option value="5-10">$5M-$10M</option>
@@ -259,14 +255,14 @@ export default class PeopleSearch extends React.Component {
 
             <div class="filter">
               <label>Education <small>Advanced Filter</small></label>
-              <Input name="education" id="education" onChange={this.handleDebouncer} disabled={this.state.PAYG} />
+              <Input name="education" id="education" onChange={this.handleDebouncer} disabled={this.props.searchFilters} />
               <div class="tag-container">
                 {tags.education}
               </div>
             </div>
 
             <label>Person's Age {advanced_filter}</label>
-            <Input type='select' name="person_age" onChange={this.handleSelected} disabled={this.state.PAYG} multiple>
+            <Input type='select' name="person_age" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="18-22">18-22</option>
               <option value="23-30">23-30</option>
               <option value="31-35">31-35</option>
@@ -276,7 +272,7 @@ export default class PeopleSearch extends React.Component {
 
             <div class="filter" >
               <label>Interest <small>Advanced Filter</small></label>
-              <InterestSearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} disabled={this.state.PAYG} />
+              <InterestSearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} disabled={this.props.searchFilters} />
               <div class="tag-container">
                 {tags.interest}
               </div>
@@ -284,13 +280,13 @@ export default class PeopleSearch extends React.Component {
 
             <div class="filter">
               <label>Social Profiles <small>Advanced Filter</small></label>
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' disabled={this.state.PAYG} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' disabled={this.state.PAYG} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='angellist' type='checkbox' value="4" label='Angellist' disabled={this.state.PAYG} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='crunchbase' type='checkbox' value="3" label='Crunchbase' disabled={this.state.PAYG} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' disabled={this.state.PAYG} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' disabled={this.state.PAYG} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={this.state.PAYG} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='angellist' type='checkbox' value="4" label='Angellist' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='crunchbase' type='checkbox' value="3" label='Crunchbase' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={this.props.searchFilters} />
             </div>
           </div>
     )
