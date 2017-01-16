@@ -52,3 +52,9 @@
 nav ul a:hover {
   background-color: transparent; !important;
 }
+li#upload-file-name {
+    font-size: 0.6em;
+}
+a.contact-upload {
+    font-size: 1em;
+}
