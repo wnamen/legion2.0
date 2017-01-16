@@ -17,6 +17,7 @@ export default class ContactsBar extends React.Component {
     this.beginMapping = this.beginMapping.bind(this);
     this.handleNewListView = this.handleNewListView.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
+    this.deleteCurrentList = this.deleteCurrentList.bind(this);
   }
 
   handleDebouncer = (e) => {
@@ -41,6 +42,10 @@ export default class ContactsBar extends React.Component {
   handleNewListView = (e) => {
     this.props.onNewListView(e.target.text);
     this.setState({selectedListView: e.target.text})
+  }
+
+  deleteCurrentList = (e) => {
+    this.props.deleteCurrentList(this.state.selectedListView)
   }
 
   handleCopySelectedToList = (e) => {
@@ -103,7 +108,7 @@ export default class ContactsBar extends React.Component {
             </ul>
 
             <ul class="right">
-              <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
+              <li onClick={this.deleteCurrentList} class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
               <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Export CSV</div></li>
 
               { this.props.isSelected &&

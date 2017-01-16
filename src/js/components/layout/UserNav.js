@@ -1,7 +1,10 @@
-import React from "react"
-import { IndexLink, Link } from "react-router"
-import { Dropdown, NavItem, Button, Modal } from 'react-materialize'
+import React from "react";
+import { IndexLink, Link } from "react-router";
+import { Dropdown, NavItem, Button, Modal } from "react-materialize";
 import cookie from "react-cookie";
+
+// import PurchaseButton from "./PurchaseButton";
+// import ConfirmButton from "./ConfirmButton";
 
 export default class UserNav extends React.Component {
   constructor(props){

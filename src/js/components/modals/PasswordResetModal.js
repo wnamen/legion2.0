@@ -5,11 +5,47 @@ export default class PasswordResetModal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.triggerModalClose = this.triggerModalClose.bind(this);
+    this.captureUniqueCode = this.captureUniqueCode.bind(this);
+    this.captureNewPassword = this.captureNewPassword.bind(this);
+    this.capturePasswordConfirm = this.capturePasswordConfirm.bind(this);
+    this.codeCheck = this.codeCheck.bind(this);
+    this.passwordCheck = this.passwordCheck.bind(this);
   }
 
-  triggerModalClose = () => {
-    this.props.handleModalClose();
+  captureNewPassword = (e) => {
+    this.setState({newPassword: e.target.value})
+  }
+
+  capturePasswordConfirm = (e) => {
+    this.setState({passwordConfirm: e.target.value})
+  }
+
+  captureUniqueCode = (e) => {
+    this.setState({uniqueCode: e.target.value})
+  }
+
+  validateNewPassword = () => {
+    if ((this.codeCheck()) && (this.passwordCheck())) {
+      console.log("validation passed");
+
+      this.props.handleModalClose();
+    } else {
+      console.log("validation failed");
+    }
+  }
+
+  codeCheck = () => {
+    let correctCode = "code";
+    let givenCode = this.state.uniqueCode;
+
+    return correctCode === givenCode ? true : false;
+  }
+
+  passwordCheck = () => {
+    let correctPassword = this.state.newPassword;
+    let givenPassword = this.state.passwordConfirm;
+
+    return correctPassword === givenPassword ? true : false;
   }
 
   render() {
@@ -19,10 +55,10 @@ export default class PasswordResetModal extends React.Component {
         		<img class="modalIcon smallerIcon" src="/src/img/emailIcon.png"></img>
         		<h1 class="modalTitle gray">Check Your Email For a Unique Code</h1>
         		<form id="billingModalForm" class="">
-		          <Input type="text" placeholder="Unique Code" />
-		          <Input type="password" placeholder="New Password" />
-		          <Input type="password" placeholder="Confirm Password" />
-		          <div onClick={this.triggerModalClose} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Change Password</div>
+		          <Input type="text" placeholder="Unique Code" onChange={this.captureUniqueCode}/>
+		          <Input type="password" placeholder="New Password" onChange={this.captureNewPassword}/>
+		          <Input type="password" placeholder="Confirm Password" onChange={this.capturePasswordConfirm}/>
+		          <div onClick={this.validateNewPassword} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Change Password</div>
 		        </form>
         	</div>
         </div>
