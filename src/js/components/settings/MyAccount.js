@@ -28,11 +28,11 @@ export default class MyAccount extends React.Component {
           <tbody class="myAccountTable">
             <tr>
               <td class="text-right gray">Name: </td>
-              <td class="text-left gray">Jamasen Rodriguez</td>
+              <td class="text-left gray">{this.props.userInfo.name}</td>
             </tr>
             <tr>
               <td class="text-right gray">Email: </td>
-              <td class="text-left gray">jamasen@legionanalytics.com</td>
+              <td class="text-left gray">{this.props.userInfo.email}</td>
             </tr>
             <tr>
               <Modal trigger={modalTrigger}>

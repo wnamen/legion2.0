@@ -12,7 +12,8 @@ export default class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: cookie.load("token")
+      token: cookie.load("token"),
+      userInfo: ""
     }
   }
 
