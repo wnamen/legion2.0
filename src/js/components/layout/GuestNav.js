@@ -1,6 +1,8 @@
 import React from "react";
 import { IndexLink, Link } from "react-router";
 import { Dropdown, NavItem, Button, Modal } from "react-materialize";
+import $ from "jquery";
+
 
 import SignUpModal from "../modals/SignUpModal";
 import SignInModal from "../modals/SignInModal";

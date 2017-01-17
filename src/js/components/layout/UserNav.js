@@ -2,6 +2,7 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 import { Dropdown, NavItem, Button, Modal } from "react-materialize";
 import cookie from "react-cookie";
+import $ from "jquery";
 
 import CreditButtonHandler from "./CreditButtonHandler";
 

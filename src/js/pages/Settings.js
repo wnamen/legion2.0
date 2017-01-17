@@ -16,7 +16,7 @@ export default class Settings extends React.Component {
       userInfo: ""
     }
     this.saveAlias = this.saveAlias.bind(this);
-    this.deleteAlias = this.deleteAlias.bind(this);
+    this.removeAlias = this.removeAlias.bind(this);
   }
 
   componentWillMount = () => {
@@ -41,15 +41,17 @@ export default class Settings extends React.Component {
   }
 
   saveAlias = (changes) => {
-    // let tokenHeader = `Token ${this.state.token}`;
-    //
+    let tokenHeader = `Token ${this.state.token}`;
+
+    console.log(changes);
+
     // $.post({
     //   url:
     //
     // })
   }
 
-  deleteAlias = (changes) => {
+  removeAlias = (changes) => {
     // let tokenHeader = `Token ${this.state.token}`;
     //
     // $.post({
@@ -65,7 +67,7 @@ export default class Settings extends React.Component {
         <br></br>
         <MyAccount userInfo={this.state.userInfo} />
         <Integrations userInfo={this.state.userInfo} />
-        <EmailConfiguration emails={this.state.emails} saveAlias={this.saveAlias} deleteAlias={this.deleteAlias} />
+        <EmailConfiguration emails={this.state.emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
         <Billing userInfo={this.state.userInfo} />
         <Logout userInfo={this.state.userInfo} />
       </div>
