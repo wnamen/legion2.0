@@ -124,6 +124,7 @@ export default class PeopleSearch extends React.Component {
   }
 
   render(){
+    const advanced_filter = <small>Advanced Filter</small>;
     const less_than = '<';
     let tags = {}
 
@@ -141,8 +142,7 @@ export default class PeopleSearch extends React.Component {
         };
       });
     }
-
-    const advanced_filter = <small>Advanced Filter</small>;
+    
     return(
           <div>
 

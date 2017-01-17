@@ -8,20 +8,15 @@ import PlanSettings from "./PlanSettings"
 export default class Billing extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
 
   render(){
-    //RENDER LOGIC HERE
 
     return(
       <div class="sixteen columns lgbufferMargin">
       <h5 class="settingsSubTitles">Billing</h5>
-        <BillingForm />
-        <PlanSettings />
+        <BillingForm userInfo={this.props.userInfo} />
+        <PlanSettings userInfo={this.props.userInfo} />
       </div>
     )
   }

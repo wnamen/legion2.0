@@ -1,5 +1,4 @@
 import React from "react"
-import CSSModules from 'react-css-modules'
 import { Input, Tag, Chip } from 'react-materialize'
 import { debounce } from 'throttle-debounce';
 import Autosuggest from 'react-autosuggest';
@@ -124,9 +123,9 @@ export default class CompanySearch extends React.Component {
           <div>
             <div class="filter">
               <label>Keywords</label>
-              <Input name="keyword" id="keywords" onChange={this.handleDebouncer} />
+              <Input name="keywords" id="keywords" onChange={this.handleDebouncer} />
               <div class="tag-container">
-                {tags.keyword}
+                {tags.keywords}
               </div>
             </div>
 

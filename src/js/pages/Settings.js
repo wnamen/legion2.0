@@ -15,6 +15,8 @@ export default class Settings extends React.Component {
       token: cookie.load("token"),
       userInfo: ""
     }
+    this.saveAlias = this.saveAlias.bind(this);
+    this.deleteAlias = this.deleteAlias.bind(this);
   }
 
   componentWillMount = () => {
@@ -29,7 +31,8 @@ export default class Settings extends React.Component {
       success:function(response){
         console.log(response);
         this.setState({
-          userInfo: response
+          userInfo: response,
+          emails: response.emails
         });
       }.bind(this),
       error:function(xhr, status, err){
@@ -37,6 +40,23 @@ export default class Settings extends React.Component {
     });
   }
 
+  saveAlias = (changes) => {
+    // let tokenHeader = `Token ${this.state.token}`;
+    //
+    // $.post({
+    //   url:
+    //
+    // })
+  }
+
+  deleteAlias = (changes) => {
+    // let tokenHeader = `Token ${this.state.token}`;
+    //
+    // $.post({
+    //   url:
+    //
+    // })
+  }
 
   render() {
     return (
@@ -45,7 +65,7 @@ export default class Settings extends React.Component {
         <br></br>
         <MyAccount userInfo={this.state.userInfo} />
         <Integrations userInfo={this.state.userInfo} />
-        <EmailConfiguration userInfo={this.state.userInfo} />
+        <EmailConfiguration emails={this.state.emails} saveAlias={this.saveAlias} deleteAlias={this.deleteAlias} />
         <Billing userInfo={this.state.userInfo} />
         <Logout userInfo={this.state.userInfo} />
       </div>

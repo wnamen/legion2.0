@@ -52,13 +52,18 @@ export default class BillingForm extends React.Component {
   }
 
   render(){
-    //RENDER LOGIC HERE
+    let userInfo = this.props.userInfo;
+    let currentCardOnFile = <p class="cardNum red">No card on file</p>
+
+    if ((userInfo !== undefined) && (userInfo !== "") && (userInfo.primary_credit_card)) {
+      currentCardOnFile = <p class="cardNum">**** **** **** <span>3726</span></p>;
+    }
 
     return(
       <div class="eight columns">
         <div class="text-center gray smtxt no-margin">
           <p class="no-margin">Current card on file:</p>
-          <p class="cardNum">**** **** **** <span>3726</span></p>
+          { currentCardOnFile }
         </div>
         <div>
           <form id="billingModalForm" class="nine offset-by-one">
