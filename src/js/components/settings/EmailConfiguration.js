@@ -70,8 +70,10 @@ export default class EmailConfiguration extends React.Component {
   }
 
   handleRemove = () => {
+    let emailID = this.state.currentEmailID || this.props.emails[0].id;
 
-    // this.props.removeAlias()
+    this.props.removeAlias({emailID: emailID})
+
   }
 
   render(){
@@ -91,7 +93,7 @@ export default class EmailConfiguration extends React.Component {
 
       mappedAliases = emailData.map((email, index) => {
         return (
-          <option key={index} value={email.id}>{email.credential_handle}</option>
+          <option key={index} value={email.id}>{ email.credential_private_key || email.credential_handle }</option>
         )
       })
     } else {

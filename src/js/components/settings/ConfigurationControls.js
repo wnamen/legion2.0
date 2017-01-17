@@ -63,7 +63,7 @@ export default class ConfigurationForm extends React.Component {
             </tr>
             <tr>
               <td class="text-right">Alias: </td>
-              <td class="text-left gray"><Input type="text" placeholder={ emailData.credential_handle } onChange={this.handleEmailChange} class="eight aliasField"/></td>
+              <td class="text-left gray"><Input type="text" placeholder={ emailData.credential_private_key || emailData.credential_handle } onChange={this.handleEmailChange} class="eight aliasField"/></td>
             </tr>
             <tr>
               <td class="text-right">Primary Account: </td>

@@ -6,17 +6,6 @@ import $ from "jquery"
 export default class Integrations extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleOutlookIntegration = this.handleOutlookIntegration.bind(this);
-    this.handleGmailIntegration = this.handleGmailIntegration.bind(this);
-  }
-
-  handleGmailIntegration = (e) => {
-    // e.preventDefault();
-  }
-
-  handleOutlookIntegration = (e) => {
-    // e.preventDefault();
   }
 
   render(){
@@ -29,12 +18,12 @@ export default class Integrations extends React.Component {
         <div class="thirteen columns offset-by-one small-border gray-border integrationRow">
           <img class="integrationIcon one columns" src="/src/img/gmail-icon.png"></img>
           <div class="gray one columns">Gmail</div>
-          <a onClick={this.handleGmailIntegration} href={gmailLink} class="offset-by-twelve one columns">Connect</a>
+          <a href={gmailLink} class="offset-by-twelve one columns">Connect</a>
         </div>
         <div class="thirteen columns offset-by-one small-border gray-border integrationRow">
           <img class="integrationIcon one columns" src="/src/img/outlook-icon.png"></img>
           <div class="gray one columns">Outlook</div>
-          <a onClick={this.handleOutlookIntegration} href={outlookLink} class="offset-by-twelve one columns">Connect</a>
+          <a href={outlookLink} class="offset-by-twelve one columns">Connect</a>
         </div>
       </div>
     )

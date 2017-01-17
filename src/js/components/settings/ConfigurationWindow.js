@@ -12,13 +12,15 @@ export default class ConfigurationForm extends React.Component {
   render(){
     let emailData = this.props.details;
 
+    let currentEmail =  emailData.credential_private_key || emailData.credential_handle;
+
     return(
       <div class="sampleWindow small-border gray-border white-background">
         <table id="configuration">
           <tbody>
             <tr>
               <td class="text-right">From: </td>
-              <td class="text-left gray">{ this.props.newName || emailData.credential_api_key} <small> { this.props.newEmail || emailData.credential_handle } </small></td>
+              <td class="text-left gray">{ this.props.newName || emailData.credential_api_key} <small> { this.props.newEmail || currentEmail } </small></td>
             </tr>
             <tr>
               <td class="text-right">To: </td>
