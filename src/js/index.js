@@ -17,10 +17,7 @@ import TOS                                          from "./pages/TOS";
 import Directory                                    from "./pages/Directory";
 import ServerError                                  from "./pages/ServerError";
 import NotFound                                     from "./pages/NotFound";
-
-import Outlook                                      from "./pages/Outlook";
-import Google                                       from "./pages/Google";
-import Success                                      from "./pages/Success";
+import IntegrationSuccess                           from "./pages/IntegrationSuccess";
 
 const App = document.getElementById('app');
 
@@ -39,7 +36,7 @@ const updateLogin = (status) => {
   if (token !== undefined) {
     let tokenHeader = `Token ${token}`;
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      url: "https://api.legionanalytics.com/me",
       dataType: "JSON",
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
@@ -93,23 +90,10 @@ ReactDOM.render(
       <Route path="/onboarding" name="onboarding" component={Onboarding} onEnter={requireAuth}></Route>
       <Route path="/tos" name="tos" component={TOS}></Route>
       <Route path="/directory" name="directory" component={Directory}></Route>
-      <Route path="/google" name="success" component={Google}>
-        <Route path="/google/:status" name="success" component={Success} />
-      </Route>
-      <Route path="/outlook" name="success" component={Outlook}>
-        <Route path="/outlook/:status" name="success" component={Success} />
-      </Route>
+      <Route path="/google/success" name="success" component={IntegrationSuccess} />
+      <Route path="/outlook/success" name="success" component={IntegrationSuccess} />
       <Route path="/500" name="serverError" component={ServerError} />
       <Route path="*" name="notFound" component={NotFound} />
     </Route>
   </Router>, App
 );
-
-// <Route path="/people-profiles" name="success" component={Outlook}>
-//   <Route path="/people-profiles/:person-id" name="success" component={Success} />
-// </Route>
-//
-//
-// <Route path="/company-profiles" name="success" component={Outlook}>
-//   <Route path="/company-profiles/:company-id" name="success" component={Success} />
-// </Route>

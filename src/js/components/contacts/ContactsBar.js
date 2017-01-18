@@ -25,14 +25,17 @@ export default class ContactsBar extends React.Component {
   }
 
   getCSV = (e) => {
-    var holder;
-    var filename;
+    let self = this;
+    let path;
+    let filename;
     $("#hiddenInput").trigger("click");
     $('#hiddenInput').change(function() {
-        holder = $(this).val();
-        filename = holder.replace(/^.*\\/, "");
+        path = $(this).val();
+        filename = path.replace(/^.*\\/, "");
         $('.fileName').text(filename);
+        self.props.uploadCSV(path, filename)
     });
+
   }
 
   beginMapping = () => {

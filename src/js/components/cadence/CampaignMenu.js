@@ -16,13 +16,22 @@ export default class CampaignMenu extends React.Component {
 
   render(){
     //RENDER LOGIC HERE
+    let data = this.props.cadenceData;
+    let cadences;
+
+    if (data !== undefined) {
+      cadences = data.map((cadence, index) => {
+        console.log(cadence);
+        return (
+          <CampaignListing key={index} campaignID={cadence.id} campaignName={cadence.name} campaignStatus={cadence.started} />
+        )
+      })
+    }
+
 
     return(
       <div class="sixteen text-left">
-        <CampaignListing />
-        <CampaignListing />
-        <CampaignListing />
-        <CampaignListing />
+        { cadences }
       </div>
     )
   }

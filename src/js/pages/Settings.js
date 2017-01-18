@@ -25,7 +25,7 @@ export default class Settings extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      url: "https://api.legionanalytics.com/me",
       headers: {"Authorization": tokenHeader },
       dataType: "json",
       crossDomain: true,
@@ -46,7 +46,7 @@ export default class Settings extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      url: "https://api.legionanalytics.com/me",
       headers: {"Authorization": tokenHeader},
       dataType: "json",
       crossDomain: true,
@@ -71,7 +71,7 @@ export default class Settings extends React.Component {
     // changes.emailPrimary !== null ? newChanges.primary = changes.emailPrimary : "";
 
     $.post({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/settings",
+      url: "https://api.legionanalytics.com/settings",
       headers: {"Authorization": tokenHeader},
       data: newChanges,
       success: (response) => {
@@ -88,7 +88,7 @@ export default class Settings extends React.Component {
     let newChanges = {remove_alias: changes.emailID,}
 
     $.post({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/settings",
+      url: "https://api.legionanalytics.com/settings",
       headers: {"Authorization": tokenHeader},
       data: newChanges,
       success: (response) => {
@@ -106,7 +106,7 @@ export default class Settings extends React.Component {
     let newCard = {new_card: token}
 
     $.post({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/settings",
+      url: "https://api.legionanalytics.com/settings",
       headers: {"Authorization": tokenHeader},
       data: newCard,
       success: (response) => {

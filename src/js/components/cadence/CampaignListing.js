@@ -13,12 +13,14 @@ export default class CampaignListing extends React.Component {
   //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
 
   render(){
-    //RENDER LOGIC HERE
+    console.log(this.props);
+    const running = <small class="running">(Running)</small>;
+    const paused = <small class="running red">(Paused)</small>;
 
     return(
       <div class="sixteen campaignListing gray">
-        <div class="text-left inline-block full-width">
-          My First Campaign <small class="running">(running)</small>
+        <div id={this.props.campaignID} class="text-left inline-block full-width">
+          { this.props.campaignName } { this.props.campaignStatus ? running : paused }
           <span class="text-right">&times;</span>
         </div>
       </div>

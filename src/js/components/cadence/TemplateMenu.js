@@ -1,27 +1,32 @@
 import React, { Component } from "react"
 import $ from "jquery"
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 import TemplateListing from "./TemplateListing"
 
 export default class TemplateMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
     }
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
 
   render(){
-    //RENDER LOGIC HERE
+    let data = this.props.templateData;
+    let templates;
+
+    // MAP ALL TEMPLATES TO VIEW
+    if (data !== undefined) {
+      templates = data.map((template, index) => {
+        console.log(template);
+        return (
+          <TemplateListing key={index} templateID={template.id} templateData={template} />
+        )
+      })
+    }
 
     return(
       <div class="sixteen text-left">
-        <TemplateListing />
-        <TemplateListing />
-        <TemplateListing />
-        <TemplateListing />
+        { templates }
       </div>
     )
   }

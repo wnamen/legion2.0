@@ -29,7 +29,7 @@ export default class ActionBar extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
-      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/tm-list/?page_size=1000',
+      url:'https://api.legionanalytics.com/tm-list/?page_size=1000',
       headers: {"Authorization": tokenHeader },
       dataType:'json',
       crossDomain: true,
