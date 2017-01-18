@@ -15,9 +15,10 @@ export default class Settings extends React.Component {
       token: cookie.load("token"),
       userInfo: ""
     }
+    this.saveCard = this.saveCard.bind(this);
     this.saveAlias = this.saveAlias.bind(this);
     this.removeAlias = this.removeAlias.bind(this);
-    this.updateAliases = this.updateAliases.bind(this);
+    this.updateSettings = this.updateSettings.bind(this);
   }
 
   componentWillMount = () => {
@@ -41,7 +42,7 @@ export default class Settings extends React.Component {
     });
   }
 
-  updateAliases = () => {
+  updateSettings = () => {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
@@ -52,6 +53,7 @@ export default class Settings extends React.Component {
       cache:false,
       success:function(response){
         this.setState({
+          userInfo: response,
           emails: response.emails
         });
       }.bind(this),
@@ -73,7 +75,7 @@ export default class Settings extends React.Component {
       headers: {"Authorization": tokenHeader},
       data: newChanges,
       success: (response) => {
-        this.updateAliases();
+        this.updateSettings();
       },
       error: (response) => {
         console.log(response);
@@ -91,7 +93,25 @@ export default class Settings extends React.Component {
       data: newChanges,
       success: (response) => {
         console.log(response);
-        this.updateAliases();
+        this.updateSettings();
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    })
+  }
+
+  saveCard = (token) => {
+    let tokenHeader = `Token ${this.state.token}`;
+    let newCard = {new_card: token}
+
+    $.post({
+      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/settings",
+      headers: {"Authorization": tokenHeader},
+      data: newCard,
+      success: (response) => {
+        console.log(response);
+        this.updateSettings();
       },
       error: (response) => {
         console.log(response);
@@ -107,7 +127,7 @@ export default class Settings extends React.Component {
         <MyAccount userInfo={this.state.userInfo} />
         <Integrations userInfo={this.state.userInfo} />
         <EmailConfiguration emails={this.state.emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
-        <Billing userInfo={this.state.userInfo} />
+        <Billing userInfo={this.state.userInfo} saveCard={this.saveCard}/>
         <Logout userInfo={this.state.userInfo} />
       </div>
 

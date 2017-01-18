@@ -104,3 +104,12 @@ ReactDOM.render(
     </Route>
   </Router>, App
 );
+
+// <Route path="/people-profiles" name="success" component={Outlook}>
+//   <Route path="/people-profiles/:person-id" name="success" component={Success} />
+// </Route>
+//
+//
+// <Route path="/company-profiles" name="success" component={Outlook}>
+//   <Route path="/company-profiles/:company-id" name="success" component={Success} />
+// </Route>
