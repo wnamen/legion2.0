@@ -26,7 +26,7 @@ export default class UserNav extends React.Component {
   loadCurrentCredits = () => {
     let tokenHeader = `Token ${this.state.token}`;
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      url: "https://api.legionanalytics.com/me",
       dataType: "JSON",
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
@@ -78,6 +78,7 @@ export default class UserNav extends React.Component {
                   trigger={
                   <a>{ currentCredits } credits <i id ="credit-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i><span id="buy-more" class="electric-blue">Buy More</span></a>
                 }>
+                  <NavItem>25k Credits - $6,250 <CreditButtonHandler credits={25000} cost={6250} loadCurrentCredits={this.loadCurrentCredits}/></NavItem>
                   <NavItem>10k Credits - $3,300 <CreditButtonHandler credits={10000} cost={3300} loadCurrentCredits={this.loadCurrentCredits}/></NavItem>
                   <NavItem>5k Credits - $2,500 <CreditButtonHandler credits={5000} cost={2500} loadCurrentCredits={this.loadCurrentCredits}/></NavItem>
                   <NavItem>3k Credits - $1,800 <CreditButtonHandler credits={3000} cost={1800} loadCurrentCredits={this.loadCurrentCredits}/></NavItem>

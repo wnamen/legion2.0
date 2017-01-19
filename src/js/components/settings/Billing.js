@@ -11,11 +11,12 @@ export default class Billing extends React.Component {
   }
 
   render(){
+    console.log(this.props);
 
     return(
       <div class="sixteen columns lgbufferMargin">
       <h5 class="settingsSubTitles">Billing</h5>
-        <BillingForm userInfo={this.props.userInfo} />
+        <BillingForm userInfo={this.props.userInfo} saveCard={this.props.saveCard}/>
         <PlanSettings userInfo={this.props.userInfo} />
       </div>
     )

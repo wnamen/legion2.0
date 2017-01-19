@@ -16,7 +16,7 @@ export default class TechonologySearch extends React.Component {
     let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
-      url: 'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/technology/?page_size=150',
+      url: 'https://api.legionanalytics.com/search/technology/?page_size=150',
       headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
@@ -32,7 +32,7 @@ export default class TechonologySearch extends React.Component {
     query = query.text
 
     $.ajax({
-      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/search/technology/?page_size=100&${query}`,
+      url:`https://api.legionanalytics.com/search/technology/?page_size=100&${query}`,
       headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,

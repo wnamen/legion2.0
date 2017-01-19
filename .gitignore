@@ -2,8 +2,12 @@
 *node_modules
 .DS_Store
 env/*
+<<<<<<< HEAD
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+=======
+*bundles
+>>>>>>> 3dc70d7454343e514186e87c8aada53630a00658

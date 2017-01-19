@@ -17,7 +17,7 @@ export default class CreditButtonHandler extends React.Component {
       console.log("purchased");
 
       $.post({
-        url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/purchase-credits",
+        url: "https://api.legionanalytics.com/purchase-credits",
         headers: {"Authorization": tokenHeader },
         data: {num_credits: this.props.credits, amount_in_dollars: this.props.cost},
         success: (response) => {

@@ -20,95 +20,10 @@ export default class Contacts extends React.Component {
       mapping: false,
       results: [],
       tmLists: [],
-      defaultListView: "All My Contacts",
-      contacts: [
-        {
-          id:1865,
-          name:'William',
-          jobTitle:'Software Engineer',
-          company:'Legion Analytics',
-          employees:'<10',
-          industry:'Technology',
-          city:'San Francisco',
-          phone:'(904) 314-6488',
-          email:'williamjosephnamen@gmail.com',
-          education:'University of North Florida',
-          age: 24,
-          interests:'Sailing'
-        },
-        {
-          id:75675,
-          name:'William',
-          jobTitle:'Software Engineer',
-          company:'Legion Analytics',
-          employees:'<10',
-          industry:'Technology',
-          city:'San Francisco',
-          phone:'(904) 314-6488',
-          email:'williamjosephnamen@gmail.com',
-          education:'University of North Florida',
-          age: 24,
-          interests:'Sailing'
-        },
-        {
-          id:342564,
-          name:'William',
-          jobTitle:'Software Engineer',
-          company:'Legion Analytics',
-          employees:'<10',
-          industry:'Technology',
-          city:'San Francisco',
-          phone:'(904) 314-6488',
-          email:'williamjosephnamen@gmail.com',
-          education:'University of North Florida',
-          age: 24,
-          interests:'Sailing'
-        },
-        {
-          id:421313,
-          name:'William',
-          jobTitle:'Software Engineer',
-          company:'Legion Analytics',
-          employees:'<10',
-          industry:'Technology',
-          city:'San Francisco',
-          phone:'(904) 314-6488',
-          email:'williamjosephnamen@gmail.com',
-          education:'University of North Florida',
-          age: 24,
-          interests:'Sailing'
-        },
-        {
-          id:3425,
-          name:'William',
-          jobTitle:'Software Engineer',
-          company:'Legion Analytics',
-          employees:'<10',
-          industry:'Technology',
-          city:'San Francisco',
-          phone:'(904) 314-6488',
-          email:'williamjosephnamen@gmail.com',
-          education:'University of North Florida',
-          age: 24,
-          interests:'Sailing'
-        },
-        {
-          id:6543534,
-          name:'William',
-          jobTitle:'Software Engineer',
-          company:'Legion Analytics',
-          employees:'<10',
-          industry:'Technology',
-          city:'San Francisco',
-          phone:'(904) 314-6488',
-          email:'williamjosephnamen@gmail.com',
-          education:'University of North Florida',
-          age: 24,
-          interests:'Sailing'
-        }
-      ]
+      defaultListView: "All My Contacts"
     }
     this.updateMappingStatus = this.updateMappingStatus.bind(this);
+    this.uploadCSV = this.uploadCSV.bind(this);
     this.changeListView = this.changeListView.bind(this);
     this.getNewListView = this.getNewListView.bind(this);
     this.captureSelected = this.captureSelected.bind(this);
@@ -128,7 +43,7 @@ export default class Contacts extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
-      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/tm-list/?page_size=1000',
+      url:'https://api.legionanalytics.com/tm-list/?page_size=1000',
       headers: {"Authorization": tokenHeader },
       dataType:'json',
       crossDomain: true,
@@ -152,7 +67,7 @@ export default class Contacts extends React.Component {
         let tokenHeader = `Token ${this.state.token}`;
 
         $.get({
-          url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/contacts/${list.id}/?page_size=50`,
+          url:`https://api.legionanalytics.com/contacts/${list.id}/?page_size=50`,
           headers: {"Authorization": tokenHeader },
           dataType:'json',
           crossDomain: true,
@@ -177,7 +92,7 @@ export default class Contacts extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
-      url:`https://legionv2-api.us-west-2.elasticbeanstalk.com/contacts/${listID}/?page_size=50`,
+      url:`https://api.legionanalytics.com/contacts/${listID}/?page_size=50`,
       headers: {"Authorization": tokenHeader },
       dataType:'json',
       crossDomain: true,
@@ -201,7 +116,7 @@ export default class Contacts extends React.Component {
 
 
         $.post({
-          url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/delete-tm",
+          url: "https://api.legionanalytics.com/delete-tm",
           headers: {"Authorization": tokenHeader },
           data: {id: list.id},
           success: (response) => {
@@ -215,6 +130,27 @@ export default class Contacts extends React.Component {
         })
       }
     });
+  }
+
+  //UPLOADS CSV TO BACKEND TO BEGIN MAPPING
+  uploadCSV = (path, filename) => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.post({
+      url: "https://api.legionanalytics.com/upload-document",
+      headers: {"Authorization": tokenHeader, "Content-Disposition": `attachment; filename=${filename}`, "Content-Type": "text/csv"},
+      data: path,
+      success: (response) => {
+        console.log(response);
+        this.setState({
+          importedSample: response
+        })
+      },
+      error: (response) => {
+        console.log(response);
+      }
+
+    })
   }
 
   // TOGGLE FOR MAPPING NEW CSVS
@@ -245,14 +181,14 @@ export default class Contacts extends React.Component {
       currentView = (
         <div class="sixteen columns">
           <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus}/>
-          <MapTable contacts={this.state.contacts}/>
+          <MapTable contacts={this.state.importedSample}/>
           <MapResults />
         </div>
       )
     } else {
       currentView = (
         <div class="sixteen columns">
-          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} isSelected={this.state.isSelected} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
+          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} isSelected={this.state.isSelected} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
               <ContactsTable results={this.state.results} captureSelected={this.captureSelected} />

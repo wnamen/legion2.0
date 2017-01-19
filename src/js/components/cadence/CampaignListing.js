@@ -6,19 +6,22 @@ import $ from "jquery"
 export default class CampaignListing extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
+    this.handleRenderCampaign = this.handleRenderCampaign.bind(this);
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+
+  // RENDERS THE SELECTED CAMPAIGN
+  handleRenderCampaign = (e) => {
+    this.props.renderCampaign(e);
+  }
 
   render(){
-    //RENDER LOGIC HERE
+    const running = <small class="running" id={this.props.campaignID} onClick={this.handleRenderCampaign}>(Running)</small>;
+    const paused = <small class="running red" id={this.props.campaignID} onClick={this.handleRenderCampaign}>(Paused)</small>;
 
     return(
-      <div class="sixteen campaignListing gray">
-        <div class="text-left inline-block full-width">
-          My First Campaign <small class="running">(running)</small>
+      <div id={this.props.campaignID} onClick={this.handleRenderCampaign} class="sixteen campaignListing gray">
+        <div id={this.props.campaignID} class="text-left inline-block full-width" onClick={this.handleRenderCampaign}>
+          { this.props.campaignName } { this.props.campaignStatus ? running : paused }
           <span class="text-right">&times;</span>
         </div>
       </div>

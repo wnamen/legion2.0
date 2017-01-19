@@ -3,7 +3,7 @@ import { CubeGrid }     from "better-react-spinkit";
 import cookie           from "react-cookie";
 import $                from "jquery";
 
-export default class Success extends React.Component {
+export default class IntegrationSuccess extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +24,7 @@ export default class Success extends React.Component {
     }
 
     $.post({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/authenticate",
+      url: "https://api.legionanalytics.com/authenticate",
       headers: {"Authorization": tokenHeader },
       data: codeBody,
       success: (response) => {
@@ -44,14 +44,19 @@ export default class Success extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     }
+
     return (
-      <div style={styles}>
-        <CubeGrid size={50} color="#36b7ea" />
+      <div class="ten offset-by-three white-background">
+        <div class="sixteen columns">
+          <div style={styles}>
+            <CubeGrid size={50} color="#36b7ea" />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-Success.contextTypes = {
+IntegrationSuccess.contextTypes = {
   router: React.PropTypes.object
 };

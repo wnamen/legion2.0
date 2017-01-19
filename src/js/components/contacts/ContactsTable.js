@@ -43,8 +43,6 @@ export default class ContactsTable extends React.Component {
     let data = this.props.results;
     let mappedResults;
 
-    console.log(this.props);
-
     // TABLE HEADER FOR AG-GRID COLUMNS
     const tableHeader = [
       {headerName:"", field:"id", width: 30, cellRendererFramework: CheckBoxRenderer },
