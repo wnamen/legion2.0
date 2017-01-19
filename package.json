@@ -2,7 +2,7 @@
   "name": "legion2.0",
   "version": "1.0.0",
   "description": "### React/Redux Info Series",
-  "main": "webpack.config.js",
+  "main": "server.js",
   "scripts": {
     "dev": "webpack-dev-server --content-base src --inline --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
