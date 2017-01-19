@@ -50,6 +50,7 @@ export default class SignUpModal extends React.Component {
       data: {email: email, password: password, name: name, phone: phone},
       success: (response) => {
         this.cookieSaver(response);
+        window.location.href = 'onboarding'; //need change to route
       },
       error: (response) => {
         console.log(response);
