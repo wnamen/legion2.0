@@ -1,29 +1,60 @@
 import React, { Component } from "react";
-import { Input, Button, Dropdown } from "react-materialize";
+import { Input, Button,  Modal, Dropdown, NavItem } from "react-materialize";
 import $ from "jquery";
 
 // IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+import SaveCampaignModal from "../modals/SaveCampaignModal";
 import TemplateGenerator from "./TemplateGenerator";
-import TemplateViewHeader from "./TemplateViewHeader";
 import Template from "./Template";
 
 export default class TemplateViews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
+      campaignActivated: true
     }
+    this.onCampaignToggle = this.onCampaignToggle.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+
+  handleModalClose = () => {
+    $(".modal-close").trigger("click");
+  }
+
+  onCampaignToggle = () => {
+    this.setState({campaignActivated: !this.state.campaignActivated});
+  }
 
   render(){
-    //RENDER LOGIC HERE
+    const modalTrigger = <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn">Save Campaign</div>;
+    const play = <i class="fa fa-play electric-blue"></i>;
+    const pause = <i class="fa fa-pause electric-blue"></i>;
+
+    let templates = this.state.currentTemplates || this.props.currentTemplates;
+    let mappedTemplates;
+
+    console.log(templates);
+
+    if (templates !== null) {
+      mappedTemplates = templates.map((template, index) => {
+        return (
+          <Template key={index} data={template} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/>
+        )
+      })
+    }
 
     return(
       <div class="sixteen">
-        <TemplateViewHeader />
+        <div class="gray activeCampaignName">{this.props.currentView.name}</div>
+        <div class="topCampaignBtns">
+          <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
+          <Modal trigger={modalTrigger}>
+            <SaveCampaignModal handleModalClose={this.handleModalClose}/>
+          </Modal>
+        </div>
+
         <div class="sixteen templateHolder">
-          <Template />
+          { mappedTemplates }
           <TemplateGenerator />
         </div>
       </div>

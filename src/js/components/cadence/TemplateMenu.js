@@ -17,15 +17,14 @@ export default class TemplateMenu extends React.Component {
     // MAP ALL TEMPLATES TO VIEW
     if (data !== undefined) {
       templates = data.map((template, index) => {
-        console.log(template);
         return (
-          <TemplateListing key={index} templateID={template.id} templateData={template} />
+          <TemplateListing key={index} templateID={template.id} templateData={template}  renderTemplate={this.props.renderTemplate}/>
         )
       })
     }
 
     return(
-      <div class="sixteen text-left">
+      <div class="sixteen text-left menu-container">
         { templates }
       </div>
     )

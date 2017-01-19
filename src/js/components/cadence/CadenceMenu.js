@@ -10,42 +10,36 @@ export default class CadenceMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
       currentView: "campaigns"
     }
-    this.renderCampaigns = this.renderCampaigns.bind(this);
-    this.renderTemplates = this.renderTemplates.bind(this);
-  }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
-  renderCampaigns = () => {
-    this.setState({currentView: "campaigns"});
+    this.renderSelectedMenu = this.renderSelectedMenu.bind(this);
   }
 
-  renderTemplates = () => {
-    this.setState({currentView: "templates"});
+  // HANDLES TOGGLING BETWEEN MENUS
+  renderSelectedMenu = () => {
+    this.state.currentView === "campaigns" ? this.setState({currentView: "templates"}) : this.setState({currentView: "campaigns"});
   }
 
   render(){
-    //RENDER LOGIC HERE
     let current_view = this.state.currentView;
 
-    const createCampaign = <a class="cadenceToggle newBtnBuffer">Create New Campaign</a>;
-    const createTemplate = <a class="cadenceToggle newBtnBuffer">Create New Template</a>;
-    const activeCampaign = <a onClick={this.renderCampaigns} class="cadenceToggle text-left medium-bottom-border electric-blue-border gray">Campaigns</a>;
-    const unactiveCampaign = <a onClick={this.renderCampaigns} class="cadenceToggle text-left gray">Campaigns</a>;
-    const activeTemplate = <a onClick={this.renderTemplates} class="cadenceToggle text-right medium-bottom-border electric-blue-border gray">Templates</a>;
-    const unactiveTemplate = <a onClick={this.renderTemplates} class="cadenceToggle text-right gray">Templates</a>;
+    const createCampaign = <a class="cadenceToggle newBtnBuffer" onClick={this.props.createNewCampaign}>Create New Campaign</a>;
+    const createTemplate = <a class="cadenceToggle newBtnBuffer" onClick={this.props.createNewCampaign}>Create New Template</a>;
+    const activeCampaign = <a onClick={this.renderSelectedMenu} class="cadenceToggle text-left medium-bottom-border electric-blue-border gray">Campaigns</a>;
+    const unactiveCampaign = <a onClick={this.renderSelectedMenu} class="cadenceToggle text-left gray">Campaigns</a>;
+    const activeTemplate = <a onClick={this.renderSelectedMenu} class="cadenceToggle text-right medium-bottom-border electric-blue-border gray">Templates</a>;
+    const unactiveTemplate = <a onClick={this.renderSelectedMenu} class="cadenceToggle text-right gray">Templates</a>;
 
     return(
       <div class="four columns offset-by-one-half">
         <div class="profile-card whiteCard cadenceMenu">
-          <div class="lgnBtn smoothBkgd electric-blue-background electric-blue-border white lgnBtnUp newCampaignBtn">New Campaign (20 Credits)</div>
+          <div class="lgnBtn smoothBkgd electric-blue-background electric-blue-border white lgnBtnUp newCampaignBtn" onClick={this.props.createNewCampaign}>New Campaign (20 Credits)</div>
           <div class="cadenceToggleContainer">
             { current_view === "campaigns" ? activeCampaign : unactiveCampaign }
             { current_view === "templates" ? activeTemplate : unactiveTemplate }
           </div>
           <hr class="no-margin"></hr>
-          { current_view === "campaigns" ? <CampaignMenu cadenceData={this.props.cadenceData}/> : <TemplateMenu templateData={this.props.templateData}/> }
+          { current_view === "campaigns" ? <CampaignMenu cadenceData={this.props.cadenceData} renderCampaign={this.props.renderCampaign}/> : <TemplateMenu templateData={this.props.templateData}  renderTemplate={this.props.renderTemplate}/> }
           { current_view === "campaigns" ? createCampaign : createTemplate }
         </div>
       </div>
