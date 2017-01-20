@@ -47,6 +47,7 @@
   top: 44px !important;
   /*left: 294px !important;*/
   padding: 10px 0;
+  max-height: 50vh !important;
 }
 
 #listAdderDropdown span .dropdown-content li > a {
@@ -61,4 +62,7 @@
 #listAdderAngleIcon {
   height: inherit;
   line-height: normal;
+}
+#listAdderDropdown span .dropdown-content li{
+  padding:10px;
 }
