@@ -2,7 +2,7 @@ var debug = process.env.NODE_ENV !== "production";
 
 var path = require('path');
 var webpack = require('webpack');
-var BundleTracker = require('webpack-bundle-tracker');
+// var BundleTracker = require('webpack-bundle-tracker');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
@@ -52,11 +52,20 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve('./src/bundles/'),
-    filename: "[name]-[hash].js"
+    path: __dirname,
+    publicPath: "/src/",
+    filename: "index.min.js"
   },
   plugins: [
-    new BundleTracker({filename: './webpack-stats.json'}),
+    // new BundleTracker({filename: './webpack-stats.json'}),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+       'process.env': {
+         NODE_ENV: JSON.stringify('production')
+       }
+      }),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin("styles.css")
   ],
   resolve: {

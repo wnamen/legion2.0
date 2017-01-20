@@ -133,13 +133,15 @@ export default class Contacts extends React.Component {
   }
 
   //UPLOADS CSV TO BACKEND TO BEGIN MAPPING
-  uploadCSV = (path, filename) => {
+  uploadCSV = (file, filename) => {
+    console.log("uploadCSV starting");
+    console.log(file);
     let tokenHeader = `Token ${this.state.token}`;
-
     $.post({
       url: "https://api.legionanalytics.com/upload-document",
       headers: {"Authorization": tokenHeader, "Content-Disposition": `attachment; filename=${filename}`, "Content-Type": "text/csv"},
-      data: path,
+      data: file,
+      processData: false,
       success: (response) => {
         console.log(response);
         this.setState({
