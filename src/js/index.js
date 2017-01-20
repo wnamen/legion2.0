@@ -23,12 +23,7 @@ const App = document.getElementById('app');
 
 let loggedIn = false;
 
-const updateLogin = (status) => {
-  if (status) {
-    return loggedIn = true;
-  }
-  return loggedIn = false;
-}
+const updateLogin = (status) => loggedIn = status;
 
 (() => {
   let token = cookie.load("token");
@@ -46,11 +41,11 @@ const updateLogin = (status) => {
       },
       error: (response) => {
         console.log(response);
-        cookie.remove("token", { path: "/" })
+        cookie.remove("token", { path: "/" });
         updateLogin(false);
       }
     })
-  };
+  }
 })();
 
 const requireAuth = (nextState, replace, cb) => {
@@ -63,7 +58,7 @@ const requireAuth = (nextState, replace, cb) => {
     return cb();
   }
   , 700);
-}
+};
 
 const guestsOnly = (nextState, replace, cb) => {
   setTimeout(()=> {
@@ -75,21 +70,21 @@ const guestsOnly = (nextState, replace, cb) => {
     return cb();
   }
   , 700);
-}
+};
 
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={Layout}>
-      <IndexRoute component={Landing} onEnter={guestsOnly}></IndexRoute>
-      <Route path="/search" name="search" component={Search} onEnter={requireAuth}></Route>
-      <Route path="/contacts" name="contacts" component={Contacts} onEnter={requireAuth}></Route>
-      <Route path="/campaigns" name="cadence" component={Cadence} onEnter={requireAuth}></Route>
-      <Route path="/people-profiles" name="peopleProfiles" component={PeopleProfiles}></Route>
-      <Route path="/company-profiles" name="companyProfiles" component={CompanyProfiles}></Route>
-      <Route path="/settings" name="settings" component={Settings} onEnter={requireAuth}></Route>
-      <Route path="/onboarding" name="onboarding" component={Onboarding} onEnter={requireAuth}></Route>
-      <Route path="/tos" name="tos" component={TOS}></Route>
-      <Route path="/directory" name="directory" component={Directory}></Route>
+      <IndexRoute component={Landing} onEnter={guestsOnly} />
+      <Route path="/search" name="search" component={Search} onEnter={requireAuth} />
+      <Route path="/contacts" name="contacts" component={Contacts} onEnter={requireAuth} />
+      <Route path="/campaigns" name="cadence" component={Cadence} onEnter={requireAuth} />
+      <Route path="/people-profiles" name="peopleProfiles" component={PeopleProfiles} />
+      <Route path="/company-profiles" name="companyProfiles" component={CompanyProfiles} />
+      <Route path="/settings" name="settings" component={Settings} onEnter={requireAuth} />
+      <Route path="/onboarding" name="onboarding" component={Onboarding} />
+      <Route path="/tos" name="tos" component={TOS} />
+      <Route path="/directory" name="directory" component={Directory} />
       <Route path="/google/success" name="success" component={IntegrationSuccess} />
       <Route path="/outlook/success" name="success" component={IntegrationSuccess} />
       <Route path="/500" name="serverError" component={ServerError} />

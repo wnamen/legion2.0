@@ -1,35 +1,52 @@
 import React, { Component } from "react";
-import { Button } from "react-materialize";
+import cookie           from "react-cookie";
 import $ from "jquery";
 
-export default class DataShare extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
+
+class DataShare extends Component {
+
+  onHandleChoice = (choice) => {
+  
+    let tokenHeader = `Token ${cookie.load("token")}`;
+  
+    $.ajax({
+      url: 'https://api.legionanalytics.com/settings',
+      headers: {"Authorization": tokenHeader},
+      data: {
+        data_shares: choice
+      },
+      crossDomain: true,
+      cache:false,
+      success: (industries) => {
+        
+      }
+    });
+    
+    if(choice) {
+      $.ajax({
+        url: 'https://api.legionanalytics.com/onboarded-complete',
+        headers: {"Authorization": tokenHeader},
+        crossDomain: true,
+        cache:false,
+        success: () => {
+          window.location.href = '/search'; //need change to route
+        }
+      });
     }
-  }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
-
+  };
+  
   render(){
-    //RENDER LOGIC HERE
-
     return(
-      <div class="sixteen columns">
-        <div class="nine columns onbMargin text-center">
-          <img class="modalIcon smallerIcon" src="/src/img/credit_empty_state.png"></img>
+        <div>
+          <img class="modalIcon smallerIcon" src="/src/img/credit_empty_state.png" />
           <h1 class="modalTitle gray onbTitle">Would you like to earn 100 more credits by sharing your data with the Legion Analytics community?</h1>
-          <div id="billingModalForm" class="">
-            <div class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Yes, please!</div>
-            <div class="lgnBtn settingsBtn lgnBtnLg smoothBkgd white-background gray gray-border inline-block signupBtn">No, thanks.</div>
-          </div>
-          <div>
-            <i class="fa fa-circle billingOpenPagination" aria-hidden="true"></i>
-            <i class="fa fa-circle billingOpenPagination" aria-hidden="true"></i>
-            <i class="fa fa-circle billingClosedPagination" aria-hidden="true"></i>
+          <div id="billingModalForm">
+            <div onClick={this.onHandleChoice.bind(null, true)} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Yes, please!</div>
+            <div onClick={this.onHandleChoice.bind(null, false)} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd white-background gray gray-border inline-block signupBtn">No, thanks.</div>
           </div>
         </div>
-      </div>
     )
   }
 }
+
+export default DataShare;
