@@ -43,13 +43,14 @@ export default class SignUpModal extends React.Component {
     const password = this.state.password;
     const name = this.state.name;
     const phone = this.state.phone;
-    const url = "https://legionv2-api.us-west-2.elasticbeanstalk.com/users/register";
+    const url = "https://api.legionanalytics.com/users/register";
 
     $.post({
       url: url,
       data: {email: email, password: password, name: name, phone: phone},
       success: (response) => {
         this.cookieSaver(response);
+        window.location.href = 'onboarding'; //need change to route
       },
       error: (response) => {
         console.log(response);
@@ -68,7 +69,7 @@ export default class SignUpModal extends React.Component {
   signIn = () => {
     const email = this.state.email;
     const password = this.state.password;
-    const url = "https://legionv2-api.us-west-2.elasticbeanstalk.com/login";
+    const url = "https://api.legionanalytics.com/login";
 
     $.post({
       url: url,

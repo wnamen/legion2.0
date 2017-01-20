@@ -16,10 +16,45 @@ export default class Template extends React.Component {
         toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', '-', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', '-', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink']
       }
     }
+    this.handleModelChange = this.handleModelChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleSubjectChange = this.handleSubjectChange.bind(this);
+    this.handleTemplateSave = this.handleTemplateSave.bind(this);
+  }
+
+  handleModelChange = (model) => {
+    console.log("changed");
+    console.log(model);
+    this.setState({model: model});
+
+  }
+
+  handleNameChange = (e) => {
+    this.setState({templateName: e.target.value})
+  }
+
+  handleSubjectChange = (e) => {
+    this.setState({templateSubject: e.target.value})
+  }
+
+  handleTemplateSave = () => {
+    let templateChanges = {id: (this.props.data.id || null), templateName: this.state.templateName, templateSubject: this.state.templateSubject, templateText: this.state.model};
+    this.props.saveTemplate(templateChanges);
   }
 
   render(){
-    //RENDER LOGIC HERE
+    let templates = this.props.templateData;
+    let mappedTemplates;
+
+    console.log(this.props.data);
+
+    if (templates !== undefined) {
+      mappedTemplates = templates.map((template, index) => {
+        return (
+          <option key={index} value={template.id}>{template.name_of_template}</option>
+        )
+      })
+    }
 
     return(
       <div class="sixteen">
@@ -27,34 +62,32 @@ export default class Template extends React.Component {
             <div class="gray small-bottom-border gray-border workingRow">
               <div class="inline-block">Template Name: </div>
               <div class="inline-block templateNameContainer">
-                <Input type='text' name="newTemplateName">
-                </Input>
+                <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.templateName || this.props.data.name_of_template}/>
               </div>
               <div class="working chooseTemplate">
                 <Input type='select' name="whichEmail" onChange={this.handleSelected}>
                   <option value="">Choose Existing</option>
-                  <option value="123455">Follow Up</option>
-                  <option value="213445">Missed Call</option>
-                  <option value="123435">Break-Up Email</option>
-                  <option value="213415">Sandler First Email</option>
+                  {mappedTemplates}
                 </Input>
               </div>
             </div>
             <div class="gray small-bottom-border gray-border workingRow">
               <div class="inline-block">Subject: </div>
               <div class="inline-block templateNameContainer">
-                <Input type='text' name="newSubjectName">
+                <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.templateSubject || this.props.data.subject}>
                 </Input>
               </div>
             </div>
             <div class="editableText">
               <FroalaEditor
-                config={this.state.config}
                 tag="textarea"
+                config={this.state.config}
+                model={this.state.model || this.props.data.html}
+                onModelChange={this.handleModelChange}
               />
             </div>
             <div class="gray small-bottom-border gray-border workingRow bottomRow">
-              <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp">Save</div>
+              <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.handleTemplateSave}>Save</div>
               <div class="working chooseTemplate pTags">
                 <Input type='select' name="whichEmail" onChange={this.handleSelected}>
                   <option value="">Personalized Tags</option>

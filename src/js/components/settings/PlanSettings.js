@@ -11,14 +11,22 @@ export default class PlanSettings extends React.Component {
       // COMPONENT STATE DECLARTION HERE
     }
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+  componentWillReceiveProps = () => {
+    this.forceUpdate();
+  }
 
   render(){
-    //RENDER LOGIC HERE
+    let userInfo = this.props.userInfo
+    let currentPlan;
+    console.log(userInfo);
+
+    if ((userInfo !== undefined) && (userInfo !== "")){
+      (userInfo.settings.plan.pay_as_you_go) ? currentPlan = <span class="currentPlan electric-blue">Pay-As-You-Go</span> : currentPlan = <span class="currentPlan electric-blue">Standard</span>
+    }
 
     return(
       <div class="eight columns smtxt">
-        <div class="gray">Current Plan: <span class="currentPlan">Pay-As-You-Go</span></div>
+        <div class="gray">Current Plan: { currentPlan }</div>
         <div class="po">
           <div class="payg">
             <Collapsible>

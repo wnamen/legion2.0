@@ -25,7 +25,7 @@ export default class SignInModal extends React.Component {
   signIn = () => {
     const email = this.state.email;
     const password = this.state.password;
-    const url = "https://legionv2-api.us-west-2.elasticbeanstalk.com/login";
+    const url = "https://api.legionanalytics.com/login";
 
     console.log(email, password, url);
 

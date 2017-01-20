@@ -84,7 +84,7 @@ export default class Search extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/me",
+      url: "https://api.legionanalytics.com/me",
       dataType: "JSON",
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
@@ -97,7 +97,7 @@ export default class Search extends React.Component {
     });
 
     $.get({
-      url:'https://legionv2-api.us-west-2.elasticbeanstalk.com/search/job/?page_size=50',
+      url:'https://api.legionanalytics.com/search/job/?page_size=50',
       headers: {"Authorization": tokenHeader },
       dataType:'json',
       crossDomain: true,
@@ -129,7 +129,7 @@ export default class Search extends React.Component {
       current_state = this.state.apiState.job ? "job" : "company";
     }
 
-    let url = `https://legionv2-api.us-west-2.elasticbeanstalk.com/search/${current_state}/?format=json&page_size=50&${query}`;
+    let url = `https://api.legionanalytics.com/search/${current_state}/?format=json&page_size=50&${query}`;
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({

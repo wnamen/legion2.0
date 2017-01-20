@@ -7,40 +7,45 @@ import $ from "jquery"
 export default class BillingForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      card: {
+        number: "",
+        cvc: "",
+        exp_month: "",
+        exp_year: "",
+        zip_code: ""
+        }
+    }
 
-    this.captureCardNumber = this.captureCardNumber.bind(this);
-    this.captureCardMonth = this.captureCardMonth.bind(this);
-    this.captureCardYear = this.captureCardYear.bind(this);
-    this.captureCardZipCode = this.captureCardZipCode.bind(this);
-    this.saveNewCard = this.saveNewCard.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleToken = this.handleToken.bind(this);
     this.resetFields = this.resetFields.bind(this);
   }
 
-  captureCardNumber = (e) => {
-    this.setState({cardNumber: e.target.value})
+  componentDidMount = () => {
+  	// Stripe.setPublishableKey('pk_live_dOwIuwJIzpJSQrgYCPDNgUy1'); // set your test public key
+    Stripe.setPublishableKey('pk_test_hlppy9I1vUFGVYBltYq75eAW'); // set your test public key
   }
 
-  captureCardZipCode = (e) => {
-    this.setState({cardZipCode: e.target.value})
+	handleChange = (e) => {
+    let card = this.state.card;
+    card[e.target.name] = parseInt(e.target.value);
+    this.setState(card);
+	}
+
+  handleToken = (e) => {
+    let self = this;
+
+    Stripe.createToken(this.state.card, function (status, response) {
+      console.log( status, response );
+      self.handleSave(response.id);
+    });
+
   }
 
-  captureCardMonth = (e) => {
-    this.setState({cardMonth: e.target.value})
-  }
-
-  captureCardYear = (e) => {
-    this.setState({cardYear: e.target.value})
-  }
-
-  saveNewCard = (e) => {
-    let cardNumber = this.state.cardNumber;
-    let cardZipCode = this.state.cardZipCode;
-    let cardMonth = this.state.cardMonth;
-    let cardYear = this.state.cardYear;
-
-    console.log(cardNumber, cardZipCode, cardMonth, cardYear);
-
+  handleSave = (token) => {
+    this.props.saveCard(token);
     this.resetFields();
   }
 
@@ -49,26 +54,35 @@ export default class BillingForm extends React.Component {
     $("#cardMonthField").val("");
     $("#cardYearField").val("");
     $("#cardZipCodeField").val("");
+    $("#cardCVCField").val("");
   }
 
   render(){
-    //RENDER LOGIC HERE
+    let userInfo = this.props.userInfo;
+    let currentCardOnFile = <p class="cardNum red">No card on file</p>
+
+    if ((userInfo !== undefined) && (userInfo !== "") && (userInfo.primary_credit_card)) {
+      currentCardOnFile = <p class="cardNum">**** **** **** <span>{ userInfo.primary_credit_card.credential_handle }</span></p>;
+    }
 
     return(
       <div class="eight columns">
         <div class="text-center gray smtxt no-margin">
           <p class="no-margin">Current card on file:</p>
-          <p class="cardNum">**** **** **** <span>3726</span></p>
+          { currentCardOnFile }
         </div>
         <div>
           <form id="billingModalForm" class="nine offset-by-one">
-            <Input id="cardNumberField" type="text" placeholder="Credit Card Number" onChange={this.captureCardNumber}/>
+            <Input id="cardNumberField" type="text" name="number" placeholder="Credit Card Number" onChange={this.handleChange}/>
             <div class="billingDates sixteen">
-              <Input id="cardMonthField" type="text" placeholder="Exp. Month" class="eight" onChange={this.captureCardMonth}/>
-              <Input id="cardYearField" type="text" placeholder="Exp. Year" class="eight" onChange={this.captureCardYear}/>
+              <Input id="cardMonthField" type="text" name="exp_month" placeholder="Exp. Month" class="eight" onChange={this.handleChange}/>
+              <Input id="cardYearField" type="text" name="exp_year" placeholder="Exp. Year" class="eight" onChange={this.handleChange}/>
             </div>
-            <Input id="cardZipCodeField" type="text" placeholder="Zip Code" onChange={this.captureCardZipCode}/>
-            <div class="lgnBtn settingsBtn smoothBkgd electric-blue-background white cardSave" onClick={this.saveNewCard}>Save</div>
+            <div class="billingDates sixteen">
+              <Input id="cardZipCodeField" type="text" name="zip_code" placeholder="Zip Code" class="eight" onChange={this.handleChange}/>
+              <Input id="cardCVCField" type="text" name="cvc" placeholder="CVC" class="eight" onChange={this.handleChange}/>
+            </div>
+            <div class="lgnBtn settingsBtn smoothBkgd electric-blue-background white cardSave" onClick={this.handleToken}>Save</div>
           </form>
         </div>
       </div>

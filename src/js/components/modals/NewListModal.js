@@ -22,7 +22,7 @@ export default class UploadContactsModal extends React.Component {
     let listName = this.state.listName;
 
     $.post({
-      url: "https://legionv2-api.us-west-2.elasticbeanstalk.com/create-tm",
+      url: "https://api.legionanalytics.com/create-tm",
       headers: {"Authorization": tokenHeader },
       data: {name: listName},
       success: (response) => {

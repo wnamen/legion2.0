@@ -23,6 +23,7 @@ export default class ResultsTable extends React.Component {
     this.handleNextSearch = this.handleNextSearch.bind(this);
   }
 
+  // FLATTENS GIVEN ARRAY AND RETURNS A STRING
   arrayConvert(arr) {
     let endIdx = arr.length - 1;
     let convertedString = "";
@@ -32,39 +33,27 @@ export default class ResultsTable extends React.Component {
     return convertedString;
   }
 
+  // HANDLES THE LOAD MORE BUTTON BY CAPTURING THE NEXT ENDPOINT AND PASSING IT TO AJAX
   handleNextSearch(){
     const next = this.props.results.next;
     this.props.nextSearch(next);
     this.forceUpdate();
   }
 
+  // REQUIRED APIS TO RUN AG-GRID
   onGridReady(params) {
       this.api = params.api;
       this.columnApi = params.columnApi;
   }
 
-  selectAll() {
-      this.api.selectAll();
-  }
-
-  deselectAll() {
-      this.api.deselectAll();
-  }
-
-  onCellClicked(event) {
-      console.log('onCellClicked: ' + event.data.name + ', col ' + event.colIndex);
-  }
-
-  onRowSelected(event) {
-      console.log('onRowSelected: ' + event.node.data.name);
-  }
-
   render() {
     let data = this.props.resultsArray;
-    console.log(data);
     let mappedResults;
+    let currentHeader;
+
+    // TABLE HEADER FOR PEOPLE API
     const peopleHeader = [
-      {headerName:"", field:"chck", width: 30, cellRendererFramework: CheckBoxRenderer },
+      {headerName:"", field:"id", width: 30, cellRendererFramework: CheckBoxRenderer },
       {headerName:"Name", field:"name", width: 130 },
       {headerName:"Job Title", field:"jobTitle", width: 130},
       {headerName:"Company", field:"companyName", width: 130},
@@ -88,8 +77,9 @@ export default class ResultsTable extends React.Component {
       {headerName:"Interests", field:"interests", width: 130}
     ];
 
+    // TABLE HEADER FOR COMPANY API
     const companyHeader = [
-      {headerName:"", field:"chck", width: 30, cellRendererFramework: CheckBoxRenderer },
+      {headerName:"", field:"id", width: 30, cellRendererFramework: CheckBoxRenderer },
       {headerName:"Company", field:"companyName", width: 130},
       {headerName:"location", field:"location", width: 130},
       {headerName:"Industry", field:"industry", width: 130},
@@ -107,19 +97,20 @@ export default class ResultsTable extends React.Component {
       {headerName:"Company Wikipedia", field:"companyWikipedia", width: 130, cellRendererFramework: CheckMarkRenderer}
     ];
 
-    let currentHeader;
-
+    // DETERMINES THE CURRENT API STATE AND SETS THE RESPECTIVE HEADER
     if (this.props.apiState.job === true) {
       currentHeader = peopleHeader;
     } else {
       currentHeader = companyHeader;
     }
 
+    // CHECKS IF DATA IS PRESENT TO DISPLAY IN GRID AND MAPS EACH RESULT TO THE COLUMNS OF THE RESPECTIVE API STATE
     if ((data !== undefined) && (data.length > 0)) {
       mappedResults = data.map((result, index) => {
         if (this.props.apiState.job === true) {
           return (
             {
+              id: result.job_id,
               name: result.person_name,
               jobTitle: result.title,
               education: this.arrayConvert(result.education),
@@ -167,6 +158,7 @@ export default class ResultsTable extends React.Component {
         }
       })
     } else if (data !== undefined) {
+      // RETURNS AN IMAGE PLACEHOLDER IF NO DATA IS PRESENT TO DISPLAY
       return (
         <div class="eleven columns">
           <div id="noResultsContainer" class="white-background">
@@ -177,17 +169,11 @@ export default class ResultsTable extends React.Component {
       )
     }
 
-    console.log(mappedResults);
-
     return(
       <div class="eleven columns">
         <div id="resultTable" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
           <AgGridReact
             onGridReady={this.onGridReady.bind(this)}
-            onRowSelected={this.onRowSelected.bind(this)}
-            onCellClicked={this.onCellClicked.bind(this)}
-            showToolPanel={this.state.showToolPanel}
-
             icons={this.state.icons}
 
             columnDefs={currentHeader}
@@ -196,7 +182,6 @@ export default class ResultsTable extends React.Component {
             suppressDragLeaveHidesColumns="true"
             suppressCellSelection="true"
             suppressRowClickSelection="true"
-            rowSelection="multiple"
             enableColResize="true"
             enableSorting="true"
             rowHeight="35"
