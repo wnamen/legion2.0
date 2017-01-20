@@ -21,6 +21,7 @@ export default class Template extends React.Component {
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
     this.handleTemplateSave = this.handleTemplateSave.bind(this);
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
+    this.clearTemplate = this.clearTemplate.bind(this);
   }
 
   handleModelChange = (html) => {
@@ -43,18 +44,18 @@ export default class Template extends React.Component {
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
-        console.log(template);
         return this.setState({templateName: template.name_of_template, templateSubject: template.subject, templateText: template.html})
       }
     })
   }
 
+  clearTemplate = () => {
+    this.setState({templateName: "", templateSubject: "", templateText: ""})
+  }
+
   render(){
     let templates = this.props.templateData;
     let mappedTemplates;
-
-    console.log(this.props.data);
-    console.log(this.state);
 
     if (templates !== undefined) {
       mappedTemplates = templates.map((template, index) => {
@@ -99,19 +100,19 @@ export default class Template extends React.Component {
               <div class="working chooseTemplate pTags">
                 <Input type='select' name="whichEmail" onChange={this.handleSelected}>
                   <option value="">Personalized Tags</option>
-                  <option value="123455">contact.first_name</option>
-                  <option value="213445">contact.last_name</option>
-                  <option value="123455">contact.age</option>
-                  <option value="213445">contact.city</option>
-                  <option value="213445">contact.state</option>
-                  <option value="213445">contact.email_address</option>
-                  <option value="123435">company.name</option>
-                  <option value="213415">company.city</option>
-                  <option value="123435">company.state</option>
-                  <option value="213415">company.phone_number</option>
+                  <option value="first_name">contact.first_name</option>
+                  <option value="last_name">contact.last_name</option>
+                  <option value="age">contact.age</option>
+                  <option value="city">contact.city</option>
+                  <option value="state">contact.state</option>
+                  <option value="email_address">contact.email_address</option>
+                  <option value="company_name">company.name</option>
+                  <option value="company_city">company.city</option>
+                  <option value="company_state">company.state</option>
+                  <option value="company_phone_number">company.phone_number</option>
                 </Input>
               </div>
-              <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn">Delete</div>
+              <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>
               <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
             </div>
         </div>
