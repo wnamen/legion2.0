@@ -20,13 +20,11 @@ export default class Template extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
     this.handleTemplateSave = this.handleTemplateSave.bind(this);
+    this.handleRenderSelection = this.handleRenderSelection.bind(this);
   }
 
-  handleModelChange = (model) => {
-    console.log("changed");
-    console.log(model);
-    this.setState({model: model});
-
+  handleModelChange = (html) => {
+    this.setState({templateText: html});
   }
 
   handleNameChange = (e) => {
@@ -38,8 +36,17 @@ export default class Template extends React.Component {
   }
 
   handleTemplateSave = () => {
-    let templateChanges = {id: (this.props.data.id || null), templateName: this.state.templateName, templateSubject: this.state.templateSubject, templateText: this.state.model};
+    let templateChanges = {id: (this.props.data.id || null), templateName: this.state.templateName, templateSubject: this.state.templateSubject, templateText: this.state.templateText};
     this.props.saveTemplate(templateChanges);
+  }
+
+  handleRenderSelection = (e) => {
+    this.props.templateData.forEach((template) => {
+      if (parseInt(e.target.value) === parseInt(template.id)) {
+        console.log(template);
+        return this.setState({templateName: template.name_of_template, templateSubject: template.subject, templateText: template.html})
+      }
+    })
   }
 
   render(){
@@ -47,6 +54,7 @@ export default class Template extends React.Component {
     let mappedTemplates;
 
     console.log(this.props.data);
+    console.log(this.state);
 
     if (templates !== undefined) {
       mappedTemplates = templates.map((template, index) => {
@@ -65,7 +73,7 @@ export default class Template extends React.Component {
                 <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.templateName || this.props.data.name_of_template}/>
               </div>
               <div class="working chooseTemplate">
-                <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+                <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
                   <option value="">Choose Existing</option>
                   {mappedTemplates}
                 </Input>
@@ -82,7 +90,7 @@ export default class Template extends React.Component {
               <FroalaEditor
                 tag="textarea"
                 config={this.state.config}
-                model={this.state.model || this.props.data.html}
+                model={this.state.templateText || this.props.data.html}
                 onModelChange={this.handleModelChange}
               />
             </div>
@@ -111,10 +119,3 @@ export default class Template extends React.Component {
     )
   }
 }
-
-// noresize
-// class="editableText"
-// tag="textarea"
-// config={this.config}
-// model={this.state.model}
-// onModelChange={this.handleModelChange}

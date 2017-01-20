@@ -47,7 +47,7 @@ export default class TemplateViews extends React.Component {
         return (
           <div>
             <Template key={template.id || `newTemplate ${index}`} data={template} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/>
-            <TemplateDelay key={ `delay ${template.id}` || `newDelay ${index}`} />
+            { (index !== (templates.length-1)) && <TemplateDelay key={ `newDelay${template.id}` || `newDelay${index}`} /> }
           </div>
         )
       })
