@@ -18,7 +18,7 @@ export default class TemplateMenu extends React.Component {
     if (data !== undefined) {
       templates = data.map((template, index) => {
         return (
-          <TemplateListing key={index} templateID={template.id} templateData={template}  renderTemplate={this.props.renderTemplate}/>
+          <TemplateListing key={index} templateID={template.id} templateData={template}  renderTemplate={this.props.renderTemplate} deleteTemplate={this.props.deleteTemplate}/>
         )
       })
     }
