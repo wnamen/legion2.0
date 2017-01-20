@@ -73,7 +73,7 @@ export default class Cadence extends React.Component {
     });
   }
 
-  // CAPTURES THE SELECTED TEMPLATE TO BE renderSelectedMenu
+  // CAPTURES THE SELECTED TEMPLATE TO BE RENDERED
   findSelectedTemplate = (id) => {
     let currentTemplate = [];
 
@@ -84,7 +84,7 @@ export default class Cadence extends React.Component {
       }
     })
 
-    this.setState({currentView: currentTemplate, currentTemplates: currentTemplate});
+    this.setState({renderState: "template", currentView: currentTemplate, currentTemplates: currentTemplate});
   }
 
   // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
@@ -104,7 +104,7 @@ export default class Cadence extends React.Component {
     templates.forEach((template) => {
       currentTemplates.push(this.findTemplateData(template[0]))
     })
-    this.setState({currentView: campaign, currentTemplates: currentTemplates});
+    this.setState({renderState: "campaign", currentView: campaign, currentTemplates: currentTemplates});
   }
 
   // CAPTURES A SELECTED TEMPLATE
@@ -121,7 +121,39 @@ export default class Cadence extends React.Component {
 
   // INITIALIZE A NEW CAMPAIGN
   createNewCampaign = () => {
-    this.setState({currentView: {name:"", started: true, settings: {templates: []}}, currentTemplates: [{html:"", subject:"", name_of_template:""}]});
+    this.setState({
+      renderState: "campaign",
+      currentView: {
+        name:"",
+        started: true,
+        settings: {
+          templates: []
+        }
+      },
+      currentTemplates: [{
+        html:"",
+        subject:"",
+        name_of_template:""
+      }]
+    });
+  }
+
+  // INTIALIZE A NEW TEMPLATE
+  createNewTemplate = () => {
+    this.setState({
+      renderState: "template",
+      currentView: {
+        name:"", started: true,
+        settings: {
+          templates: []
+        }
+      },
+      currentTemplates: [{
+        html:"",
+        subject:"",
+        name_of_template:""
+      }]
+    })
   }
 
   // DETERMINE TEMPLATE UPDATE/CREATE
@@ -176,8 +208,8 @@ export default class Cadence extends React.Component {
     return (
         <div class="gray-light-background">
           <div class="sixteen columns">
-            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign}/>
-            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} saveTemplate={this.saveTemplate}/>
+            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate}/>
+            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} saveTemplate={this.saveTemplate} renderState={this.state.renderState}/>
             <CampaignEngagment />
           </div>
         </div>

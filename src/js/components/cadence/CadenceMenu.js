@@ -24,7 +24,7 @@ export default class CadenceMenu extends React.Component {
     let current_view = this.state.currentView;
 
     const createCampaign = <a class="cadenceToggle newBtnBuffer" onClick={this.props.createNewCampaign}>Create New Campaign</a>;
-    const createTemplate = <a class="cadenceToggle newBtnBuffer" onClick={this.props.createNewCampaign}>Create New Template</a>;
+    const createTemplate = <a class="cadenceToggle newBtnBuffer" onClick={this.props.createNewTemplate}>Create New Template</a>;
     const activeCampaign = <a onClick={this.renderSelectedMenu} class="cadenceToggle text-left medium-bottom-border electric-blue-border gray">Campaigns</a>;
     const unactiveCampaign = <a onClick={this.renderSelectedMenu} class="cadenceToggle text-left gray">Campaigns</a>;
     const activeTemplate = <a onClick={this.renderSelectedMenu} class="cadenceToggle text-right medium-bottom-border electric-blue-border gray">Templates</a>;

@@ -6,6 +6,7 @@ import $ from "jquery";
 import SaveCampaignModal from "../modals/SaveCampaignModal";
 import TemplateGenerator from "./TemplateGenerator";
 import Template from "./Template";
+import TemplateDelay from "./TemplateDelay";
 
 export default class TemplateViews extends React.Component {
   constructor(props) {
@@ -30,32 +31,34 @@ export default class TemplateViews extends React.Component {
     const play = <i class="fa fa-play electric-blue"></i>;
     const pause = <i class="fa fa-pause electric-blue"></i>;
 
+    const header = (<div><div class="gray activeCampaignName">{this.props.currentView.name}</div>
+    <div class="topCampaignBtns">
+      <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
+      <Modal trigger={modalTrigger}>
+        <SaveCampaignModal handleModalClose={this.handleModalClose}/>
+      </Modal>
+    </div></div>)
+
     let templates = this.state.currentTemplates || this.props.currentTemplates;
     let mappedTemplates;
-
-    console.log(templates);
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {
         return (
-          <Template key={index} data={template} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/>
+          <div>
+            <Template key={template.id || `newTemplate ${index}`} data={template} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/>
+            <TemplateDelay key={ `delay ${template.id}` || `newDelay ${index}`} />
+          </div>
         )
       })
     }
 
     return(
       <div class="sixteen">
-        <div class="gray activeCampaignName">{this.props.currentView.name}</div>
-        <div class="topCampaignBtns">
-          <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
-          <Modal trigger={modalTrigger}>
-            <SaveCampaignModal handleModalClose={this.handleModalClose}/>
-          </Modal>
-        </div>
-
+        { this.props.renderState === "campaign" && header }
         <div class="sixteen templateHolder">
           { mappedTemplates }
-          <TemplateGenerator />
+          { this.props.renderState === "campaign" && <TemplateGenerator /> }
         </div>
       </div>
     )

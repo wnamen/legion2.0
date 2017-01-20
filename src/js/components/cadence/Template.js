@@ -23,7 +23,10 @@ export default class Template extends React.Component {
   }
 
   handleModelChange = (model) => {
+    console.log("changed");
+    console.log(model);
     this.setState({model: model});
+
   }
 
   handleNameChange = (e) => {
@@ -42,6 +45,8 @@ export default class Template extends React.Component {
   render(){
     let templates = this.props.templateData;
     let mappedTemplates;
+
+    console.log(this.props.data);
 
     if (templates !== undefined) {
       mappedTemplates = templates.map((template, index) => {
