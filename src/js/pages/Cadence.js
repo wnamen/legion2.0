@@ -12,11 +12,13 @@ export default class Cadence extends React.Component {
     this.state={
       token: cookie.load("token"),
       currentView: null,
-      currentTemplates: null
+      currentTemplates: null,
+      campaignTemplateList: []
     }
     this.loadAvailableCampaigns = this.loadAvailableCampaigns.bind(this);
     this.loadAvailableTemplates = this.loadAvailableTemplates.bind(this);
     this.findSelectedCampaign = this.findSelectedCampaign.bind(this);
+    this.findNewCampaignTemplates = this.findNewCampaignTemplates.bind(this);
     this.findSelectedTemplate = this.findSelectedTemplate.bind(this);
     this.findCampaignTemplates = this.findCampaignTemplates.bind(this);
     this.findTemplateData = this.findTemplateData.bind(this);
@@ -53,7 +55,7 @@ export default class Cadence extends React.Component {
   }
 
   // LOAD THE USERS CURRENT TEMPLATES
-  loadAvailableTemplates = () => {
+  loadAvailableTemplates = (id) => {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
@@ -64,8 +66,12 @@ export default class Cadence extends React.Component {
       success: (response) => {
         console.log(response);
         this.setState({
-          templateData: response
+          templateData: response,
         })
+
+        if (this.state.renderState === "campaign") {
+          this.findNewCampaignTemplates(id)
+        }
       },
       error: (response) => {
         console.log(response);
@@ -79,12 +85,23 @@ export default class Cadence extends React.Component {
 
     this.state.templateData.forEach((template) => {
       if (parseInt(id) === parseInt(template.id)) {
-        console.log(template);
         return currentTemplate.push(template);
       }
     })
 
     this.setState({renderState: "template", currentView: currentTemplate, currentTemplates: currentTemplate});
+  }
+
+  // CAPTURES THE SELECTED CAMPAIGN TEMPLATE TO BE RENDERED
+  findNewCampaignTemplates = (id) => {
+    let templateList = this.state.campaignTemplateList
+    templateList.push(id)
+    let currentTemplates = [];
+
+    templateList.forEach((templateID) => {
+      currentTemplates.push(this.findTemplateData(templateID))
+    })
+    this.setState({renderState: "campaign", currentTemplates: currentTemplates, campaignTemplateList: templateList});
   }
 
   // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
@@ -140,6 +157,16 @@ export default class Cadence extends React.Component {
     });
   }
 
+  // DETERMINE CAMPAIGN UPDATE/CREATE
+  saveCampaign = (campaign) => {
+    if (template.id === null) {
+      this.makeTemplate(template);
+    } else {
+      this.updateTemplate(template);
+    }
+  }
+
+
   // INTIALIZE A NEW TEMPLATE
   createNewTemplate = () => {
     this.setState({
@@ -178,7 +205,7 @@ export default class Cadence extends React.Component {
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         console.log(response);
-        this.loadAvailableTemplates();
+        this.loadAvailableTemplates(response.id);
       },
       error: (response) => {
         console.log(response);

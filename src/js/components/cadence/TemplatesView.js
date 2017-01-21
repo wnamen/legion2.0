@@ -31,8 +31,12 @@ export default class TemplateViews extends React.Component {
     this.setState({currentTemplates: templates})
   }
 
+  createNewCampaign = () => {
+
+  }
+
   render(){
-    const modalTrigger = <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn">Save Campaign</div>;
+    const modalTrigger = <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn" onClick={this.createNewCampaign}>Save Campaign</div>;
     const play = <i class="fa fa-play electric-blue"></i>;
     const pause = <i class="fa fa-pause electric-blue"></i>;
 

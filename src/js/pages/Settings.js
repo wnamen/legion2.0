@@ -9,21 +9,21 @@ import $ from "jquery";
 
 
 class Settings extends Component {
-  
+
   constructor(props) {
     super(props);
-    
+
     this.state = {
       userInfo: "",
       emails: []
     };
   }
-  
+
   handleModalClose = () => {
     console.log("clicked");
     $(".modal-close").trigger("click");
   };
-  
+
   componentDidMount = () => {
     this.updateSettings()
   };
@@ -55,20 +55,20 @@ class Settings extends Component {
   };
 
   render() {
-  
+
     const { userInfo, emails } = this.state;
-    
+
     return (
       <div class="ten offset-by-three white-background settingsCard">
         <h6>Settings</h6>
         <br />
-        
+
         <MyAccount userInfo={userInfo} handleModalClose={this.handleModalClose} />
         <Integrations userInfo={userInfo} />
         <EmailConfiguration emails={emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
         <Billing userInfo={userInfo} saveCard={this.saveCard}/>
         <Logout userInfo={userInfo} />
-        
+
       </div>
 
     );
@@ -81,4 +81,3 @@ Settings.contextTypes = {
 
 
 export default Settings;
-
