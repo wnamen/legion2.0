@@ -1,37 +1,18 @@
-import React, { Component } from "react";
-import cookie           from "react-cookie";
-import $ from "jquery";
+import React, { Component, PropTypes } from "react";
 
 
 class DataShare extends Component {
 
   onHandleChoice = (choice) => {
   
-    let tokenHeader = `Token ${cookie.load("token")}`;
-  
-    $.ajax({
-      url: 'https://api.legionanalytics.com/settings',
-      headers: {"Authorization": tokenHeader},
-      data: {
-        data_shares: choice
-      },
-      crossDomain: true,
-      cache:false,
-      success: (industries) => {
-        
-      }
-    });
+    const { http } = this.context;
+    http.post(`settings`, {params: {
+      data_shares: choice
+    }}).then(response => console.log(response.data));
     
     if(choice) {
-      $.ajax({
-        url: 'https://api.legionanalytics.com/onboarded-complete',
-        headers: {"Authorization": tokenHeader},
-        crossDomain: true,
-        cache:false,
-        success: () => {
-          window.location.href = '/search'; //need change to route
-        }
-      });
+      http.post(`onboard-complete`)
+        .then(response => window.location.href = '/search' ); //need change to route
     }
   };
   
@@ -48,5 +29,10 @@ class DataShare extends Component {
     )
   }
 }
+
+DataShare.contextTypes = {
+  http: PropTypes.func.isRequired
+};
+
 
 export default DataShare;

@@ -109,3 +109,7 @@ strong{
 strong.largeText{
   font-size: 2em;
 }
+
+.capitalize{
+    text-transform: capitalize;
+}
