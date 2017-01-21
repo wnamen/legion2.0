@@ -1,8 +1,8 @@
 import React, { PropTypes } from "react"
 
-const ConfigurationForm = ({ emails, newName, newEmail }) => {
+const ConfigurationForm = ({ email, newName, newEmail }) => {
   
-  let currentEmail = emails.credential_private_key || emails.credential_handle;
+  let currentEmail = email.credential_private_key || email.credential_handle;
   
   return (
     <div class="sampleWindow small-border gray-border white-background">
@@ -10,7 +10,7 @@ const ConfigurationForm = ({ emails, newName, newEmail }) => {
         <tbody>
         <tr>
           <td class="text-right">From:</td>
-          <td class="text-left gray">{ newName || emails.credential_api_key }
+          <td class="text-left gray">{ newName || email.credential_api_key }
             <small> { newEmail || currentEmail } </small>
           </td>
         </tr>

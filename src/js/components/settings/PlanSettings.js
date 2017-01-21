@@ -61,10 +61,7 @@ class PlanSettings extends Component {
     
     http.post('settings', {
         plan_name: plan === 'payg' ? 'standard' : 'payg'
-    }, {
-      'Content-Type': 'multipart/form-data',
-    })
-      .then(response => console.log(response))
+    }).then(response => console.log(response))
   };
   
   render() {
