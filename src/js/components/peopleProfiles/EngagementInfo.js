@@ -14,7 +14,7 @@ const EngagementInfo = ({ data }) => {
                 <div class="activityAction">
                   <div class={`actionIcon ${v.type_of_visit === 'open' ? `red-background` : -`electric-blue-background`}`}/>
                   <p class="activityDetails gray">
-                    {v.type_of_visit === 'open' ? '- Opened' : '- Clicked' }
+                    {v.type_of_visit === 'open' ? '- Opened ' : '- Clicked ' }
                     <strong>{v.subject}</strong> on <strong>{date}</strong>
                   </p>
                 </div>

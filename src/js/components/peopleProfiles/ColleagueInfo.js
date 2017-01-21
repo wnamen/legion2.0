@@ -8,7 +8,7 @@ const ColleagueInfo = ({ data }) => {
     <div>
       <div class="profile-card whiteCard" id="kylieCard">
         <a href="https://www.kylie.ai" target="_blank">
-          <img src="src/img/kylieAd.png" class="kylieAd" />
+          <img src="/src/img/kylieAd.png" class="kylieAd" />
         </a>
       </div>
       

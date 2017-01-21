@@ -6,7 +6,7 @@ class DataShare extends Component {
   onHandleChoice = (choice) => {
   
     const { http } = this.context;
-    http.post(`settings`, {params: {
+    http.post(`settings`, { params: {
       data_shares: choice
     }}).then(response => console.log(response.data));
     

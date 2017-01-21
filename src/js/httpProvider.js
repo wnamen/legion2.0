@@ -14,13 +14,16 @@ class HttpProvider extends Component {
   };
 
   getChildContext() {
-
-    let header = cookie.load("token") ? {'Authorization': `Token ${cookie.load("token")}`, 'Content-Type': 'application/x-www-form-urlencoded'} : {'Content-Type': 'application/x-www-form-urlencoded'};
+    const auth = cookie.load("token") ? {'Authorization': `Token ${cookie.load("token")}`} : null;
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      ...auth
+    } ;
 
     return {
       http: axios.create({
         baseURL: 'https://api.legionanalytics.com/',
-        headers: header
+        headers: headers
       })
     };
   }

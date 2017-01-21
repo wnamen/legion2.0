@@ -1,6 +1,7 @@
-import React, { Component, PropTypes }       from "react";
-import { CubeGrid }           from "better-react-spinkit"
+import React, { Component, PropTypes } from "react";
+import { CubeGrid } from "better-react-spinkit"
 import Helmet from "react-helmet";
+import cookie from "react-cookie";
 
 import ContactLocationColumn      from "../components/peopleProfiles/ContactLocationColumn";
 import ColleagueEngagementColumn  from "../components/peopleProfiles/ColleagueEngagementColumn";
@@ -24,6 +25,7 @@ class Profile extends Component {
     this.state = {
       data: false,
       engagement: false,
+      user: 0
     }
   }
 
@@ -31,25 +33,22 @@ class Profile extends Component {
     const { type, id } = this.props.params;
     const { http } = this.context;
 
-    http.get(`${type}/${id}`)
-      .then(response => {
-        this.setState({data: response.data});
-        if(type === 'person') {
-          http.get(`/${type}-engagement/${id}`)
-            .then(response => {
-              this.setState({engagement: response.data.results})
-            })
-            .catch(err => console.log(err));
-        }
-      })
-      .catch(err => console.log(err));
+    http.get(`${type}/${id}`).then(response => {this.setState({data: response.data});});
 
+    if(cookie.load('token')) {
+      http.get(`ids_connected_to_user`).then(response => this.setState({
+        user: Object.keys(response.data).length ? 2 : 1}
+      ));
+    }
+
+    if(type === 'person' && cookie.load('token')) {
+      http.get(`/${type}-engagement/2533785`).then(response => {this.setState({engagement: response.data.results})})
+    }
   }
 
   render() {
-    const { data, engagement } = this.state;
+    const { data, engagement, user } = this.state;
     const { type } = this.props.params;
-    console.log(this.state);
 
     return (
       <div class="gray-light-background">
@@ -59,16 +58,16 @@ class Profile extends Component {
             type === 'person' ?
               <div>
                 <Meta name={data.name} />
-                <ContactLocationColumn data={data}/>
-                <PublicBio data={data}/>
-                <ColleagueEngagementColumn colleagues={data.colleagues} data={engagement}/>
+                <ContactLocationColumn data={data} user={user} />
+                <PublicBio data={data} user={user} />
+                <ColleagueEngagementColumn colleagues={data.colleagues} user={user} data={engagement}/>
               </div>
               :
               <div>
                 <Meta name={data.name} />
-                <CompanyLocationColumn data={data}/>
-                <CompanyBio data={data}/>
-                <CompanyInfo data={data}/>
+                <CompanyLocationColumn data={data} user={user} />
+                <CompanyBio data={data} user={user} />
+                <div className="three columns noShow"><CompanyInfo data={data} user={user}/></div>
               </div>
             :
             <div className="spinner-profile"><CubeGrid size={50} color="#36b7ea"/></div>

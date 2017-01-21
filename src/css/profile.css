@@ -47,6 +47,9 @@
 .splink:not(:last-of-type){
 	border-right: 1px solid #647382;
 }
+.splink:not(:first-of-type){
+	padding: 0 10px 0 0;
+}
 a.active:hover{
 	text-decoration: underline;
 }
@@ -145,7 +148,7 @@ a.active:hover{
     top: 20%;
 }
 
-.engagement-profile{
+.engagement-profile div{
     position: absolute;
     left: 50%;
     top: 20%;

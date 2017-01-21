@@ -5,12 +5,19 @@ import ColleagueInfo from "./ColleagueInfo"
 import EngagementInfo from "./EngagementInfo"
 
 
-const ColleagueEngagementColumn = ({ data, colleagues }) => {
+const ColleagueEngagementColumn = ({ data, colleagues, user }) => {
   
   return (
     <div class="three columns noShow">
       <ColleagueInfo data={colleagues}/>
-      {data ? <EngagementInfo data={data}/> : <div className="engagement-profile"><CubeGrid size={50} color="#36b7ea"/></div> }
+      
+      {
+        data ? <EngagementInfo data={data}/> : user ?
+          <div className="profile-card engagement">
+            <CubeGrid className='flex-center' size={50} color="#36b7ea"/>
+          </div> : ''
+      }
+    
     </div>
   )
 };
