@@ -7,7 +7,6 @@ export default class DirectoryTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
       sections: 'abcdefghijklmnopqrstuvwxyz'.split('')
     }
     this.handleGroupClick = this.handleGroupClick.bind(this);
