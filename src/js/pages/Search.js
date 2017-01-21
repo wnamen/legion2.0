@@ -175,7 +175,11 @@ export default class Search extends React.Component {
           <SearchMenu searchFilters={this.state.searchFilters} interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch} userToken={this.state.token}/>
           <ActionBar results={this.state.results}/>
           { this.state.loading ?
-            <div class="eleven columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
+            <div class="eleven columns">
+              <div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
+                <CubeGrid size={50} color="#36b7ea" />
+              </div>
+            </div> :
             <ResultsTable results={this.state.results} resultsArray={this.state.resultsArray} apiState={this.state.apiState} nextSearch={this.nextSearch} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
           }
         </div>

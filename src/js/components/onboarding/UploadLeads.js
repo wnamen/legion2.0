@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import cookie           from "react-cookie";
-import $ from "jquery";
+import React, { Component, PropTypes } from "react";
 
-class UploadLeads extends React.Component {
+
+class UploadLeads extends Component {
   
   constructor(props) {
     super(props);
@@ -11,12 +10,12 @@ class UploadLeads extends React.Component {
       upload: false
     };
   }
-
+  
   onHandleFile = (e) => {
-      this.setState({
-        file: e.target.files[0],
-        upload: true
-      });
+    this.setState({
+      file: e.target.files[0],
+      upload: true
+    });
   };
   
   clear = () => {
@@ -27,64 +26,60 @@ class UploadLeads extends React.Component {
   };
   
   upload = () => {
-    let tokenHeader = `Token ${cookie.load("token")}`;
-    const {file} = this.state;
-    $.post({
-      url: "https://api.legionanalytics.com/upload-document",
-      headers: {"Authorization": tokenHeader, "Content-Disposition": `attachment; filename=${file.name}`, "Content-Type": "text/csv"},
-      processData: false,
-      data: file,
-      success: (response) => {
-        console.log(response);
-      },
-      error: (response) => {
-        console.log(response);
-      }
+    const { file } = this.state;
+  
+    const data = new FormData();
+    data.append('file', file);
+  
+    this.context.http.post('upload-document', data, {
+      'Content-Disposition': `name=${file.name}; filename=${file.name}`,
+      'Content-Type': "text/csv"
     })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      });
+    
   };
   
-  render(){
+  render() {
     
-    const { file: {name}, upload } = this.state;
+    const { file: { name }, upload } = this.state;
     const extraClass = "lgnBtn settingsBtn lgnBtnLg smoothBkgd white inline-block signupBtn";
-    return(
+    return (
       <div>
-          <img class="modalIcon smallerIcon" src="/src/img/upload_cloud_asset.png"></img>
-          <h1 class="modalTitle gray onbTitle">Upload Your Current Leads</h1>
-          <form id="billingModalForm">
-            <div class="gray"><small>File: {name}</small></div>
-  
-            {upload ?
-              <div>
-                <div class={`${extraClass} green-background`} onClick={this.upload}>Confirm?</div>
-                <div class={`${extraClass} red-background`} onClick={this.clear}>Choose Another</div>
-              </div>
-              
-              :
-              
-              <div class={`${extraClass} electric-blue-background`}
-                             style={{
-                               position: "relative",
-                               cursor: "pointer",
-                             }}>
-              <input type="file" onChange={this.onHandleFile} accept=".csv" style={{
-                opacity: 0,
-                cursor: "pointer",
-                width: "160px",
-                height: "50px",
-                fontSize: 0,
-                position: "absolute",
-                top: 0,
-                left: "calc(50% - 80px)",
-              }} />
+        <img class="modalIcon smallerIcon" src="/src/img/upload_cloud_asset.png" />
+        <h1 class="modalTitle gray onbTitle">Upload Your Current Leads</h1>
+        <form id="billingModalForm">
+          <div class="gray">
+            <small>File: {name}</small>
+          </div>
+          
+          {upload ?
+            <div>
+              <div class={`${extraClass} green-background`} onClick={this.upload}>Confirm?</div>
+              <div class={`${extraClass} red-background`} onClick={this.clear}>Choose Another</div>
+            </div>
+            
+            :
+            
+            <div class={`${extraClass} electric-blue-background file-input`} >
+              <input type="file" onChange={this.onHandleFile} accept=".csv" />
               Upload .CSV
             </div>}
-            
-          </form>
-        </div>
+        
+        </form>
+      </div>
     )
   }
 }
+
+UploadLeads.contextTypes = {
+  http: PropTypes.func.isRequired
+};
+
 
 export default UploadLeads;
 

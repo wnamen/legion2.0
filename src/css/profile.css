@@ -13,6 +13,7 @@
 .colleagues,.engagement{
 	padding: 10px 20px 10px 20px;
     white-space: nowrap;
+    position: relative;
 }
 .colleagues{
 	margin-top: 5em;
@@ -138,3 +139,14 @@ a.active:hover{
     }
 }
 
+.spinner-profile{
+    position: absolute;
+    left: 50%;
+    top: 20%;
+}
+
+.engagement-profile{
+    position: absolute;
+    left: 50%;
+    top: 20%;
+}

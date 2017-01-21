@@ -31,7 +31,6 @@ export default class UserNav extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
-        console.log(response);
         this.setState({currentCredits: response.credits})
       },
       error: (response) => {
