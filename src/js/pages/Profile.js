@@ -10,9 +10,8 @@ import PublicBio from "../components/peopleProfiles/PublicBio";
 import CompanyLocationColumn from "../components/companyProfiles/CompanyLocationColumn";
 import CompanyInfo from "../components/companyProfiles/CompanyInfo";
 import CompanyBio from "../components/companyProfiles/CompanyBio";
- 
+
 const Meta = ({name}) => <Helmet
-  title={name}
   meta={[
     {name: "description", content: `${name} Email Address - *****@***.com, ****@***.com | Show email & phone >>>`},
     {name: "keywords", content: `${name} Email Address, Kevin Hale's Phone Number, email search, email lookup, email address lookup`},
@@ -20,7 +19,7 @@ const Meta = ({name}) => <Helmet
 />;
 
 class Profile extends Component {
-  
+
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -29,34 +28,32 @@ class Profile extends Component {
       user: 0
     }
   }
-  
+
   componentWillMount() {
     const { type, id } = this.props.params;
     const { http } = this.context;
-  
+
     http.get(`${type}/${id}`).then(response => {this.setState({data: response.data});});
-    
+
     if(cookie.load('token')) {
       http.get(`ids_connected_to_user`).then(response => this.setState({
         user: Object.keys(response.data).length ? 2 : 1}
       ));
     }
-  
+
     if(type === 'person' && cookie.load('token')) {
-      http.get(`/${type}-engagement/2533785`).then(response => {this.setState({engagement: response.data.results})})
+      http.get(`/${type}-engagement/${id}`).then(response => {this.setState({engagement: response.data.results})})
     }
   }
-  
+
   render() {
     const { data, engagement, user } = this.state;
     const { type } = this.props.params;
-    
-    console.log(user);
-    
+
     return (
       <div class="gray-light-background">
         <div class="sixteen columns">
-          
+
           {data ?
             type === 'person' ?
               <div>

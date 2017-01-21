@@ -5,22 +5,22 @@ import querystring from 'querystring';
 
 
 class HttpProvider extends Component {
-  
+
   static propTypes = {
     children: PropTypes.any.isRequired
   };
-  
+
   static childContextTypes = {
     http: PropTypes.func.isRequired,
   };
-  
+
   getChildContext() {
     const auth = cookie.load("token") ? {'Authorization': `Token ${cookie.load("token")}`} : null;
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       ...auth
     } ;
-    
+
     return {
       http: axios.create({
         baseURL: 'https://api.legionanalytics.com/',
@@ -31,7 +31,7 @@ class HttpProvider extends Component {
       })
     };
   }
-  
+
   render() {
     return Children.only(this.props.children);
   }
