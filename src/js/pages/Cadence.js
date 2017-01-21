@@ -204,11 +204,30 @@ export default class Cadence extends React.Component {
     });
   }
 
+  // DELETE SELECTED TEMPLATE
+  deleteTemplate = (id) => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.post({
+      url: "https://api.legionanalytics.com/delete-template",
+      data: {id: id},
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(response);
+        this.loadAvailableTemplates();
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
   render() {
     return (
         <div class="gray-light-background">
           <div class="sixteen columns">
-            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate}/>
+            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate}/>
             <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} saveTemplate={this.saveTemplate} renderState={this.state.renderState}/>
             <CampaignEngagment />
           </div>
