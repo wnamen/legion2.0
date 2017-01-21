@@ -8,7 +8,7 @@ const Billing = ({ userInfo, saveCard }) => {
     <div class="sixteen columns lgbufferMargin">
       <h5 class="settingsSubTitles">Billing</h5>
       <BillingForm userInfo={userInfo} saveCard={saveCard}/>
-      <PlanSettings userInfo={userInfo}/>
+      <PlanSettings plan={userInfo.settings.plan.name}/>
     </div>
   )
 };

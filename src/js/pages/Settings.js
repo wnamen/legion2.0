@@ -1,11 +1,11 @@
 import React, { PropTypes, Component }       from "react";
-
 import MyAccount                  from "../components/settings/MyAccount";
 import Integrations               from "../components/settings/Integrations";
 import EmailConfiguration         from "../components/settings/EmailConfiguration";
 import Billing                    from "../components/settings/Billing";
 import Logout                     from "../components/settings/Logout";
 import $ from "jquery";
+import { CubeGrid } from "better-react-spinkit"
 
 
 class Settings extends Component {
@@ -38,36 +38,35 @@ class Settings extends Component {
   };
 
   saveAlias = (changes) => {
-    let newChanges = { change_alias: changes.emailID };
-
-    changes.emailHandle !== null ? newChanges.aliasemail = changes.emailHandle : "";
-    changes.emailName !== null ? newChanges.aliasname = changes.emailName : "";
-
-    this.context.http.post('settings', { params: newChanges} ).then(() => this.updateSettings())
+    this.context.http.post('settings', changes).then(() => this.updateSettings())
   };
 
   removeAlias = (changes) => {
-    this.context.http.post('settings', { params: { remove_alias: changes.emailID }}).then(() => this.updateSettings())
+    this.context.http.post('settings', { remove_alias: changes.emailID }).then(() => this.updateSettings())
   };
 
   saveCard = (token) => {
-    this.context.http.post('settings', { params: { new_card: token }}).then(response => this.updateSettings());
+    this.context.http.post('settings', { new_card: token }).then(response => this.updateSettings());
   };
 
   render() {
   
     const { userInfo, emails } = this.state;
+    console.log(emails, 'emails');
     
     return (
       <div class="ten offset-by-three white-background settingsCard">
         <h6>Settings</h6>
         <br />
         
-        <MyAccount userInfo={userInfo} handleModalClose={this.handleModalClose} />
-        <Integrations userInfo={userInfo} />
-        <EmailConfiguration emails={emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
-        <Billing userInfo={userInfo} saveCard={this.saveCard}/>
-        <Logout userInfo={userInfo} />
+        {!userInfo ? <CubeGrid size={50} color="#36b7ea"/> :
+        <div>
+          <MyAccount userInfo={userInfo} handleModalClose={this.handleModalClose} />
+          <Integrations userInfo={userInfo} />
+          <EmailConfiguration emails={emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
+          <Billing userInfo={userInfo} saveCard={this.saveCard}/>
+          <Logout userInfo={userInfo} />
+        </div>}
         
       </div>
 
