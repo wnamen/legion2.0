@@ -42,7 +42,7 @@ class Profile extends Component {
     }
 
     if(type === 'person' && cookie.load('token')) {
-      http.get(`/${type}-engagement/2533785`).then(response => {this.setState({engagement: response.data.results})})
+      http.get(`/${type}-engagement/${id}`).then(response => {this.setState({engagement: response.data.results})})
     }
   }
 
