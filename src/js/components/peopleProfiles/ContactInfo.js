@@ -1,8 +1,9 @@
 import React, { PropTypes } from "react";
 import { Modal } from "react-materialize";
+import classNames from "classnames";
 import SignUpModal from "../modals/SignUpModal";
 
-const ContactInfo = ({ data: { name, jobs, location } }) => {
+const ContactInfo = ({ data: { name, jobs, location }, user }) => {
   
   const modalTrigger =
     <div class="lgnBtn electric-blue-light-background electric-blue-border black lgnBtnUp">
@@ -18,15 +19,17 @@ const ContactInfo = ({ data: { name, jobs, location } }) => {
       
       <h6 class="gray meta local">{location}</h6>
       
-      <Modal trigger={modalTrigger}>
-        <SignUpModal />
-      </Modal>
+      <div className={classNames({ hidden: user })} >
+        <Modal trigger={modalTrigger}>
+          <SignUpModal />
+        </Modal>
       
-      <hr />
+        <hr />
       
-      <div class="thumbs">
-        <i class="fa fa-thumbs-up thumb-icon electric-blue"/>
-        <i class="fa fa-thumbs-o-down thumb-icon"/>
+        <div class="thumbs">
+          <i class="fa fa-thumbs-up thumb-icon electric-blue"/>
+          <i class="fa fa-thumbs-o-down thumb-icon"/>
+        </div>
       </div>
     
     </div>

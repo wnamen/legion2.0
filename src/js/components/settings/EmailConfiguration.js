@@ -1,20 +1,15 @@
 import React, { Component } from "react"
-import { Input, Dropdown, Button } from "react-materialize"
-import $ from "jquery"
-
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+import { Input } from "react-materialize"
 import ConfigurationWindow from "./ConfigurationWindow";
 import ConfigurationControls from "./ConfigurationControls";
 
-export default class EmailConfiguration extends React.Component {
+class EmailConfiguration extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       displayDefault: true
-    }
-    this.handleSelected = this.handleSelected.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
+    };
   }
 
   handleSelected = (e) => {
@@ -124,3 +119,5 @@ export default class EmailConfiguration extends React.Component {
     )
   }
 }
+
+export default EmailConfiguration;

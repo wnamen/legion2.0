@@ -13,9 +13,9 @@ const LocationInfo = ({ data: { name, location } }) => {
   const img = locationList.filter(v => !prepareLocation.search(v))[0];
   
   return (
-    <div class="profile-card whiteCard text-center">
+    <div class="profile-card whiteCard text-center" >
       <img src={`/src/img/svg/${img || 'austin'}.svg`} class="electric-blue smScreenImg" alt={`${name} lives in ${location}`}/>
-      <h6 class="gray locationH1"> Location: <br /> {location} </h6>
+      <h6 class="gray locationH1"> Location{location ? ':' : ''} <br /> {location} </h6>
     </div>
   )
 };

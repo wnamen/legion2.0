@@ -1,7 +1,8 @@
 import React from "react"
 import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
 
-export default class PasswordResetModal extends React.Component {
+
+class PasswordResetModal extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,15 +39,15 @@ export default class PasswordResetModal extends React.Component {
     let correctCode = "code";
     let givenCode = this.state.uniqueCode;
 
-    return correctCode === givenCode ? true : false;
-  }
+    return correctCode === Boolean(givenCode);
+  };
 
   passwordCheck = () => {
     let correctPassword = this.state.newPassword;
     let givenPassword = this.state.passwordConfirm;
 
-    return correctPassword === givenPassword ? true : false;
-  }
+    return correctPassword === Boolean(givenPassword);
+  };
 
   render() {
     return (
@@ -65,3 +66,6 @@ export default class PasswordResetModal extends React.Component {
     )
   }
 }
+
+export default PasswordResetModal;
+
