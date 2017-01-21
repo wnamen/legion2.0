@@ -20,13 +20,12 @@ export default class Template extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
     this.handleTemplateSave = this.handleTemplateSave.bind(this);
+    this.handleRenderSelection = this.handleRenderSelection.bind(this);
+    this.clearTemplate = this.clearTemplate.bind(this);
   }
 
-  handleModelChange = (model) => {
-    console.log("changed");
-    console.log(model);
-    this.setState({model: model});
-
+  handleModelChange = (html) => {
+    this.setState({templateText: html});
   }
 
   handleNameChange = (e) => {
@@ -38,15 +37,25 @@ export default class Template extends React.Component {
   }
 
   handleTemplateSave = () => {
-    let templateChanges = {id: (this.props.data.id || null), templateName: this.state.templateName, templateSubject: this.state.templateSubject, templateText: this.state.model};
+    let templateChanges = {id: (this.props.data.id || null), templateName: this.state.templateName, templateSubject: this.state.templateSubject, templateText: this.state.templateText};
     this.props.saveTemplate(templateChanges);
+  }
+
+  handleRenderSelection = (e) => {
+    this.props.templateData.forEach((template) => {
+      if (parseInt(e.target.value) === parseInt(template.id)) {
+        return this.setState({templateName: template.name_of_template, templateSubject: template.subject, templateText: template.html})
+      }
+    })
+  }
+
+  clearTemplate = () => {
+    this.setState({templateName: "", templateSubject: "", templateText: ""})
   }
 
   render(){
     let templates = this.props.templateData;
     let mappedTemplates;
-
-    console.log(this.props.data);
 
     if (templates !== undefined) {
       mappedTemplates = templates.map((template, index) => {
@@ -65,7 +74,7 @@ export default class Template extends React.Component {
                 <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.templateName || this.props.data.name_of_template}/>
               </div>
               <div class="working chooseTemplate">
-                <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+                <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
                   <option value="">Choose Existing</option>
                   {mappedTemplates}
                 </Input>
@@ -82,7 +91,7 @@ export default class Template extends React.Component {
               <FroalaEditor
                 tag="textarea"
                 config={this.state.config}
-                model={this.state.model || this.props.data.html}
+                model={this.state.templateText || this.props.data.html}
                 onModelChange={this.handleModelChange}
               />
             </div>
@@ -91,19 +100,19 @@ export default class Template extends React.Component {
               <div class="working chooseTemplate pTags">
                 <Input type='select' name="whichEmail" onChange={this.handleSelected}>
                   <option value="">Personalized Tags</option>
-                  <option value="123455">contact.first_name</option>
-                  <option value="213445">contact.last_name</option>
-                  <option value="123455">contact.age</option>
-                  <option value="213445">contact.city</option>
-                  <option value="213445">contact.state</option>
-                  <option value="213445">contact.email_address</option>
-                  <option value="123435">company.name</option>
-                  <option value="213415">company.city</option>
-                  <option value="123435">company.state</option>
-                  <option value="213415">company.phone_number</option>
+                  <option value="first_name">contact.first_name</option>
+                  <option value="last_name">contact.last_name</option>
+                  <option value="age">contact.age</option>
+                  <option value="city">contact.city</option>
+                  <option value="state">contact.state</option>
+                  <option value="email_address">contact.email_address</option>
+                  <option value="company_name">company.name</option>
+                  <option value="company_city">company.city</option>
+                  <option value="company_state">company.state</option>
+                  <option value="company_phone_number">company.phone_number</option>
                 </Input>
               </div>
-              <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn">Delete</div>
+              <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>
               <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
             </div>
         </div>
@@ -111,10 +120,3 @@ export default class Template extends React.Component {
     )
   }
 }
-
-// noresize
-// class="editableText"
-// tag="textarea"
-// config={this.config}
-// model={this.state.model}
-// onModelChange={this.handleModelChange}
