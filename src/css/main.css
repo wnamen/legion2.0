@@ -119,3 +119,6 @@ strong.largeText{
     align-items: center;
     justify-content: center;
 }
+a[href="https://froala.com/wysiwyg-editor"] {
+    display: none !important;
+}
