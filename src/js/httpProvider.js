@@ -1,6 +1,7 @@
 import React, { PropTypes, Component, Children } from 'react';
 import axios from "axios";
 import cookie from "react-cookie";
+import querystring from 'querystring';
 
 
 class HttpProvider extends Component {
@@ -23,7 +24,10 @@ class HttpProvider extends Component {
     return {
       http: axios.create({
         baseURL: 'https://api.legionanalytics.com/',
-        headers: headers
+        headers: headers,
+        transformRequest: [function (data) {
+          return querystring.stringify(data);
+        }],
       })
     };
   }
