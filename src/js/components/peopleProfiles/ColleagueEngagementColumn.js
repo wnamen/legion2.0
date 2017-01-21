@@ -6,18 +6,18 @@ import EngagementInfo from "./EngagementInfo"
 
 
 const ColleagueEngagementColumn = ({ data, colleagues, user }) => {
-  
+
   return (
     <div class="three columns noShow">
-      <ColleagueInfo data={colleagues}/>
-      
+      <ColleagueInfo data={colleagues} user={user}/>
+
       {
         data ? <EngagementInfo data={data}/> : user ?
           <div className="profile-card engagement">
             <CubeGrid className='flex-center' size={50} color="#36b7ea"/>
           </div> : ''
       }
-    
+
     </div>
   )
 };

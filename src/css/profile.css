@@ -47,7 +47,8 @@
 .splink:not(:last-of-type){
 	border-right: 1px solid #647382;
 }
-.splink:first-of-type {
+
+.splink:first-of-type{
 	padding: 0 10px 0 0;
 }
 a.active:hover{

@@ -14,7 +14,10 @@ export default class Template extends React.Component {
         toolbarVisibleWithoutSelection: true,
         charCounterCount: false,
         toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', '-', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', '-', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink']
-      }
+      },
+      name_of_template: null,
+      subject: null,
+      html: null
     }
     this.handleModelChange = this.handleModelChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -25,32 +28,32 @@ export default class Template extends React.Component {
   }
 
   handleModelChange = (html) => {
-    this.setState({templateText: html});
+    this.setState({html: html});
   }
 
   handleNameChange = (e) => {
-    this.setState({templateName: e.target.value})
+    this.setState({name_of_template: e.target.value})
   }
 
   handleSubjectChange = (e) => {
-    this.setState({templateSubject: e.target.value})
+    this.setState({subject: e.target.value})
   }
 
   handleTemplateSave = () => {
-    let templateChanges = {id: (this.props.data.id || null), templateName: this.state.templateName, templateSubject: this.state.templateSubject, templateText: this.state.templateText};
+    let templateChanges = {id: (this.props.data.id || null), name_of_template: this.state.name_of_template, subject: this.state.subject, html: this.state.html};
     this.props.saveTemplate(templateChanges);
   }
 
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
-        return this.setState({templateName: template.name_of_template, templateSubject: template.subject, templateText: template.html})
+        return this.setState({name_of_template: template.name_of_template, subject: template.subject, html: template.html})
       }
     })
   }
 
   clearTemplate = () => {
-    this.setState({templateName: "", templateSubject: "", templateText: ""})
+    this.setState({name_of_template: " ", subject: " ", html: " "})
   }
 
   render(){
@@ -71,7 +74,7 @@ export default class Template extends React.Component {
             <div class="gray small-bottom-border gray-border workingRow">
               <div class="inline-block">Template Name: </div>
               <div class="inline-block templateNameContainer">
-                <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.templateName || this.props.data.name_of_template}/>
+                <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.name_of_template || this.props.data.name_of_template}/>
               </div>
               <div class="working chooseTemplate">
                 <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
@@ -83,7 +86,7 @@ export default class Template extends React.Component {
             <div class="gray small-bottom-border gray-border workingRow">
               <div class="inline-block">Subject: </div>
               <div class="inline-block templateNameContainer">
-                <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.templateSubject || this.props.data.subject}>
+                <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.subject || this.props.data.subject}>
                 </Input>
               </div>
             </div>
@@ -91,7 +94,7 @@ export default class Template extends React.Component {
               <FroalaEditor
                 tag="textarea"
                 config={this.state.config}
-                model={this.state.templateText || this.props.data.html}
+                model={this.state.html || this.props.data.html}
                 onModelChange={this.handleModelChange}
               />
             </div>
