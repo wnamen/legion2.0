@@ -60,10 +60,12 @@ class EmailConfiguration extends Component {
     let { newName, newEmail, newCheck, currentEmailID } = this.state;
 
     let is_primary = newCheck === true ? {is_primary: newCheck} : ``;
+    let currentEmail = emails.filter(v => v.id == currentEmailID)[0];
+    
     saveAlias({
       change_alias: currentEmailID || emails[0].id,
-      aliasemail: newEmail === null ? currentEmailID ? emails[currentEmailID].credential_api_key : emails[0].credential_api_key : newEmail,
-      aliasname: newName === null ? currentEmailID ? emails[currentEmailID].credential_private_key : emails[0].credential_private_key : newName,
+      aliasemail: newEmail === null ? currentEmailID ? currentEmail.credential_api_key : emails[0].credential_api_key : newEmail,
+      aliasname: newName === null ? currentEmailID ? currentEmailID.credential_private_key : emails[0].credential_private_key : newName,
       ...is_primary
     })
   };
@@ -84,7 +86,7 @@ class EmailConfiguration extends Component {
     let currentControls;
 
     if(emails) {
-      currentWindow = <ConfigurationWindow emails={displayDefault ? emails[0] : currentEmailData} newName={newName} newEmail={newEmail}/>;
+      currentWindow = <ConfigurationWindow email={displayDefault ? emails[0] : currentEmailData} newName={newName} newEmail={newEmail}/>;
       currentControls = <ConfigurationControls
         email={displayDefault ? emails[0] : currentEmailData}
         displayDefault={displayDefault}
