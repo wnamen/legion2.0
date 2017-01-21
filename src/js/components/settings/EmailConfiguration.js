@@ -4,7 +4,7 @@ import ConfigurationWindow from "./ConfigurationWindow";
 import ConfigurationControls from "./ConfigurationControls";
 
 class EmailConfiguration extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +58,7 @@ class EmailConfiguration extends Component {
   handleSave = () => {
     let { emails, saveAlias } = this.props;
     let { newName, newEmail, newCheck, currentEmailID } = this.state;
-    
+
     let is_primary = newCheck === true ? {is_primary: newCheck} : ``;
     saveAlias({
       change_alias: currentEmailID || emails[0].id,
@@ -79,10 +79,10 @@ class EmailConfiguration extends Component {
   render(){
     const { emails } = this.props;
     const { displayDefault, newName, newEmail, newCheck, reset, currentEmailData } = this.state;
-    
+
     let currentWindow;
     let currentControls;
-    
+
     if(emails) {
       currentWindow = <ConfigurationWindow emails={displayDefault ? emails[0] : currentEmailData} newName={newName} newEmail={newEmail}/>;
       currentControls = <ConfigurationControls
