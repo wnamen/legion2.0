@@ -49,6 +49,7 @@ export default class TemplateViews extends React.Component {
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {
+        console.log(template);
         return (
           <div>
             <Template key={template.id || `newTemplate ${index}`} data={template} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/>

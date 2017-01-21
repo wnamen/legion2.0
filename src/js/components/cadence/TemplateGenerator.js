@@ -8,9 +8,9 @@ export default class TemplateGenerator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      templateName: "",
-      templateSubject: "",
-      templateText: ""
+      name_of_template: "",
+      subject: "",
+      html: ""
     }
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
     this.appendNewTemplate = this.appendNewTemplate.bind(this);
@@ -18,7 +18,8 @@ export default class TemplateGenerator extends React.Component {
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
-        return this.setState({templateName: template.name_of_template, templateSubject: template.subject, templateText: template.html})
+        console.log(template);
+        return this.setState({name_of_template: template.name_of_template, subject: template.subject, html: template.html})
       }
     })
   }
@@ -26,14 +27,13 @@ export default class TemplateGenerator extends React.Component {
   appendNewTemplate = () => {
     let templates = this.props.currentTemplates;
     templates.push(this.state)
+    console.log(templates);
     this.props.onAppendTemplate(templates);
   }
 
   render(){
     let templates = this.props.templateData;
     let mappedTemplates;
-
-    console.log(this.props.currentTemplates);
 
     if (templates !== undefined) {
       mappedTemplates = templates.map((template, index) => {
