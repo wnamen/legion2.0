@@ -2,4 +2,4 @@
 .DS_Store
 env/*
 *bundles
-webpack-stats.json
+/webpack-stats.json

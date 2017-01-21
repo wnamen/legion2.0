@@ -64,7 +64,7 @@ class Settings extends Component {
           <MyAccount userInfo={userInfo} handleModalClose={this.handleModalClose} />
           <Integrations userInfo={userInfo} />
           <EmailConfiguration emails={emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
-          <Billing userInfo={userInfo} saveCard={this.saveCard}/>
+          <Billing userInfo={userInfo} saveCard={this.saveCard} updateSettings={this.updateSettings}/>
           <Logout userInfo={userInfo} />
         </div>}
         
