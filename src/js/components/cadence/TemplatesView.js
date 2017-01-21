@@ -64,8 +64,3 @@ export default class TemplateViews extends React.Component {
     )
   }
 }
-
-<div>
-  <p>{data.twitter_bio}</p>
-  <p>{data.linkedin_bio}</p>
-</div>
