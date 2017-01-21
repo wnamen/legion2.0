@@ -124,6 +124,7 @@ export default class Cadence extends React.Component {
     this.setState({
       renderState: "campaign",
       currentView: {
+        id: null,
         name:"",
         started: true,
         settings: {
@@ -131,6 +132,7 @@ export default class Cadence extends React.Component {
         }
       },
       currentTemplates: [{
+        id: null,
         html:"",
         subject:"",
         name_of_template:""
@@ -171,7 +173,7 @@ export default class Cadence extends React.Component {
 
     $.post({
       url: "https://api.legionanalytics.com/make-template",
-      data: {name: (template.templateName || null), subject: (template.templateSubject || null), html: (template.templateText || null)},
+      data: {name: (template.name_of_template || null), subject: (template.subject || null), html: (template.html || null)},
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
@@ -191,7 +193,7 @@ export default class Cadence extends React.Component {
 
     $.post({
       url: "https://api.legionanalytics.com/update-template",
-      data: {id: template.id, name: (template.templateName || null), subject: (template.templateSubject || null), html: (template.templateText || null)},
+      data: {id: template.id, name: (template.templateName || null), subject: (template.subject || null), html: (template.html || null)},
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {

@@ -1,27 +1,31 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { PropTypes } from "react"
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+const locationList = [
+  'amsterdam', 'austin', 'barcelona', 'berlin',
+  'capetown', 'dublin', 'london', 'newyork', 'london',
+  'paris', 'sanfrancisco', 'stockholm', 'sydney',
+  'tokyo', 'wellington'
+];
 
-export default class LocationInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
-  }
 
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+const LocationInfo = ({ data: { location, name } }) => {
+  
+  const prepareLocation = location.replace(/[\. ,:-]+/g, "").toLowerCase();
+  const img = locationList.filter(v => !prepareLocation.search(v))[0];
+  
+  return (
+    <div class="profile-card whiteCard text-center">
+      <img src={`/src/img/svg/${img || 'austin'}.svg`} class="electric-blue smScreenImg" alt={`${name} in ${location}`}/>
+      <h6 class="gray locationH1">Location:<br /> { location } </h6>
+    </div>
+  )
+};
 
-  render(){
+LocationInfo.propTypes = {
+  data: PropTypes.shape({
+    location: PropTypes.string
+  })
+};
 
-  //RENDER LOGIC HERE
 
-    return(
-      <div class="profile-card whiteCard text-center">
-        <img src="src/img/svg/san-francisco.svg" class="electric-blue smScreenImg" alt="Kevin Hale lives in San Francisco"></img>
-        <h6 class="gray locationH1">Location:<br></br>San Francisco</h6>
-      </div>
-    )
-  }
-}
+export default LocationInfo

@@ -1,28 +1,30 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { PropTypes } from "react"
+import { CubeGrid } from "better-react-spinkit"
 
 import ColleagueInfo from "./ColleagueInfo"
 import EngagementInfo from "./EngagementInfo"
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 
-export default class ColleagueEngagementColumn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
-  }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+const ColleagueEngagementColumn = ({ data, colleagues, user }) => {
 
-  render(){
-    //RENDER LOGIC HERE
+  return (
+    <div class="three columns noShow">
+      <ColleagueInfo data={colleagues} user={user}/>
 
-    return(
-      <div class="three columns noShow">
-        <ColleagueInfo />
-        <EngagementInfo />
-      </div>
-    )
-  }
-}
+      {
+        data ? <EngagementInfo data={data}/> : user ?
+          <div className="profile-card engagement">
+            <CubeGrid className='flex-center' size={50} color="#36b7ea"/>
+          </div> : ''
+      }
+
+    </div>
+  )
+};
+
+ColleagueEngagementColumn.propTypes = {
+  data: PropTypes.any
+};
+
+
+export default ColleagueEngagementColumn;

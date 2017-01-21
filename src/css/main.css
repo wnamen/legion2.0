@@ -109,3 +109,13 @@ strong{
 strong.largeText{
   font-size: 2em;
 }
+
+.capitalize{
+    text-transform: capitalize;
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

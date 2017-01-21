@@ -1,35 +1,33 @@
-import React, { Component } from "react";
+import React, { PropTypes } from "react";
 import { Modal } from "react-materialize";
-import $ from "jquery";
+import classNames from "classnames";
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 import SignUpModal from "../modals/SignUpModal";
 
-export default class CompanyInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
-  }
 
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
-
-  render(){
-
-    //RENDER LOGIC HERE
-    const modalTrigger = <div class="lgnBtn electric-blue-light-background electric-blue-border black lgnBtnUp">Find Employees</div>;
-
-    return(
-      <div class="profile-card whiteCard" id="contact-card">
-        <div></div>
-        <h1 class="adjustedH1">Y Combinator</h1>
-        <p class="gray meta"><br></br></p>
-        <h6 class="gray meta local">San Francisco Bay Area</h6>
-        <Modal trigger={modalTrigger}>
+const CompanyInfo = ({ data: { name, location }, user }) => {
+  
+  const modalTrigger = <div class="lgnBtn electric-blue-light-background electric-blue-border black lgnBtnUp">Find Employees</div>;
+  
+  return (
+    <div class="profile-card whiteCard" id="contact-card">
+      <div />
+      <h1 class="adjustedH1">{name}</h1>
+      <p class="gray meta"><br/></p>
+      <h6 class="gray meta local">{location}</h6>
+      
+      <div className={classNames({ hidden: user })} >
+        <Modal trigger={modalTrigger} className={classNames({ hidden: user })}>
           <SignUpModal />
         </Modal>
       </div>
-    )
-  }
-}
+    </div>
+  )
+};
+
+CompanyInfo.propTypes = {
+  data: PropTypes.object.isRequired
+};
+
+
+export default CompanyInfo;

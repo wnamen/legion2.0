@@ -1,103 +1,103 @@
 import React, { Component } from "react"
-import { Input, Dropdown, Button } from "react-materialize"
-import $ from "jquery"
-
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+import { Input } from "react-materialize"
 import ConfigurationWindow from "./ConfigurationWindow";
 import ConfigurationControls from "./ConfigurationControls";
 
-export default class EmailConfiguration extends React.Component {
+class EmailConfiguration extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
-      displayDefault: true
-    }
-    this.handleSelected = this.handleSelected.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
+      displayDefault: true,
+      newName: null,
+      newEmail: null,
+      newCheck: null,
+    };
   }
 
   handleSelected = (e) => {
+    let { emails } = this.props;
     let selectedValue = parseInt(e.target.value);
     let selectedEmail;
 
-    this.props.emails.forEach((email, index) => {
+    emails.forEach((email, k) => {
       if (email.id === selectedValue) {
-        selectedEmail = this.props.emails[index];
+        selectedEmail = emails[k];
 
         this.setState({
           displayDefault: false,
           currentEmailID: selectedValue,
           currentEmailData: selectedEmail,
-          newName: "",
-          newEmail: "",
-          newCheck: "",
+          newName: null,
+          newEmail: null,
+          newCheck: null,
           reset: true
         })
       }
     })
-  }
+  };
 
-  onNameChange = (name) => {
+  onNameChange = (data) => {
     this.setState({
-      newName: name,
-      reset: false
+      newName: data
     })
-  }
+  };
 
-  onEmailChange = (email) => {
+  onEmailChange = (data) => {
     this.setState({
-      newEmail: email,
-      reset: false
+      newEmail: data
     })
-  }
+  };
 
   onPrimaryCheck = (check) => {
-    console.log(check);
     this.setState({
-      newCheck: check,
-      reset: false
-    })
-  }
+      newCheck: check
+    });
+  };
 
   handleSave = () => {
-    // let newCheck = this.state.newCheck || null;
-    let newName = this.state.newName || null;
-    let newEmail = this.state.newEmail || null;
-    let emailID = this.state.currentEmailID || this.props.emails[0].id;
-
-    this.props.saveAlias({emailID: emailID, emailName: newName, emailHandle: newEmail})
-  }
+    let { emails, saveAlias } = this.props;
+    let { newName, newEmail, newCheck, currentEmailID } = this.state;
+    
+    let is_primary = newCheck === true ? {is_primary: newCheck} : ``;
+    let currentEmail = emails.filter(v => v.id == currentEmailID)[0];
+    
+    saveAlias({
+      change_alias: currentEmailID || emails[0].id,
+      aliasemail: newEmail === null ? currentEmailID ? currentEmail.credential_api_key : emails[0].credential_api_key : newEmail,
+      aliasname: newName === null ? currentEmailID ? currentEmailID.credential_private_key : emails[0].credential_private_key : newName,
+      ...is_primary
+    })
+  };
 
   handleRemove = () => {
-    let emailID = this.state.currentEmailID || this.props.emails[0].id;
-
-    this.props.removeAlias({emailID: emailID})
-
-  }
+    let { emails, removeAlias } = this.props;
+    let { currentEmailID } = this.state;
+    removeAlias({
+      emailID: currentEmailID || emails[0].id
+    })
+  };
 
   render(){
-    let emailData = this.props.emails;
-    let mappedAliases;
+    const { emails } = this.props;
+    const { displayDefault, newName, newEmail, newCheck, reset, currentEmailData } = this.state;
+    
     let currentWindow;
     let currentControls;
-
-    if ((emailData !== null) && (emailData !== undefined) && (emailData.length > 0)) {
-      if (this.state.displayDefault) {
-        currentWindow = <ConfigurationWindow details={this.props.emails[0]} newName={this.state.newName} newEmail={this.state.newEmail}/>
-        currentControls = <ConfigurationControls details={this.props.emails[0]} isPrimary={this.props.emails[0].is_primary} displayDefault={this.state.displayDefault} onNameChange={this.onNameChange} onEmailChange={this.onEmailChange} onPrimaryCheck={this.onPrimaryCheck} newCheck={this.state.newCheck} reset={this.state.reset}/>
-      } else {
-        currentWindow = <ConfigurationWindow details={this.state.currentEmailData} newName={this.state.newName} newEmail={this.state.newEmail}/>
-        currentControls = <ConfigurationControls details={this.state.currentEmailData} isPrimary={this.state.currentEmailData.is_primary} displayDefault={this.state.displayDefault} onNameChange={this.onNameChange} onEmailChange={this.onEmailChange} onPrimaryCheck={this.onPrimaryCheck} newCheck={this.state.newCheck} reset={this.state.reset}/>
-      }
-
-      mappedAliases = emailData.map((email, index) => {
-        return (
-          <option key={index} value={email.id}>{ email.credential_private_key || email.credential_handle }</option>
-        )
-      })
-    } else {
-      mappedAliases = <option>No Emails Connected</option>
+    
+    if(emails) {
+      currentWindow = <ConfigurationWindow email={displayDefault ? emails[0] : currentEmailData} newName={newName} newEmail={newEmail}/>;
+      currentControls = <ConfigurationControls
+        email={displayDefault ? emails[0] : currentEmailData}
+        displayDefault={displayDefault}
+        onNameChange={this.onNameChange}
+        onEmailChange={this.onEmailChange}
+        onPrimaryCheck={this.onPrimaryCheck}
+        newCheck={newCheck}
+        newName={newName}
+        newEmail={newEmail}
+        reset={reset}
+      />;
     }
 
     return(
@@ -107,8 +107,12 @@ export default class EmailConfiguration extends React.Component {
           <div class="emailSelect">
             <div class="gray inline-block">Configure</div>
             <div class="inline-block configureEmail">
-              <Input type='select' name="whichEmail" onChange={this.handleSelected}>
-                { mappedAliases }
+              <Input type='select' name="whichEmail" onChange={this.handleSelected} >
+                { emails ? emails.map(email =>
+                    <option key={email.id} value={email.id}>
+                      { email.credential_private_key || email.credential_handle }
+                    </option>) :
+                    <option>No Emails Connected</option> }
               </Input>
             </div>
           </div>
@@ -124,3 +128,5 @@ export default class EmailConfiguration extends React.Component {
     )
   }
 }
+
+export default EmailConfiguration;
