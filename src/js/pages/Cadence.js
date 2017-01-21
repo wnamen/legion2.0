@@ -124,6 +124,7 @@ export default class Cadence extends React.Component {
     this.setState({
       renderState: "campaign",
       currentView: {
+        id: null,
         name:"",
         started: true,
         settings: {
@@ -131,6 +132,7 @@ export default class Cadence extends React.Component {
         }
       },
       currentTemplates: [{
+        id: null,
         html:"",
         subject:"",
         name_of_template:""

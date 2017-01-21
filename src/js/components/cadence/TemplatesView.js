@@ -16,6 +16,7 @@ export default class TemplateViews extends React.Component {
     }
     this.onCampaignToggle = this.onCampaignToggle.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
+    this.onAppendTemplate = this.onAppendTemplate.bind(this);
   }
 
   handleModalClose = () => {
@@ -24,6 +25,10 @@ export default class TemplateViews extends React.Component {
 
   onCampaignToggle = () => {
     this.setState({campaignActivated: !this.state.campaignActivated});
+  }
+
+  onAppendTemplate = (templates) => {
+    this.setState({currentTemplates: templates})
   }
 
   render(){
@@ -58,14 +63,9 @@ export default class TemplateViews extends React.Component {
         { this.props.renderState === "campaign" && header }
         <div class="sixteen templateHolder">
           { mappedTemplates }
-          { this.props.renderState === "campaign" && <TemplateGenerator /> }
+          { this.props.renderState === "campaign" && <TemplateGenerator templateData={this.props.templateData} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} onAppendTemplate={this.onAppendTemplate}/> }
         </div>
       </div>
     )
   }
 }
-
-<div>
-  <p>{data.twitter_bio}</p>
-  <p>{data.linkedin_bio}</p>
-</div>

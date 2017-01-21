@@ -8,25 +8,49 @@ export default class TemplateGenerator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
+      templateName: "",
+      templateSubject: "",
+      templateText: ""
     }
+    this.handleRenderSelection = this.handleRenderSelection.bind(this);
+    this.appendNewTemplate = this.appendNewTemplate.bind(this);
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+  handleRenderSelection = (e) => {
+    this.props.templateData.forEach((template) => {
+      if (parseInt(e.target.value) === parseInt(template.id)) {
+        return this.setState({templateName: template.name_of_template, templateSubject: template.subject, templateText: template.html})
+      }
+    })
+  }
+
+  appendNewTemplate = () => {
+    let templates = this.props.currentTemplates;
+    templates.push(this.state)
+    this.props.onAppendTemplate(templates);
+  }
 
   render(){
-    //RENDER LOGIC HERE
+    let templates = this.props.templateData;
+    let mappedTemplates;
+
+    console.log(this.props.currentTemplates);
+
+    if (templates !== undefined) {
+      mappedTemplates = templates.map((template, index) => {
+        return (
+          <option key={index} value={template.id}>{template.name_of_template}</option>
+        )
+      })
+    }
 
     return(
       <div class="sixteen">
         <div class="gray-border small-border tempGen text-center">
-            <a href="#" class="active">Create New Template</a>
+            <a class="active" onClick={this.appendNewTemplate}>Create New Template</a>
             <div class="chooseTemplate">
-              <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+              <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
                 <option value="">Choose Existing</option>
-                <option value="123455">Follow Up</option>
-                <option value="213445">Missed Call</option>
-                <option value="123435">Break-Up Email</option>
-                <option value="213415">Sandler First Email</option>
+                {mappedTemplates}
               </Input>
             </div>
         </div>
