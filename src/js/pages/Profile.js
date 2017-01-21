@@ -19,16 +19,15 @@ import CompanyBio from "../components/companyProfiles/CompanyBio";
 {/*<meta property="og:image:type" content="image/png">*/}
 {/*<meta property="og:image:width" content="500">*/}
 {/*<meta property="og:image:height" content="500">*/}
-                        
+
 {/*<meta name="twitter:card" content="summary_large_image">*/}
 {/*<meta name="twitter:site" content="@legionanalytics">*/}
 {/*<meta name="twitter:creator" content="@legionanalytics">*/}
 {/*<meta name="twitter:title" content="Legion Analytics - Lookup Email & Phone for millions of professionals">*/}
 {/*<meta name="twitter:description" content="Email lookups by name, location, job or profile keywords for millions of professionals. Use our email search to get contact information on your desktop.">*/}
 {/*<meta name="twitter:image" content="//legionanalytics.com/src/img/legion_analytics_logo.png">*/}
-                                      
-const Meta = ({name, description, keywords, }) => <Helmet
-  title={name}
+
+const Meta = ({description, keywords, }) => <Helmet
   meta={[
     {name: "description", content: {description}},
     {name: "keywords", content: {keywords}},
@@ -40,7 +39,7 @@ const Meta = ({name, description, keywords, }) => <Helmet
 />;
 
 class Profile extends Component {
-  
+
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -48,16 +47,16 @@ class Profile extends Component {
       engagement: false,
     }
   }
-  
+
   componentWillMount() {
     const { type, id } = this.props.params;
     const { http } = this.context;
-  
+
     http.get(`${type}/${id}`)
       .then(response => {
         this.setState({data: response.data});
         if(type === 'person') {
-          http.get(`/${type}-engagement/2533785`)
+          http.get(`/${type}-engagement/${id}`)
             .then(response => {
               this.setState({engagement: response.data.results})
             })
@@ -67,16 +66,16 @@ class Profile extends Component {
       .catch(err => console.log(err));
 
   }
-  
+
   render() {
     const { data, engagement } = this.state;
     const { type } = this.props.params;
     console.log(this.state);
-    
+
     return (
       <div class="gray-light-background">
         <div class="sixteen columns">
-          
+
           {data ?
             type === 'person' ?
               <div>
