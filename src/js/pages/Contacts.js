@@ -77,6 +77,7 @@ export default class Contacts extends React.Component {
       },
 
       removeSelected: () => {
+        console.log(checked);
         let params = {tm_id: this.state.currentViewId, prospect_ids: checked};
         http.post('/remove-contacts-from-tm', params: params)
           .then(response => console.log(response))
