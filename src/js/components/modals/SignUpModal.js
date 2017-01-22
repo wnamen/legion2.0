@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Modal, Input } from 'react-materialize';
 import cookie from 'react-cookie';
 import SignInModal from "../modals/SignInModal";
-import { browserHistory } from 'react-router';
 
 class SignUpModal extends Component {
   
@@ -53,18 +52,20 @@ class SignUpModal extends Component {
     } else {
       this.signIn();
     }
+    const modal = document.querySelectorAll('.modal-close');
+    Object.keys(modal).map(v => modal[v].click());
   };
   
   signIn = () => {
     const { email, password } = this.state;
-    const { http } = this.context;
+    const { http, router } = this.context;
     
     http.post('login', {
       username: email,
       password: password
     }).then(response => {
       cookie.save("token", response.data.token, { path: "/" });
-      browserHistory.push('/onboarding');
+      router.push('/onboarding');
     })
   };
   
@@ -105,7 +106,8 @@ class SignUpModal extends Component {
 }
 
 SignUpModal.contextTypes = {
-  http: PropTypes.func.isRequired
+  http: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 

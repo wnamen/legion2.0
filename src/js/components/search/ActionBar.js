@@ -7,15 +7,16 @@ import BillingModal from "../modals/BillingModal"
 import NewListModal from "../modals/NewListModal";
 
 export default class ActionBar extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       token: cookie.load("token"),
       tmLists: [],
       currentModal: true
-    }
+    };
+    
     this.renderBilling = this.renderBilling.bind(this);
-    this.createList = this.createList.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
     this.loadAvailableLists = this.loadAvailableLists.bind(this);
   }
@@ -25,7 +26,7 @@ export default class ActionBar extends React.Component {
   }
 
   loadAvailableLists = () => {
-    console.log("called");
+
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
@@ -35,31 +36,26 @@ export default class ActionBar extends React.Component {
       crossDomain: true,
       cache:false,
       success:function(response){
-        console.log(response);
         this.updateLists(response.results);
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
     });
-  }
+  };
 
   renderBilling() {
     this.setState({ currentModal: !this.state.currentModal })
-  }
-
-  createList(e) {
-    e.preventDefault();
   }
 
   updateLists = (lists) => {
     this.setState({
       tmLists:lists
     });
-  }
+  };
 
   handleModalClose = (e) => {
     $(".modal-close").trigger("click");
-  }
+  };
 
   render(){
     const modalTrigger = <NavItem><div>+ Create new list</div></NavItem>;
@@ -92,7 +88,7 @@ export default class ActionBar extends React.Component {
             <ul class="right">
               <li id="listAdderDropdown" class="rightActions">
                 <Dropdown trigger={
-                  <a id="listAdderButton" class="smoothBkgd">Add to list <i id="listAdderAngleIcon" class="fa fa-angle-down" aria-hidden="true"></i></a>
+                  <a id="listAdderButton" class="smoothBkgd">Add to list <i id="listAdderAngleIcon" class="fa fa-angle-down" aria-hidden="true" /></a>
                 }>
                   { copyLists }
                   <Modal trigger={modalTrigger}>
