@@ -12,7 +12,7 @@ const DirectoryListings = ({ list, directory }) => {
       </div>
       <ul>
         {
-          list.length ?
+          list && list.length ?
           list.map((v, k) => <li key={k} ><IndexLink to={`/profile/${directory}/${v.id}`}>{v.name}</IndexLink></li> )
           : <CubeGrid size={50} color="#36b7ea" className="flex-center" />
         }

@@ -11,12 +11,12 @@ class Directory extends Component {
     const {type, id} = props.params;
     
     this.state = {
-      groupView: id.length === 2,
+      groupView: id && id.length === 2,
       list: [],
       current: {
         directory: type || '',
         subDirectory: id || '',
-        group: id.length === 2 ? id : '',
+        group: id && id.length === 2 ? id : '',
         groupView: type && id ? false : null,
       }
     };
@@ -26,7 +26,7 @@ class Directory extends Component {
     const { type, id } = this.props.params;
     const { http } = this.context;
   
-    if(id.length == 2){
+    if(id && id.length === 2) {
       http.get(`/directory/${type}`, { params: {
         name: id,
         page_size: 100,
@@ -41,17 +41,17 @@ class Directory extends Component {
     const { http } = this.context;
     
     this.setState({
-      groupView: id.length === 2,
+      groupView: id && id.length === 2,
       list: [],
       current: {
         directory: type || '',
         subDirectory: id || '',
-        group: id.length === 2 ? id : '',
+        group: id && id.length === 2 ? id : '',
         groupView: type && id ? false : null,
       }
     });
     
-    if(id.length == 2){
+    if(id && id.length === 2){
       http.get(`/directory/${type}`, { params: {
         name: id,
         page_size: 100,
