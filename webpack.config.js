@@ -2,7 +2,6 @@ var debug = process.env.NODE_ENV !== "production";
 
 var path = require('path');
 var webpack = require('webpack');
-// var BundleTracker = require('webpack-bundle-tracker');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
@@ -57,7 +56,6 @@ module.exports = {
     filename: "index.min.js"
   },
   plugins: [
-    // new BundleTracker({filename: './webpack-stats.json'}),
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
        'process.env': {
