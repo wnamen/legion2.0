@@ -88,7 +88,12 @@ ReactDOM.render(
         <Route path="settings" name="settings" component={Settings} onEnter={requireAuth} />
         <Route path="onboarding" name="onboarding" component={Onboarding} />
         <Route path="tos" name="tos" component={TOS} />
-        <Route path="directory" name="directory" component={Directory} />
+  
+        <Route path="directory" name="directory" component={Directory} >
+          <Route path=":type/:id" name="directory" component={Directory} >
+          </Route>
+        </Route>
+        
         <Route path="google/success" name="success" component={IntegrationSuccess} />
         <Route path="outlook/success" name="success" component={IntegrationSuccess} />
         <Route path="500" name="serverError" component={ServerError} />
@@ -97,5 +102,3 @@ ReactDOM.render(
     </Router>
   </HttpProvider>, App
 );
-// Onboarding page (6h)
-// Profile page (3h)

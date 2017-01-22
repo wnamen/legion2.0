@@ -1,49 +1,82 @@
-import React, { Component }       from "react"
-import { Link }                   from "react-router"
-import $                          from "jquery"
+import React, { Component, PropTypes } from "react"
+import DirectoryMenu from "../components/directory/DirectoryMenu"
+import DirectoryTable from "../components/directory/DirectoryTable"
 
-import DirectoryMenu              from "../components/directory/DirectoryMenu"
-import DirectoryTable             from "../components/directory/DirectoryTable"
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
-
-export default class Directory extends React.Component {
-  constructor(props) {
-    super(props);
+class Directory extends Component {
+  
+  constructor(props, context) {
+    super(props, context);
+    
+    const {type, id} = props.params;
+    
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
+      groupView: id.length === 2,
+      list: [],
       current: {
-        directory: "people",
-        subDirectory: "a",
-        group: "",
-      },
-      groupView: false
+        directory: type || '',
+        subDirectory: id || '',
+        group: id.length === 2 ? id : '',
+        groupView: type && id ? false : null,
+      }
+    };
+  }
+  
+  componentWillMount() {
+    const { type, id } = this.props.params;
+    const { http } = this.context;
+  
+    if(id.length == 2){
+      http.get(`/directory/${type}`, { params: {
+        name: id,
+        page_size: 100,
+      }}).then(response => this.setState({
+        list: response.data
+      }))
     }
-    this.handleSubDirectoryToggle = this.handleSubDirectoryToggle.bind(this);
-    this.handleGroupSelection = this.handleGroupSelection.bind(this);
   }
-
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
-  handleSubDirectoryToggle(directory, subDirectory) {
-    console.log(directory, subDirectory);
-    this.setState({current: {directory:directory, subDirectory:subDirectory}, groupView: false});
-  }
-
-  handleGroupSelection(group) {
-    console.log(group);
-    this.setState({groupView: true, current: {group:group}});
-  }
+  
+  componentWillReceiveProps(nextProps) {
+    const { type, id } = nextProps.params;
+    const { http } = this.context;
+    
+    this.setState({
+      groupView: id.length === 2,
+      list: [],
+      current: {
+        directory: type || '',
+        subDirectory: id || '',
+        group: id.length === 2 ? id : '',
+        groupView: type && id ? false : null,
+      }
+    });
+    
+    if(id.length == 2){
+      http.get(`/directory/${type}`, { params: {
+        name: id,
+        page_size: 100,
+      }}).then(response => this.setState({
+        list: response.data
+      }))
+    }
+  };
 
   render() {
-    //RENDER LOGIC HERE
-
+    const { current, groupView, list } = this.state;
     return (
       <div class="gray-light-background">
         <div class="sixteen columns">
-          <DirectoryMenu onSubDirectoryToggle={this.handleSubDirectoryToggle}/>
-          <DirectoryTable current={this.state.current} groupView={this.state.groupView} onGroupSelection={this.handleGroupSelection}/>
+          <DirectoryMenu />
+          <DirectoryTable current={current} list={list} groupView={groupView} />
         </div>
       </div>
     );
   }
 }
+
+Directory.contextTypes = {
+  http: PropTypes.func.isRequired
+};
+
+
+export default Directory;
