@@ -271,7 +271,7 @@ input[name=newSubjectName]:focus:not([readonly]){
   max-width: 2em;
   max-height: 1em;
   text-align: center;
-  margin-right: 1em;
+  margin-right: 1em !important;
   color: #36b7ea;
 }
 .delayAdjuster{

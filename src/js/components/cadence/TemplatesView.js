@@ -15,8 +15,10 @@ export default class TemplateViews extends React.Component {
       campaignActivated: true
     }
     this.onCampaignToggle = this.onCampaignToggle.bind(this);
-    this.handleModalClose = this.handleModalClose.bind(this);
     this.onAppendTemplate = this.onAppendTemplate.bind(this);
+    this.onDelayChange = this.onDelayChange.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.handleCampaignSave = this.handleCampaignSave.bind(this);
   }
 
   handleModalClose = () => {
@@ -31,8 +33,20 @@ export default class TemplateViews extends React.Component {
     this.setState({currentTemplates: templates})
   }
 
-  createNewCampaign = () => {
+  onDelayChange = (id, delay) => {
+    let delays = this.state.currentDelays || this.props.currentDelays;
+    delays.forEach((item, index) => {
+      if (index === parseInt(id)) {
+        return (item[index] = delay);
+      }
+    }
+    this.setState({})
+  }
 
+  handleCampaignSave = () => {
+    if ((currentView.id === null) && ((this.props.campaignTemplateList).length > 1)) {
+      // let campaignChanges = {}
+    }
   }
 
   render(){
@@ -49,16 +63,14 @@ export default class TemplateViews extends React.Component {
     </div></div>)
 
     let templates = this.state.currentTemplates || this.props.currentTemplates;
+    let delays = this.state.currentDelays || this.props.currentDelays;
     let mappedTemplates;
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {
-        console.log(template);
         return (
-          <div>
-            <Template key={template.id || `newTemplate ${index}`} data={template} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/>
-            { (index !== (templates.length-1)) && <TemplateDelay key={ `newDelay${template.id}` || `newDelay${index}`} /> }
-          </div>
+          <Template key={template.id || `newTemplate ${index}`} data={template} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/>
+          { (index !== (templates.length-1)) && <TemplateDelay key={`delay ${index}`} id={template.id} currentDelay={delays[index]} onDelayChange={this.onDelayChange} /> }
         )
       })
     }
@@ -68,6 +80,7 @@ export default class TemplateViews extends React.Component {
         { this.props.renderState === "campaign" && header }
         <div class="sixteen templateHolder">
           { mappedTemplates }
+          {}
           { this.props.renderState === "campaign" && <TemplateGenerator templateData={this.props.templateData} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} onAppendTemplate={this.onAppendTemplate}/> }
         </div>
       </div>
