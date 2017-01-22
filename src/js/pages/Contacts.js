@@ -49,16 +49,13 @@ export default class Contacts extends React.Component {
         if (checked.length === 0) {
           return checked.push(id);
         }
-        console.log(checked);
 
         checked.forEach((checked_id) => {
-          console.log(checked);
           if (checked_id === id) {
             checked.splice(checked.indexOf(id), 1)
           } else {
             return checked.push(id)
           }
-          console.log(checked);
         })
         if (checked.length === 0) {
           selectionStatus = false;
@@ -69,18 +66,15 @@ export default class Contacts extends React.Component {
 
       copySelected: (id) => {
         let params = {tm_id: id, prospect_ids: checked};
-        console.log(id);
-        console.log(checked);
-        console.log(params);
         http.post('/copy-contacts-to-tm', params: params)
           .then(response => console.log(response))
       },
 
       removeSelected: () => {
-        console.log(checked);
+        let self = this;
         let params = {tm_id: this.state.currentViewId, prospect_ids: checked};
         http.post('/remove-contacts-from-tm', params: params)
-          .then(response => console.log(response))
+          .then(response => self.getNewListView(self.state.currentViewId))
       }
     }
   }
@@ -144,6 +138,7 @@ export default class Contacts extends React.Component {
   getNewListView = (listID) => {
     this.setState({loading:true});
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(listID);
 
     $.get({
       url:`https://api.legionanalytics.com/contacts/${listID}?page_size=50`,

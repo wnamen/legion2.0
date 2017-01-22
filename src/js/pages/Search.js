@@ -49,7 +49,17 @@ export default class Search extends React.Component {
 
     return {
       captureSelected: (id) => {
-        checked.push(id)
+        if (checked.length === 0) {
+          return checked.push(id);
+        }
+
+        checked.forEach((checked_id) => {
+          if (checked_id === id) {
+            checked.splice(checked.indexOf(id), 1);
+          } else {
+            return checked.push(id);
+          }
+        })
       },
 
       purchaseSelected: (id) => {

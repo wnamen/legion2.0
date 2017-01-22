@@ -82,7 +82,7 @@ export default class ContactsTable extends React.Component {
       mappedResults = data.results.map((result, index) => {
         return (
           {
-            id: result.person.id,
+            id: result.id,
             name: result.person.name ? result.person.name : "",
             jobTitle: result.job.title ? result.job.title : "",
             companyName: result.company.name ? result.company.name : "",
