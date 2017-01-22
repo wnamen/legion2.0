@@ -47,7 +47,6 @@ export default class Cadence extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
-        throw 500;
         console.log(response);
         this.setState({
           cadenceData: response
