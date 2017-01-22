@@ -1,10 +1,13 @@
-import React from "react";
+import React, { PropTypes, Component, Children } from 'react';
 import { Dropdown, NavItem, Input } from "react-materialize";
 import { AgGrid } from 'ag-grid/main';
 import { AgGridReact } from 'ag-grid-react';
 
 import CheckMarkRenderer from "./CheckMarkRenderer";
 import CheckBoxRenderer from "./CheckBoxRenderer";
+import SizeFilterRenderer from "./SizeFilterRenderer";
+import RevenueFundingFilterRenderer from "./RevenueFundingFilterRenderer";
+
 
 export default class ResultsTable extends React.Component {
   constructor(props) {
@@ -17,7 +20,8 @@ export default class ResultsTable extends React.Component {
         groupContracted: "<i class='fa fa-plus-square-o'/>",
         columnGroupOpened: "<i class='fa fa-minus-square-o'/>",
         columnGroupClosed: "<i class='fa fa-plus-square-o'/>"
-      }
+      },
+      checked: []
     };
     this.arrayConvert = this.arrayConvert.bind(this);
     this.handleNextSearch = this.handleNextSearch.bind(this);
@@ -60,9 +64,9 @@ export default class ResultsTable extends React.Component {
       {headerName:"location", field:"location", width: 130},
       {headerName:"Industry", field:"industry", width: 130},
       {headerName:"Technology", field:"technologies", width: 130},
-      {headerName:"Company Size", field:"companySize", width: 130},
-      {headerName:"Revenue", field:"revenue", width: 130},
-      {headerName:"Funding", field:"funding", width: 130},
+      {headerName:"Company Size", field:"companySize", width: 130, cellRendererFramework: SizeFilterRenderer},
+      {headerName:"Revenue", field:"revenue", width: 130, cellRendererFramework: RevenueFundingFilterRenderer},
+      {headerName:"Funding", field:"funding", width: 130, cellRendererFramework: RevenueFundingFilterRenderer},
       {headerName:"Email", field:"email", width: 130, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Phone", field:"phone", width: 130, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Website", field:"homePage", width: 130, cellRendererFramework: CheckMarkRenderer},
@@ -84,9 +88,9 @@ export default class ResultsTable extends React.Component {
       {headerName:"location", field:"location", width: 130},
       {headerName:"Industry", field:"industry", width: 130},
       {headerName:"Technology", field:"technologies", width: 130},
-      {headerName:"Company Size", field:"companySize", width: 130},
-      {headerName:"Revenue", field:"revenue", width: 130},
-      {headerName:"Funding", field:"funding", width: 130},
+      {headerName:"Company Size", field:"companySize", width: 130, cellRendererFramework: SizeFilterRenderer},
+      {headerName:"Revenue", field:"revenue", width: 130, cellRendererFramework: RevenueFundingFilterRenderer},
+      {headerName:"Funding", field:"funding", width: 130, cellRendererFramework: RevenueFundingFilterRenderer},
       {headerName:"Company Phone", field:"companyPhone", width: 130, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Company Website", field:"companyHomePage", width: 130, cellRendererFramework: CheckMarkRenderer},
       {headerName:"Company Linkedin", field:"companyLinkedin", width: 130, cellRendererFramework: CheckMarkRenderer},

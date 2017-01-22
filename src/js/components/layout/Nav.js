@@ -1,22 +1,38 @@
-import React from "react"
-import { IndexLink, Link } from "react-router";
-import CSSModules from "react-css-modules";
-import { Dropdown, NavItem, Button } from "react-materialize";
-import $ from "jquery";
-
+import React, { Component, PropTypes } from "react";
 import UserNav from "./UserNav";
 import GuestNav from "./GuestNav";
+import cookie from "react-cookie";
 
-export default class Nav extends React.Component {
+
+class Nav extends Component {
+  
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      user: false
+    }
+  }
+  
+  componentWillMount() {
+    this.updateState();
+  }
+  
+  componentWillReceiveProps() {
+    this.updateState();
+  }
+  
+  updateState = () => {
+    this.setState({user: cookie.load('token')});
+  };
+
   render() {
-    const { location } = this.props;
-
-
-
+    
     return (
         <nav class="navbar navbar-fixed white-background">
-            { location.pathname === "/" ? <GuestNav /> : <UserNav /> }
+            { this.state.user ? <UserNav /> : <GuestNav /> }
         </nav>
     );
   }
 }
+
+export default Nav;

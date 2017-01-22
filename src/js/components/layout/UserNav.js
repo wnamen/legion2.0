@@ -1,62 +1,54 @@
-import React from "react";
-import { IndexLink, Link } from "react-router";
-import { Dropdown, NavItem, Button, Modal } from "react-materialize";
+import React, { Component, PropTypes } from "react";
+import { IndexLink } from "react-router";
+import { Dropdown, NavItem } from "react-materialize";
 import cookie from "react-cookie";
-import $ from "jquery";
 
 import CreditButtonHandler from "./CreditButtonHandler";
 
-export default class UserNav extends React.Component {
-  constructor(props){
-    super(props);
+
+class UserNav extends Component {
+  
+  constructor(props, context){
+    super(props, context);
     this.state = {
-      token: cookie.load("token"),
       currentCredits: 0
-    }
-    this.preventClose = this.preventClose.bind(this);
-    this.handleBuy = this.handleBuy.bind(this);
-    this.handleConfirm = this.handleConfirm.bind(this);
-    this.loadCurrentCredits = this.loadCurrentCredits.bind(this);
+    };
   }
 
   componentWillMount = () => {
     this.loadCurrentCredits();
-  }
+  };
 
   loadCurrentCredits = () => {
-    let tokenHeader = `Token ${this.state.token}`;
-    $.get({
-      url: "https://api.legionanalytics.com/me",
-      dataType: "JSON",
-      crossDomain:true,
-      headers: {"Authorization": tokenHeader },
-      success: (response) => {
-        console.log(response);
-        this.setState({currentCredits: response.credits})
-      },
-      error: (response) => {
-        console.log(response);
+    this.context.http.get('me', {
+      headers: {
+        'Authorization': `Token ${cookie.load('token')}`
       }
-    })
-  }
+    }).then(response =>
+      this.setState({
+        currentCredits: response.data.credits
+      })
+    );
+    
+  };
 
   preventClose = (e) => {
     e.stopPropagation();
-  }
+  };
 
   handleBuy = (e) => {
     e.stopPropagation();
     this.setState({buttonStatus: "confirm"});
-  }
+  };
 
   handleConfirm = (e) => {
     e.stopPropagation();
     this.setState({buttonStatus: "buy"});
-  }
+  };
 
   handleSelection = (e) => {
     this.setState({selected: !this.state.selected})
-  }
+  };
 
   render() {
     let currentCredits = (this.state.currentCredits).toLocaleString();
@@ -65,9 +57,9 @@ export default class UserNav extends React.Component {
         <div class="nav-wrapper medium-vertical-padding">
           <ul id="nav-links" class="nav-hover">
             <li><IndexLink class="medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
-            <li><Link to="search" activeClassName="active">Search</Link></li>
-            <li><Link to="campaigns" activeClassName="active">Campaigns</Link></li>
-            <li><Link to="contacts" activeClassName="active">Contacts</Link></li>
+            <li><IndexLink to="/search" activeClassName="active">Search</IndexLink></li>
+            <li><IndexLink to="/campaigns" activeClassName="active">Campaigns</IndexLink></li>
+            <li><IndexLink to="/contacts" activeClassName="active">Contacts</IndexLink></li>
           </ul>
 
           <div class="right">
@@ -90,7 +82,7 @@ export default class UserNav extends React.Component {
                 </Dropdown>
               </li>
               <li id="settings-button" class="large-right-margin nav-hover">
-                <Link class="black" to="settings" activeClassName="active"><i class="gray-medium-2 fa fa-user-circle fa-2x" aria-hidden="true"></i></Link>
+                <IndexLink class="black" to="/settings" activeClassName="active"><i class="gray-medium-2 fa fa-user-circle fa-2x" aria-hidden="true"></i></IndexLink>
               </li>
             </ul>
           </div>
@@ -98,3 +90,10 @@ export default class UserNav extends React.Component {
     );
   }
 }
+
+UserNav.contextTypes = {
+  http: PropTypes.func.isRequired
+};
+
+
+export default UserNav;

@@ -9,12 +9,13 @@ export default class CheckBoxRenderer extends React.Component {
 
   // CAPTURE'S THE ROW ID THAT IS SELECTED
   handleSelected = (e) => {
-    this.context.captureSelected(e.target.id);
+    console.log(e.target.id);
+    this.context.captureSelected(parseInt(e.target.id));
   }
 
   render(){
     return(
-      <span><Input type="checkbox" label=" " id={this.props.data.id} onClick={this.handleSelected}/></span>
+      <span><Input type="checkbox" label=" " id={(this.props.data.id).toString()} onClick={this.handleSelected}/></span>
     )
   }
 }

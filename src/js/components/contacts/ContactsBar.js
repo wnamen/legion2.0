@@ -1,4 +1,4 @@
-import React from "react"
+import React, { PropTypes, Component, Children } from 'react';
 import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize"
 import $ from 'jquery'
 import UploadContactsModal from "../modals/UploadContactsModal";
@@ -18,6 +18,8 @@ export default class ContactsBar extends React.Component {
     this.handleNewListView = this.handleNewListView.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
     this.deleteCurrentList = this.deleteCurrentList.bind(this);
+    this.handleCopySelectedToList = this.handleCopySelectedToList.bind(this);
+    this.handleRemoveFromList = this.handleRemoveFromList.bind(this);
   }
 
   handleDebouncer = (e) => {
@@ -52,8 +54,15 @@ export default class ContactsBar extends React.Component {
   }
 
   handleCopySelectedToList = (e) => {
+    this.props.lists.forEach((list) => {
+      if (list.name === e.target.text) {
+        this.context.copySelected(parseInt(list.id));
+      }
+    })
+  }
 
-    // this.props.onCopyToList(e.target.text, this.state.selected);
+  handleRemoveFromList = (e) => {
+    this.context.removeSelected()
   }
 
   handleModalClose = (e) => {
@@ -103,7 +112,7 @@ export default class ContactsBar extends React.Component {
                   </Modal>
                 </Dropdown>
               </li>
-              { this.props.isSelected &&
+              { this.context.isSelected &&
                 <li>
                   <Input name="contacts_search" id="contacts-search" placeholder={result_count} onChange={this.handleDebouncer} />
                 </li>
@@ -114,14 +123,14 @@ export default class ContactsBar extends React.Component {
               <li onClick={this.deleteCurrentList} class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
               <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Export CSV</div></li>
 
-              { this.props.isSelected &&
+              { this.context.isSelected &&
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={
                 <a>Copy to List <i id="list-adder-angle-icon" class="fa fa-angle-down" style={{"lineHeight":"normal"}} aria-hidden="true"></i></a>
               }>
                 { copyLists }
               </Dropdown></li>
               }
-              { this.props.isSelected && <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Remove</div></li> }
+              { this.context.isSelected && <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div onClick={this.handleRemoveFromList} class="gray">Remove</div></li> }
 
               <li><a class="contact-upload" onClick={this.getCSV}>Upload Contacts</a></li>
               <input onChange={this.beginMapping} type="file" accept=".csv" id="hiddenInput" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn hidden"></input>
@@ -132,3 +141,9 @@ export default class ContactsBar extends React.Component {
     )
   }
 }
+
+ContactsBar.contextTypes = {
+  copySelected: PropTypes.func,
+  removeSelected: PropTypes.func,
+  isSelected: PropTypes.bool
+};

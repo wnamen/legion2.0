@@ -1,93 +1,114 @@
-import React, { Component } from "react";
+import React, { PropTypes, createElement } from "react";
 import { Modal } from "react-materialize";
-import $ from "jquery";
+import classNames from "classnames";
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
 import SignUpModal from "../modals/SignUpModal";
 
-export default class PublicBio extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
-  }
+const PublicBio = ({ data: {
+  jobs,
+  age,
+  twitter_bio,
+  linkedin_bio,
+  personal_twitter,
+  personal_linkedin,
+  personal_github,
+  personal_home_page,
+  personal_crunchbase,
+  personal_angellist,
+  industries, education, interest
+}, user }) => {
+  
+  const modalTrigger1 = <div class="lgnBtn lgnBtn-lg white electric-blue-background">Create my account</div>;
+  const modalTrigger2 = <div class="lgnBtn lgnBtn-lg white electric-blue-background text-center">Create my account</div>;
+  const job = jobs.length ? jobs[0] : null;
+  
+  return (
+    <div class="eight columns smScreenWhiteCard smScreenMarginLeft">
+      
+      <div class={classNames('profile-card whiteCard noaccount text-center', { hidden: user })} >
+        <h2>Get $100 in credits when you create an account</h2>
+        <Modal trigger={modalTrigger1}>
+          <SignUpModal />
+        </Modal>
+      </div>
+      
+      <div class="profile-card whiteCard">
+        <h1 class="gray">{job ? job.email : '*****@**********.***'}</h1>
+        <h1 class="gray">{job ? job.phone :'(***) ***-****'}</h1> <br />
 
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
-
-
-  render(){
-    //RENDER LOGIC HERE
-    const modalTrigger1 = <div class="lgnBtn lgnBtn-lg white electric-blue-background">Create my account</div>;
-    const modalTrigger2 = <div class="lgnBtn lgnBtn-lg white electric-blue-background text-center">Create my account</div>;
-
-    return(
-      <div class="eight columns smScreenWhiteCard smScreenMarginLeft">
-
-        <div class="profile-card whiteCard noaccount text-center">
-          <h2>Get $100 in credits when you create an account</h2>
-          <Modal trigger={modalTrigger1}>
-            <SignUpModal />
-          </Modal>
+        <h6 class="black">JOB TITLE</h6>
+        <p class="profile-body gray thick-line-height"><span className="capitalize">{job ? job.title : ''}</span>{` at ${job ? job.company_name : ''}`}</p> <br />
+        
+        <h6 class="black">AGE</h6>
+        <p class="profile-body gray thick-line-height">{age} years old</p> <br />
+  
+        
+        <h6 class="black">INTERESTS</h6>
+        <div class="profile-body gray thick-line-height">
+          {interest ? interest.map((v, k) => <div key={k} class="tag gray">{v}</div>) : ''}
         </div>
+        <br />
+  
+        
+        <h6 class="black">PUBLIC PROFILES</h6>
+        
+        {function () {
 
-        <div class="profile-card whiteCard">
-          <h1 class="gray">*****@**********.***</h1>
-          <h1 class="gray">(***) ***-****</h1>
-          <br></br>
-          <h6 class="black">JOB TITLE</h6>
-          <p class="profile-body gray thick-line-height">Managing Partner at Y Combinator.</p>
-          <br></br>
-          <h6 class="black">AGE</h6>
-          <p class="profile-body gray thick-line-height">32 years old</p>
-          <br></br>
-          <h6 class="black">INTERESTS</h6>
-          <p class="profile-body gray thick-line-height">
-            <div class="tag gray">User Design</div>
-            <div class="tag gray">User Interface Design</div>
-            <div class="tag gray">Design</div>
-            <div class="tag gray">Photoshop</div>
-            <div class="tag gray">User Design</div>
-            <div class="tag gray">User Interface Design</div>
-            <div class="tag gray">Design</div>
-            <div class="tag gray">Photoshop</div>
-          </p>
-          <br></br>
-          <h6 class="black">PUBLIC PROFILES</h6>
-          <p class="profile-body gray thick-line-height">
-            <a href="#" class="active splink">Twitter</a>
-            <a href="#" class="active splink">Linkedin</a>
-            <a href="#" class="inactive gray splink">Github</a>
-            <a href="#" class="active splink">Facebook</a>
-            <a href="#" class="inactive gray splink">Instagram</a>
-            <a href="#" class="inactive gray splink">Pinterest</a>
-            <a href="#" class="active splink">Wikipedia</a>
-          </p>
-          <br></br>
-          <h6 class="black">INDUSTRIES</h6>
-          <p class="profile-body gray thick-line-height">
-            <div class="tag gray">Start Ups</div>
-            <div class="tag gray">Design</div>
-            <div class="tag gray">Venture Capital</div>
-            <div class="tag gray">Angel Investing</div>
-            <div class="tag gray">Marketing/Advertising</div>
-          </p>
-          <br></br>
-          <h6 class="black">EDUCATION</h6>
-          <p class="profile-body gray thick-line-height">
-            <div class="splink edu">The Johns Hopkins University</div>
-            <div class="splink edu">Modesto High School</div>
-          </p>
-          <br></br>
-          <h6 class="black">PUBLIC BIO</h6>
-          <p class="profile-body gray thick-line-height">Managing Partner at Y Combinator. I run the Fellowship. Founded Wufoo. Find my dream journal over @dreamface. And yes, I like vests. Holla.</p>
-          <p class="profile-body gray thick-line-height"> Kevin Hale is a partner at Y Combinator, which provides seed funding to startups. He works with their portfolio of companies on user experience design, product development and customer support. In 2006,he co-founded Wufoo, which was one of the earliest Y Combinator funded startups. The online form builder was ranked by Jakob Nielson as one of the best application UIs of 2008 and later acquired by SurveyMonkey in 2011.</p>
-          <br></br>
+          const a = (data, link) => createElement('a', {
+            href: `${link}/${data}`,
+            className: 'active',
+            target: '_blank',
+          }, data);
+          
+          const span = () => createElement('span', {
+            className: 'active splink gray',
+          }, "********");
+          
+          return <div class="profile-body gray thick-line-height">
+            <span className="splink"> Twitter: {personal_twitter ? a(personal_twitter, 'https://twitter.com') : span()} </span>
+            <span className="splink"> Linkedin: {personal_linkedin ? a(personal_linkedin, 'https://www.linkedin.com/in') : span()} </span>
+            <span className="splink"> Github: {personal_github ? a(personal_github, 'https://github.com') : span()} </span>
+            <span className="splink"> Personal Page: {personal_home_page ? a(personal_home_page, 'http://') : span()} </span>
+            <span className="splink"> CrunchBase: {personal_crunchbase ? a(personal_crunchbase, 'https://www.crunchbase.com/person/') : span()} </span>
+            <span className="splink"> AngelList: {personal_angellist ? a(personal_angellist, 'https://angel.co') : span()} </span>
+          </div>
+          
+        }()}
+  
+        <br />
+        
+        <h6 class="black">INDUSTRIES</h6>
+        <div class="profile-body gray thick-line-height">
+          {industries ? industries.map((v, k) => <div key={k} class="tag gray">{v}</div>) : ''}
+        </div>
+        <br />
+        
+        <h6 class="black">EDUCATION</h6>
+        <div class="profile-body gray thick-line-height">
+          {education ? education.map((v, k) => <div key={k} class="splink edu">{v}</div>) : ''}
+        </div>
+        <br />
+        
+        <h6 class="black">PUBLIC BIO</h6>
+        <p class="profile-body gray thick-line-height">{twitter_bio}</p>
+        <p class="profile-body gray thick-line-height">{linkedin_bio}</p>
+        <br />
+        
+        <div className={classNames({ hidden: user })}>
           <Modal trigger={modalTrigger2}>
             <SignUpModal />
           </Modal>
         </div>
+      
       </div>
-    )
-  }
-}
+    </div>
+  )
+};
+
+
+PublicBio.propTypes = {
+  data: PropTypes.object.isRequired
+};
+
+
+export default PublicBio;

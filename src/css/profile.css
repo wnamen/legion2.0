@@ -13,6 +13,7 @@
 .colleagues,.engagement{
 	padding: 10px 20px 10px 20px;
     white-space: nowrap;
+    position: relative;
 }
 .colleagues{
 	margin-top: 5em;
@@ -45,6 +46,10 @@
 }
 .splink:not(:last-of-type){
 	border-right: 1px solid #647382;
+}
+
+.splink:first-of-type{
+	padding: 0 10px 0 0;
 }
 a.active:hover{
 	text-decoration: underline;
@@ -138,3 +143,14 @@ a.active:hover{
     }
 }
 
+.spinner-profile{
+    position: absolute;
+    left: 50%;
+    top: 20%;
+}
+
+.engagement-profile div{
+    position: absolute;
+    left: 50%;
+    top: 20%;
+}

@@ -266,3 +266,14 @@ input[name=newSubjectName]:focus:not([readonly]){
 .topMargin1em{
 	margin-top: 1em;
 }
+.delayPicker{
+	display: inline-block;
+  max-width: 2em;
+  max-height: 1em;
+  text-align: center;
+  margin-right: 1em !important;
+  color: #36b7ea;
+}
+.delayAdjuster{
+  font-size: 0.8em;
+}

@@ -18,7 +18,7 @@ export default class CadenceViews extends React.Component {
     return(
       <div class="eight columns">
         <div class="profile-card whiteCard campaignEditorCard">
-          { current_view !== null ? <TemplatesView currentView={this.props.currentView} currentTemplates={this.props.currentTemplates} templateData={this.props.templateData} saveTemplate={this.props.saveTemplate}/> : <NoTemplatesView /> }
+          { current_view !== null ? <TemplatesView renderState={this.props.renderState} currentView={this.props.currentView} currentTemplates={this.props.currentTemplates} currentDelays={this.props.currentDelays} templateData={this.props.templateData} campaignTemplateList={this.props.campaignTemplateList} saveTemplate={this.props.saveTemplate}/> : <NoTemplatesView /> }
         </div>
       </div>
     )

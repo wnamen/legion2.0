@@ -1,4 +1,4 @@
-import React, { Component }   from "react";
+import React, { PropTypes, Component, Children } from 'react';
 import cookie                 from "react-cookie";
 import { Link }               from "react-router"
 import { CubeGrid }           from "better-react-spinkit"
@@ -27,8 +27,6 @@ export default class Search extends React.Component {
     this.setApiState = this.setApiState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.nextSearch = this.nextSearch.bind(this);
-    this.checkAll = this.checkAll.bind(this);
-    this.checkRow = this.checkRow.bind(this);
   }
 
   setApiState() {
@@ -40,42 +38,27 @@ export default class Search extends React.Component {
     })
   }
 
-  setRowState(results) {
-    let rowState =[];
+  static childContextTypes = {
+    captureSelected: PropTypes.func,
+    purchaseSelected: PropTypes.func,
+  };
 
-    if (results !== undefined) {
-      results.results.forEach((results, index) => {
-        rowState[index] = false
-      })
+  getChildContext() {
+    const { http } = this.context;
+    const checked = []
+
+    return {
+      captureSelected: (id) => {
+        checked.push(id)
+      },
+
+      purchaseSelected: (id) => {
+        let params;
+        this.state.apiState.job === true ? params = {tm_id: id, jobs: checked} : params = {tm_id: id, companies: checked};
+        http.post('/add-contacts-to-tm', params: params)
+          .then(response => console.log(response))
+      }
     }
-    this.setState({ rowState: rowState })
-  }
-
-  checkRow(id,value) {
-    this.state.rowState[id] = value;
-    if (this.state.checkAll) {
-      this.state.checkAll = !this.state.checkAll;
-    }
-    this.setState({
-      rowState: this.state.rowState,
-      checkAll: this.state.checkAll
-    });
-  }
-
-  checkAll() {
-    let rowState =[];
-    let checkState = !this.state.checkAll;
-
-    this.state.rowState.forEach((results, index) => {
-      rowState[index] = checkState;
-    })
-
-    this.state.checkAll = checkState;
-
-    this.setState({
-      rowState: rowState,
-      checkAll: this.state.checkAll
-    });
   }
 
   componentWillMount(){
@@ -175,11 +158,20 @@ export default class Search extends React.Component {
           <SearchMenu searchFilters={this.state.searchFilters} interestSuggestions={this.state.interestSuggestions} apiState={this.state.apiState} setApiState={this.setApiState} onSearchChange={this.handleSearch} onInterestSearch={this.handleInterestSearch} userToken={this.state.token}/>
           <ActionBar results={this.state.results}/>
           { this.state.loading ?
-            <div class="eleven columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
-            <ResultsTable results={this.state.results} resultsArray={this.state.resultsArray} apiState={this.state.apiState} nextSearch={this.nextSearch} rowState={this.state.rowState} checkedAll={this.state.checkedAll} checkAll={this.checkAll} checkRow={this.checkRow}/>
+            <div class="eleven columns">
+              <div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
+                <CubeGrid size={50} color="#36b7ea" />
+              </div>
+            </div> :
+            <ResultsTable results={this.state.results} resultsArray={this.state.resultsArray} apiState={this.state.apiState} nextSearch={this.nextSearch}/>
           }
         </div>
       </div>
     )
   }
 }
+
+
+Search.contextTypes = {
+  http: PropTypes.func.isRequired
+};

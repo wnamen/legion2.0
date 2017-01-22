@@ -1,53 +1,85 @@
-import React, { Component } from "react";
-import { Button } from "react-materialize";
-import $ from "jquery";
+import React, { Component, PropTypes } from "react";
 
-export default class UploadLeads extends React.Component {
+
+class UploadLeads extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
-    this.clickTrigger = this.clickTrigger.bind(this)
+      file: "__________________",
+      upload: false
+    };
   }
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
-    clickTrigger = (e) => {
-      var holder;
-      var filename;
-      $("#hiddenInput").trigger("click");
-      $('#hiddenInput').change(function() {
-          holder = $(this).val();
-          filename = holder.replace(/^.*\\/, "");
-          $('.fileName').text(filename);
-          $("#ourInput").text("Confirm?").addClass("green-background");
-          $("#redoInput").removeClass("hidden");
-      });
-      $("#redoInput").on("click",function(){
-        $(this).addClass("hidden");
-        $("#ourInput").text("Upload .CSV").removeClass("green-background");
+  
+  onHandleFile = (e) => {
+    this.setState({
+      file: e.target.files[0],
+      upload: true
+    });
+  };
+  
+  clear = () => {
+    this.setState({
+      file: "__________________",
+      upload: false
+    });
+  };
+  
+  upload = () => {
+    const { file } = this.state;
+  
+    const data = new FormData();
+    data.append('file', file);
+  
+    this.context.http.post('upload-document', data, {
+      'Content-Disposition': `name=${file.name}; filename=${file.name}`,
+      'Content-Type': "text/csv"
+    })
+      .then(res => {
+        console.log(res)
       })
-    }
-  render(){
-    //RENDER LOGIC HERE
-
-    return(
-      <div class="sixteen columns">
-        <div class="nine columns onbMargin text-center">
-          <img class="modalIcon smallerIcon" src="/src/img/upload_cloud_asset.png"></img>
-          <h1 class="modalTitle gray onbTitle">Upload Your Current Leads</h1>
-          <form id="billingModalForm" class="">
-            <div class="gray"><small>File: <span class="fileName">_______</span></small></div>
-            <div onClick={this.clickTrigger} id="ourInput" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Upload .CSV</div>
-            <div id="redoInput" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd red-background white inline-block signupBtn hidden">Choose Another</div>
-            <input type="file" accept=".csv" id="hiddenInput" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn hidden"></input>
-          </form>
-          <div>
-            <i class="fa fa-circle billingOpenPagination" aria-hidden="true"></i>
-            <i class="fa fa-circle billingClosedPagination" aria-hidden="true"></i>
-            <i class="fa fa-circle billingOpenPagination" aria-hidden="true"></i>
+      .catch(err => {
+        console.log(err)
+      });
+    
+  };
+  
+  render() {
+    
+    const { file: { name }, upload } = this.state;
+    const extraClass = "lgnBtn settingsBtn lgnBtnLg smoothBkgd white inline-block signupBtn";
+    return (
+      <div>
+        <img class="modalIcon smallerIcon" src="/src/img/upload_cloud_asset.png" />
+        <h1 class="modalTitle gray onbTitle">Upload Your Current Leads</h1>
+        <form id="billingModalForm">
+          <div class="gray">
+            <small>File: {name}</small>
           </div>
-        </div>
+          
+          {upload ?
+            <div>
+              <div class={`${extraClass} green-background`} onClick={this.upload}>Confirm?</div>
+              <div class={`${extraClass} red-background`} onClick={this.clear}>Choose Another</div>
+            </div>
+            
+            :
+            
+            <div class={`${extraClass} electric-blue-background file-input`} >
+              <input type="file" onChange={this.onHandleFile} accept=".csv" />
+              Upload .CSV
+            </div>}
+        
+        </form>
       </div>
     )
   }
 }
+
+UploadLeads.contextTypes = {
+  http: PropTypes.func.isRequired
+};
+
+
+export default UploadLeads;
+

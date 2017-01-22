@@ -1,20 +1,19 @@
-import React from "react"
-import { Dropdown, NavItem, Button, Modal, Input, Collapsible, CollapsibleItem } from 'react-materialize'
+import React, { Component } from "react"
+import { Input } from 'react-materialize'
 
-export default class SaveCampaignModal extends React.Component {
+
+class SaveCampaignModal extends Component {
+
   constructor(props) {
     super(props);
-
-    this.triggerModalClose = this.triggerModalClose.bind(this);
   }
 
   triggerModalClose = () => {
     this.props.handleModalClose();
-  }
+  };
 
   render() {
-
-
+    
     return (
         <div class="sixteen modalContainer">
          	<div class="thirteen columns text-center smallModal">
@@ -133,3 +132,5 @@ export default class SaveCampaignModal extends React.Component {
     )
   }
 }
+
+export default SaveCampaignModal;

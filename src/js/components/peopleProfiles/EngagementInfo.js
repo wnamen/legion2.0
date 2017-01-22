@@ -1,50 +1,37 @@
-import React, { Component } from "react"
-import $ from "jquery"
+import React, { PropTypes } from "react"
 
-// IMPORT OTHER COMPONENTS AND DEPENDENCIES HERE
+const EngagementInfo = ({ data }) => {
+  
+  return (
+    <div class="profile-card engagement">
+      <h6 class="black">Engagement</h6>
+      
+      {
+        data.map(v => {
+            const date = v.date;
+            return (
+              <div key={v.id}>
+                <div class="activityAction">
+                  <div class={`actionIcon ${v.type_of_visit === 'open' ? `red-background` : -`electric-blue-background`}`}/>
+                  <p class="activityDetails gray">
+                    {v.type_of_visit === 'open' ? '- Opened ' : '- Clicked ' }
+                    <strong>{v.subject}</strong> on <strong>{date}</strong>
+                  </p>
+                </div>
+                <br />
+              </div>
+            )
+          }
+        )
+      }
+    
+    </div>
+  )
+};
 
-export default class EngagementInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
-  }
 
-    //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+EngagementInfo.propTypes = {
+  data: PropTypes.any
+};
 
-  render(){
-    //RENDER LOGIC HERE
-
-    return(
-      <div class="profile-card engagement">
-        <h6 class="black">Engagement</h6>
-        <div class="activityAction">
-          <div class="actionIcon red-background"></div>
-          <p class="activityDetails gray">- Clicked <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
-        </div>
-        <br></br>
-        <div class="activityAction">
-          <div class="actionIcon electric-blue-background"></div>
-          <p class="activityDetails gray">- Opened <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
-        </div>
-        <br></br>
-        <div class="activityAction">
-          <div class="actionIcon red-background"></div>
-          <p class="activityDetails gray">- Clicked <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
-        </div>
-        <br></br>
-        <div class="activityAction">
-          <div class="actionIcon electric-blue-background"></div>
-          <p class="activityDetails gray">- Opened <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
-        </div>
-        <br></br>
-        <div class="activityAction">
-          <div class="actionIcon red-background"></div>
-          <p class="activityDetails gray">- Clicked <strong>Follow-up from our meeting</strong> on <strong>12/07 @ 5:47pm PST</strong></p>
-        </div>
-        <br></br>
-      </div>
-    )
-  }
-}
+export default EngagementInfo;

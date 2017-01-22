@@ -1,69 +1,63 @@
 import React, { Component, PropTypes } from "react";
-import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize';
+import { Modal, Input } from 'react-materialize';
 import cookie from "react-cookie";
-import $ from "jquery";
 
 import PasswordResetModal from "../modals/PasswordResetModal"
-export default class SignInModal extends React.Component {
+
+class SignInModal extends Component {
+  
   constructor(props) {
     super(props);
-    this.state = {}
-    this.signIn = this.signIn.bind(this);
-    this.cookieSaver = this.cookieSaver.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
   handleEmailChange = (e) => {
     this.setState({email: e.target.value});
-  }
+  };
 
   handlePasswordChange = (e) => {
     this.setState({password: e.target.value});
-  }
+  };
 
-  signIn = () => {
-    const email = this.state.email;
-    const password = this.state.password;
-    const url = "https://api.legionanalytics.com/login";
-
-    console.log(email, password, url);
-
-    $.post({
-      url: url,
-      data: {username: email, password: password},
-      success: (response) => {
-        console.log(response);
-        this.cookieSaver(response);
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    })
-
-  }
+  signIn = (e) => {
+    e.preventDefault();
+    const { email, password } = this.state;
+    const { http } = this.context;
+    
+    http.post('login', {
+      username: email,
+      password: password
+    }).then(response => this.cookieSaver(response.data))
+  };
 
   cookieSaver = (response) => {
+    const { router } = this.context;
+    const modal = document.querySelectorAll('.modal-close');
     cookie.save("token", response.token, { path: "/" });
-    location.reload();
-    this.context.router.transitionTo("/search");
-  }
+    Object.keys(modal).map(v => modal[v].click());
+    router.push("/search");
+  };
 
   render() {
-    const modalTrigger = <div><small class="text-center"><a href="#" class="active">Forgot Password</a></small></div>
+    const modalTrigger =
+      <div>
+        <small class="text-center">
+          <a href="#" class="active">Forgot Password</a>
+        </small>
+      </div>;
 
     return (
         <div class="sixteen modalContainer">
           <div class="eight columns text-center smallModal">
-          		<img class="modalIcon" src="/src/img/logInIcon.png"></img>
+          		<img class="modalIcon" src="/src/img/logInIcon.png" />
           		<h1 class="modalTitle gray">Secure Sign In</h1>
-          		<form id="billingModalForm" class="">
+            
+          		<form id="billingModalForm" onSubmit={this.signIn}>
       	          <Input type="email" placeholder="Email Address" onChange={this.handleEmailChange} required/>
       	          <Input type="password" placeholder="Password" onChange={this.handlePasswordChange} required/>
                   <Modal trigger={modalTrigger}>
                     <PasswordResetModal />
                   </Modal>
-      	          <div onClick={this.signIn} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Sign In</div>
+      	          <button type="submit" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Sign In</button>
     	        </form>
         	</div>
         </div>
@@ -72,5 +66,8 @@ export default class SignInModal extends React.Component {
 }
 
 SignInModal.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired,
+  http: PropTypes.func.isRequired,
 };
+
+export default SignInModal;

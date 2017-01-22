@@ -1,22 +1,22 @@
 import React, { Component } from "react"
-import $ from "jquery"
+import { IndexLink } from "react-router"
+import { CubeGrid }     from "better-react-spinkit";
 
-export default class DirectoryListings extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // COMPONENT STATE DECLARTION HERE
-    }
-  }
 
-  render(){
+const DirectoryListings = ({ list, directory }) => {
 
-    return(
-      <div class="sixteen">
-        <div class="navbar white-background small-border gray-border text-center fpng">
-          <a href="#" class="active">Person's Name</a>
-        </div>
-      </div>
-    )
-  }
-}
+  return (
+    <div class="sixteen">
+      <ul>
+        {
+          list && list.length ?
+          list.map((v, k) => <li key={k} class="navbar white-background small-bottom-border gray-border text-center" ><IndexLink class="active" to={`/profiles/${directory}/${v.id}`}>{v.name}</IndexLink></li> )
+          : <CubeGrid size={50} color="#36b7ea" className="flex-center" />
+        }
+      </ul>
+    </div>
+  )
+};
+
+
+export default DirectoryListings;

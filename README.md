@@ -1,5 +1,18 @@
 # legion2.0
 
+### Minimum Requirements
+
+1. NPM @ 3.10.3
+2. Node @ v6.5.0
+3. Webpack installed globally
+
+### Development Instructions
+
+1. Run "npm install" to install dependencies
+2. In a separate window, run node server.js to start the server
+3. Upon any changes in the code, run "webpack" to bundle the app
+4. Then restart the server
+
 ### Production Management
 
 Trello: https://trello.com/b/QMEb0hwA/legion-v2

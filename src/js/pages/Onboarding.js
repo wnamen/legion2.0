@@ -1,33 +1,56 @@
 import React, { Component }       from "react";
-import { Link }                   from "react-router";
-
 import ConnectEmail               from "../components/onboarding/ConnectEmail";
 import UploadLeads                from "../components/onboarding/UploadLeads";
 import DataShare                  from "../components/onboarding/DataShare";
 
-export default class Onboarding extends React.Component {
+
+class Onboarding extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       currentStep: 1
-    }
-    this.nextStep = this.nextStep.bind(this);
+    };
   }
 
   nextStep = () => {
-    this.setState({currentStep: this.state.currentStep += 1})
-  }
-
-  //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
+    this.setState({
+      currentStep: this.state.currentStep += 1
+    })
+  };
+  
+  onHandleToggle = (v) => {
+    this.setState({
+      currentStep: v
+    })
+  };
 
   render() {
+    
+    const {currentStep} = this.state;
+    
     return (
-      <div class="ten offset-by-three white-background onboardingCard">
-        { this.state.currentStep === 3 ? "" : <div class="skipBtn electric-blue"  onClick={this.nextStep}>Skip</div> }
-        { this.state.currentStep === 1 && <ConnectEmail />}
-        { this.state.currentStep === 2 && <UploadLeads />}
-        { this.state.currentStep === 3 && <DataShare />}
+      <div className="ten offset-by-three white-background onboardingCard">
+        { currentStep === 3 ? "" : <div className="skipBtn electric-blue"  onClick={this.nextStep}>Skip</div> }
+  
+          <div class="sixteen columns">
+            <div class="nine columns onbMargin text-center">
+              { currentStep === 1 && <ConnectEmail />}
+              { currentStep === 2 && <UploadLeads />}
+              { currentStep === 3 && <DataShare />}
+  
+              <div>
+                {[1,2,3].map(v => <i key={v}
+                  class={`fa fa-circle ${currentStep === v ? `billingClosedPagination` : `billingOpenPagination`}`}
+                  style={{cursor: "pointer"}}
+                  onClick={this.onHandleToggle.bind(null, v)}
+                /> )}
+              </div>
+            </div>
+          </div>
       </div>
     );
   }
 }
+
+export default Onboarding;
