@@ -32,7 +32,10 @@ export default class ContactsBar extends React.Component {
     let filename;
     $("#hiddenInput").trigger("click");
     $('#hiddenInput').change(function() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e53d936e2680000ef7ea754fc47b3f84edfb9649
         var file = $(this)[0].files[0];
         path = $(this).val();
         filename = path.replace(/^.*\\/, "");
