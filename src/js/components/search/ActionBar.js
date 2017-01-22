@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropTypes, Component, Children } from 'react';
 import { Dropdown, NavItem, Modal, Input } from "react-materialize";
 import cookie from "react-cookie";
 
@@ -18,6 +18,7 @@ export default class ActionBar extends React.Component {
     this.createList = this.createList.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
     this.loadAvailableLists = this.loadAvailableLists.bind(this);
+    this.handleCopySelectedToList = this.handleCopySelectedToList.bind(this);
   }
 
   componentWillMount = () =>{
@@ -57,6 +58,10 @@ export default class ActionBar extends React.Component {
     });
   }
 
+  handleCopySelectedToList = (e) => {
+    this.context.purchaseSelected(parseInt(e.target.id));
+  }
+
   handleModalClose = (e) => {
     $(".modal-close").trigger("click");
   }
@@ -76,7 +81,7 @@ export default class ActionBar extends React.Component {
     if ((listData !== undefined) && (listData.length > 0)) {
       copyLists = listData.map((list, index) => {
         return (
-          <NavItem key={index} onClick={this.handleCopySelectedToList}>{list.name}</NavItem>
+          <NavItem key={index} id={list.id} onClick={this.handleCopySelectedToList}>{list.name}</NavItem>
         )
       });
     }
@@ -107,6 +112,10 @@ export default class ActionBar extends React.Component {
     )
   }
 }
+
+ActionBar.contextTypes = {
+  purchaseSelected: PropTypes.func
+};
 
 
 

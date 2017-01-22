@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropTypes, Component, Children } from 'react';
 import { Dropdown, NavItem, Input } from "react-materialize";
 import { AgGrid } from 'ag-grid/main';
 import { AgGridReact } from 'ag-grid-react';
@@ -17,11 +17,38 @@ export default class ResultsTable extends React.Component {
         groupContracted: "<i class='fa fa-plus-square-o'/>",
         columnGroupOpened: "<i class='fa fa-minus-square-o'/>",
         columnGroupClosed: "<i class='fa fa-plus-square-o'/>"
-      }
+      },
+      checked: []
     };
     this.arrayConvert = this.arrayConvert.bind(this);
     this.handleNextSearch = this.handleNextSearch.bind(this);
   }
+
+
+  static childContextTypes = {
+    captureSelected: PropTypes.func,
+    purchaseSelected: PropTypes.func,
+  };
+
+  getChildContext() {
+    const { http } = this.context;
+    const checked = []
+
+    return {
+      captureSelected: (id) => {
+        checked.push(id)
+      },
+
+      purchaseSelected: (id) => {
+        let params;
+        this.props.apiState.job === true ? params = { params: {tm_id: id, job: checked}} : params = { params: {tm_id: id, company: checked}};
+
+        http.post('/add-contacts-to-tm', params)
+          .then(response => console.log(response))
+      }
+    }
+  }
+
 
   // FLATTENS GIVEN ARRAY AND RETURNS A STRING
   arrayConvert(arr) {
@@ -195,3 +222,7 @@ export default class ResultsTable extends React.Component {
     );
   }
 }
+
+ResultsTable.contextTypes = {
+  http: PropTypes.func.isRequired
+};
