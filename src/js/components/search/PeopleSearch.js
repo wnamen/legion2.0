@@ -215,46 +215,46 @@ export default class PeopleSearch extends React.Component {
 
             <label>Company Size {advanced_filter}</label>
             <Input type='select' name="company_size" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
-              <option value="5">{less_than}10</option>
-              <option value="30">11-50</option>
-              <option value="125">51-200</option>
-              <option value="350">201-500</option>
-              <option value="750">501-1,000</option>
-              <option value="3000">1,001-5,000</option>
-              <option value="7500">5,001-10,000</option>
+              <option value="0-10">{less_than}10</option>
+              <option value="11-50">11-50</option>
+              <option value="51-200">51-200</option>
+              <option value="201-500">201-500</option>
+              <option value="501-1000">501-1,000</option>
+              <option value="1001-5000">1,001-5,000</option>
+              <option value="5001-10000">5,001-10,000</option>
               <option value="10001">10,000+</option>
             </Input>
 
             <label>Revenue {advanced_filter}</label>
             <Input type='select' name="revenue" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
-              <option value="500000">{less_than}$500K</option>
-              <option value="3000000">$1M-$5M</option>
-              <option value="7500000">$5M-$10M</option>
-              <option value="17500000">$10M-$25M</option>
-              <option value="30000000">$25M-$35M</option>
-              <option value="42500000">$35M-$50M</option>
-              <option value="62500000">$50M-$75M</option>
-              <option value="87500000">$75M-$100M</option>
-              <option value="150000000">$100M-$200M</option>
-              <option value="350000000">$200M-$500M</option>
-              <option value="750000000">$500M-$1B</option>
-              <option value="1000000001">$1B+</option>
+              <option value="0-0.5">{less_than}$500K</option>
+              <option value="1-5">$1M-$5M</option>
+              <option value="5-10">$5M-$10M</option>
+              <option value="10-25">$10M-$25M</option>
+              <option value="25-35">$25M-$35M</option>
+              <option value="35-50">$35M-$50M</option>
+              <option value="50-75">$50M-$75M</option>
+              <option value="75-100">$75M-$100M</option>
+              <option value="100-200">$100M-$200M</option>
+              <option value="200-500">$200M-$500M</option>
+              <option value="500-1000">$500M-$1B</option>
+              <option value="1001">$1B+</option>
             </Input>
 
             <label>Funding {advanced_filter}</label>
             <Input type='select' name="funding" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
-              <option value="500000">{less_than}$500K</option>
-              <option value="3000000">$1M-$5M</option>
-              <option value="7500000">$5M-$10M</option>
-              <option value="17500000">$10M-$25M</option>
-              <option value="30000000">$25M-$35M</option>
-              <option value="42500000">$35M-$50M</option>
-              <option value="62500000">$50M-$75M</option>
-              <option value="87500000">$75M-$100M</option>
-              <option value="150000000">$100M-$200M</option>
-              <option value="350000000">$200M-$500M</option>
-              <option value="750000000">$500M-$1B</option>
-              <option value="1000000001">$1B+</option>
+              <option value="0-0.5">{less_than}$500K</option>
+              <option value="1-5">$1M-$5M</option>
+              <option value="5-10">$5M-$10M</option>
+              <option value="10-25">$10M-$25M</option>
+              <option value="25-35">$25M-$35M</option>
+              <option value="35-50">$35M-$50M</option>
+              <option value="50-75">$50M-$75M</option>
+              <option value="75-100">$75M-$100M</option>
+              <option value="100-200">$100M-$200M</option>
+              <option value="200-500">$200M-$500M</option>
+              <option value="500-1000">$500M-$1B</option>
+              <option value="1001">$1B+</option>
             </Input>
 
             <div class="filter">

@@ -67,7 +67,7 @@ export default class Contacts extends React.Component {
         let tokenHeader = `Token ${this.state.token}`;
 
         $.get({
-          url:`https://api.legionanalytics.com/contacts/${list.id}/?page_size=50`,
+          url:`https://api.legionanalytics.com/contacts/${list.id}?page_size=50`,
           headers: {"Authorization": tokenHeader },
           dataType:'json',
           crossDomain: true,
