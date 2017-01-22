@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react"
+import React, { PropTypes } from "react"
 
 const locationList = [
   'amsterdam', 'austin', 'barcelona', 'berlin',
@@ -9,13 +9,13 @@ const locationList = [
 
 const LocationInfo = ({ data: { name, location } }) => {
   
-  const prepareLocation = location.replace(/[\. ,:-]+/g, "").toLowerCase();
-  const img = locationList.filter(v => !prepareLocation.search(v))[0];
+  const prepareLocation = location ? location.replace(/[\. ,:-]+/g, "").toLowerCase() : null;
+  const img = location ? locationList.filter(v => !prepareLocation.search(v))[0] : null;
   
   return (
     <div class="profile-card whiteCard text-center" >
-      <img src={`/src/img/svg/${img || 'austin'}.svg`} class="electric-blue smScreenImg" alt={`${name} lives in ${location}`}/>
-      <h6 class="gray locationH1"> Location{location ? ':' : ''} <br /> {location} </h6>
+      <img src={`/src/img/svg/${ img || 'austin' }.svg`} class="electric-blue smScreenImg" alt={`${ name } from ${ location }`}/>
+      <h6 class="gray locationH1"> Location{ location ? ':' : '' } <br /> { location } </h6>
     </div>
   )
 };
@@ -23,9 +23,9 @@ const LocationInfo = ({ data: { name, location } }) => {
 LocationInfo.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string,
-    location: PropTypes.string,
+    location: PropTypes.string
   })
 };
 
 
-export default LocationInfo
+export default LocationInfo;
