@@ -9,13 +9,13 @@ const ContactInfo = ({ data: { name, jobs, location }, user }) => {
     <div class="lgnBtn electric-blue-light-background electric-blue-border black lgnBtnUp">
       Get Kevin's Email
     </div>;
-  
+  const job = jobs.length ? jobs[0] : null;
   return (
     <div class="profile-card whiteCard" id="contact-card">
       
       <h1 class="adjustedH1">{name}</h1>
       
-      <p class="gray meta"><span className="capitalize">{jobs[0].title}</span>{` at ${jobs[0].company_name}`}</p>
+      <p class="gray meta"><span className="capitalize">{job ? job.title : ''}</span>{` at ${job ? job.company_name : ''}`}</p>
       
       <h6 class="gray meta local">{location}</h6>
       

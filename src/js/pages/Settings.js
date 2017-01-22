@@ -6,30 +6,34 @@ import Billing                    from "../components/settings/Billing";
 import Logout                     from "../components/settings/Logout";
 import $ from "jquery";
 import { CubeGrid } from "better-react-spinkit"
-
+import cookie from "react-cookie";
 
 class Settings extends Component {
-  
+
   constructor(props) {
     super(props);
-    
+
     this.state = {
       userInfo: "",
       emails: []
     };
   }
-  
+
   handleModalClose = () => {
     console.log("clicked");
     $(".modal-close").trigger("click");
   };
-  
+
   componentDidMount = () => {
     this.updateSettings()
   };
 
   updateSettings = () => {
-    this.context.http.get('me').then(response =>
+    this.context.http.get('me', {
+      headers: {
+        'Authorization': `Token ${cookie.load('token')}`
+      }
+    }).then(response =>
       this.setState({
         userInfo: response.data,
         emails: response.data.emails
@@ -50,24 +54,21 @@ class Settings extends Component {
   };
 
   render() {
-  
     const { userInfo, emails } = this.state;
-    console.log(emails, 'emails');
-    
+
     return (
       <div class="ten offset-by-three white-background settingsCard">
         <h6>Settings</h6>
         <br />
-        
+
         {!userInfo ? <CubeGrid size={50} color="#36b7ea"/> :
         <div>
           <MyAccount userInfo={userInfo} handleModalClose={this.handleModalClose} />
           <Integrations userInfo={userInfo} />
           <EmailConfiguration emails={emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
-          <Billing userInfo={userInfo} saveCard={this.saveCard}/>
+          <Billing userInfo={userInfo} saveCard={this.saveCard} updateSettings={this.updateSettings}/>
           <Logout userInfo={userInfo} />
         </div>}
-        
       </div>
 
     );
@@ -80,4 +81,3 @@ Settings.contextTypes = {
 
 
 export default Settings;
-

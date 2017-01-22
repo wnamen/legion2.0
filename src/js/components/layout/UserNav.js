@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from "react";
-import { IndexLink, Link } from "react-router";
+import { IndexLink } from "react-router";
 import { Dropdown, NavItem } from "react-materialize";
+import cookie from "react-cookie";
 
 import CreditButtonHandler from "./CreditButtonHandler";
 
 
 class UserNav extends Component {
+  
   constructor(props, context){
     super(props, context);
     this.state = {
@@ -18,7 +20,11 @@ class UserNav extends Component {
   };
 
   loadCurrentCredits = () => {
-    this.context.http.get('me').then(response =>
+    this.context.http.get('me', {
+      headers: {
+        'Authorization': `Token ${cookie.load('token')}`
+      }
+    }).then(response =>
       this.setState({
         currentCredits: response.data.credits
       })
@@ -51,9 +57,9 @@ class UserNav extends Component {
         <div class="nav-wrapper medium-vertical-padding">
           <ul id="nav-links" class="nav-hover">
             <li><IndexLink class="medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
-            <li><Link to="search" activeClassName="active">Search</Link></li>
-            <li><Link to="campaigns" activeClassName="active">Campaigns</Link></li>
-            <li><Link to="contacts" activeClassName="active">Contacts</Link></li>
+            <li><IndexLink to="/search" activeClassName="active">Search</IndexLink></li>
+            <li><IndexLink to="/campaigns" activeClassName="active">Campaigns</IndexLink></li>
+            <li><IndexLink to="/contacts" activeClassName="active">Contacts</IndexLink></li>
           </ul>
 
           <div class="right">

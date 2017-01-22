@@ -23,34 +23,44 @@ import Profile                                         from "./pages/Profile";
 const App = document.getElementById('app');
 
 let loggedIn = false;
+let token = undefined;
 
 const updateLogin = (status) => loggedIn = status;
 
-(() => {
-  let token = cookie.load("token");
 
+const setToken = () => {
+  token = cookie.load("token");
+};
+
+(() => {
+  
+  let token = cookie.load("token");
+  setToken();
   if (token !== undefined) {
+    
     let tokenHeader = `Token ${token}`;
+    
     $.get({
       url: "https://api.legionanalytics.com/me",
       dataType: "JSON",
       crossDomain: true,
       headers: {"Authorization": tokenHeader },
-      success: (response) => {
+      success: () => {
         updateLogin(true);
       },
-      error: (response) => {
-        console.log(response);
+      error: () => {
         cookie.remove("token", { path: "/" });
         updateLogin(false);
       }
     })
+    
   }
 })();
 
 const requireAuth = (nextState, replace, cb) => {
+  setToken();
   setTimeout(()=> {
-    if (!loggedIn) {
+    if (!cookie.load("token")) {
       replace({
         pathname: '/'
       })
@@ -61,8 +71,9 @@ const requireAuth = (nextState, replace, cb) => {
 };
 
 const guestsOnly = (nextState, replace, cb) => {
+  setToken();
   setTimeout(()=> {
-    if (loggedIn) {
+    if (cookie.load("token")) {
       replace({
         pathname: '/search'
       })
@@ -73,22 +84,27 @@ const guestsOnly = (nextState, replace, cb) => {
 };
 
 ReactDOM.render(
-  <HttpProvider>
+  <HttpProvider token={token}>
     <Router history={browserHistory}>
-      <Route path="/" component={Layout}>
-        <IndexRoute component={Landing} onEnter={guestsOnly} />
+      <Route path="/" component={Layout} >
+        <IndexRoute component={Landing} onChange={guestsOnly} />
         <Route path="search" name="search" component={Search} onEnter={requireAuth} />
         <Route path="contacts" name="contacts" component={Contacts} onEnter={requireAuth} />
         <Route path="campaigns" name="cadence" component={Cadence} onEnter={requireAuth} />
 
         <Route path="profiles" name="profiles" component={Profile} >
-          <Route path=":type/:id" name="type" component={Profile} />
+          <Route path=":type(/:id)" name="type" component={Profile} />
         </Route>
 
         <Route path="settings" name="settings" component={Settings} onEnter={requireAuth} />
         <Route path="onboarding" name="onboarding" component={Onboarding} />
         <Route path="tos" name="tos" component={TOS} />
-        <Route path="directory" name="directory" component={Directory} />
+  
+        <Route path="directory" name="directory" component={Directory} >
+          <Route path=":type(/:id)" name="directory" component={Directory} >
+          </Route>
+        </Route>
+        
         <Route path="google/success" name="success" component={IntegrationSuccess} />
         <Route path="outlook/success" name="success" component={IntegrationSuccess} />
         <Route path="500" name="serverError" component={ServerError} />
@@ -97,5 +113,3 @@ ReactDOM.render(
     </Router>
   </HttpProvider>, App
 );
-// Onboarding page (6h)
-// Profile page (3h)

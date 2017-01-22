@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropTypes, Component, Children } from 'react';
 import { Input } from "react-materialize";
 
 export default class CheckBoxRenderer extends React.Component {
@@ -9,8 +9,7 @@ export default class CheckBoxRenderer extends React.Component {
 
   // CAPTURE'S THE ROW ID THAT IS SELECTED
   handleSelected = (e) => {
-    console.log(this.props);
-    this.props.captureSelected(e.target.id);
+    this.context.captureSelected(e.target.id);
   }
 
   render(){
@@ -19,3 +18,7 @@ export default class CheckBoxRenderer extends React.Component {
     )
   }
 }
+
+CheckBoxRenderer.contextTypes = {
+  captureSelected: PropTypes.func
+};

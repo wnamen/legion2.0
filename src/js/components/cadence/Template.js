@@ -25,6 +25,11 @@ export default class Template extends React.Component {
     this.handleTemplateSave = this.handleTemplateSave.bind(this);
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
     this.clearTemplate = this.clearTemplate.bind(this);
+    this.handleDelayChange = this.handleDelayChange.bind(this);
+  }
+
+  handleDelayChange = (e) => {
+    this.props.onDelayChange((this.props.data.id || null), e.target.value);
   }
 
   handleModelChange = (html) => {
@@ -69,56 +74,66 @@ export default class Template extends React.Component {
     }
 
     return(
-      <div class="sixteen">
-        <div class="gray-border small-border workingTemplate">
-            <div class="gray small-bottom-border gray-border workingRow">
-              <div class="inline-block">Template Name: </div>
-              <div class="inline-block templateNameContainer">
-                <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.name_of_template || this.props.data.name_of_template}/>
+      <div>
+        <div class="sixteen">
+          <div class="gray-border small-border workingTemplate">
+              <div class="gray small-bottom-border gray-border workingRow">
+                <div class="inline-block">Template Name: </div>
+                <div class="inline-block templateNameContainer">
+                  <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.name_of_template || this.props.data.name_of_template}/>
+                </div>
+                <div class="working chooseTemplate">
+                  <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
+                    <option value="">Choose Existing</option>
+                    {mappedTemplates}
+                  </Input>
+                </div>
               </div>
-              <div class="working chooseTemplate">
-                <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
-                  <option value="">Choose Existing</option>
-                  {mappedTemplates}
-                </Input>
+              <div class="gray small-bottom-border gray-border workingRow">
+                <div class="inline-block">Subject: </div>
+                <div class="inline-block templateNameContainer">
+                  <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.subject || this.props.data.subject}>
+                  </Input>
+                </div>
               </div>
-            </div>
-            <div class="gray small-bottom-border gray-border workingRow">
-              <div class="inline-block">Subject: </div>
-              <div class="inline-block templateNameContainer">
-                <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.subject || this.props.data.subject}>
-                </Input>
+              <div class="editableText">
+                <FroalaEditor
+                  tag="textarea"
+                  config={this.state.config}
+                  model={this.state.html || this.props.data.html}
+                  onModelChange={this.handleModelChange}
+                />
               </div>
-            </div>
-            <div class="editableText">
-              <FroalaEditor
-                tag="textarea"
-                config={this.state.config}
-                model={this.state.html || this.props.data.html}
-                onModelChange={this.handleModelChange}
-              />
-            </div>
-            <div class="gray small-bottom-border gray-border workingRow bottomRow">
-              <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.handleTemplateSave}>Save</div>
-              <div class="working chooseTemplate pTags">
-                <Input type='select' name="whichEmail" onChange={this.handleSelected}>
-                  <option value="">Personalized Tags</option>
-                  <option value="first_name">contact.first_name</option>
-                  <option value="last_name">contact.last_name</option>
-                  <option value="age">contact.age</option>
-                  <option value="city">contact.city</option>
-                  <option value="state">contact.state</option>
-                  <option value="email_address">contact.email_address</option>
-                  <option value="company_name">company.name</option>
-                  <option value="company_city">company.city</option>
-                  <option value="company_state">company.state</option>
-                  <option value="company_phone_number">company.phone_number</option>
-                </Input>
+              <div class="gray small-bottom-border gray-border workingRow bottomRow">
+                <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.handleTemplateSave}>Save</div>
+                <div class="working chooseTemplate pTags">
+                  <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+                    <option value="">Personalized Tags</option>
+                    <option value="first_name">contact.first_name</option>
+                    <option value="last_name">contact.last_name</option>
+                    <option value="age">contact.age</option>
+                    <option value="city">contact.city</option>
+                    <option value="state">contact.state</option>
+                    <option value="email_address">contact.email_address</option>
+                    <option value="company_name">company.name</option>
+                    <option value="company_city">company.city</option>
+                    <option value="company_state">company.state</option>
+                    <option value="company_phone_number">company.phone_number</option>
+                  </Input>
+                </div>
+                <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>
+                <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
               </div>
-              <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>
-              <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
-            </div>
+          </div>
         </div>
+        { this.props.currentDelay &&
+          <div class="sixteen text-center">
+            <div class="gray inlineFlex delayAdjuster">
+              <div class="preText">If I don't receive a response after </div>
+              <input type="number" min="1" max="30" class="delayPicker inline-block" value={this.props.currentDelay} id={this.props.data.id} onChange={this.handleDelayChange}/> days, then send the following template
+            </div>
+          </div>
+        }
       </div>
     )
   }

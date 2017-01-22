@@ -1,26 +1,35 @@
 import React, { PropTypes, Component, Children } from 'react';
 import axios from "axios";
-import cookie from "react-cookie";
 import querystring from 'querystring';
 
+axios.interceptors.response.use(undefined, err => {
+    if (err.status === 500) {
+      window.location.href = '500';
+    }
+    return Promise.reject(err);
+  }
+);
 
 class HttpProvider extends Component {
-
+  
   static propTypes = {
-    children: PropTypes.any.isRequired
+    children: PropTypes.any.isRequired,
+    token: PropTypes.any
   };
-
+  
   static childContextTypes = {
     http: PropTypes.func.isRequired,
   };
-
+  
   getChildContext() {
-    const auth = cookie.load("token") ? {'Authorization': `Token ${cookie.load("token")}`} : null;
+    
+    const auth = this.props.token ? { 'Authorization': `Token ${this.props.token}` } : null;
+    
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       ...auth
-    } ;
-
+    };
+    
     return {
       http: axios.create({
         baseURL: 'https://api.legionanalytics.com/',
@@ -29,9 +38,9 @@ class HttpProvider extends Component {
           return querystring.stringify(data);
         }],
       })
-    };
+    }
   }
-
+  
   render() {
     return Children.only(this.props.children);
   }

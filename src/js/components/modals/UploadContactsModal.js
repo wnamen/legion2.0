@@ -1,20 +1,15 @@
-import React from "react"
-import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
-import $ from "jquery";
+import React, { Component } from "react"
 
-export default class UploadContactsModal extends React.Component {
+
+class UploadContactsModal extends Component {
+  
   constructor(props) {
     super(props);
-    this.state=({
-
-    })
-    this.triggerModalClose = this.triggerModalClose.bind(this);
   }
 
   triggerModalClose = () => {
     this.props.handleModalClose();
-  }
-
+  };
 
   render() {
     return (
@@ -29,3 +24,5 @@ export default class UploadContactsModal extends React.Component {
     )
   }
 }
+
+export default UploadContactsModal;

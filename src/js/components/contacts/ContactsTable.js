@@ -1,10 +1,9 @@
-import React from "react"
+import React, { PropTypes, Component, Children } from 'react';
 import { Dropdown, NavItem, Input } from "react-materialize";
 import { AgGrid } from 'ag-grid/main';
 import { AgGridReact } from 'ag-grid-react';
 
-import CheckMarkRenderer from "../search/CheckMarkRenderer";
-import CheckBoxRenderer from "../search/CheckBoxRenderer";
+import CheckBoxRenderer from "./CheckBoxRenderer";
 
 export default class ContactsTable extends React.Component {
   constructor(props) {
@@ -24,6 +23,9 @@ export default class ContactsTable extends React.Component {
 
   // FLATTENS GIVEN ARRAY AND RETURNS A STRING
   arrayConvert(arr) {
+    if (arr === undefined) {
+      return
+    }
     let endIdx = arr.length - 1;
     let convertedString = "";
     arr.forEach((item, idx) => {
@@ -51,10 +53,10 @@ export default class ContactsTable extends React.Component {
       {headerName:"Company", field:"companyName", width: 130 },
       {headerName:"Age", field:"age", width: 130 },
       {headerName:"Location", field:"location", width: 130 },
-      // {headerName:"Education", field:"education", width: 130 },
+      {headerName:"Education", field:"education", width: 130 },
       {headerName:"Interests", field:"interests", width: 130 },
-      // {headerName:"Phone", field:"phone", width: 130 },
-      // {headerName:"Email", field:"email", width: 130 },
+      {headerName:"Phone", field:"phone", width: 130 },
+      {headerName:"Email", field:"email", width: 130 },
       {headerName:"Linkedin", field:"linkedin", width: 130 },
       {headerName:"Facebook", field:"facebook", width: 130 },
       {headerName:"Twitter", field:"twitter", width: 130 },
@@ -80,13 +82,16 @@ export default class ContactsTable extends React.Component {
       mappedResults = data.results.map((result, index) => {
         return (
           {
-            id: result.person.id,
+            id: result.id,
             name: result.person.name ? result.person.name : "",
             jobTitle: result.job.title ? result.job.title : "",
             companyName: result.company.name ? result.company.name : "",
+            education: result.person.education ? this.arrayConvert(result.education) : "",
             age: result.person.age ? result.person.age : "",
             location: result.person.location ? result.person.location : "",
             interests: result.person.interests ? this.arrayConvert(result.person.interests) : "",
+            phone: result.job.phone ? result.job.phone : "",
+            email: result.job.email ? result.job.email : "",
             linkedin: result.person.personal_linkedin ? result.person.personal_linkedin : "",
             facebook: result.person.personal_facebook ? result.person.personal_facebook : "",
             twitter: result.person.personal_twitter ? result.person.personal_twitter : "",

@@ -49,6 +49,7 @@ const planDesc = (plan) => {
     </div>
 };
 
+
 class PlanSettings extends Component {
   
   constructor(props, context) {
@@ -56,12 +57,12 @@ class PlanSettings extends Component {
   }
   
   updateProfie = () => {
-    const { plan } = this.props;
+    const { plan, updateSettings } = this.props;
     const { http } = this.context;
     
     http.post('settings', {
         plan_name: plan === 'payg' ? 'standard' : 'payg'
-    }).then(response => console.log(response))
+    }).then(() => updateSettings())
   };
   
   render() {

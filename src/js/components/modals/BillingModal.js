@@ -1,10 +1,13 @@
-import React from "react"
-import { Dropdown, NavItem, Button, Modal, Input } from 'react-materialize'
+import React, { Component } from "react"
+import { Dropdown, NavItem, Input } from 'react-materialize'
 
-export default class BillingModal extends React.Component {
+class BillingModal extends Component {
+  
   render() {
+    
     return (
       <div id="billingModal" class="sixteen">
+  
         <form id="billingModalForm" class="five">
           <Input type="text" placeholder="Credit Card Number" />
           <div class="billingDates sixteen">
@@ -13,10 +16,11 @@ export default class BillingModal extends React.Component {
           </div>
           <Input type="text" placeholder="Zip Code" />
         </form>
+        
         <div id="billingDropdown" class="creditOptionsDropdown">
           <Dropdown
             trigger={
-              <a>Buy 50 Credits <i class="creditOptionsAngleIcon" class="fa fa-angle-down" aria-hidden="true"></i></a>
+              <a>Buy 50 Credits <i class="creditOptionsAngleIcon" class="fa fa-angle-down" aria-hidden="true" /></a>
             }>
             <NavItem>25,000 Credits - $6,250</NavItem>
             <NavItem>10,000 Credits - $3,300</NavItem>
@@ -30,11 +34,13 @@ export default class BillingModal extends React.Component {
           </Dropdown>
         </div>
         <div>
-          <i class="fa fa-circle billingOpenPagination" aria-hidden="true"></i>
-          <i class="fa fa-circle billingClosedPagination" aria-hidden="true"></i>
-          <i class="fa fa-circle billingOpenPagination" aria-hidden="true"></i>
+          <i class="fa fa-circle billingOpenPagination" aria-hidden="true" />
+          <i class="fa fa-circle billingClosedPagination" aria-hidden="true" />
+          <i class="fa fa-circle billingOpenPagination" aria-hidden="true" />
         </div>
       </div>
     )
   }
 }
+
+export default BillingModal;

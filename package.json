@@ -1,28 +1,19 @@
 {
-  "name": "legion2.0",
-  "version": "1.0.0",
-  "description": "### React/Redux Info Series",
-  "main": "webpack.config.js",
-  "scripts": {
-    "dev": "webpack-dev-server --content-base src --inline --hot",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wnamen/legion2.0.git"
-  },
-  "author": "William Namen",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/wnamen/legion2.0/issues"
-  },
-  "homepage": "https://github.com/wnamen/legion2.0#readme",
+  "name": "Elastic-Beanstalk-Sample-App",
+  "version": "0.0.1",
+  "private": true,
   "dependencies": {
-    "ag-grid": "^7.1.0",
-    "ag-grid-react": "^7.1.0",
+    "express": "^4.14.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "ag-grid": "^7.2.2",
+    "ag-grid-react": "^7.2.0",
     "axios": "^0.15.3",
-    "babel-core": "^6.20.0",
-    "babel-loader": "^6.2.9",
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.19.0",
@@ -32,6 +23,7 @@
     "babel-preset-stage-1": "^6.16.0",
     "better-react-spinkit": "^2.0.0-4",
     "classnames": "^2.2.5",
+    "core-js": "^2.4.1",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
@@ -39,28 +31,22 @@
     "inline-style-prefixer": "^2.0.5",
     "jquery": "^3.1.1",
     "materialize-css": "^0.97.8",
-    "querystring": "^0.2.0",
     "react": "^15.4.2",
-    "react-autosuggest": "^7.0.2",
+    "react-autosuggest": "^8.0.0",
     "react-cookie": "^1.0.4",
     "react-css-modules": "^4.1.0",
-    "react-dom": "^15.4.1",
+    "react-dom": "^15.4.2",
     "react-froala-wysiwyg": "^2.4.0",
     "react-helmet": "^4.0.0",
     "react-highcharts": "^11.5.0",
     "react-hot-loader": "^1.3.1",
-    "react-materialize": "^0.17.6",
-    "react-router": "^3.0.0",
-    "react-stripe-checkout": "^2.2.5",
+    "react-materialize": "^0.17.7",
+    "react-router": "^3.0.2",
     "require": "^2.4.20",
     "style-loader": "^0.13.1",
     "throttle-debounce": "^1.0.1",
+    "transformation": "^0.2.0-beta.2",
     "url-loader": "^0.5.7",
-    "webpack": "^1.14.0",
-    "webpack-bundle-tracker": "^0.1.0"
-  },
-  "devDependencies": {
-    "redux-devtools": "^3.3.1",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^1.14.0"
   }
 }

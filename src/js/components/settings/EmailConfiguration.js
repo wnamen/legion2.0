@@ -4,7 +4,7 @@ import ConfigurationWindow from "./ConfigurationWindow";
 import ConfigurationControls from "./ConfigurationControls";
 
 class EmailConfiguration extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -58,10 +58,10 @@ class EmailConfiguration extends Component {
   handleSave = () => {
     let { emails, saveAlias } = this.props;
     let { newName, newEmail, newCheck, currentEmailID } = this.state;
-    
-    let is_primary = newCheck === true ? {is_primary: newCheck} : ``;
+
+    let is_primary = newCheck === true ? {primary: newCheck} : ``;
     let currentEmail = emails.filter(v => v.id == currentEmailID)[0];
-    
+
     saveAlias({
       change_alias: currentEmailID || emails[0].id,
       aliasemail: newEmail === null ? currentEmailID ? currentEmail.credential_api_key : emails[0].credential_api_key : newEmail,
@@ -81,10 +81,10 @@ class EmailConfiguration extends Component {
   render(){
     const { emails } = this.props;
     const { displayDefault, newName, newEmail, newCheck, reset, currentEmailData } = this.state;
-    
+
     let currentWindow;
     let currentControls;
-    
+
     if(emails) {
       currentWindow = <ConfigurationWindow email={displayDefault ? emails[0] : currentEmailData} newName={newName} newEmail={newEmail}/>;
       currentControls = <ConfigurationControls
@@ -110,7 +110,7 @@ class EmailConfiguration extends Component {
               <Input type='select' name="whichEmail" onChange={this.handleSelected} >
                 { emails ? emails.map(email =>
                     <option key={email.id} value={email.id}>
-                      { email.credential_private_key || email.credential_handle }
+                      { email.credential_handle }
                     </option>) :
                     <option>No Emails Connected</option> }
               </Input>
