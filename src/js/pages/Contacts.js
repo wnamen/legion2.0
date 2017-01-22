@@ -1,4 +1,4 @@
-import React            from "react";
+import React, { PropTypes, Component, Children } from 'react';
 import { Link }         from "react-router";
 import cookie           from "react-cookie";
 import { CubeGrid }     from "better-react-spinkit";
@@ -15,7 +15,6 @@ export default class Contacts extends React.Component {
     super(props)
     this.state = {
       token: cookie.load("token"),
-      isSelected: false,
       loading: false,
       mapping: false,
       results: [],
@@ -26,10 +25,63 @@ export default class Contacts extends React.Component {
     this.uploadCSV = this.uploadCSV.bind(this);
     this.changeListView = this.changeListView.bind(this);
     this.getNewListView = this.getNewListView.bind(this);
-    this.captureSelected = this.captureSelected.bind(this);
     this.loadInitialListView = this.loadInitialListView.bind(this);
     this.loadAvailableLists = this.loadAvailableLists.bind(this);
     this.deleteCurrentList = this.deleteCurrentList.bind(this);
+  }
+
+  static childContextTypes = {
+    captureSelected: PropTypes.func,
+    copySelected: PropTypes.func,
+    removeSelected: PropTypes.func,
+    isSelected: PropTypes.bool,
+  };
+
+  getChildContext() {
+    const { http } = this.context;
+    const checked = [];
+    let selectionStatus = true;
+
+    return {
+      isSelected: true,
+
+      captureSelected: (id) => {
+        if (checked.length === 0) {
+          return checked.push(id);
+        }
+        console.log(checked);
+
+        checked.forEach((checked_id) => {
+          console.log(checked);
+          if (checked_id === id) {
+            checked.splice(checked.indexOf(id), 1)
+          } else {
+            return checked.push(id)
+          }
+          console.log(checked);
+        })
+        if (checked.length === 0) {
+          selectionStatus = false;
+        } else {
+          selectionStatus = true;
+        }
+      },
+
+      copySelected: (id) => {
+        let params = {tm_id: id, prospect_ids: checked};
+        console.log(id);
+        console.log(checked);
+        console.log(params);
+        http.post('/copy-contacts-to-tm', params: params)
+          .then(response => console.log(response))
+      },
+
+      removeSelected: () => {
+        let params = {tm_id: this.state.currentViewId, prospect_ids: checked};
+        http.post('/remove-contacts-from-tm', params: params)
+          .then(response => console.log(response))
+      }
+    }
   }
 
   // INITALIZE LOADING ICON AND CALL FN TO CAPTURE THE USER'S LISTS
@@ -76,7 +128,8 @@ export default class Contacts extends React.Component {
             console.log(results);
             this.setState({
               results:results,
-              loading: false
+              loading: false,
+              currentViewId: list.id
             });
           }.bind(this),
           error:function(xhr, status, err){
@@ -100,7 +153,8 @@ export default class Contacts extends React.Component {
       success:function(results){
         this.setState({
           results:results,
-          loading: false
+          loading: false,
+          currentViewId: listID
         });
       }.bind(this),
       error:function(xhr, status, err){
@@ -167,12 +221,6 @@ export default class Contacts extends React.Component {
     });
   }
 
-  // CAPTURES THE SELECTED DATA ROWS
-  captureSelected = (data) => {
-    console.log(data);
-    // this.setState({isSelected: true});
-  }
-
   render() {
     let currentView;
 
@@ -188,10 +236,10 @@ export default class Contacts extends React.Component {
     } else {
       currentView = (
         <div class="sixteen columns">
-          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} isSelected={this.state.isSelected} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
+          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
-              <ContactsTable results={this.state.results} captureSelected={this.captureSelected} />
+              <ContactsTable results={this.state.results} />
             }
         </div>
       )
@@ -207,3 +255,7 @@ export default class Contacts extends React.Component {
     );
   }
 }
+
+Contacts.contextTypes = {
+  http: PropTypes.func.isRequired
+};

@@ -27,32 +27,6 @@ export default class ResultsTable extends React.Component {
     this.handleNextSearch = this.handleNextSearch.bind(this);
   }
 
-
-  static childContextTypes = {
-    captureSelected: PropTypes.func,
-    purchaseSelected: PropTypes.func,
-  };
-
-  getChildContext() {
-    const { http } = this.context;
-    const checked = []
-
-    return {
-      captureSelected: (id) => {
-        checked.push(id)
-      },
-
-      purchaseSelected: (id) => {
-        let params;
-        this.props.apiState.job === true ? params = { params: {tm_id: id, job: checked}} : params = { params: {tm_id: id, company: checked}};
-
-        http.post('/add-contacts-to-tm', params)
-          .then(response => console.log(response))
-      }
-    }
-  }
-
-
   // FLATTENS GIVEN ARRAY AND RETURNS A STRING
   arrayConvert(arr) {
     let endIdx = arr.length - 1;
@@ -225,7 +199,3 @@ export default class ResultsTable extends React.Component {
     );
   }
 }
-
-ResultsTable.contextTypes = {
-  http: PropTypes.func.isRequired
-};

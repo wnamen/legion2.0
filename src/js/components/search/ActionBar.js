@@ -59,7 +59,11 @@ export default class ActionBar extends React.Component {
   }
 
   handleCopySelectedToList = (e) => {
-    this.context.purchaseSelected(parseInt(e.target.id));
+    this.state.tmLists.forEach((list) => {
+      if (list.name === e.target.text) {
+        this.context.purchaseSelected(parseInt(list.id));
+      }
+    })
   }
 
   handleModalClose = (e) => {
@@ -81,7 +85,7 @@ export default class ActionBar extends React.Component {
     if ((listData !== undefined) && (listData.length > 0)) {
       copyLists = listData.map((list, index) => {
         return (
-          <NavItem key={index} id={list.id} onClick={this.handleCopySelectedToList}>{list.name}</NavItem>
+          <NavItem key={index} onClick={this.handleCopySelectedToList}>{list.name}</NavItem>
         )
       });
     }
