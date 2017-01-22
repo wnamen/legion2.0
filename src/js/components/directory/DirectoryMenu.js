@@ -5,7 +5,7 @@ import { Link } from "react-router"
 const data = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 const DirectoryMenu = () => {
-  
+
   return (
     <div class="sixteen">
       <div class="navbar text-center fpng">

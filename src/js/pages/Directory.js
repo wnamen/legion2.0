@@ -4,12 +4,12 @@ import DirectoryTable from "../components/directory/DirectoryTable"
 
 
 class Directory extends Component {
-  
+
   constructor(props, context) {
     super(props, context);
-    
+
     const {type, id} = props.params;
-    
+
     this.state = {
       groupView: id && id.length === 2,
       list: [],
@@ -21,25 +21,24 @@ class Directory extends Component {
       }
     };
   }
-  
+
   componentWillMount() {
     const { type, id } = this.props.params;
     const { http } = this.context;
-  
+
     if(id && id.length === 2) {
       http.get(`/directory/${type}`, { params: {
         name: id,
-        page_size: 100,
       }}).then(response => this.setState({
         list: response.data
       }))
     }
   }
-  
+
   componentWillReceiveProps(nextProps) {
     const { type, id } = nextProps.params;
     const { http } = this.context;
-    
+
     this.setState({
       groupView: id && id.length === 2,
       list: [],
@@ -50,11 +49,10 @@ class Directory extends Component {
         groupView: type && id ? false : null,
       }
     });
-    
+
     if(id && id.length === 2){
       http.get(`/directory/${type}`, { params: {
         name: id,
-        page_size: 100,
       }}).then(response => this.setState({
         list: response.data
       }))

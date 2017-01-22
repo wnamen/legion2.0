@@ -4,16 +4,13 @@ import { CubeGrid }     from "better-react-spinkit";
 
 
 const DirectoryListings = ({ list, directory }) => {
-  
+
   return (
     <div class="sixteen">
-      <div class="navbar white-background small-border gray-border text-center fpng">
-        <a href="#" class="active">Person's Name</a>
-      </div>
       <ul>
         {
           list && list.length ?
-          list.map((v, k) => <li key={k} ><IndexLink to={`/profiles/${directory}/${v.id}`}>{v.name}</IndexLink></li> )
+          list.map((v, k) => <li key={k} class="navbar white-background small-bottom-border gray-border text-center" ><IndexLink class="active" to={`/profiles/${directory}/${v.id}`}>{v.name}</IndexLink></li> )
           : <CubeGrid size={50} color="#36b7ea" className="flex-center" />
         }
       </ul>
