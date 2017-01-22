@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from "react";
+import { browserHistory } from 'react-router';
 
 
 class DataShare extends Component {
 
   onHandleChoice = (choice) => {
   
-    const { http } = this.context;
+    const { http, router } = this.context;
     http.post(`settings`, {
       data_shares: choice
     }).then(response => console.log(response.data));
     
     if(choice) {
-      http.post(`onboard-complete`)
-        .then(response => window.location.href = '/search' ); //need change to route
+      http.post(`onboard-complete`).then(response => browserHistory.push('/search'));
     }
   };
   
@@ -31,7 +31,8 @@ class DataShare extends Component {
 }
 
 DataShare.contextTypes = {
-  http: PropTypes.func.isRequired
+  http: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 

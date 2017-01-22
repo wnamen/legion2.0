@@ -1,5 +1,6 @@
 import React            from "react";
 import { CubeGrid }     from "better-react-spinkit";
+import { browserHistory }     from "react-router";
 import cookie           from "react-cookie";
 import $                from "jquery";
 
@@ -28,8 +29,7 @@ export default class IntegrationSuccess extends React.Component {
       headers: {"Authorization": tokenHeader },
       data: codeBody,
       success: (response) => {
-        location.reload();
-        this.context.router.push('/settings');
+        browserHistory.push('/settings');
       },
       error: (response) => {
         console.log(response);
