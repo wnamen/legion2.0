@@ -16,7 +16,8 @@ export default class IntegrationSuccess extends React.Component {
     let code = this.props.location.query.code;
     let currentPath = this.props.location.pathname;
     let codeBody;
-
+    const { router } = this.context;
+  
     if (currentPath.search("google") === -1) {
       codeBody = {outlook_code: code};
     } else if (currentPath.search("outlook" === -1)) {
@@ -28,8 +29,7 @@ export default class IntegrationSuccess extends React.Component {
       headers: {"Authorization": tokenHeader },
       data: codeBody,
       success: (response) => {
-        location.reload();
-        this.context.router.push('/settings');
+        router.push('/settings');
       },
       error: (response) => {
         console.log(response);

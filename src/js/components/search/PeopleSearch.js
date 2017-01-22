@@ -33,7 +33,6 @@ export default class PeopleSearch extends React.Component {
       let option = e.target.selectedOptions[i];
       selected.push({name: selectedName, value: option.value})
     }
-    console.log(selected);
     this.setState({selected: selected})
   }
 
@@ -114,8 +113,6 @@ export default class PeopleSearch extends React.Component {
       }
     });
 
-    console.log(query);
-
     this.setState({ query: query });
     this.props.onSearchChange({ text: query });
   }
@@ -144,8 +141,6 @@ export default class PeopleSearch extends React.Component {
         };
       });
     }
-
-    console.log(this.state.selected);
 
     return(
           <div>

@@ -6,7 +6,7 @@ import Billing                    from "../components/settings/Billing";
 import Logout                     from "../components/settings/Logout";
 import $ from "jquery";
 import { CubeGrid } from "better-react-spinkit"
-
+import cookie from "react-cookie";
 
 class Settings extends Component {
 
@@ -29,7 +29,11 @@ class Settings extends Component {
   };
 
   updateSettings = () => {
-    this.context.http.get('me').then(response =>
+    this.context.http.get('me', {
+      headers: {
+        'Authorization': `Token ${cookie.load('token')}`
+      }
+    }).then(response =>
       this.setState({
         userInfo: response.data,
         emails: response.data.emails

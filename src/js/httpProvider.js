@@ -1,6 +1,5 @@
 import React, { PropTypes, Component, Children } from 'react';
 import axios from "axios";
-import cookie from "react-cookie";
 import querystring from 'querystring';
 
 axios.interceptors.response.use(undefined, err => {
@@ -14,7 +13,8 @@ axios.interceptors.response.use(undefined, err => {
 class HttpProvider extends Component {
   
   static propTypes = {
-    children: PropTypes.any.isRequired
+    children: PropTypes.any.isRequired,
+    token: PropTypes.any
   };
   
   static childContextTypes = {
@@ -22,7 +22,9 @@ class HttpProvider extends Component {
   };
   
   getChildContext() {
-    const auth = cookie.load("token") ? { 'Authorization': `Token ${cookie.load("token")}` } : null;
+    
+    const auth = this.props.token ? { 'Authorization': `Token ${this.props.token}` } : null;
+    
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       ...auth

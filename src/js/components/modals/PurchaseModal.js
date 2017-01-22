@@ -1,10 +1,10 @@
-import React from "react"
-import { Dropdown, NavItem, Button, Modal } from 'react-materialize'
+import React, { Component } from "react"
+import { Dropdown, NavItem } from 'react-materialize'
 
-export default class PurchaseModal extends React.Component {
+class PurchaseModal extends Component {
+  
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
@@ -18,7 +18,7 @@ export default class PurchaseModal extends React.Component {
         <div id="purchaseDropdown" class="creditOptionsDropdown">
           <Dropdown
             trigger={
-              <a>Buy 50 Credits <i class="creditOptionsAngleIcon" class="fa fa-angle-down" aria-hidden="true"></i></a>
+              <a>Buy 50 Credits <i class="creditOptionsAngleIcon" class="fa fa-angle-down" aria-hidden="true" /></a>
             }>
             <NavItem onClick={this.handleClick}>25,000 Credits - $6,250</NavItem>
             <NavItem>10,000 Credits - $3,300</NavItem>
@@ -37,3 +37,5 @@ export default class PurchaseModal extends React.Component {
     )
   }
 }
+
+export default PurchaseModal;
