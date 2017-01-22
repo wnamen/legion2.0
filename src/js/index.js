@@ -82,7 +82,7 @@ ReactDOM.render(
         <Route path="campaigns" name="cadence" component={Cadence} onEnter={requireAuth} />
 
         <Route path="profiles" name="profiles" component={Profile} >
-          <Route path=":type/:id" name="type" component={Profile} />
+          <Route path=":type(/:id)" name="type" component={Profile} />
         </Route>
 
         <Route path="settings" name="settings" component={Settings} onEnter={requireAuth} />
@@ -90,7 +90,7 @@ ReactDOM.render(
         <Route path="tos" name="tos" component={TOS} />
   
         <Route path="directory" name="directory" component={Directory} >
-          <Route path=":type/:id" name="directory" component={Directory} >
+          <Route path=":type(/:id)" name="directory" component={Directory} >
           </Route>
         </Route>
         
