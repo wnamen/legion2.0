@@ -6,7 +6,6 @@ import $ from "jquery";
 import SaveCampaignModal from "../modals/SaveCampaignModal";
 import TemplateGenerator from "./TemplateGenerator";
 import Template from "./Template";
-// import TemplateDelay from "./TemplateDelay";
 
 export default class TemplateViews extends React.Component {
   constructor(props) {

@@ -25,6 +25,11 @@ export default class Template extends React.Component {
     this.handleTemplateSave = this.handleTemplateSave.bind(this);
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
     this.clearTemplate = this.clearTemplate.bind(this);
+    this.handleDelayChange = this.handleDelayChange.bind(this);
+  }
+
+  handleDelayChange = (e) => {
+    this.props.onDelayChange((this.props.data.id || null), e.target.value);
   }
 
   handleModelChange = (html) => {

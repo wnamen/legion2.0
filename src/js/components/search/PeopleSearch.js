@@ -27,14 +27,14 @@ export default class PeopleSearch extends React.Component {
   handleSelected(e) {
     let selectedLength = e.target.selectedOptions.length;
     let selectedName = e.target.name;
-    let selected = [];
-
+    let selected = this.state.selected || [];
 
     for (let i = 0; i < selectedLength; i++) {
       let option = e.target.selectedOptions[i];
       selected.push({name: selectedName, value: option.value})
     }
     console.log(selected);
+    this.setState({selected: selected})
   }
 
   socialCheck(e) {
@@ -144,6 +144,8 @@ export default class PeopleSearch extends React.Component {
         };
       });
     }
+
+    console.log(this.state.selected);
 
     return(
           <div>

@@ -47,6 +47,7 @@ export default class Cadence extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
+        throw 500;
         console.log(response);
         this.setState({
           cadenceData: response
@@ -125,8 +126,10 @@ export default class Cadence extends React.Component {
 
     templates.forEach((template) => {
       currentTemplates.push(this.findTemplateData(template[0]));
-      currentDelays.push(template[1]);
       campaignTemplateList.push(parseInt(template[0]));
+      if (template[1] !== -1) {
+        currentDelays.push(template[1]);
+      }
     })
     this.setState({renderState: "campaign", currentView: campaign, currentDelays: currentDelays, campaignTemplateList: campaignTemplateList, currentTemplates: currentTemplates});
   }
