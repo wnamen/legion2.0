@@ -64,6 +64,7 @@ export default class ContactsBar extends React.Component {
 
   handleRemoveFromList = (e) => {
     this.context.removeSelected()
+    this.props.onNewListView(this.state.selectedListView);
   }
 
   handleModalClose = (e) => {

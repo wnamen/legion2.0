@@ -39,7 +39,7 @@ export default class Contacts extends React.Component {
 
   getChildContext() {
     const { http } = this.context;
-    const checked = [];
+    let checked = [];
     let selectionStatus = true;
 
     return {
@@ -49,19 +49,8 @@ export default class Contacts extends React.Component {
         if (checked.length === 0) {
           return checked.push(id);
         }
-
-        checked.forEach((checked_id) => {
-          if (checked_id === id) {
-            checked.splice(checked.indexOf(id), 1)
-          } else {
-            return checked.push(id)
-          }
-        })
-        if (checked.length === 0) {
-          selectionStatus = false;
-        } else {
-          selectionStatus = true;
-        }
+        
+        checked.indexOf(id) !== -1 ? checked.splice(checked.indexOf(id), 1) : checked.push(id);
       },
 
       copySelected: (id) => {
@@ -74,7 +63,11 @@ export default class Contacts extends React.Component {
         let self = this;
         let params = {tm_id: this.state.currentViewId, prospect_ids: checked};
         http.post('/remove-contacts-from-tm', params: params)
-          .then(response => self.getNewListView(self.state.currentViewId))
+          .then(response => {
+            console.log(self);
+            console.log(self.state.currentViewId);
+            self.getNewListView(self.state.currentViewId)
+          })
       }
     }
   }
