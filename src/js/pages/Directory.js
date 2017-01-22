@@ -29,7 +29,6 @@ class Directory extends Component {
     if(id && id.length === 2) {
       http.get(`/directory/${type}`, { params: {
         name: id,
-        page_size: 100,
       }}).then(response => this.setState({
         list: response.data
       }))
@@ -54,7 +53,6 @@ class Directory extends Component {
     if(id && id.length === 2){
       http.get(`/directory/${type}`, { params: {
         name: id,
-        page_size: 100,
       }}).then(response => this.setState({
         list: response.data
       }))

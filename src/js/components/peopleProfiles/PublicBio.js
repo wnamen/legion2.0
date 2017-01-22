@@ -20,6 +20,7 @@ const PublicBio = ({ data: {
   
   const modalTrigger1 = <div class="lgnBtn lgnBtn-lg white electric-blue-background">Create my account</div>;
   const modalTrigger2 = <div class="lgnBtn lgnBtn-lg white electric-blue-background text-center">Create my account</div>;
+  const job = jobs.length ? jobs[0] : null;
   
   return (
     <div class="eight columns smScreenWhiteCard smScreenMarginLeft">
@@ -32,11 +33,11 @@ const PublicBio = ({ data: {
       </div>
       
       <div class="profile-card whiteCard">
-        <h1 class="gray">{jobs[0].email || '*****@**********.***'}</h1>
-        <h1 class="gray">{jobs[0].phone || '(***) ***-****'}</h1> <br />
+        <h1 class="gray">{job ? job.email : '*****@**********.***'}</h1>
+        <h1 class="gray">{job ? job.phone :'(***) ***-****'}</h1> <br />
 
         <h6 class="black">JOB TITLE</h6>
-        <p class="profile-body gray thick-line-height"><span className="capitalize">{jobs[0].title}</span>{` at ${jobs[0].company_name}`}</p> <br />
+        <p class="profile-body gray thick-line-height"><span className="capitalize">{job ? job.title : ''}</span>{` at ${job ? job.company_name : ''}`}</p> <br />
         
         <h6 class="black">AGE</h6>
         <p class="profile-body gray thick-line-height">{age} years old</p> <br />

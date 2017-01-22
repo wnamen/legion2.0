@@ -6,6 +6,7 @@ import CreditButtonHandler from "./CreditButtonHandler";
 
 
 class UserNav extends Component {
+  
   constructor(props, context){
     super(props, context);
     this.state = {
@@ -51,9 +52,9 @@ class UserNav extends Component {
         <div class="nav-wrapper medium-vertical-padding">
           <ul id="nav-links" class="nav-hover">
             <li><IndexLink class="medium-right-border gray-border" to="/" ><strong>Legion</strong> Analytics</IndexLink></li>
-            <li><Link to="search" activeClassName="active">Search</Link></li>
-            <li><Link to="campaigns" activeClassName="active">Campaigns</Link></li>
-            <li><Link to="contacts" activeClassName="active">Contacts</Link></li>
+            <li><IndexLink to="/search" activeClassName="active">Search</IndexLink></li>
+            <li><IndexLink to="/campaigns" activeClassName="active">Campaigns</IndexLink></li>
+            <li><IndexLink to="/contacts" activeClassName="active">Contacts</IndexLink></li>
           </ul>
 
           <div class="right">
