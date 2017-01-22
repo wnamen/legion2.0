@@ -8,9 +8,14 @@ export default class TemplateGenerator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name_of_template: "",
-      subject: "",
-      html: ""
+      currentTemplates: {
+        name_of_template: "",
+        subject: "",
+        html: ""
+      },
+      currentDelays: {
+        delay: ""
+      }
     }
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
     this.appendNewTemplate = this.appendNewTemplate.bind(this);
@@ -26,9 +31,12 @@ export default class TemplateGenerator extends React.Component {
 
   appendNewTemplate = () => {
     let templates = this.props.currentTemplates;
-    templates.push(this.state)
-    console.log(templates);
-    this.props.onAppendTemplate(templates);
+    let delays = this.props.currentDelays;
+
+    templates.push(this.state.currentTemplates);
+    delays.push(this.state.currentDelays);
+    console.log(templates, delays);
+    this.props.onAppendTemplate(templates, delays);
   }
 
   render(){

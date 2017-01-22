@@ -28,8 +28,8 @@ export default class TemplateViews extends React.Component {
     this.setState({campaignActivated: !this.state.campaignActivated});
   }
 
-  onAppendTemplate = (templates) => {
-    this.setState({currentTemplates: templates})
+  onAppendTemplate = (templates, delays) => {
+    this.setState({currentTemplates: templates, currentDelays: delays})
   }
 
   onDelayChange = (id, delay) => {
@@ -79,7 +79,7 @@ export default class TemplateViews extends React.Component {
         { this.props.renderState === "campaign" && header }
         <div class="sixteen templateHolder">
           { mappedTemplates }
-          { this.props.renderState === "campaign" && <TemplateGenerator templateData={this.props.templateData} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} onAppendTemplate={this.onAppendTemplate}/> }
+          { this.props.renderState === "campaign" && <TemplateGenerator templateData={this.props.templateData} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate}/> }
         </div>
       </div>
     )
