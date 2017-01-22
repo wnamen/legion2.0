@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "^4.14.0",
-    "react": "^15.4.2"
+    "express": "^4.14.0"
   },
   "scripts": {
     "start": "node server.js"
@@ -12,9 +11,10 @@
   "devDependencies": {
     "ag-grid": "^7.2.2",
     "ag-grid-react": "^7.2.0",
+    "axios": "^0.15.3",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
-        "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -26,13 +26,11 @@
     "core-js": "^2.4.1",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^1.0.1",
-    "fbemitter": "^2.1.1",
     "file-loader": "^0.9.0",
     "image-webpack-loader": "^3.1.0",
     "inline-style-prefixer": "^2.0.5",
     "jquery": "^3.1.1",
     "materialize-css": "^0.97.8",
-    "querystring": "^0.2.0",
     "react": "^15.4.2",
     "react-autosuggest": "^8.0.0",
     "react-cookie": "^1.0.4",
@@ -49,11 +47,6 @@
     "throttle-debounce": "^1.0.1",
     "transformation": "^0.2.0-beta.2",
     "url-loader": "^0.5.7",
-    "webpack": "^1.14.0",
-    "ag-grid": "^7.1.0",
-    "ag-grid-react": "^7.1.0",
-    "axios": "^0.15.3",
-    "babel-core": "^6.20.0",
-    "babel-loader": "^6.2.9",
-  "homepage": "https://github.com/wnamen/legion2.0#readme",
+    "webpack": "^1.14.0"
+  }
 }
