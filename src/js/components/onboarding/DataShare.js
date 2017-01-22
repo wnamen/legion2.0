@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from "react";
-import { browserHistory } from 'react-router';
 
 
 class DataShare extends Component {
@@ -12,7 +11,7 @@ class DataShare extends Component {
     }).then(response => console.log(response.data));
     
     if(choice) {
-      http.post(`onboard-complete`).then(response => browserHistory.push('/search'));
+      http.post(`onboard-complete`).then(response => router.push('/search'));
     }
   };
   

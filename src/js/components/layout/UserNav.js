@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
-import { IndexLink, Link } from "react-router";
+import { IndexLink } from "react-router";
 import { Dropdown, NavItem } from "react-materialize";
+import cookie from "react-cookie";
 
 import CreditButtonHandler from "./CreditButtonHandler";
 
@@ -19,7 +20,11 @@ class UserNav extends Component {
   };
 
   loadCurrentCredits = () => {
-    this.context.http.get('me').then(response =>
+    this.context.http.get('me', {
+      headers: {
+        'Authorization': `Token ${cookie.load('token')}`
+      }
+    }).then(response =>
       this.setState({
         currentCredits: response.data.credits
       })

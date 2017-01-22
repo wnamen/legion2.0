@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { Modal, Input } from 'react-materialize';
 import cookie from "react-cookie";
-import { browserHistory } from 'react-router';
 
 import PasswordResetModal from "../modals/PasswordResetModal"
 
@@ -31,14 +30,19 @@ class SignInModal extends Component {
   };
 
   cookieSaver = (response) => {
+    const { router } = this.context;
+    const modal = document.querySelectorAll('.modal-close');
     cookie.save("token", response.token, { path: "/" });
-    browserHistory.push("/search");
+    Object.keys(modal).map(v => modal[v].click());
+    router.push("/search");
   };
 
   render() {
     const modalTrigger =
       <div>
-        <small class="text-center"><a href="#" class="active">Forgot Password</a></small>
+        <small class="text-center">
+          <a href="#" class="active">Forgot Password</a>
+        </small>
       </div>;
 
     return (
