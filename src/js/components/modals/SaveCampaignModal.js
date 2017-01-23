@@ -17,13 +17,14 @@ class SaveCampaignModal extends Component {
       },
       date: {
         format: "",
-        hour: "",
-        minute: "",
-        meridiem: ""
+        hour: "1",
+        minute: "00",
+        meridiem: "AM"
       }
     }
     this.handleSelected = this.handleSelected.bind(this);
     this.handleDate = this.handleDate.bind(this);
+    this.handleChecked = this.handleChecked.bind(this);
     this.triggerModalClose = this.triggerModalClose.bind(this);
     this.dateAnalyzer = this.dateAnalyzer.bind(this);
     this.handleCampaignUpdate = this.handleCampaignUpdate.bind(this);
@@ -44,7 +45,8 @@ class SaveCampaignModal extends Component {
       }
     }).then(response =>
       this.setState({
-        emails: response.data.emails
+        emails: response.data.emails,
+        credential_id: response.data.emails[0].id
       })
     );
   }
@@ -56,9 +58,9 @@ class SaveCampaignModal extends Component {
       crossDomain:true,
       headers: {"Authorization": `Token ${cookie.load("token")}` },
       success: (response) => {
-        console.log(response);
         this.setState({
-          tmLists:response.results
+          tmLists:response.results,
+          target_market_id: response.results[0].id
         })
       },
       error: (response) => {
@@ -77,6 +79,12 @@ class SaveCampaignModal extends Component {
     this.setState(dateDetails);
 	}
 
+  handleChecked = (e) => {
+    let campaignDetails = this.state.campaignDetails;
+    campaignDetails[e.target.name] = !this.state.campaignDetails.only_business_days;
+    this.setState({campaignDetails})
+  }
+
 	handleSelected = (e) => {
     let campaignDetails = this.state.campaignDetails;
     campaignDetails[e.target.name] = e.target.value;
@@ -89,6 +97,7 @@ class SaveCampaignModal extends Component {
     let campaignDetails = this.state.campaignDetails;
     campaignDetails.date_started = date_started;
     this.props.handleCampaignUpdate(campaignDetails)
+    this.triggerModalClose();
   }
 
   dateAnalyzer = () => {
@@ -97,7 +106,6 @@ class SaveCampaignModal extends Component {
     let formated = date.format.split("/").reverse().map((k, v) => {
       return parseInt(k)
     })
-    console.log(formated);
     let date_started = `${formated.join("-")}T${parseInt(date.hour) + meridiem}:${date.minute}:00Z`
     return date_started;
   }
@@ -214,7 +222,7 @@ class SaveCampaignModal extends Component {
 	        		</div>
 	        		<div class="gray inlineFlex bigger topMargin1em">
 	        			Send this campaign on Saturday & Sunday
-		        		<Input class="medium-left-margin" name='only_business_days' type='checkbox' label=" " value="0" />
+		        		<Input class="medium-left-margin" name='only_business_days' type='checkbox' label=" " value="0" onChange={this.handleChecked} />
 		        	</div>
 	        		<div class="gray inlineFlex bigger whatEmailSend topMargin1em">Send with
                   <Input type='select' name="credential_id" id="chooseEmail" onChange={this.handleSelected} >

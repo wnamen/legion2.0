@@ -10,9 +10,9 @@ export default class TemplateGenerator extends React.Component {
     this.state = {
       currentTemplates: {
         id: null,
-        name_of_template: "",
-        subject: "",
-        html: ""
+        name_of_template: null,
+        subject: null,
+        html: null
       },
       currentDelays: {
         delay: 1
@@ -24,7 +24,7 @@ export default class TemplateGenerator extends React.Component {
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
-        return this.setState({name_of_template: template.name_of_template, subject: template.subject, html: template.html})
+        return this.setState({id: template.id, name_of_template: template.name_of_template, subject: template.subject, html: template.html})
       }
     })
   }

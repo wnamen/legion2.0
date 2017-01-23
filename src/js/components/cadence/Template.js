@@ -15,6 +15,7 @@ export default class Template extends React.Component {
         charCounterCount: false,
         toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', '-', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', '-', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink']
       },
+      id: null,
       name_of_template: null,
       subject: null,
       html: null
@@ -45,20 +46,14 @@ export default class Template extends React.Component {
   }
 
   onTemplateSave = () => {
-    // let templates = this.props.currentTemplates;
-    // let delays = this.props.currentDelays;
-    //
-    // console.log(templates, delays);
-    // this.props.onAppendTemplate(templates, delays);
-
-    let templateChanges = {id: (this.props.data.id || null), name_of_template: this.state.name_of_template, subject: this.state.subject, html: this.state.html};
+    let templateChanges = {id: (this.state.id || this.props.data.id), name_of_template: this.state.name_of_template || this.props.data.name_of_template, subject: this.state.subject || this.props.data.subject, html: this.state.html || this.props.data.html};
     this.props.handleTemplateSave(templateChanges)
   }
 
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
-        return this.setState({name_of_template: template.name_of_template, subject: template.subject, html: template.html})
+        return this.setState({id: template.id, name_of_template: template.name_of_template, subject: template.subject, html: template.html})
       }
     })
   }
