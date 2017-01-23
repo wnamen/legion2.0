@@ -39,7 +39,7 @@ export default class CadenceMenu extends React.Component {
             { current_view === "templates" ? activeTemplate : unactiveTemplate }
           </div>
           <hr class="no-margin"></hr>
-          { current_view === "campaigns" ? <CampaignMenu cadenceData={this.props.cadenceData} renderCampaign={this.props.renderCampaign}/> : <TemplateMenu templateData={this.props.templateData}  renderTemplate={this.props.renderTemplate} deleteTemplate={this.props.deleteTemplate}/> }
+          { current_view === "campaigns" ? <CampaignMenu cadenceData={this.props.cadenceData} renderCampaign={this.props.renderCampaign} deleteCampaign={this.props.deleteCampaign}/> : <TemplateMenu templateData={this.props.templateData}  renderTemplate={this.props.renderTemplate} deleteTemplate={this.props.deleteTemplate}/> }
           { current_view === "campaigns" ? createCampaign : createTemplate }
         </div>
       </div>

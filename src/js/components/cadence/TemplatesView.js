@@ -49,20 +49,23 @@ export default class TemplateViews extends React.Component {
   }
 
   handleCampaignSave = () => {
-    let delays = [];
-
-    this.props.currentDelays.forEach((item) => {
-      delays.push(item.delay)
-    })
-
-    let campaign = {templates: this.props.campaignTemplateList, delays: delays}
-    console.log(campaign);
-    this.props.saveCampaign(campaign)
+    if (this.props.currentView.id === null) {
+      let delays = [];
+      this.props.currentDelays.forEach((item) => {
+        delays.push(item.delay)
+      })
+      let campaign = {templates: this.props.campaignTemplateList, delays: delays}
+      this.props.saveCampaign(campaign)
+    }
     this.activateModal();
   }
 
   activateModal = () => {
     $("#uploadOpen").trigger("click");
+  }
+
+  handleCampaignUpdate = (campaign) => {
+    this.props.saveCampaign(campaign)
   }
 
   handleTemplateSave = (templateChanges) => {
@@ -78,8 +81,8 @@ export default class TemplateViews extends React.Component {
     <div class="topCampaignBtns">
       <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
       <button class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn" disabled={this.props.disableSave} onClick={this.handleCampaignSave}>Save Campaign</button>
-      <Modal trigger={<div id="uploadOpen"></div>}>
-        <SaveCampaignModal handleModalClose={this.handleModalClose}/>
+      <Modal trigger={<div id="uploadOpen" ></div>}>
+        <SaveCampaignModal handleCampaignUpdate={this.handleCampaignUpdate} handleModalClose={this.handleModalClose}/>
       </Modal>
     </div></div>)
 
@@ -87,11 +90,9 @@ export default class TemplateViews extends React.Component {
     let delays = this.state.currentDelays || this.props.currentDelays;
     let mappedTemplates;
 
-    console.log(this.props.campaignTemplateList);
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {
-        console.log(template);
         if (this.props.renderState === "campaign") {
           return (
             <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index] !== undefined ? delays[index].delay : null} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} />

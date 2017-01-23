@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Component } from "react"
 import { Input, Tag, Chip } from 'react-materialize'
 import { debounce } from 'throttle-debounce';
 import Autosuggest from 'react-autosuggest';
@@ -7,31 +7,46 @@ import $ from 'jquery'
 import IndustrySearch from "../../actions/search/IndustrySearch"
 import TechnologySearch from "../../actions/search/TechnologySearch"
 
-export default class CompanySearch extends React.Component {
+
+class CompanySearch extends Component {
+  
   constructor(props) {
 		super(props);
 		this.state = {
       inputTags: [],
 			query: "",
-      text_search: ""
+      text_search: "",
+      selected: []
 		};
     this.getSearch = this.getSearch.bind(this);
     this.getTag = debounce(1000, this.getTag.bind(this));
     this.removeTag = this.removeTag.bind(this);
     this.handleDebouncer = this.handleDebouncer.bind(this);
-    this.handleSelected = this.handleSelected.bind(this);
 	}
 
-  handleSelected(e) {
+  handleSelected = (e) => {
     let selectedLength = e.target.selectedOptions.length;
     let selectedName = e.target.name;
-    let selected = [];
-
+    const { selected } = this.state;
+  
+    let clearState = selected.filter(v => v.name !== selectedName);
+    
     for (let i = 0; i < selectedLength; i++) {
       let option = e.target.selectedOptions[i];
-      selected.push({name: selectedName, value: option.value})
+  
+      clearState.push({
+        name: selectedName,
+        value: option.value
+      })
     }
-  }
+    
+    this.props.filterBy(clearState, e.target.dataset.id);
+  
+    this.setState({
+      selected: clearState
+    });
+  };
+  
 
   removeTag(e) {
     e.preventDefault();
@@ -101,11 +116,14 @@ export default class CompanySearch extends React.Component {
   render(){
     const less_than = '<';
     const advanced_filter = <small>Advanced Filter</small>;
+    const { inputTags } = this.state;
+    const { checked, userToken, searchFilters } = this.props;
+    let tags = {};
 
-    let tags = {}
-
-    if (this.state.inputTags !== undefined){
-      this.state.inputTags.map((tag) => {
+    if (inputTags !== undefined){
+      
+      inputTags.map(tag => {
+        
         if (tags[tag.name] !== undefined) {
           tags[tag.name].push(
             <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
@@ -114,10 +132,9 @@ export default class CompanySearch extends React.Component {
           tags[tag.name] = [
             <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
           ]
-        };
+        }
       });
     }
-
 
     return(
           <div>
@@ -147,14 +164,14 @@ export default class CompanySearch extends React.Component {
 
             <div class="filter">
               <label>Industry</label>
-              <IndustrySearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} />
+              <IndustrySearch onDebouncer={this.handleDebouncer} userToken={userToken} />
               <div class="tag-container">
                 {tags.industry}
               </div>
             </div>
 
             <label>Company Size {advanced_filter}</label>
-            <Input type='select' name="company_size" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
+            <Input type='select' name="company_size" data-id="size" onChange={this.handleSelected} disabled={searchFilters} multiple>
               <option value="0-10">{less_than}10</option>
               <option value="11-50">11-50</option>
               <option value="51-200">51-200</option>
@@ -166,40 +183,40 @@ export default class CompanySearch extends React.Component {
             </Input>
 
             <label>Revenue {advanced_filter}</label>
-            <Input type='select' name="revenue" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
-              <option value="0-0.5">{less_than}$500K</option>
-              <option value="1-5">$1M-$5M</option>
-              <option value="5-10">$5M-$10M</option>
-              <option value="10-25">$10M-$25M</option>
-              <option value="25-35">$25M-$35M</option>
-              <option value="35-50">$35M-$50M</option>
-              <option value="50-75">$50M-$75M</option>
-              <option value="75-100">$75M-$100M</option>
-              <option value="100-200">$100M-$200M</option>
-              <option value="200-500">$200M-$500M</option>
-              <option value="500-1000">$500M-$1B</option>
-              <option value="1001">$1B+</option>
+            <Input type='select' name="revenue" data-id="revenue" onChange={this.handleSelected} disabled={searchFilters} multiple>
+              <option value="0-500000">{less_than}$500K</option>
+              <option value="1000000-5000000">$1M-$5M</option>
+              <option value="5000000-10000000">$5M-$10M</option>
+              <option value="10000000-25000000">$10M-$25M</option>
+              <option value="25000000-35000000">$25M-$35M</option>
+              <option value="35000000-50000000">$35M-$50M</option>
+              <option value="50000000-75000000">$50M-$75M</option>
+              <option value="75000000-100000000">$75M-$100M</option>
+              <option value="100000000-200000000">$100M-$200M</option>
+              <option value="200000000-500000000">$200M-$500M</option>
+              <option value="500000000-1000000000">$500M-$1B</option>
+              <option value="1000000000">$1B+</option>
             </Input>
 
             <label>Funding {advanced_filter}</label>
-            <Input type='select' name="funding" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
-              <option value="0-0.5">{less_than}$500K</option>
-              <option value="1-5">$1M-$5M</option>
-              <option value="5-10">$5M-$10M</option>
-              <option value="10-25">$10M-$25M</option>
-              <option value="25-35">$25M-$35M</option>
-              <option value="35-50">$35M-$50M</option>
-              <option value="50-75">$50M-$75M</option>
-              <option value="75-100">$75M-$100M</option>
-              <option value="100-200">$100M-$200M</option>
-              <option value="200-500">$200M-$500M</option>
-              <option value="500-1000">$500M-$1B</option>
-              <option value="1001">$1B+</option>
+            <Input type='select' name="funding" data-id="funding" onChange={this.handleSelected} disabled={searchFilters} multiple>
+              <option value="0-500000">{less_than}$500K</option>
+              <option value="1000000-5000000">$1M-$5M</option>
+              <option value="5000000-10000000">$5M-$10M</option>
+              <option value="10000000-25000000">$10M-$25M</option>
+              <option value="25000000-35000000">$25M-$35M</option>
+              <option value="35000000-50000000">$35M-$50M</option>
+              <option value="50000000-75000000">$50M-$75M</option>
+              <option value="75000000-100000000">$75M-$100M</option>
+              <option value="100000000-200000000">$100M-$200M</option>
+              <option value="200000000-500000000">$200M-$500M</option>
+              <option value="500000000-1000000000">$500M-$1B</option>
+              <option value="1000000000">$1B+</option>
             </Input>
 
             <div class="filter">
               <label>Technology <small>Advanced Filter</small></label>
-              <TechnologySearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} disabled={this.props.searchFilters} />
+              <TechnologySearch onDebouncer={this.handleDebouncer} userToken={userToken} disabled={searchFilters} />
               <div class="tag-container">
                 {tags.technology}
               </div>
@@ -207,15 +224,17 @@ export default class CompanySearch extends React.Component {
 
             <div class="filter">
               <label>Social Profiles <small>Advanced Filter</small></label>
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='github' type='checkbox' value="3" label='Github' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='pinterest' type='checkbox' value="4" label='Pinterest' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={this.props.searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='github' type='checkbox' value="3" label='Github' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='pinterest' type='checkbox' value="4" label='Pinterest' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={searchFilters} />
             </div>
           </div>
     )
   }
 }
+
+export default CompanySearch;

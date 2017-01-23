@@ -3,6 +3,7 @@ import axios from "axios";
 import querystring from 'querystring';
 
 axios.interceptors.response.use(undefined, err => {
+  console.log(1);
     if (err.status === 500) {
       window.location.href = '500';
     }
