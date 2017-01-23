@@ -12,6 +12,14 @@ app.get('/legion/:type/:id', function (req, res) {
   res.sendFile(__dirname + '/src/tracking.html')
 })
 
+app.get('/profiles/:type/:id', function (req, res) {
+  res.sendFile(__dirname + '/src/index.html')
+})
+
+app.get('/directory/:type/:id', function (req, res) {
+  res.sendFile(__dirname + '/src/index.html')
+})
+
 app.get('*', function (req, res) {
   res.sendFile(__dirname + '/src/index.html')
 })

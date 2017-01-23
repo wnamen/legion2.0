@@ -17,17 +17,21 @@ export default class Contacts extends React.Component {
       token: cookie.load("token"),
       loading: false,
       mapping: false,
+      mappedColumns: {},
       results: [],
       tmLists: [],
       defaultListView: "All My Contacts"
     }
     this.updateMappingStatus = this.updateMappingStatus.bind(this);
     this.uploadCSV = this.uploadCSV.bind(this);
+    this.exportCSV = this.exportCSV.bind(this);
+    this.handleCaptureColumn = this.handleCaptureColumn.bind(this);
     this.changeListView = this.changeListView.bind(this);
     this.getNewListView = this.getNewListView.bind(this);
     this.loadInitialListView = this.loadInitialListView.bind(this);
     this.loadAvailableLists = this.loadAvailableLists.bind(this);
     this.deleteCurrentList = this.deleteCurrentList.bind(this);
+    this.searchCurrentList = this.searchCurrentList.bind(this);
   }
 
   static childContextTypes = {
@@ -49,7 +53,7 @@ export default class Contacts extends React.Component {
         if (checked.length === 0) {
           return checked.push(id);
         }
-        
+
         checked.indexOf(id) !== -1 ? checked.splice(checked.indexOf(id), 1) : checked.push(id);
       },
 
@@ -175,6 +179,29 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // SEARCH THE CURRENT LIST VIEW
+  searchCurrentList = (query) => {
+    this.setState({loading:true});
+
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.get({
+      url: `https://api.legionanalytics.com/contacts/${this.state.currentViewId}?page_size=1000&search=${query}`,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(results);
+        this.setState({
+          results:results,
+          loading: false
+        });
+      },
+      error: (response) => {
+        console.log(response);
+      }
+
+    })
+  }
+
   //UPLOADS CSV TO BACKEND TO BEGIN MAPPING
   uploadCSV = (file, filename) => {
     let tokenHeader = `Token ${this.state.token}`;
@@ -186,7 +213,8 @@ export default class Contacts extends React.Component {
       success: (response) => {
         console.log(response);
         this.setState({
-          importedSample: response
+          importedSample: response,
+          mapFileName: filename
         })
       },
       error: (response) => {
@@ -196,9 +224,34 @@ export default class Contacts extends React.Component {
     })
   }
 
+  //EXPORTS CSV TO BACKEND TO BEGIN MAPPING
+  exportCSV = () => {
+    let tokenHeader = `Token ${this.state.token}`;
+    $.get({
+      url: `https://api.legionanalytics.com/export-list/${this.state.currentViewId}`,
+      headers: {"Authorization": tokenHeader},
+      processData: false,
+      success: (response) => {
+        console.log(response);
+      },
+      error: (response) => {
+        console.log(response);
+      }
+
+    })
+  }
+
+  // CAPTURE MAPPED COLUMNS
+  handleCaptureColumn = (column, value) => {
+    let mappedColumns = this.state.mappedColumns;
+    mappedColumns[column] = value;
+    console.log(mappedColumns);
+    this.setState({mappedColumns});
+  }
+
   // TOGGLE FOR MAPPING NEW CSVS
   updateMappingStatus = () => {
-    this.setState({mapping: !this.state.mapping})
+    this.state.mapping ? this.setState({mapping: !this.state.mapping}) : this.setState({mapping: !this.state.mapping, mappedColumns: {}});
   }
 
   // FINDS THE NEW SELECTED LIST VIEW AND CALLS THE FN TO UPDATE THE VIEW
@@ -217,15 +270,15 @@ export default class Contacts extends React.Component {
     if (this.state.mapping) {
       currentView = (
         <div class="sixteen columns">
-          <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus}/>
-          <MapTable contacts={this.state.importedSample}/>
+          <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} filename={this.state.mapFileName}/>
+          <MapTable contacts={this.state.importedSample} handleCaptureColumn={this.handleCaptureColumn}/>
           <MapResults />
         </div>
       )
     } else {
       currentView = (
         <div class="sixteen columns">
-          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
+          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} exportCSV={this.exportCSV} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} searchCurrentList={this.searchCurrentList}/>
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
               <ContactsTable results={this.state.results} />
