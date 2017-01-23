@@ -60,7 +60,7 @@ export default class TechonologySearch extends React.Component {
   getTechnologySuggestionValue = suggestion => "";
 
   renderTechnologySuggestion = suggestion => (
-    <option value={suggestion.id} title="technology">{suggestion.name}</option>
+    <option value={suggestion.name} title="technologies">{suggestion.name}</option>
   );
 
   onTechnologySuggestionSearch = (event, { newValue }) => {
