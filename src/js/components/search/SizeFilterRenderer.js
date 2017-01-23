@@ -1,6 +1,7 @@
-import React from "react"
+import React, { Component } from "react";
 
-export default class SizeFilterRenderer extends React.Component {
+class SizeFilterRenderer extends Component {
+  
   constructor(props){
     super(props);
   }
@@ -13,3 +14,5 @@ export default class SizeFilterRenderer extends React.Component {
     )
   }
 }
+
+export default SizeFilterRenderer;
