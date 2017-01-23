@@ -25,7 +25,7 @@ export default class CampaignMenu extends React.Component {
 
 
     return(
-      <div class="sixteen text-left">
+      <div class="sixteen text-left menu-container">
         { cadences }
       </div>
     )

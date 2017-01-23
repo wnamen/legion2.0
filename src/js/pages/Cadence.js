@@ -47,7 +47,6 @@ export default class Cadence extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
-        console.log(response);
         this.setState({
           cadenceData: response
         })
@@ -72,7 +71,6 @@ export default class Cadence extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
-        console.log(response);
         this.setState({
           templateData: response,
         })
@@ -112,15 +110,16 @@ export default class Cadence extends React.Component {
     })
 
     templateList.length >= 2 ? disableSave = false : disableSave = true;
-    console.log(templateList);
 
     this.setState({renderState: "campaign", currentTemplates: currentTemplates, campaignTemplateList: templateList, disableSave: disableSave});
   }
 
   // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
   findSelectedCampaign = (e) => {
+    let id = isNaN(e) ? e.target.id : e;
     this.state.cadenceData.forEach((cadence) => {
-      if (parseInt(cadence.id) === parseInt(e.target.id || e)) {
+      console.log(id);
+      if (parseInt(cadence.id) === parseInt(id)) {
         this.findCampaignTemplates(cadence, cadence.settings.templates)
       }
     })
@@ -180,17 +179,17 @@ export default class Cadence extends React.Component {
 
   // DETERMINE CAMPAIGN UPDATE/CREATE
   saveCampaign = (campaign) => {
-    // if (this.state.currentView.id === null) {
+    console.log(this.state.currentView.id);
+    if (this.state.currentView.id === null) {
       this.makeCampaign(campaign);
-    // } else {
-    //   this.updateCampaign(campaign);
-    // }
+    } else {
+      this.updateCampaign(campaign);
+    }
   }
 
   // CREATE NEW CAMPAIGN
   makeCampaign = (campaign) => {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(campaign);
 
     $.post({
       url: "https://api.legionanalytics.com/make-cadence",
@@ -208,18 +207,19 @@ export default class Cadence extends React.Component {
   }
 
   // UPDATE TEMPLATE
-  updateTemplate = (cadence) => {
+  updateCampaign = (campaign) => {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(template);
+    campaign["id"] = this.state.currentView.id
+    console.log(campaign);
 
     $.post({
-      url: "https://api.legionanalytics.com/update-template",
-      data: {id: template.id, name: (template.templateName || null), subject: (template.subject || null), html: (template.html || null)},
+      url: "https://api.legionanalytics.com/update-cadence",
+      data: campaign,
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         console.log(response);
-        this.loadAvailableTemplates(response.id);
+        this.loadAvailableCampaigns(response.id);
       },
       error: (response) => {
         console.log(response);
@@ -332,6 +332,7 @@ export default class Cadence extends React.Component {
   }
 
   render() {
+    console.log(this.state.currentView);
     return (
         <div class="gray-light-background">
           <div class="sixteen columns">

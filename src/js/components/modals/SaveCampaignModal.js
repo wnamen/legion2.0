@@ -11,15 +11,15 @@ class SaveCampaignModal extends Component {
         credential_id: "",
         name: "",
         date_started: "",
-        only_business_days: "",
-        target_market_id: ""
+        only_business_days: true,
+        target_market_id: "",
+        offset: ((new Date()).getTimezoneOffset()/-60),
       },
       date: {
-        date: "",
+        format: "",
         hour: "",
         minute: "",
-        meridiem: "",
-        tz: ((new Date()).getTimezoneOffset()/-60),
+        meridiem: ""
       }
     }
     this.handleSelected = this.handleSelected.bind(this);
@@ -36,12 +36,8 @@ class SaveCampaignModal extends Component {
 	handleDate = (e) => {
     let dateDetails = this.state.date;
     dateDetails[e.target.name] = e.target.value;
-    console.log(date);
-    this.setState(date);
+    this.setState(dateDetails);
 	}
-
-  // "date_started": "2016-09-05T00:00:00Z",
-
 
 	handleSelected = (e) => {
     let campaignDetails = this.state.campaignDetails;
@@ -52,15 +48,17 @@ class SaveCampaignModal extends Component {
   handleCampaignUpdate = (e) => {
     e.preventDefault();
     let date_started = this.dateAnalyzer()
-    console.log(date_started);
-    console.log(this.state);
-
+    let campaignDetails = this.state.campaignDetails;
+    campaignDetails.date_started = date_started;
+    this.props.handleCampaignUpdate(campaignDetails)
   }
 
   dateAnalyzer = () => {
     let date = this.state.date;
-    let format = date.date.split("/")
-    console.log(date);
+    let meridiem = date.meridiem === "am" ? 1 : 2;
+    let format = date.format.split("/").reverse();
+    let date_started = `${format.join("-")}T${(date.hour) * meridiem}:${date.minute}:00Z`
+    return date_started;
   }
 
   validateDate = (testdate) => {
@@ -78,7 +76,7 @@ class SaveCampaignModal extends Component {
         		<form>
 	        		<div class="gray inlineFlex">
 	        			<div class="preText">Start this campaign on</div>
-	        			<input type="text" name="date" placeholder="MM/DD/YYYY" class="datePicker inline-block" onChange={this.handleDate} />
+	        			<input type="text" name="format" placeholder="DD/MM/YYYY" class="datePicker inline-block" onChange={this.handleDate} />
 	        			at
 	        			<Input type='select' name="hour" id="hour" onChange={this.handleDate}>
 			                <option value="1">1</option>

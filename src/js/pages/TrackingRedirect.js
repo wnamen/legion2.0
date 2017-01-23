@@ -3,9 +3,7 @@ import { CubeGrid }     from "better-react-spinkit";
 import cookie           from "react-cookie";
 import $                from "jquery";
 
-import TrackingRedirect from "./TrackingRedirect"
-
-export default class Tracking extends React.Component {
+export default class TrackingRedirect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,12 +21,16 @@ export default class Tracking extends React.Component {
 
     return (
       <div class="ten offset-by-three white-background">
-        <TrackingRedirect />
+        <div class="sixteen columns">
+          <div style={styles}>
+            <CubeGrid size={50} color="#36b7ea" />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-Tracking.contextTypes = {
+TrackingRedirect.contextTypes = {
   router: React.PropTypes.object
 };
