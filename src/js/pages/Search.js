@@ -9,10 +9,10 @@ import SearchMenu             from "../components/search/SearchMenu"
 import ResultsTable           from "../components/search/ResultsTable"
 
 export default class Search extends React.Component {
-  
+
   constructor(props){
     super(props);
-    
+
     this.state = {
       token: cookie.load("token"),
       loading: false,
@@ -26,7 +26,7 @@ export default class Search extends React.Component {
       checkedAll: false,
       rowState: []
     };
-    
+
     this.setFilterAccess = this.setFilterAccess.bind(this);
     this.setApiState = this.setApiState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -57,14 +57,14 @@ export default class Search extends React.Component {
         if (checked.length === 0) {
           return checked.push(id);
         }
-        
+
         checked.indexOf(id) !== -1 ? checked.splice(checked.indexOf(id), 1) : checked.push(id);
       },
 
       purchaseSelected: (id) => {
         let params = this.state.apiState.job === true ? {tm_id: id, jobs: checked} : {tm_id: id, companies: checked};
         http.post('/add-contacts-to-tm', params).then(response => console.log(response))
-      }
+      },
     }
   }
 
@@ -158,36 +158,36 @@ export default class Search extends React.Component {
       }.bind(this)
     });
   }
-  
+
   filterBy(data, type){
     const { resultsArray, pureResult } = this.state;
-    
+
 
       let bySize = data.filter(v => v.name === 'company_size').length ?
-        
+
         data.filter(v => v.name === 'company_size').reduce((previousValue, currentValue) => {
-        
+
             return pureResult.filter(c =>
               c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
             ).concat(previousValue)
-          
+
       }, []) : null;
-      
+
       let byRevenue = data.filter(v => v.name === 'revenue').length ?
-        
+
         data.filter(v => v.name === 'revenue').reduce((previousValue, currentValue) => {
             let filtered = bySize ? bySize : pureResult;
             let ready = filtered.filter(c =>
               c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
             ).concat(previousValue);
-            
+
             bySize = null;
             return ready;
-          
+
       }, []) : null;
-    
+
       let byFunding = data.filter(v => v.name === 'funding').length ?
-        
+
         data.filter(v => v.name === 'funding').reduce((previousValue, currentValue) => {
             let filtered = !byRevenue ? bySize ? bySize : pureResult : byRevenue ;
 
@@ -198,23 +198,23 @@ export default class Search extends React.Component {
             bySize = null;
             byRevenue = null;
             return ready;
-          
+
       }, []) : null;
-  
+
     const filteredCheck = [bySize, byRevenue, byFunding].filter(v => v)[0];
     let filtered = !data.length ? pureResult : filteredCheck;
-    
+
     this.setState({
       resultsArray: filtered
     })
-    
+
     this.forceUpdate();
   };
 
   render() {
-    
+
     const { searchFilters, interestSuggestions, apiState, token, results, loading, resultsArray} = this.state;
-    
+
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">

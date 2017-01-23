@@ -8,7 +8,7 @@ import PeopleSearch from "./PeopleSearch"
 import CompanySearch from "./CompanySearch"
 
 class SearchMenu extends Component {
-  
+
   constructor(props) {
 		super(props);
 		this.state = {
@@ -55,7 +55,6 @@ class SearchMenu extends Component {
   render(){
     const { userToken, onSearchChange, searchFilters, checked, filterBy } = this.props;
     const { menuView } = this.state;
-    console.log(checked);
     
     return(
       <div class="nav navbar-default offset-by-one three columns gray">

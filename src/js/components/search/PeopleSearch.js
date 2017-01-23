@@ -25,6 +25,7 @@ export default class PeopleSearch extends React.Component {
 	}
 
   handleSelected(e) {
+    e.stopPropagation()
     let selectedLength = e.target.selectedOptions.length;
     let selectedName = e.target.name;
     let selected = this.state.selected || [];

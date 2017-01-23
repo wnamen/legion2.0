@@ -16,10 +16,9 @@ export default class IndustrySearch extends React.Component {
     let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
-      url: 'https://api.legionanalytics.com/search/industry/?page_size=100&num_companies__gt=0',
+      url: 'https://api.legionanalytics.com/search/industry/?page_size=1000&num_companies__gt=0',
       headers: {"Authorization": tokenHeader},
       dataType:'json',
-      crossDomain:true,
       cache:false,
       success:function(industries){
         this.setState({industrySuggestions: industries});

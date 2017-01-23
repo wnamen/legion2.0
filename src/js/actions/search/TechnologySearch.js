@@ -29,6 +29,7 @@ export default class TechonologySearch extends React.Component {
   }
 
   handleTechnologySearch(query) {
+    let tokenHeader = `Token ${this.props.userToken}`;
     query = query.text
 
     $.ajax({
