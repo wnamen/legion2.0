@@ -14,11 +14,11 @@ export default class CadenceViews extends React.Component {
   render(){
     let current_view = this.props.currentView;
 
-    console.log(current_view);
+    console.log(this.props);
     return(
       <div class="eight columns">
         <div class="profile-card whiteCard campaignEditorCard">
-          { current_view !== null ? <TemplatesView renderState={this.props.renderState} currentView={this.props.currentView} currentTemplates={this.props.currentTemplates} currentDelays={this.props.currentDelays} templateData={this.props.templateData} campaignTemplateList={this.props.campaignTemplateList} saveTemplate={this.props.saveTemplate}/> : <NoTemplatesView /> }
+          { current_view !== null ? <TemplatesView renderState={this.props.renderState} disableSave={this.props.disableSave} currentView={this.props.currentView} currentTemplates={this.props.currentTemplates} currentDelays={this.props.currentDelays} templateData={this.props.templateData} campaignTemplateList={this.props.campaignTemplateList} saveTemplate={this.props.saveTemplate} saveCampaign={this.props.saveCampaign}/> : <NoTemplatesView /> }
         </div>
       </div>
     )

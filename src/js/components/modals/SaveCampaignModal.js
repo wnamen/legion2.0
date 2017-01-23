@@ -6,14 +6,63 @@ class SaveCampaignModal extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      campaignDetails: {
+        credential_id: "",
+        name: "",
+        date_started: "",
+        only_business_days: "",
+        target_market_id: ""
+      },
+      date: {
+        date: "",
+        hour: "",
+        minute: "",
+        meridiem: "",
+        tz: ((new Date()).getTimezoneOffset()/-60),
+      }
+    }
+    this.handleSelected = this.handleSelected.bind(this);
+    this.handleDate = this.handleDate.bind(this);
+    this.triggerModalClose = this.triggerModalClose.bind(this);
+    this.dateAnalyzer = this.dateAnalyzer.bind(this);
+    this.handleCampaignUpdate = this.handleCampaignUpdate.bind(this);
   }
 
   triggerModalClose = () => {
     this.props.handleModalClose();
   };
 
+	handleDate = (e) => {
+    let campaignDetails = this.state.campaignDetails;
+    campaignDetails[e.target.name] = e.target.value;
+    this.setState(campaignDetails);
+	}
+
+	handleSelected = (e) => {
+    let campaignDetails = this.state.campaignDetails;
+    campaignDetails[e.target.name] = e.target.value;
+    this.setState(campaignDetails);
+	}
+
+  handleCampaignUpdate = (e) => {
+    let date_started = this.dateAnalyzer()
+    console.log(date_started);
+
+  }
+
+  dateAnalyzer = () => {
+    let date = this.state.date;
+    console.log(date);
+  }
+
+  validateDate = (testdate) => {
+    let date_regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
+    return date_regex.test(testdate);
+}
+
   render() {
-    
+
     return (
         <div class="sixteen modalContainer">
          	<div class="thirteen columns text-center smallModal">
@@ -22,9 +71,9 @@ class SaveCampaignModal extends Component {
         		<form>
 	        		<div class="gray inlineFlex">
 	        			<div class="preText">Start this campaign on</div>
-	        			<input type="text" placeholder="MM/DD/YYYY" class="datePicker inline-block"></input>
+	        			<input type="text" name="date" placeholder="MM/DD/YYYY" class="datePicker inline-block" onChange={this.handleDate} />
 	        			at
-	        			<Input type='select' name="whatHour" id="hour" onChange={this.handleSelected}>
+	        			<Input type='select' name="hour" id="hour" onChange={this.handleDate}>
 			                <option value="1">1</option>
 			                <option value="2">2</option>
 			                <option value="3">3</option>
@@ -38,7 +87,7 @@ class SaveCampaignModal extends Component {
 			                <option value="11">11</option>
 			                <option value="12">12</option>
 			            </Input>
-			            <Input type='select' name="whatMinute" id="minute" onChange={this.handleSelected}>
+			            <Input type='select' name="minute" id="minute" onChange={this.handleDate}>
 			                <option value="00">00</option>
 			                <option value="01">01</option>
 			                <option value="02">02</option>
@@ -100,32 +149,32 @@ class SaveCampaignModal extends Component {
 			                <option value="58">58</option>
 			                <option value="59">59</option>
 			            </Input>
-			            <Input type='select' name="amOrPm" id="meridian" onChange={this.handleSelected}>
+			            <Input type='select' name="meridiem" id="meridiem" onChange={this.handleDate}>
 			                <option value="am">AM</option>
 			                <option value="pm">PM</option>
 			            </Input>
 	        		</div>
 	        		<div class="gray inlineFlex bigger">Send this campaign to
-	        			<Input type='select' name="chooseList" onChange={this.handleSelected}>
+	        			<Input type='select' name="target_market_id" onChange={this.handleSelected}>
 			                <option value="">Choose List</option>
 			                <option value="13">My first List</option>
 			                <option value="1234">Other List</option>
 			            </Input>
 	        		</div>
 	        		<div class="gray inlineFlex bigger">Name this campaign
-	        			<Input type='text' name="createName" placeholder="My Campaign" onChange={this.handleSelected} />
+	        			<Input type='text' name="name" placeholder="My Campaign" onChange={this.handleSelected} />
 	        		</div>
 	        		<div class="gray inlineFlex bigger topMargin1em">
 	        			Send this campaign on Saturday & Sunday
-		        		<Input class="medium-left-margin" checked={this.props.checked} onChange={this.socialCheck} name='primary' type='checkbox' label=" " value="0" />
+		        		<Input class="medium-left-margin" name='only_business_days' type='checkbox' label=" " value="0" />
 		        	</div>
 	        		<div class="gray inlineFlex bigger whatEmailSend topMargin1em">Send with
-				        <Input type='select' name="whatEmailToSend" id="chooseEmail" onChange={this.handleSelected}>
+				        <Input type='select' name="credential_id" id="chooseEmail" onChange={this.handleSelected}>
 			                <option value="jamasen@legionanalytics.com">jamasen@legionanalytics.com</option>
 			                <option value="jamasen@kylie.ai">jamasen@kylie.ai</option>
 			            </Input>
 	        		</div>
-			        <div onClick={this.triggerModalClose} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</div>
+			        <button type="submit" onClick={this.handleCampaignUpdate} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</button>
 		        </form>
         	</div>
         </div>

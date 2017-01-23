@@ -51,6 +51,10 @@ export default class Cadence extends React.Component {
         this.setState({
           cadenceData: response
         })
+
+        if (this.state.renderState === "campaign") {
+          this.findSelectedCampaign(id);
+        }
       },
       error: (response) => {
         console.log(response);
@@ -101,17 +105,22 @@ export default class Cadence extends React.Component {
     let templateList = this.state.campaignTemplateList
     templateList.push(id)
     let currentTemplates = [];
+    let disableSave;
 
     templateList.forEach((templateID) => {
       currentTemplates.push(this.findTemplateData(templateID))
     })
-    this.setState({renderState: "campaign", currentTemplates: currentTemplates, campaignTemplateList: templateList});
+
+    templateList.length >= 2 ? disableSave = false : disableSave = true;
+    console.log(templateList);
+
+    this.setState({renderState: "campaign", currentTemplates: currentTemplates, campaignTemplateList: templateList, disableSave: disableSave});
   }
 
   // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
   findSelectedCampaign = (e) => {
     this.state.cadenceData.forEach((cadence) => {
-      if (parseInt(cadence.id) === parseInt(e.target.id)) {
+      if (parseInt(cadence.id) === parseInt(e.target.id || e)) {
         this.findCampaignTemplates(cadence, cadence.settings.templates)
       }
     })
@@ -149,6 +158,7 @@ export default class Cadence extends React.Component {
   createNewCampaign = () => {
     this.setState({
       renderState: "campaign",
+      disableSave: true,
       campaignTemplateList: [],
       currentDelays: [],
       currentView: {
@@ -170,20 +180,21 @@ export default class Cadence extends React.Component {
 
   // DETERMINE CAMPAIGN UPDATE/CREATE
   saveCampaign = (campaign) => {
-    if (campaign.id === null) {
+    // if (this.state.currentView.id === null) {
       this.makeCampaign(campaign);
-    } else {
-      this.updateCampaign(campaign);
-    }
+    // } else {
+    //   this.updateCampaign(campaign);
+    // }
   }
 
   // CREATE NEW CAMPAIGN
-  makeCampaign = (cadence) => {
+  makeCampaign = (campaign) => {
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(campaign);
 
     $.post({
       url: "https://api.legionanalytics.com/make-cadence",
-      data: {},
+      data: campaign,
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
@@ -197,24 +208,24 @@ export default class Cadence extends React.Component {
   }
 
   // UPDATE TEMPLATE
-  // updateTemplate = (cadence) => {
-  //   let tokenHeader = `Token ${this.state.token}`;
-  //   console.log(template);
-  //
-  //   $.post({
-  //     url: "https://api.legionanalytics.com/update-template",
-  //     data: {id: template.id, name: (template.templateName || null), subject: (template.subject || null), html: (template.html || null)},
-  //     crossDomain:true,
-  //     headers: {"Authorization": tokenHeader },
-  //     success: (response) => {
-  //       console.log(response);
-  //       this.loadAvailableTemplates();
-  //     },
-  //     error: (response) => {
-  //       console.log(response);
-  //     }
-  //   });
-  // }
+  updateTemplate = (cadence) => {
+    let tokenHeader = `Token ${this.state.token}`;
+    console.log(template);
+
+    $.post({
+      url: "https://api.legionanalytics.com/update-template",
+      data: {id: template.id, name: (template.templateName || null), subject: (template.subject || null), html: (template.html || null)},
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(response);
+        this.loadAvailableTemplates(response.id);
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
+  }
 
   // DELETE SELECTED TEMPLATE
   // deleteTemplate = (id) => {
@@ -324,8 +335,8 @@ export default class Cadence extends React.Component {
     return (
         <div class="gray-light-background">
           <div class="sixteen columns">
-            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate}/>
-            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} renderState={this.state.renderState} campaignTemplateList={this.campaignTemplateList}/>
+            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} />
+            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList}/>
             <CampaignEngagment />
           </div>
         </div>
