@@ -186,7 +186,7 @@ export default class Search extends React.Component {
       let byFunding = data.filter(v => v.name === 'funding').length ?
         
         data.filter(v => v.name === 'funding').reduce((previousValue, currentValue) => {
-            let filtered = !byRevenue ? bySize ? bySize : pureResult : pureResult ;
+            let filtered = !byRevenue ? bySize ? bySize : pureResult : byRevenue ;
 
             let ready = filtered.filter(c =>
               c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
