@@ -49,7 +49,7 @@ export default class InterestSearch extends React.Component {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    let text_search = `search_text=${value}`.trim();
+    let text_search = `name=${value}`.trim();
     this.handleInterestSearch({ text: text_search });
 
     return inputLength === 0 ? [] : this.state.interestSuggestions.results.filter(result =>

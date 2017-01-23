@@ -281,13 +281,13 @@ export default class PeopleSearch extends React.Component {
 
             <div class="filter">
               <label>Social Profiles <small>Advanced Filter</small></label>
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='angellist' type='checkbox' value="4" label='Angellist' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='crunchbase' type='checkbox' value="3" label='Crunchbase' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_facebook' type='checkbox' value="0" label='Facebook' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_linkedin' type='checkbox' value="1" label='Linkedin' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_angellist' type='checkbox' value="4" label='Angellist' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_crunchbase' type='checkbox' value="3" label='Crunchbase' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_twitter' type='checkbox' value="2" label='Twitter' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_instagram' type='checkbox' value="5" label='Instagram' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={this.props.searchFilters} />
             </div>
           </div>
     )

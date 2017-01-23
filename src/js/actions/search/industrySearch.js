@@ -50,7 +50,7 @@ export default class IndustrySearch extends React.Component {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    let text_search = `search_text=${value}`.trim();
+    let text_search = `name=${value}`.trim();
     this.handleIndustrySearch({ text: text_search });
 
     return inputLength === 0 ? [] : this.state.industrySuggestions.results.filter(result =>
