@@ -4,7 +4,7 @@ import cookie               from "react-cookie";
 
 import CadenceMenu          from "../components/cadence/CadenceMenu"
 import CadenceViews         from "../components/cadence/CadenceViews"
-import CampaignEngagment    from "../components/cadence/CampaignEngagement"
+import CampaignEngagement    from "../components/cadence/CampaignEngagement"
 
 export default class Cadence extends React.Component {
   constructor(props) {
@@ -17,6 +17,7 @@ export default class Cadence extends React.Component {
     }
     this.loadAvailableCampaigns = this.loadAvailableCampaigns.bind(this);
     this.loadAvailableTemplates = this.loadAvailableTemplates.bind(this);
+    this.loadCampaignEngagements = this.loadCampaignEngagements.bind(this);
     this.findSelectedCampaign = this.findSelectedCampaign.bind(this);
     this.findNewCampaignTemplates = this.findNewCampaignTemplates.bind(this);
     this.findSelectedTemplate = this.findSelectedTemplate.bind(this);
@@ -87,6 +88,28 @@ export default class Cadence extends React.Component {
     });
   }
 
+
+  // LOAD CAMPAIGN ENGAGEMENTS
+  loadCampaignEngagements = (id) => {
+    let tokenHeader = `Token ${this.state.token}`;
+    console.log(id);
+
+    $.get({
+      url: `https://api.legionanalytics.com/cadence-engagement/${id}?page_size=1000`,
+      dataType: "JSON",
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        this.setState({
+          engagementData: response.results,
+        })
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
   // CAPTURES THE SELECTED TEMPLATE TO BE RENDERED
   findSelectedTemplate = (id) => {
     let currentTemplate = [];
@@ -118,11 +141,10 @@ export default class Cadence extends React.Component {
 
   // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
   findSelectedCampaign = (e) => {
-    console.log(e);
     let id = isNaN(e) ? e.target.id : e;
     this.state.cadenceData.forEach((cadence) => {
-      console.log(id);
       if (parseInt(cadence.id) === parseInt(id)) {
+        this.loadCampaignEngagements(cadence.id)
         this.findCampaignTemplates(cadence, cadence.settings.templates)
       }
     })
@@ -341,7 +363,7 @@ export default class Cadence extends React.Component {
           <div class="sixteen columns">
             <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} deleteCampaign={this.deleteCampaign} />
             <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList}/>
-            <CampaignEngagment />
+            <CampaignEngagement engagementData={this.state.engagementData}/>
           </div>
         </div>
 

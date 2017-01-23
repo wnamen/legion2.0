@@ -13,35 +13,44 @@ export default class CampaignEngagement extends React.Component {
   //LOGIC HERE: CHECK OUT COMPONENT MOUNTING IF YOU WANT TO TRY IT OUT
 
   render(){
-    //RENDER LOGIC HERE
+    let engagements = this.props.engagementData;
+    let mappedEngagments;
+    console.log(engagements);
+
+    if (engagements !== undefined) {
+      mappedEngagments = engagements.map((engagement, index) => {
+
+        let year = ((engagement.date.split("-"))[0]).slice(2);
+        let month = (engagement.date.split("-"))[1];
+        let hour = (engagement.date.slice(engagement.date.indexOf("T")+1)).split(":")[0];
+        let minute = (engagement.date.slice(engagement.date.indexOf("T")+1)).split(":")[1];
+        let meridiem = "am";
+
+        if (parseInt(hour) > 12) {
+          hour = (parseInt(hour) - 12);
+          meridiem = "pm"
+        }
+
+        return (
+          <div>
+            <div key={index} class="activityAction">
+              <div class="actionIcon electric-blue-background"></div>
+              <p class="activityDetails gray">
+                <a class="active electric-blue">{engagement.person.name} </a>
+                <strong>{(engagement.type_of_visit).charAt(0).toUpperCase() + (engagement.type_of_visit).slice(1)}</strong> {engagement.subject} on {year}/{month} @ {hour}:{minute} {meridiem}
+              </p>
+            </div>
+            <br></br>
+          </div>
+        )
+      })
+    }
 
     return(
       <div class="three columns">
-          <div class="profile-card engagement">
+        <div class="profile-card engagement">
           <h6 class="black">Engagement</h6>
-          <div class="activityAction">
-            <div class="actionIcon red-background"></div>
-            <p class="activityDetails gray">
-              <a href="#" class="active electric-blue">Kevin Hale </a>
-              <strong>Clicked</strong> Follow-up on 12/07 @ 5:47pm PST
-            </p>
-          </div>
-          <br></br>
-          <div class="activityAction">
-            <div class="actionIcon electric-blue-background"></div>
-            <p class="activityDetails gray">
-              <a href="#" class="active electric-blue">Jamasen Rodriguez </a>
-              <strong>Opened</strong> Follow-up on 12/05 @ 12:04pm PST
-            </p>
-          </div>
-          <br></br>
-          <div class="activityAction">
-            <div class="actionIcon electric-blue-background"></div>
-            <p class="activityDetails gray">
-              <a href="#" class="active electric-blue">Jamasen Rodriguez </a>
-              <strong>Opened</strong> Re: Checking in with Legion on 12/03 @ 8:12am PST
-            </p>
-          </div>
+          {mappedEngagments}
         </div>
       </div>
     )
