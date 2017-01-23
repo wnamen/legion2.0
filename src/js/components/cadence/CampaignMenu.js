@@ -18,7 +18,7 @@ export default class CampaignMenu extends React.Component {
     if (data !== undefined) {
       cadences = data.map((cadence, index) => {
         return (
-          <CampaignListing key={index} campaignID={cadence.id} campaignName={cadence.name} campaignStatus={cadence.started} renderCampaign={this.props.renderCampaign}/>
+          <CampaignListing key={index} campaignID={cadence.id} campaignName={cadence.name} campaignStatus={cadence.started} renderCampaign={this.props.renderCampaign} deleteCampaign={this.props.deleteCampaign}/>
         )
       })
     }

@@ -29,7 +29,8 @@ export default class Cadence extends React.Component {
     this.createNewCampaign = this.createNewCampaign.bind(this);
     this.saveCampaign = this.saveCampaign.bind(this);
     this.makeCampaign = this.makeCampaign.bind(this);
-    // this.updateCampaign = this.updateCampaign.bind(this);
+    this.updateCampaign = this.updateCampaign.bind(this);
+    this.deleteCampaign = this.deleteCampaign.bind(this);
   }
 
   componentWillMount = () => {
@@ -40,6 +41,7 @@ export default class Cadence extends React.Component {
   // LOAD THE USERS CURRENT CAMPAIGNS
   loadAvailableCampaigns = (id) => {
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(id);
 
     $.get({
       url: "https://api.legionanalytics.com/my-cadences?page_size=1000",
@@ -50,8 +52,8 @@ export default class Cadence extends React.Component {
         this.setState({
           cadenceData: response
         })
-
-        if (this.state.renderState === "campaign") {
+        console.log(id);
+        if ((this.state.renderState === "campaign") && (id !== undefined)) {
           this.findSelectedCampaign(id);
         }
       },
@@ -116,6 +118,7 @@ export default class Cadence extends React.Component {
 
   // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
   findSelectedCampaign = (e) => {
+    console.log(e);
     let id = isNaN(e) ? e.target.id : e;
     this.state.cadenceData.forEach((cadence) => {
       console.log(id);
@@ -227,24 +230,24 @@ export default class Cadence extends React.Component {
     });
   }
 
-  // DELETE SELECTED TEMPLATE
-  // deleteTemplate = (id) => {
-  //   let tokenHeader = `Token ${this.state.token}`;
-  //
-  //   $.post({
-  //     url: "https://api.legionanalytics.com/delete-template",
-  //     data: {id: id},
-  //     crossDomain:true,
-  //     headers: {"Authorization": tokenHeader },
-  //     success: (response) => {
-  //       console.log(response);
-  //       this.loadAvailableTemplates();
-  //     },
-  //     error: (response) => {
-  //       console.log(response);
-  //     }
-  //   });
-  // }
+  // DELETE SELECTED CAMPAIGN
+  deleteCampaign = (id) => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.post({
+      url: "https://api.legionanalytics.com/delete-cadence",
+      data: {id: id},
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(response);
+        this.loadAvailableCampaigns();
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
+  }
 
   // INTIALIZE A NEW TEMPLATE
   createNewTemplate = () => {
@@ -336,7 +339,7 @@ export default class Cadence extends React.Component {
     return (
         <div class="gray-light-background">
           <div class="sixteen columns">
-            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} />
+            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} deleteCampaign={this.deleteCampaign} />
             <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList}/>
             <CampaignEngagment />
           </div>
