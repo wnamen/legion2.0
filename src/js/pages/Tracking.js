@@ -1,4 +1,4 @@
-import React            from "react";
+import React, { Component, PropTypes } from "react"
 import { CubeGrid }     from "better-react-spinkit";
 import cookie           from "react-cookie";
 import $                from "jquery";
