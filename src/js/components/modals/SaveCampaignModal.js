@@ -93,12 +93,12 @@ class SaveCampaignModal extends Component {
 
   dateAnalyzer = () => {
     let date = this.state.date;
-    let meridiem = date.meridiem === "am" ? 1 : 2;
+    let meridiem = date.meridiem === "am" ? 0 : 12;
     let formated = date.format.split("/").reverse().map((k, v) => {
       return parseInt(k)
     })
     console.log(formated);
-    let date_started = `${formated.join("-")}T${(date.hour) * meridiem}:${date.minute}:00Z`
+    let date_started = `${formated.join("-")}T${parseInt(date.hour) + meridiem}:${date.minute}:00Z`
     return date_started;
   }
 
