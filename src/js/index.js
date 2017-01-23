@@ -17,6 +17,7 @@ import Directory                                       from "./pages/Directory";
 import ServerError                                     from "./pages/ServerError";
 import NotFound                                        from "./pages/NotFound";
 import IntegrationSuccess                              from "./pages/IntegrationSuccess";
+import Tracking                                        from "./pages/Tracking";
 import Profile                                         from "./pages/Profile";
 
 
@@ -33,13 +34,13 @@ const setToken = () => {
 };
 
 (() => {
-  
+
   let token = cookie.load("token");
   setToken();
   if (token !== undefined) {
-    
+
     let tokenHeader = `Token ${token}`;
-    
+
     $.get({
       url: "https://api.legionanalytics.com/me",
       dataType: "JSON",
@@ -53,7 +54,7 @@ const setToken = () => {
         updateLogin(false);
       }
     })
-    
+
   }
 })();
 
@@ -99,14 +100,18 @@ ReactDOM.render(
         <Route path="settings" name="settings" component={Settings} onEnter={requireAuth} />
         <Route path="onboarding" name="onboarding" component={Onboarding} />
         <Route path="tos" name="tos" component={TOS} />
-  
+
         <Route path="directory" name="directory" component={Directory} >
           <Route path=":type(/:id)" name="directory" component={Directory} >
           </Route>
         </Route>
-        
+
+        <Route path="legion/e" name="tracking" component={Tracking} />
+        <Route path="legion/r" name="tracking" component={Tracking} />
+
         <Route path="google/success" name="success" component={IntegrationSuccess} />
         <Route path="outlook/success" name="success" component={IntegrationSuccess} />
+
         <Route path="500" name="serverError" component={ServerError} />
         <Route path="*" name="notFound" component={NotFound} />
       </Route>

@@ -22,14 +22,14 @@ export default class Template extends React.Component {
     this.handleModelChange = this.handleModelChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
-    this.handleTemplateSave = this.handleTemplateSave.bind(this);
+    this.onTemplateSave = this.onTemplateSave.bind(this);
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
     this.clearTemplate = this.clearTemplate.bind(this);
     this.handleDelayChange = this.handleDelayChange.bind(this);
   }
 
   handleDelayChange = (e) => {
-    this.props.onDelayChange((this.props.data.id || null), e.target.value);
+    this.props.onDelayChange((this.props.dataIndex), parseInt(e.target.value));
   }
 
   handleModelChange = (html) => {
@@ -44,9 +44,15 @@ export default class Template extends React.Component {
     this.setState({subject: e.target.value})
   }
 
-  handleTemplateSave = () => {
+  onTemplateSave = () => {
+    // let templates = this.props.currentTemplates;
+    // let delays = this.props.currentDelays;
+    //
+    // console.log(templates, delays);
+    // this.props.onAppendTemplate(templates, delays);
+
     let templateChanges = {id: (this.props.data.id || null), name_of_template: this.state.name_of_template, subject: this.state.subject, html: this.state.html};
-    this.props.saveTemplate(templateChanges);
+    this.props.handleTemplateSave(templateChanges)
   }
 
   handleRenderSelection = (e) => {
@@ -64,6 +70,11 @@ export default class Template extends React.Component {
   render(){
     let templates = this.props.templateData;
     let mappedTemplates;
+    let delayValue;
+
+    if (this.props.currentDelay !== null ) {
+      delayValue = this.state.currentDelay || this.props.currentDelay;
+    }
 
     if (templates !== undefined) {
       mappedTemplates = templates.map((template, index) => {
@@ -105,7 +116,7 @@ export default class Template extends React.Component {
                 />
               </div>
               <div class="gray small-bottom-border gray-border workingRow bottomRow">
-                <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.handleTemplateSave}>Save</div>
+                <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.onTemplateSave}>Save</div>
                 <div class="working chooseTemplate pTags">
                   <Input type='select' name="whichEmail" onChange={this.handleSelected}>
                     <option value="">Personalized Tags</option>
@@ -126,11 +137,11 @@ export default class Template extends React.Component {
               </div>
           </div>
         </div>
-        { this.props.currentDelay &&
+        { this.props.currentDelay !== null &&
           <div class="sixteen text-center">
             <div class="gray inlineFlex delayAdjuster">
               <div class="preText">If I don't receive a response after </div>
-              <input type="number" min="1" max="30" class="delayPicker inline-block" value={this.props.currentDelay} id={this.props.data.id} onChange={this.handleDelayChange}/> days, then send the following template
+              <input type="number" min="1" max="30" class="delayPicker inline-block" value={delayValue} id={this.props.dataIndex} onChange={this.handleDelayChange}/> days, then send the following template
             </div>
           </div>
         }
