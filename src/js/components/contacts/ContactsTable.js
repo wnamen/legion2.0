@@ -119,7 +119,7 @@ export default class ContactsTable extends React.Component {
         <div class="sixteen columns">
           <div id="noResultsContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
             <img id="noResultsImg" src="src/img/no_search_results.png" />
-            <span id="noResultsMessage" class="electric-blue">So Much Empty!</span>
+            <span id="noResultsMessage" class="electric-blue">This List is Empty</span>
           </div>
         </div>
       )

@@ -52,3 +52,22 @@
 nav ul a:hover {
   background-color: transparent; !important;
 }
+li#upload-file-name {
+    font-size: 0.6em;
+}
+a.contact-upload {
+    font-size: 1em;
+}
+#contacts-list-main-selector span .dropdown-content li{
+  padding:10px;
+}
+#contacts-list-main-selector span .dropdown-content li > a {
+  padding: 5px 10px;
+  line-height: normal;
+}
+#contacts-list-main-selector span .dropdown-content{
+  width: 200px !important;
+  top: 44px !important;
+  padding: 10px 0;
+  max-height: 50vh !important;
+}
