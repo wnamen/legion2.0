@@ -11,31 +11,35 @@ export default class Tracking extends React.Component {
     }
   }
 
-  // componentWillMount = () => {
-  //   let tokenHeader = `Token ${this.state.token}`;
-  //   let code = this.props.location.query.code;
-  //   let currentPath = this.props.location.pathname;
-  //   let codeBody;
-  //   const { router } = this.context;
-  //
-  //   if (currentPath.search("google") === -1) {
-  //     codeBody = {outlook_code: code};
-  //   } else if (currentPath.search("outlook" === -1)) {
-  //     codeBody = {google_code: code};
-  //   }
-  //
-  //   $.post({
-  //     url: "https://api.legionanalytics.com/authenticate",
-  //     headers: {"Authorization": tokenHeader },
-  //     data: codeBody,
-  //     success: (response) => {
-  //       router.push('/settings');
-  //     },
-  //     error: (response) => {
-  //       console.log(response);
-  //     }
-  //   })
-  // }
+  componentWillMount = () => {
+    let tokenHeader = `Token ${this.state.token}`;
+    let code = this.props.location.query.code;
+    let currentPath = this.props.location.pathname;
+    let codeBody;
+    const { router } = this.context;
+
+    console.log(code, currentPath);
+
+    if (currentPath.search("google") === -1) {
+      codeBody = {outlook_code: code};
+    } else if (currentPath.search("outlook" === -1)) {
+      codeBody = {google_code: code};
+    }
+
+    console.log(codeBody);
+
+    // $.post({
+    //   url: "https://api.legionanalytics.com/authenticate",
+    //   headers: {"Authorization": tokenHeader },
+    //   data: codeBody,
+    //   success: (response) => {
+    //     router.push('/settings');
+    //   },
+    //   error: (response) => {
+    //     console.log(response);
+    //   }
+    // })
+  }
 
   render() {
     const styles = {

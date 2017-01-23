@@ -106,8 +106,14 @@ ReactDOM.render(
           </Route>
         </Route>
 
-        <Route path="legion/e" name="tracking" component={Tracking} />
-        <Route path="legion/r" name="tracking" component={Tracking} />
+        <Route path="legion" name="tracking" component={Tracking} >
+          <Route path=":type" name="tracking" component={Tracking} >
+            <Route path=":id" name="tracking" component={Tracking} />
+          </Route>
+        </Route>
+
+        // <Route path="legion/e/:id" name="tracking" component={Tracking} />
+        // <Route path="legion/r/:id" name="tracking" component={Tracking} />
 
         <Route path="google/success" name="success" component={IntegrationSuccess} />
         <Route path="outlook/success" name="success" component={IntegrationSuccess} />

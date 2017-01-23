@@ -14,7 +14,7 @@ import CompanyBio from "../components/companyProfiles/CompanyBio";
 const Meta = ({name}) => <Helmet
   meta={[
     {name: "description", content: `${name} Email Address - *****@***.com, ****@***.com | Show email & phone >>>`},
-    {name: "keywords", content: `${name} Email Address, Kevin Hale's Phone Number, email search, email lookup, email address lookup`},
+    {name: "keywords", content: `${name} Email Address, ${name}'s Phone Number, email search, email lookup, email address lookup`},
   ]}
 />;
 

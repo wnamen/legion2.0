@@ -34,10 +34,14 @@ class SaveCampaignModal extends Component {
   };
 
 	handleDate = (e) => {
-    let campaignDetails = this.state.campaignDetails;
-    campaignDetails[e.target.name] = e.target.value;
-    this.setState(campaignDetails);
+    let dateDetails = this.state.date;
+    dateDetails[e.target.name] = e.target.value;
+    console.log(date);
+    this.setState(date);
 	}
+
+  // "date_started": "2016-09-05T00:00:00Z",
+
 
 	handleSelected = (e) => {
     let campaignDetails = this.state.campaignDetails;
@@ -46,13 +50,16 @@ class SaveCampaignModal extends Component {
 	}
 
   handleCampaignUpdate = (e) => {
+    e.preventDefault();
     let date_started = this.dateAnalyzer()
     console.log(date_started);
+    console.log(this.state);
 
   }
 
   dateAnalyzer = () => {
     let date = this.state.date;
+    let format = date.date.split("/")
     console.log(date);
   }
 

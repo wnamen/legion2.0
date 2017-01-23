@@ -38,7 +38,7 @@ export default class Cadence extends React.Component {
   }
 
   // LOAD THE USERS CURRENT CAMPAIGNS
-  loadAvailableCampaigns = () => {
+  loadAvailableCampaigns = (id) => {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
@@ -199,7 +199,7 @@ export default class Cadence extends React.Component {
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         console.log(response);
-        this.loadAvailableCampaigns();
+        this.loadAvailableCampaigns(response.id);
       },
       error: (response) => {
         console.log(response);
