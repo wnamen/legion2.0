@@ -182,7 +182,7 @@
         text-align: left;
         margin-bottom: 15vh;
     }
-}
+}/*
 @media screen and (min-device-width : 375px) and (max-device-width : 667px){
     .hero{
         height: 75vh;
@@ -266,5 +266,5 @@
     .fp{
         font-size: 3em;
     }
-}
+}*/
 
