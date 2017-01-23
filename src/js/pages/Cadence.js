@@ -209,7 +209,7 @@ export default class Cadence extends React.Component {
     });
   }
 
-  // UPDATE TEMPLATE
+  // UPDATE CAMPAIGN
   updateCampaign = (campaign) => {
     let tokenHeader = `Token ${this.state.token}`;
     campaign["id"] = this.state.currentView.id
@@ -269,7 +269,8 @@ export default class Cadence extends React.Component {
 
   // DETERMINE TEMPLATE UPDATE/CREATE
   saveTemplate = (template) => {
-    if (template.id === null) {
+    console.log(template);
+    if ((template.id === null) || (template.id === undefined)) {
       this.makeTemplate(template);
     } else {
       this.updateTemplate(template);
@@ -302,7 +303,7 @@ export default class Cadence extends React.Component {
 
     $.post({
       url: "https://api.legionanalytics.com/update-template",
-      data: {id: template.id, name: (template.templateName || null), subject: (template.subject || null), html: (template.html || null)},
+      data: {id: template.id, name: (template.name_of_template || null), subject: (template.subject || null), html: (template.html || null)},
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
@@ -335,7 +336,6 @@ export default class Cadence extends React.Component {
   }
 
   render() {
-    console.log(this.state.currentView);
     return (
         <div class="gray-light-background">
           <div class="sixteen columns">

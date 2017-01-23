@@ -8,11 +8,15 @@ var app = express()
 app.use(express.static(__dirname))
 
 // send all requests to index.html so browserHistory in React Router works
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'src/index.html'))
+app.get('/legion/:type/:id', function (req, res) {
+  res.sendFile(__dirname + '/src/tracking.html')
 })
 
-app.set('port', (process.env.PORT || 8081)); // 5000 was my original port
+app.get('*', function (req, res) {
+  res.sendFile(__dirname + '/src/index.html')
+})
+
+app.set('port', (process.env.PORT || 8081));
 app.listen(app.get('port'), function () {
     console.log('Server has started! http://localhost:' + app.get('port') + '/');
 });

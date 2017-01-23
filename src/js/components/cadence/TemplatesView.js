@@ -32,6 +32,7 @@ export default class TemplateViews extends React.Component {
     let campaignTemplateList = [];
 
     templates.forEach((template) => {
+      console.log(template);
       (template.id !== undefined && template.id !== null) ? campaignTemplateList.push(template.id) : "";
     })
 
@@ -69,7 +70,6 @@ export default class TemplateViews extends React.Component {
   }
 
   handleTemplateSave = (templateChanges) => {
-    this.setState({currentTemplates: null, currentDelays: null, currentView: null})
     this.props.saveTemplate(templateChanges);
   }
 
@@ -93,11 +93,12 @@ export default class TemplateViews extends React.Component {
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {
-        if (this.props.renderState === "campaign") {
+        console.log(template);
+        if ((this.props.renderState === "campaign") && (template !== undefined)) {
           return (
             <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index] !== undefined ? delays[index].delay : null} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} />
           )
-        } else {
+        } else if (template !== undefined) {
           return (
             <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={null} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} />
           )
