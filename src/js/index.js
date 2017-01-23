@@ -94,7 +94,8 @@ ReactDOM.render(
         <Route path="campaigns" name="cadence" component={Cadence} onEnter={requireAuth} />
 
         <Route path="profiles" name="profiles" component={Profile} >
-          <Route path=":type(/:id)" name="type" component={Profile} />
+          <Route path=":type/:id" name="type" component={Profile} >
+          </Route>
         </Route>
 
         <Route path="settings" name="settings" component={Settings} onEnter={requireAuth} />
@@ -102,13 +103,12 @@ ReactDOM.render(
         <Route path="tos" name="tos" component={TOS} />
 
         <Route path="directory" name="directory" component={Directory} >
-          <Route path=":type(/:id)" name="directory" component={Directory} >
+          <Route path=":type/:id" name="directory" component={Directory} >
           </Route>
         </Route>
 
-        <Route path="legion" name="tracking" component={Tracking} >
-          <Route path=":type(/:id)" name="tracking" component={Tracking} />
-        </Route>
+        <Route path="legion/r/:id" name="tracking" component={Tracking} />
+        <Route path="legion/e/:id" name="tracking" component={Tracking} />
 
         <Route path="google/success" name="success" component={IntegrationSuccess} />
         <Route path="outlook/success" name="success" component={IntegrationSuccess} />
