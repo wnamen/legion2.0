@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react"
+https://www.legionanalytics.com/profiles/person/2750326import React, { PropTypes } from "react"
 import { Link } from "react-router"
 import classNames from "classnames";
 
@@ -18,7 +18,7 @@ const ColleagueInfo = ({ data, user }) => {
 
       <div class="profile-card colleagues">
         <h6 class="black">Colleagues</h6>
-        {data.map((v, k) => <Link key={k} to={`/profile/person/${v.person__id}`} class="active" >{v.person__name}</Link>)}
+        {data.map((v, k) => <Link key={k} to={`/profiles/person/${v.person__id}`} class="active" >{v.person__name}</Link>)}
       </div>
     </div>
   )
