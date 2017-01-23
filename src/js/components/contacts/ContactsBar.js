@@ -32,10 +32,11 @@ export default class ContactsBar extends React.Component {
     let filename;
     $("#hiddenInput").trigger("click");
     $('#hiddenInput').change(function() {
+        var file = $(this)[0].files[0];
         path = $(this).val();
         filename = path.replace(/^.*\\/, "");
         $('.fileName').text(filename);
-        self.props.uploadCSV(path, filename)
+        self.props.uploadCSV(file, filename)
     });
 
   }
@@ -63,6 +64,7 @@ export default class ContactsBar extends React.Component {
 
   handleRemoveFromList = (e) => {
     this.context.removeSelected()
+    this.props.onNewListView(this.state.selectedListView);
   }
 
   handleModalClose = (e) => {

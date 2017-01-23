@@ -1,7 +1,6 @@
 import React, { PropTypes, Component, Children } from 'react';
 import cookie                 from "react-cookie";
-import { Link }               from "react-router";
-import isEqual from 'lodash.isequal';
+import { Link }               from "react-router"
 import { CubeGrid }           from "better-react-spinkit"
 import $                      from "jquery"
 
@@ -55,7 +54,11 @@ export default class Search extends React.Component {
 
     return {
       captureSelected: (id) => {
-        checked.push(id)
+        if (checked.length === 0) {
+          return checked.push(id);
+        }
+        
+        checked.indexOf(id) !== -1 ? checked.splice(checked.indexOf(id), 1) : checked.push(id);
       },
 
       purchaseSelected: (id) => {
@@ -249,77 +252,3 @@ export default class Search extends React.Component {
 Search.contextTypes = {
   http: PropTypes.func.isRequired
 };
-
-
-// doFilter = (data) => {
-//   const { resultsArray, results } = this.state;
-//
-//   let filtered = data.reduce((previousValue, currentValue) => {
-//     return resultsArray.filter(c =>
-//       c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-//     ).concat(previousValue)
-//   }, []);
-//
-//   this.setState({
-//     resultsArray: filtered
-//   })
-//
-// }
-//
-// filterBySize(data, type) {
-//
-//   const { results, resultsArray } = this.state;
-//
-//   console.log(results.results);
-//   console.log(resultsArray);
-//
-//   let bySize = data.filter(v => v.name === 'size');
-//   let byRevenue = data.filter(v => v.name === 'revenue');
-//   let byFunding = data.filter(v => v.name === 'funding');
-//
-//   let filtered1 = bySize.length ?    this.doFilter(bySize)    : '' ;
-//   let filtered2 = byRevenue.length ? this.doFilter(byRevenue) : results.results;
-//   let filtered3 = byFunding.length ? this.doFilter(byRevenue) : results.results;
-// };
-//
-// filterByRevenue(data){
-//
-//   const { resultsArray, result} = this.state;
-//
-//   let filtered = data.length ?
-//
-//     data.filter(v => v.name === 'company_size').reduce((previousValue, currentValue) => {
-//
-//       return resultsArray.filter(c =>
-//         c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-//       ).concat(previousValue)
-//
-//     }, resultsArray)
-//
-//     : resultsArray;
-//
-//   this.setState({
-//     resultsArray: filtered
-//   })
-// };
-//
-// filterByFunding(data){
-//
-//   const { resultsArray, result} = this.state;
-//
-//   let filtered = data.length ?
-//
-//     data.filter(v => v.name === 'funding').reduce((previousValue, currentValue) => {
-//
-//       return resultsArray.filter(c =>
-//         c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-//       ).concat(previousValue)
-//
-//     }, resultsArray)
-//
-//     : resultsArray;
-//
-//   this.setState({
-//     resultsArray: filtered
-//   })
-// };

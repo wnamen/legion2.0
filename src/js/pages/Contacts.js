@@ -39,7 +39,7 @@ export default class Contacts extends React.Component {
 
   getChildContext() {
     const { http } = this.context;
-    const checked = [];
+    let checked = [];
     let selectionStatus = true;
 
     return {
@@ -49,37 +49,25 @@ export default class Contacts extends React.Component {
         if (checked.length === 0) {
           return checked.push(id);
         }
-        console.log(checked);
-
-        checked.forEach((checked_id) => {
-          console.log(checked);
-          if (checked_id === id) {
-            checked.splice(checked.indexOf(id), 1)
-          } else {
-            return checked.push(id)
-          }
-          console.log(checked);
-        })
-        if (checked.length === 0) {
-          selectionStatus = false;
-        } else {
-          selectionStatus = true;
-        }
+        
+        checked.indexOf(id) !== -1 ? checked.splice(checked.indexOf(id), 1) : checked.push(id);
       },
 
       copySelected: (id) => {
         let params = {tm_id: id, prospect_ids: checked};
-        console.log(id);
-        console.log(checked);
-        console.log(params);
         http.post('/copy-contacts-to-tm', params: params)
           .then(response => console.log(response))
       },
 
       removeSelected: () => {
+        let self = this;
         let params = {tm_id: this.state.currentViewId, prospect_ids: checked};
         http.post('/remove-contacts-from-tm', params: params)
-          .then(response => console.log(response))
+          .then(response => {
+            console.log(self);
+            console.log(self.state.currentViewId);
+            self.getNewListView(self.state.currentViewId)
+          })
       }
     }
   }
@@ -143,6 +131,7 @@ export default class Contacts extends React.Component {
   getNewListView = (listID) => {
     this.setState({loading:true});
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(listID);
 
     $.get({
       url:`https://api.legionanalytics.com/contacts/${listID}?page_size=50`,
@@ -187,13 +176,13 @@ export default class Contacts extends React.Component {
   }
 
   //UPLOADS CSV TO BACKEND TO BEGIN MAPPING
-  uploadCSV = (path, filename) => {
+  uploadCSV = (file, filename) => {
     let tokenHeader = `Token ${this.state.token}`;
-
     $.post({
       url: "https://api.legionanalytics.com/upload-document",
       headers: {"Authorization": tokenHeader, "Content-Disposition": `attachment; filename=${filename}`, "Content-Type": "text/csv"},
-      data: path,
+      data: file,
+      processData: false,
       success: (response) => {
         console.log(response);
         this.setState({
