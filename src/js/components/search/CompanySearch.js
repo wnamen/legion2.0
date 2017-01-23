@@ -9,7 +9,7 @@ import TechnologySearch from "../../actions/search/TechnologySearch"
 
 
 class CompanySearch extends Component {
-  
+
   constructor(props) {
 		super(props);
 		this.state = {
@@ -28,25 +28,25 @@ class CompanySearch extends Component {
     let selectedLength = e.target.selectedOptions.length;
     let selectedName = e.target.name;
     const { selected } = this.state;
-  
+
     let clearState = selected.filter(v => v.name !== selectedName);
-    
+
     for (let i = 0; i < selectedLength; i++) {
       let option = e.target.selectedOptions[i];
-  
+
       clearState.push({
         name: selectedName,
         value: option.value
       })
     }
-    
+
     this.props.filterBy(clearState, e.target.dataset.id);
-  
+
     this.setState({
       selected: clearState
     });
   };
-  
+
 
   removeTag(e) {
     e.preventDefault();
@@ -72,12 +72,11 @@ class CompanySearch extends Component {
       return
     }
 
-    if ((e.target.title === 'industry') || (e.target.title === 'interest') ||(e.target.title === 'technology')) {
+    if ((e.target.title === 'industries') || (e.target.title === 'technologies')) {
       new_tags.push({
         id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
         name: e.target.title,
-        value: e.target.label,
-        index: e.target.value
+        value: e.target.value
       });
     } else {
       new_tags.push({
@@ -95,11 +94,7 @@ class CompanySearch extends Component {
   getSearch() {
     let query = "";
     this.state.inputTags.forEach((target) => {
-      if ((target.name === 'industry') || (target.name === 'interest') ||(target.name === 'technology')) {
-        query = query + `${target.name}=${target.index}&`;
-      } else {
-        query = query + `${target.name}=${target.value}&`;
-      }
+      query = query + `${target.name}=${target.value}&`;
     });
 
     console.log(query);
@@ -121,9 +116,9 @@ class CompanySearch extends Component {
     let tags = {};
 
     if (inputTags !== undefined){
-      
+
       inputTags.map(tag => {
-        
+
         if (tags[tag.name] !== undefined) {
           tags[tag.name].push(
             <a href="" id={tag.id} class="tags" onClick={this.removeTag} key={tag.id} name={tag.title || tag.name} value={tag.value}>{tag.value}&nbsp;&nbsp;&nbsp;x</a>
@@ -166,7 +161,7 @@ class CompanySearch extends Component {
               <label>Industry</label>
               <IndustrySearch onDebouncer={this.handleDebouncer} userToken={userToken} />
               <div class="tag-container">
-                {tags.industry}
+                {tags.industries}
               </div>
             </div>
 
@@ -218,19 +213,19 @@ class CompanySearch extends Component {
               <label>Technology <small>Advanced Filter</small></label>
               <TechnologySearch onDebouncer={this.handleDebouncer} userToken={userToken} disabled={searchFilters} />
               <div class="tag-container">
-                {tags.technology}
+                {tags.technologies}
               </div>
             </div>
 
             <div class="filter">
               <label>Social Profiles <small>Advanced Filter</small></label>
-              <Input checked={checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' disabled={searchFilters} />
-              <Input checked={checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' disabled={searchFilters} />
-              <Input checked={checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' disabled={searchFilters} />
-              <Input checked={checked} onChange={this.socialCheck} name='github' type='checkbox' value="3" label='Github' disabled={searchFilters} />
-              <Input checked={checked} onChange={this.socialCheck} name='pinterest' type='checkbox' value="4" label='Pinterest' disabled={searchFilters} />
-              <Input checked={checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' disabled={searchFilters} />
-              <Input checked={checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='has_facebook' type='checkbox' value="0" label='Facebook' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='has_linkedin' type='checkbox' value="1" label='Linkedin' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='has_twitter' type='checkbox' value="2" label='Twitter' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='has_github' type='checkbox' value="3" label='Github' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='has_pinterest' type='checkbox' value="4" label='Pinterest' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='has_instagram' type='checkbox' value="5" label='Instagram' disabled={searchFilters} />
+              <Input checked={checked} onChange={this.socialCheck} name='has_wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={searchFilters} />
             </div>
           </div>
     )

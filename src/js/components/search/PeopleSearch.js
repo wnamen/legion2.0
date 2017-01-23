@@ -85,12 +85,11 @@ export default class PeopleSearch extends React.Component {
       return
     }
 
-    if ((e.target.title === 'industry') || (e.target.title === 'interest') ) {
+    if ((e.target.title === 'industries') || (e.target.title === 'interests') ) {
       new_tags.push({
         id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
         name: e.target.title,
-        value: e.target.label,
-        index: e.target.value
+        value: e.target.value
       });
     } else {
       new_tags.push({
@@ -108,11 +107,7 @@ export default class PeopleSearch extends React.Component {
   getSearch() {
     let query = "";
     this.state.inputTags.forEach((target) => {
-      if ((target.name === 'industry') || (target.name === 'interest') ||(target.name === 'technology')) {
-        query = query + `${target.name}=${target.index}&`;
-      } else {
-        query = query + `${target.name}=${target.value}&`;
-      }
+      query = query + `${target.name}=${target.value}&`;
     });
 
     this.setState({ query: query });
@@ -191,7 +186,7 @@ export default class PeopleSearch extends React.Component {
               <label>Industry</label>
               <IndustrySearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} />
               <div class="tag-container">
-                {tags.industry}
+                {tags.industries}
               </div>
             </div>
 
@@ -275,7 +270,7 @@ export default class PeopleSearch extends React.Component {
               <label>Interest <small>Advanced Filter</small></label>
               <InterestSearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} disabled={this.props.searchFilters} />
               <div class="tag-container">
-                {tags.interest}
+                {tags.interests}
               </div>
             </div>
 

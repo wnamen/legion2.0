@@ -61,7 +61,7 @@ export default class IndustrySearch extends React.Component {
   getIndustrySuggestionValue = suggestion => "";
 
   renderIndustrySuggestion = suggestion => (
-      <option value={suggestion.industry_id} title="industry">{suggestion.name}</option>
+      <option value={suggestion.name} title="industries">{suggestion.name}</option>
   );
 
   onIndustrySuggestionSearch = (event, { newValue }) => {

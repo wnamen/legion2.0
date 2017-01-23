@@ -60,7 +60,7 @@ export default class InterestSearch extends React.Component {
   getInterestSuggestionValue = suggestion => "";
 
   renderInterestSuggestion = suggestion => (
-    <option value={suggestion.industry_id} title="interest">{suggestion.name}</option>
+    <option value={suggestion.name} title="interests">{suggestion.name}</option>
   );
 
   onInterestSuggestionSearch = (event, { newValue }) => {
