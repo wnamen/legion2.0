@@ -17,6 +17,7 @@ export default class Contacts extends React.Component {
       token: cookie.load("token"),
       loading: false,
       mapping: false,
+      mappedArray: [],
       mappedColumns: {},
       results: [],
       tmLists: [],
@@ -25,6 +26,7 @@ export default class Contacts extends React.Component {
     this.updateMappingStatus = this.updateMappingStatus.bind(this);
     this.uploadCSV = this.uploadCSV.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
+    this.mapCSV = this.mapCSV.bind(this);
     this.handleCaptureColumn = this.handleCaptureColumn.bind(this);
     this.changeListView = this.changeListView.bind(this);
     this.getNewListView = this.getNewListView.bind(this);
@@ -60,7 +62,6 @@ export default class Contacts extends React.Component {
       copySelected: (id) => {
         let params = {tm_id: id, prospect_ids: checked};
         http.post('/copy-contacts-to-tm', params: params)
-          .then(response => console.log(response))
       },
 
       removeSelected: () => {
@@ -68,8 +69,6 @@ export default class Contacts extends React.Component {
         let params = {tm_id: this.state.currentViewId, prospect_ids: checked};
         http.post('/remove-contacts-from-tm', params: params)
           .then(response => {
-            console.log(self);
-            console.log(self.state.currentViewId);
             self.getNewListView(self.state.currentViewId)
           })
       }
@@ -93,7 +92,6 @@ export default class Contacts extends React.Component {
       crossDomain: true,
       cache:false,
       success:function(response){
-        console.log(response);
         this.loadInitialListView(response.results);
         this.setState({
           tmLists:response.results
@@ -117,7 +115,6 @@ export default class Contacts extends React.Component {
           crossDomain: true,
           cache:false,
           success:function(results){
-            console.log(results);
             this.setState({
               results:results,
               loading: false,
@@ -135,7 +132,6 @@ export default class Contacts extends React.Component {
   getNewListView = (listID) => {
     this.setState({loading:true});
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(listID);
 
     $.get({
       url:`https://api.legionanalytics.com/contacts/${listID}?page_size=50`,
@@ -167,11 +163,9 @@ export default class Contacts extends React.Component {
           headers: {"Authorization": tokenHeader },
           data: {id: list.id},
           success: (response) => {
-            console.log(response);
             this.loadAvailableLists();
           },
           error: (response) => {
-            console.log(response);
           }
 
         })
@@ -186,39 +180,15 @@ export default class Contacts extends React.Component {
     let tokenHeader = `Token ${this.state.token}`;
 
     $.get({
-      url: `https://api.legionanalytics.com/contacts/${this.state.currentViewId}?page_size=1000&search=${query}`,
+      url: `https://api.legionanalytics.com/contacts/${this.state.currentViewId}?page_size=1000&keyword=${query}`,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
-        console.log(results);
         this.setState({
-          results:results,
+          results:response,
           loading: false
         });
       },
       error: (response) => {
-        console.log(response);
-      }
-
-    })
-  }
-
-  //UPLOADS CSV TO BACKEND TO BEGIN MAPPING
-  uploadCSV = (file, filename) => {
-    let tokenHeader = `Token ${this.state.token}`;
-    $.post({
-      url: "https://api.legionanalytics.com/upload-document",
-      headers: {"Authorization": tokenHeader, "Content-Disposition": `attachment; filename=${filename}`, "Content-Type": "text/csv"},
-      data: file,
-      processData: false,
-      success: (response) => {
-        console.log(response);
-        this.setState({
-          importedSample: response,
-          mapFileName: filename
-        })
-      },
-      error: (response) => {
-        console.log(response);
       }
 
     })
@@ -232,21 +202,53 @@ export default class Contacts extends React.Component {
       headers: {"Authorization": tokenHeader},
       processData: false,
       success: (response) => {
-        console.log(response);
       },
       error: (response) => {
-        console.log(response);
       }
+    })
+  }
 
+  //UPLOADS CSV TO BACKEND TO BEGIN MAPPING
+  uploadCSV = (file, filename) => {
+    let tokenHeader = `Token ${this.state.token}`;
+    $.post({
+      url: "https://api.legionanalytics.com/upload-document",
+      headers: {"Authorization": tokenHeader, "Content-Disposition": `attachment; filename=${filename}`, "Content-Type": "text/csv"},
+      data: file,
+      processData: false,
+      success: (response) => {
+        this.setState({
+          documentID: response.id,
+          importedSample: response.results,
+          mappedArray: new Array(response.results.length),
+          mapFileName: filename
+        })
+      },
+      error: (response) => {
+      }
+    })
+  }
+
+  mapCSV = () => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+
+    $.post({
+      url: "https://api.legionanalytics.com/update-document",
+      headers: {"Authorization": tokenHeader},
+      data: {document_id: this.state.documentID, document_head: this.state.mappedArray},
+      success: (response) => {
+      },
+      error: (response) => {
+      }
     })
   }
 
   // CAPTURE MAPPED COLUMNS
   handleCaptureColumn = (column, value) => {
-    let mappedColumns = this.state.mappedColumns;
-    mappedColumns[column] = value;
-    console.log(mappedColumns);
-    this.setState({mappedColumns});
+    let mappedArray = this.state.mappedArray;
+    mappedArray[column] = value;
+    this.setState({mappedArray});
   }
 
   // TOGGLE FOR MAPPING NEW CSVS
@@ -270,7 +272,7 @@ export default class Contacts extends React.Component {
     if (this.state.mapping) {
       currentView = (
         <div class="sixteen columns">
-          <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} filename={this.state.mapFileName}/>
+          <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} filename={this.state.mapFileName} mapCSV={this.mapCSV}/>
           <MapTable contacts={this.state.importedSample} handleCaptureColumn={this.handleCaptureColumn}/>
           <MapResults />
         </div>

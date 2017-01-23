@@ -20,12 +20,12 @@ export default class ContactsBar extends React.Component {
   }
 
   handleModalClose = () => {
-    console.log("clicked");
     $(".modal-close").trigger("click");
   }
 
 
   completeMapping = () => {
+    this.props.mapCSV();
     this.props.updateMappingStatus();
   }
 

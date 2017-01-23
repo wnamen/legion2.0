@@ -29,7 +29,6 @@ export default class ContactsBar extends React.Component {
   }
 
   searchContacts = (e) => {
-    console.log(e.target.value);
     this.props.searchCurrentList(e.target.value);
   }
 

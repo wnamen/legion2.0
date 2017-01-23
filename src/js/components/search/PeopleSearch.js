@@ -34,7 +34,7 @@ export default class PeopleSearch extends React.Component {
       let option = e.target.selectedOptions[i];
       selected.push({name: selectedName, value: option.value})
     }
-    this.setState({selected: selected})
+    // this.setState({selected: selected})
   }
 
   socialCheck(e) {
@@ -42,6 +42,7 @@ export default class PeopleSearch extends React.Component {
     let status = e.target.checked;
     let name = e.target.name;
     let target_id = parseInt(e.target.value);
+    console.log(status);
 
     if (status) {
       current_tags.push({

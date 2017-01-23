@@ -17,6 +17,7 @@ export default class MapTable extends React.Component {
     let column_count;
     let contacts;
 
+
     if (this.props.contacts !== undefined) {
       contacts = this.props.contacts.map((contact, i) => {
         column_count = Object.keys(contact).length;
