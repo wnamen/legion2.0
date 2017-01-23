@@ -24,8 +24,8 @@ export default class BillingForm extends React.Component {
   }
 
   componentDidMount = () => {
-  	// Stripe.setPublishableKey('pk_live_dOwIuwJIzpJSQrgYCPDNgUy1'); // set your test public key
-    Stripe.setPublishableKey('pk_test_hlppy9I1vUFGVYBltYq75eAW'); // set your test public key
+  	Stripe.setPublishableKey('pk_live_dOwIuwJIzpJSQrgYCPDNgUy1'); // set your test public key
+    // Stripe.setPublishableKey('pk_test_hlppy9I1vUFGVYBltYq75eAW'); // set your test public key
   }
 
 	handleChange = (e) => {
