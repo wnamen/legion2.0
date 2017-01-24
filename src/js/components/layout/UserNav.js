@@ -27,13 +27,14 @@ class UserNav extends Component {
       headers: {
         'Authorization': `Token ${cookie.load('token')}`
       }
-    }).then(response =>
-      console.log(response.data.primary_credit_card);
+    }).then(response => {
+      console.log(response.data.primary_credit_card)
       this.setState({
         userInfo: response.data,
         currentCredits: response.data.credits,
         currentBilling: (response.data.primary_credit_card !== null) ? true : false,
       })
+    }
     );
   };
 

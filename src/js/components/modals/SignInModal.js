@@ -24,19 +24,12 @@ class SignInModal extends Component {
     const { http } = this.context;
 
     http.post('login', {
-<<<<<<< HEAD
-      username: email,
-      password: password
-    }).then(response => this.cookieSaver(response.data))
-    .catch(response => console.log(response))
-  };
-=======
+
        username: email,
        password: password
      }).then(response => this.cookieSaver(response.data))
      .catch(response => this.errorValidation())
    };
->>>>>>> 1bd4055b3c6e2e92876ac67b0cb8de21a2534ba4
 
   cookieSaver = (response) => {
     const { router } = this.context;
