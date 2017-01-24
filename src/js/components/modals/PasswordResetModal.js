@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { PropTypes, Component }       from "react";
 import { Input } from 'react-materialize'
 
 
@@ -20,18 +20,24 @@ class PasswordResetModal extends Component {
     this.setState({ uniqueCode: e.target.value })
   };
 
-  validateNewPassword = () => {
+  validateNewPassword = (e) => {
+    e.preventDefault();
     if (this.passwordCheck()) {
-      console.log("validation passed");
-      this.props.handleModalClose();
+      this.resetPassword();
     } else {
-      console.log("validation failed");
     }
   };
 
   passwordCheck = () => {
     const { newPassword, passwordConfirm } = this.state;
-    return newPassword === Boolean(passwordConfirm);
+    return newPassword === passwordConfirm;
+  };
+
+  resetPassword = () => {
+    this.context.http.post('settings', {token: this.state.uniqueCode, password: this.state.newPassword }
+      ).then(response => {
+        this.props.handleModalClose()
+      })
   };
 
   render() {
@@ -56,5 +62,9 @@ class PasswordResetModal extends Component {
     )
   }
 }
+
+PasswordResetModal.contextTypes = {
+  http: PropTypes.func.isRequired
+};
 
 export default PasswordResetModal;

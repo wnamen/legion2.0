@@ -7,7 +7,7 @@ import BillingModal from "../modals/BillingModal"
 import NewListModal from "../modals/NewListModal";
 
 export default class ActionBar extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,7 @@ export default class ActionBar extends React.Component {
       tmLists: [],
       currentModal: true
     };
-    
+
     this.renderBilling = this.renderBilling.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
     this.loadAvailableLists = this.loadAvailableLists.bind(this);
@@ -69,8 +69,7 @@ export default class ActionBar extends React.Component {
   render(){
     const modalTrigger = <NavItem><div>+ Create new list</div></NavItem>;
 
-    let data = this.props.results;
-    let result_count = data.count;
+    let result_count = this.props.resultsCount;
     if (result_count !== undefined) {
       result_count = result_count.toLocaleString();
     }
@@ -91,7 +90,7 @@ export default class ActionBar extends React.Component {
         <nav class="navbar white-background small-border gray-border">
           <div id="actionBar" class="nav-wrapper">
             <ul class="left">
-              <li><span id="resultsTableCount" class="black">Showing {result_count} results</span></li>
+              <li><span id="resultsTableCount" class="black">{ result_count && `Found ${result_count} results`}</span></li>
             </ul>
 
             <ul class="right">

@@ -7,14 +7,15 @@ class ActionSaved extends Component {
   }
 
   closeNotification() {
-    this.props.renderBilling();
+    this.props.closeNotification();
   }
 
   render() {
 
     return (
-      <div class="sixteen campaignListing gray">
+      <div class="six offset-by-five large-bottom-margin campaignListing electric-blue white-background gray-border notifications">
         <div class="text-left inline-block full-width">
+          The contacts have been saved to your list!
           <span onClick={this.closeNotification} class="text-right">&times;</span>
         </div>
       </div>

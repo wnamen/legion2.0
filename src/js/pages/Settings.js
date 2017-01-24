@@ -17,11 +17,13 @@ class Settings extends Component {
       userInfo: "",
       emails: []
     };
+    this.sendUniqueCode = this.sendUniqueCode.bind(this);
   }
 
   handleModalClose = () => {
     console.log("clicked");
     $(".modal-close").trigger("click");
+    this.updateSettings();
   };
 
   componentDidMount = () => {
@@ -39,6 +41,15 @@ class Settings extends Component {
         emails: response.data.emails
       })
     );
+  };
+
+  sendUniqueCode = () => {
+    console.log("sent");
+    this.context.http.post('settings', {pw_token: true}).then(response => console.log())
+  };
+
+  saveAlias = (changes) => {
+    this.context.http.post('settings', changes).then(() => this.updateSettings())
   };
 
   saveAlias = (changes) => {
@@ -63,7 +74,7 @@ class Settings extends Component {
 
         {!userInfo ? <CubeGrid size={50} color="#36b7ea"/> :
         <div>
-          <MyAccount userInfo={userInfo} handleModalClose={this.handleModalClose} />
+          <MyAccount userInfo={userInfo} sendUniqueCode={this.sendUniqueCode} handleModalClose={this.handleModalClose} />
           <Integrations userInfo={userInfo} />
           <EmailConfiguration emails={emails} saveAlias={this.saveAlias} removeAlias={this.removeAlias} />
           <Billing userInfo={userInfo} saveCard={this.saveCard} updateSettings={this.updateSettings}/>

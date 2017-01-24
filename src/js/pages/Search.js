@@ -7,6 +7,7 @@ import $                      from "jquery"
 import ActionBar              from "../components/search/ActionBar"
 import SearchMenu             from "../components/search/SearchMenu"
 import ResultsTable           from "../components/search/ResultsTable"
+import ActionSaved            from "../components/notifications/ActionSaved"
 
 export default class Search extends React.Component {
 
@@ -63,7 +64,7 @@ export default class Search extends React.Component {
 
       purchaseSelected: (id) => {
         let params = this.state.apiState.job === true ? {tm_id: id, jobs: checked} : {tm_id: id, companies: checked};
-        http.post('/add-contacts-to-tm', params).then(response => console.log(response))
+        http.post('/add-contacts-to-tm', params).then(response => this.setState({purchasedAlert: response, notification: true}))
       },
     }
   }
@@ -129,6 +130,7 @@ export default class Search extends React.Component {
       success:function(results){
         this.setState({
           results: results,
+          resultsCount: results.count,
           resultsArray: this.state.resultsArray.concat(results.results),
           pureResult: this.state.resultsArray.concat(results.results),
           loading: false
@@ -150,6 +152,7 @@ export default class Search extends React.Component {
       success:function(results){
         this.setState({
           results: results,
+          resultsCount: results.count,
           resultsArray: this.state.resultsArray.concat(results.results),
           pureResult: this.state.pureResult.concat(results.results)
         });
@@ -211,13 +214,18 @@ export default class Search extends React.Component {
     this.forceUpdate();
   };
 
+  closeNotification = () => {
+    this.setState({notification: false})
+  }
+
   render() {
 
-    const { searchFilters, interestSuggestions, apiState, token, results, loading, resultsArray} = this.state;
+    const { searchFilters, interestSuggestions, apiState, token, results, resultsCount, loading, resultsArray} = this.state;
 
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
+          { this.state.notification && <ActionSaved response={this.state.purchaseSelected} closeNotification={this.closeNotification}/> }
           <SearchMenu
             searchFilters={searchFilters}
             interestSuggestions={interestSuggestions}
@@ -228,7 +236,7 @@ export default class Search extends React.Component {
             onSearchChange={this.handleSearch}
             onInterestSearch={this.handleInterestSearch}
           />
-          <ActionBar results={results}/>
+        <ActionBar resultsCount={resultsCount}/>
           { loading ?
             <div class="eleven columns">
               <div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding">
