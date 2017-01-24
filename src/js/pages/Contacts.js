@@ -202,6 +202,7 @@ export default class Contacts extends React.Component {
       headers: {"Authorization": tokenHeader},
       processData: false,
       success: (response) => {
+        console.log(response);
       },
       error: (response) => {
       }

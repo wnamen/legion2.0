@@ -15,6 +15,7 @@ export default class ContactsBar extends React.Component {
     this.handleDebouncer = this.handleDebouncer.bind(this);
     this.searchContacts = debounce(500, this.searchContacts.bind(this));
     this.getCSV = this.getCSV.bind(this);
+    this.exportCSV = this.exportCSV.bind(this);
     this.beginMapping = this.beginMapping.bind(this);
     this.handleNewListView = this.handleNewListView.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
@@ -45,6 +46,10 @@ export default class ContactsBar extends React.Component {
         self.props.uploadCSV(file, filename)
     });
 
+  }
+
+  exportCSV = () => {
+    this.props.exportCSV()
   }
 
   beginMapping = () => {
@@ -129,7 +134,7 @@ export default class ContactsBar extends React.Component {
 
             <ul class="right">
               <li onClick={this.deleteCurrentList} class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
-              <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray" onClick={this.props.exportCSV()}>Export CSV</div></li>
+              <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray" onClick={this.exportCSV}>Export CSV</div></li>
 
               { this.context.isSelected &&
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={
