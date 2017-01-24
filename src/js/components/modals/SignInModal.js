@@ -24,10 +24,11 @@ class SignInModal extends Component {
     const { http } = this.context;
     
     http.post('login', {
-      username: email,
-      password: password
-    }).then(response => this.cookieSaver(response.data))
-  };
+       username: email,
+       password: password
+     }).then(response => this.cookieSaver(response.data))
+     .catch(response => this.errorValidation())
+   };
 
   cookieSaver = (response) => {
     const { router } = this.context;
@@ -37,7 +38,15 @@ class SignInModal extends Component {
     router.push("/search");
   };
 
+  errorValidation = (e) => {
+    $(".canValidate").addClass("failedValidation");
+      window.setTimeout(function(){
+        $(".canValidate").removeClass("failedValidation");
+      },1000);
+  };
+
   render() {
+
     const modalTrigger =
       <div>
         <small class="text-center">
@@ -52,8 +61,8 @@ class SignInModal extends Component {
           		<h1 class="modalTitle gray">Secure Sign In</h1>
             
           		<form id="billingModalForm" onSubmit={this.signIn}>
-      	          <Input type="email" placeholder="Email Address" class="failedValidation" onChange={this.handleEmailChange} required/>
-      	          <Input type="password" placeholder="Password" class="failedValidation" onChange={this.handlePasswordChange} required/>
+      	          <Input type="email" placeholder="Email Address" class="canValidate" onChange={this.handleEmailChange} required/>
+      	          <Input type="password" placeholder="Password" class="canValidate" onChange={this.handlePasswordChange} required/>
                   <Modal trigger={modalTrigger}>
                     <PasswordResetModal />
                   </Modal>
