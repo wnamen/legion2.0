@@ -277,3 +277,17 @@ input[name=newSubjectName]:focus:not([readonly]){
 .delayAdjuster{
   font-size: 0.8em;
 }
+.working.chooseTemplate.pTags .col.input-field .select-wrapper .dropdown-content li{
+	padding:10px;
+}
+
+.working.chooseTemplate.pTags .col.input-field .select-wrapper .dropdown-content li > a{
+	padding: 5px 10px;
+  	line-height: normal;
+}
+.working.chooseTemplate.pTags .col.input-field .select-wrapper .dropdown-content{
+	width: 200px !important;
+  	top: 44px !important;
+  	padding: 10px 0;
+  	max-height: 30vh !important;
+}
