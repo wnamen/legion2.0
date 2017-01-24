@@ -17,58 +17,31 @@ const planTitle = {
   },
   premium: {
     fullName: 'Premium',
-    currentTitle: '',
-    updateTitle: '',
+    currentTitle: '+ Pay-As-You-Go Package Includes',
+    updateTitle: '+ Your Current Package Includes',
     upgradeTitle: '',
   }
 };
 
-const planDesc = (plan) => {
-  return plan === 'payg' ?
-    <div class="opSlider">
-      <div class="gray">&nbsp; 500 Search Queries/Month</div>
-      <div class="gray">&nbsp; 50,000 Search Results/Month</div>
-      <div class="gray">&nbsp; 10,000 Uploaded Contacts</div>
-      <div class="gray">&nbsp; Build up to 15 Lists</div>
-      <div class="gray">&nbsp; Use 5 Emails Templates Per Campaign</div>
-      <div class="gray">&nbsp; 1 Connected Email Accounts</div>
-      <div class="gray">&nbsp; Limited Campaign Activity Stream</div>
-      <div class="gray">&nbsp; Basic Search Filters</div>
-    </div>
-    :
-    <div class="opSlider">
-      <div class="gray">&nbsp; Unlimited Search Queries/Month</div>
-      <div class="gray">&nbsp; Unlimited Search Results/Month</div>
-      <div class="gray">&nbsp; Unlimited Uploaded Contacts</div>
-      <div class="gray">&nbsp; Unlimited Lists</div>
-      <div class="gray">&nbsp; Unlimited Emails Per Campaign</div>
-      <div class="gray">&nbsp; 5 Connected Email Accounts</div>
-      <div class="gray">&nbsp; Live Campaign Activity Stream</div>
-      <div class="gray">&nbsp; Advanced Search Filters</div>
-      <div class="gray">&nbsp; Export CSV</div>
-    </div>
-};
-
-
 class PlanSettings extends Component {
-  
+
   constructor(props, context) {
     super(props, context);
   }
-  
+
   updateProfie = () => {
     const { plan, updateSettings } = this.props;
     const { http } = this.context;
-    
+
     http.post('settings', {
         plan_name: plan === 'payg' ? 'standard' : 'payg'
     }).then(() => updateSettings())
   };
-  
+
   render() {
-    
+
     let { plan } = this.props;
-    
+
     return (
       <div class="eight columns smtxt">
         <div class="gray">
@@ -78,10 +51,29 @@ class PlanSettings extends Component {
           <div class="payg">
             <Collapsible>
               <CollapsibleItem header={planTitle[plan].currentTitle}>
-                {planDesc(plan)}
+                <div class="opSlider">
+                  <div class="gray">&nbsp; 500 Search Queries/Month</div>
+                  <div class="gray">&nbsp; 50,000 Search Results/Month</div>
+                  <div class="gray">&nbsp; 10,000 Uploaded Contacts</div>
+                  <div class="gray">&nbsp; Build up to 15 Lists</div>
+                  <div class="gray">&nbsp; Use 5 Emails Templates Per Campaign</div>
+                  <div class="gray">&nbsp; 1 Connected Email Accounts</div>
+                  <div class="gray">&nbsp; Limited Campaign Activity Stream</div>
+                  <div class="gray">&nbsp; Basic Search Filters</div>
+                </div>
               </CollapsibleItem>
               <CollapsibleItem header={planTitle[plan].updateTitle}>
-                {planDesc(plan)}
+                <div class="opSlider">
+                  <div class="gray">&nbsp; Unlimited Search Queries/Month</div>
+                  <div class="gray">&nbsp; Unlimited Search Results/Month</div>
+                  <div class="gray">&nbsp; Unlimited Uploaded Contacts</div>
+                  <div class="gray">&nbsp; Unlimited Lists</div>
+                  <div class="gray">&nbsp; Unlimited Emails Per Campaign</div>
+                  <div class="gray">&nbsp; 5 Connected Email Accounts</div>
+                  <div class="gray">&nbsp; Live Campaign Activity Stream</div>
+                  <div class="gray">&nbsp; Advanced Search Filters</div>
+                  <div class="gray">&nbsp; Export CSV</div>
+                </div>
               </CollapsibleItem>
             </Collapsible>
           </div>

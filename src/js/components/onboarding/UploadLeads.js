@@ -20,6 +20,7 @@ class UploadLeads extends Component {
     let self = this;
     let path;
     let filename;
+    $("#hiddenInput").trigger("click");
     $('#hiddenInput').change(function() {
         let file = $(this)[0].files[0];
         path = $(this).val();
@@ -39,6 +40,10 @@ class UploadLeads extends Component {
       upload: false
     });
   };
+
+  check = () => {
+    console.log(this.state.file, this.state.data, this.state.upload);
+  }
 
   upload = () => {
     const { file, data } = this.state;
@@ -124,10 +129,10 @@ class UploadLeads extends Component {
 
               :
 
-              <div class={`${extraClass} electric-blue-background file-input`} >                
+              <div class={`${extraClass} electric-blue-background file-input`} >
 
-                <li><a class="contact-upload" onClick={this.onHandleFile}>Upload .CSV</a></li>
-                <input type="file" accept=".csv" id="hiddenInput" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn hidden"></input>
+                <input onChange={this.check} type="file" accept=".csv" id="hiddenInput" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn hidden"></input>
+                <a class="contact-upload white" onClick={this.onHandleFile}>Upload .CSV</a>
 
               </div>}
 

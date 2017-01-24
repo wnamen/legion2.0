@@ -11,7 +11,9 @@ class UploadContactsModal extends Component {
     this.setState({listName: e.target.value});
   };
 
-  createNewList = () => {
+  createNewList = (e) => {
+
+    e.preventDefault();
 
     const { listName } = this.state;
     const { http } = this.context;
