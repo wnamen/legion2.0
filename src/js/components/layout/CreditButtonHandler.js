@@ -12,23 +12,19 @@ export default class CreditButtonHandler extends React.Component {
   }
 
   handleSelection = (e) => {
-    if (this.props.currentBilling === false) {
-      console.log("null");
+    if ((this.state.selected) && (!this.props.currentBilling)) {
       this.props.handleModalOpen();
     } else if ((this.state.selected) && (this.props.currentBilling)) {
       let tokenHeader = `Token ${this.state.token}`;
-      console.log("purchased");
 
       $.post({
         url: "https://api.legionanalytics.com/purchase-credits",
         headers: {"Authorization": tokenHeader },
         data: {num_credits: this.props.credits, amount_in_dollars: this.props.cost},
         success: (response) => {
-          console.log(response);
           this.props.loadCurrentCredits();
         },
         error: (response) => {
-          console.log(response);
         }
       })
     }
