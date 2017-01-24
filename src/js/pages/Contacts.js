@@ -198,7 +198,7 @@ export default class Contacts extends React.Component {
   exportCSV = () => {
     let tokenHeader = `Token ${this.state.token}`;
     $.post({
-      url: "http://localhost:8000/export-list",
+      url: "https://api.legionanalytics.com/export-list",
       headers: {"Authorization": tokenHeader},
       data: {"id": this.state.currentViewId},
       success: (response) => {

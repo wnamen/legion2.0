@@ -9,15 +9,29 @@ export default class IntegrationSuccess extends React.Component {
     this.state = {
       token: cookie.load("token"),
     }
+    this.authenticate = this.authenticate.bind(this);
   }
 
   componentWillMount = () => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.get({
+      url: "https://api.legionanalytics.com/me",
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(response);
+        this.authenticate(response.settings.plan.onboarded);
+      }
+    })
+  }
+
+  authenticate = (status) => {
     let tokenHeader = `Token ${this.state.token}`;
     let code = this.props.location.query.code;
     let currentPath = this.props.location.pathname;
     let codeBody;
     const { router } = this.context;
-  
+
     if (currentPath.search("google") === -1) {
       codeBody = {outlook_code: code};
     } else if (currentPath.search("outlook" === -1)) {
@@ -29,7 +43,11 @@ export default class IntegrationSuccess extends React.Component {
       headers: {"Authorization": tokenHeader },
       data: codeBody,
       success: (response) => {
-        router.push('/settings');
+        if (status) {
+          router.push('/settings');
+        } else {
+          router.push('/onboarding');
+        }
       },
       error: (response) => {
         console.log(response);
