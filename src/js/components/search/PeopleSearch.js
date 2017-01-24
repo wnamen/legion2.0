@@ -36,7 +36,6 @@ export default class PeopleSearch extends React.Component {
     }
   }
 
-    console.log(nums);
     var min_of_array = Math.min.apply(Math, nums);
     var max_of_array = Math.max.apply(Math, nums);
 
@@ -54,6 +53,24 @@ export default class PeopleSearch extends React.Component {
       })
 
     }
+    this.setState({ inputTags: current_tags });
+    this.getSearch();
+  }
+
+  handleDepartmentSelected = (e) => {
+    let current_tags = this.state.current_tags != undefined ? this.state.current_tags: [];
+    let jobs = this.props.departments[e.target.value];
+
+    console.log(jobs);
+
+    jobs.forEach((job) => {
+      current_tags.push({
+        id: current_tags.length > 0 ? current_tags[current_tags.length-1].id + 1 : 1,
+        name: "title",
+        value: job
+      })
+    })
+
     this.setState({ inputTags: current_tags });
     this.getSearch();
   }
@@ -211,17 +228,17 @@ export default class PeopleSearch extends React.Component {
             </div>
 
             <label>Department {advanced_filter}</label>
-            <Input type='select' name="department" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
-              <option value="customer-support">Customer Support</option>
-              <option value="c_suite">C-Suite</option>
+            <Input type='select' name="department" onChange={this.handleDepartmentSelected} disabled={this.props.searchFilters} multiple>
+              <option value="customerSupport">Customer Support</option>
+              <option value="management">C-Suite</option>
               <option value="engineering">Engineering</option>
               <option value="finance">Finance</option>
-              <option value="human_resources">Human Resources</option>
+              <option value="humanResources">Human Resources</option>
               <option value="legal">Legal</option>
               <option value="marketing">Marketing</option>
               <option value="operations">Operations</option>
               <option value="purchasing">Purchasing</option>
-              <option value="r&d">R&D</option>
+              <option value="rAndD">R&D</option>
               <option value="sales">Sales</option>
             </Input>
 

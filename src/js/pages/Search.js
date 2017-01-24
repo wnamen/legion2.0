@@ -10,7 +10,7 @@ import ResultsTable           from "../components/search/ResultsTable"
 import ActionSaved            from "../components/notifications/ActionSaved"
 
 export default class Search extends React.Component {
-
+ 
   constructor(props){
     super(props);
 
