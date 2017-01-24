@@ -125,3 +125,11 @@
     width: 80%;
   }
 }
+#billingModal #billingModalForm{
+  width: 100% !important;
+  text-align: center !important;
+  margin-left: 0 !important;
+}
+#billingModal #billingModalForm .cardSave{
+  margin-left: 0;
+}

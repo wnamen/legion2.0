@@ -123,10 +123,6 @@ strong.largeText{
 a[href="https://froala.com/wysiwyg-editor"] {
     display: none !important;
 }
-<<<<<<< HEAD
-=======
-
-
 
 @keyframes failedValidation {
   0%, 100%{
@@ -153,4 +149,3 @@ a[href="https://froala.com/wysiwyg-editor"] {
   animation: failedValidation 0.82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
 }
->>>>>>> 1bd4055b3c6e2e92876ac67b0cb8de21a2534ba4
