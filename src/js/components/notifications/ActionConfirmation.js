@@ -3,11 +3,16 @@ import React, { Component } from "react"
 class ActionSaved extends Component {
   constructor(props) {
     super(props);
-    this.closeNotification = this.closeNotification.bind(this);
+    this.confirmed = this.confirmed.bind(this);
+    this.canceled = this.canceled.bind(this);
   }
 
-  closeNotification() {
-    this.props.closeNotification();
+  confirmed = () => {
+    this.props.closeNotification("yes");
+  }
+
+  canceled = () => {
+    this.props.closeNotification("no")
   }
 
   render() {
@@ -16,7 +21,8 @@ class ActionSaved extends Component {
       <div class="six offset-by-five large-bottom-margin campaignListing electric-blue white-background gray-border notifications">
         <div class="text-left inline-block full-width">
           {this.props.message}
-          <span onClick={this.closeNotification} class="text-right">&times;</span>
+          <span onClick={this.confirmed} class="text-right">Yes</span>
+          <span onClick={this.canceled} class="text-right">No</span>
         </div>
       </div>
     )

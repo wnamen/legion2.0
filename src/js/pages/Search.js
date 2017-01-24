@@ -64,7 +64,7 @@ export default class Search extends React.Component {
 
       purchaseSelected: (id) => {
         let params = this.state.apiState.job === true ? {tm_id: id, jobs: checked} : {tm_id: id, companies: checked};
-        http.post('/add-contacts-to-tm', params).then(response => this.setState({purchasedAlert: response, notification: true}))
+        http.post('/add-contacts-to-tm', params).then(response => this.setState({purchasedAlert: response, notification: true, message: "The contacts have been saved to your list!"}))
       },
     }
   }
@@ -225,7 +225,7 @@ export default class Search extends React.Component {
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
-          { this.state.notification && <ActionSaved response={this.state.purchaseSelected} closeNotification={this.closeNotification}/> }
+          { this.state.notification && <ActionSaved response={this.state.purchaseSelected} message={this.state.message} closeNotification={this.closeNotification}/> }
           <SearchMenu
             searchFilters={searchFilters}
             interestSuggestions={interestSuggestions}

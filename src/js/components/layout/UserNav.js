@@ -7,11 +7,12 @@ import CreditButtonHandler from "./CreditButtonHandler";
 
 
 class UserNav extends Component {
-  
+
   constructor(props, context){
     super(props, context);
     this.state = {
-      currentCredits: 0
+      currentCredits: 0,
+      currnetBilling: false,
     };
   }
 
@@ -26,10 +27,11 @@ class UserNav extends Component {
       }
     }).then(response =>
       this.setState({
-        currentCredits: response.data.credits
+        currentCredits: response.data.credits,
+        currentBilling: (response.data.primary_credit_card !== null) ? true : false,
       })
     );
-    
+
   };
 
   preventClose = (e) => {
@@ -43,7 +45,11 @@ class UserNav extends Component {
 
   handleConfirm = (e) => {
     e.stopPropagation();
-    this.setState({buttonStatus: "buy"});
+    if (currentBilling) {
+      this.setState({buttonStatus: "buy"});
+    } else {
+
+    }
   };
 
   handleSelection = (e) => {
@@ -61,6 +67,16 @@ class UserNav extends Component {
             <li><IndexLink to="/campaigns" activeClassName="active">Campaigns</IndexLink></li>
             <li><IndexLink to="/contacts" activeClassName="active">Contacts</IndexLink></li>
           </ul>
+
+          <Modal
+            trigger={
+              <div id="hidden"></div>
+            }>
+            <div class="sixteen modalContainer">
+              <img class="contentImage" src="src/img/credit_empty_state.png" />
+              <BillingModal renderBilling={this.renderBilling} />
+            </div>
+            </Modal>
 
           <div class="right">
             <ul>

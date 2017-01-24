@@ -61,8 +61,8 @@ export default class ContactsBar extends React.Component {
     this.setState({selectedListView: e.target.text})
   }
 
-  deleteCurrentList = (e) => {
-    this.props.deleteCurrentList(this.state.selectedListView)
+  deleteCurrentList = (selectedListView) => {
+    this.props.confirmAction("Are you sure you want to delete this list?", selectedListView)
   }
 
   handleCopySelectedToList = (e) => {

@@ -9,6 +9,8 @@ import ContactsTable    from "../components/contacts/ContactsTable";
 import MapBar           from "../components/contacts/MapBar";
 import MapTable         from "../components/contacts/MapTable";
 import MapResults       from "../components/contacts/MapResults";
+import ActionSaved      from "../components/notifications/ActionSaved"
+import ActionConfirmation      from "../components/notifications/ActionConfirmation"
 
 export default class Contacts extends React.Component {
   constructor(props){
@@ -21,7 +23,11 @@ export default class Contacts extends React.Component {
       mappedColumns: {},
       results: [],
       tmLists: [],
-      defaultListView: "All My Contacts"
+      defaultListView: "All My Contacts",
+      notification: {
+        confirmation: false,
+        success: false
+      }
     }
     this.updateMappingStatus = this.updateMappingStatus.bind(this);
     this.uploadCSV = this.uploadCSV.bind(this);
@@ -75,7 +81,7 @@ export default class Contacts extends React.Component {
     }
   }
 
-  // INITALIZE LOADING ICON AND CALL FN TO CAPTURE THE USER'S LISTS
+  // INITIALIZE LOADING ICON AND CALL FN TO CAPTURE THE USER'S LISTS
   componentWillMount = () =>{
     this.setState({loading:true});
     this.loadAvailableLists();
@@ -129,7 +135,7 @@ export default class Contacts extends React.Component {
   }
 
   // UPDATE AND LOAD THE NEW SELECTED LIST VIEW
-  getNewListView = (listID) => {
+  getNewListView = (listID ) => {
     this.setState({loading:true});
     let tokenHeader = `Token ${this.state.token}`;
 
@@ -152,25 +158,23 @@ export default class Contacts extends React.Component {
   }
 
   // DELETE THE CURRENT LIST VIEW
-  deleteCurrentList = (selectedList) => {
-    this.state.tmLists.forEach((list) => {
-      if (list.name === selectedList) {
-        let tokenHeader = `Token ${this.state.token}`;
+  deleteCurrentList = (list) => {
+    let tokenHeader = `Token ${this.state.token}`;
 
-
-        $.post({
-          url: "https://api.legionanalytics.com/delete-tm",
-          headers: {"Authorization": tokenHeader },
-          data: {id: list.id},
-          success: (response) => {
-            this.loadAvailableLists();
-          },
-          error: (response) => {
-          }
-
+    $.post({
+      url: "https://api.legionanalytics.com/delete-tm",
+      headers: {"Authorization": tokenHeader },
+      data: {id: this.state.currentViewId},
+      success: (response) => {
+        this.setState({
+          notification: {success: true},
+          message: `Your list has been deleted.`
         })
+        this.loadInitialListView();
+      },
+      error: (response) => {
       }
-    });
+    })
   }
 
   // SEARCH THE CURRENT LIST VIEW
@@ -202,6 +206,10 @@ export default class Contacts extends React.Component {
       headers: {"Authorization": tokenHeader},
       data: {"id": this.state.currentViewId},
       success: (response) => {
+        this.setState({
+          notification: {success:true},
+          message: "Your list has been exported successfully and you will receive an email shortly."
+        })
       },
       error: (response) => {
       }
@@ -238,6 +246,10 @@ export default class Contacts extends React.Component {
       headers: {"Authorization": tokenHeader},
       data: {document_id: this.state.documentID, document_head: this.state.mappedArray},
       success: (response) => {
+        this.setState({
+          notification: {success: true},
+          message: "Your list has been imported successfully and your contacts will be updated shortly."
+        })
       },
       error: (response) => {
       }
@@ -265,6 +277,28 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // OPENS CONFIRMATION NOTIFICATION
+  openConfirmNotification = (message, list) => {
+    this.setState({
+      message: message,
+      notification: {
+        confirmation: true
+      }
+    });
+  }
+
+  // CLOSES THE NOTIFICATION
+  closeSuccessNotification = () => {
+    this.setState({notification: {success: false}})
+  }
+
+  // CLOSES THE NOTIFICATION
+  closeConfirmationNotification = (response, list) => {
+    console.log(response);
+    response === "yes" ? this.deleteCurrentList(list) : "";
+    this.setState({notification: {confirmation: false}})
+  }
+
   render() {
     let currentView;
 
@@ -280,7 +314,9 @@ export default class Contacts extends React.Component {
     } else {
       currentView = (
         <div class="sixteen columns">
-          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} exportCSV={this.exportCSV} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} searchCurrentList={this.searchCurrentList}/>
+          { this.state.notification.confirmation && <ActionConfirmation message={this.state.message} closeNotification={this.closeConfirmationNotification}/> }
+          { this.state.notification.success && <ActionSaved message={this.state.message} closeNotification={this.closeSuccessNotification}/> }
+          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} exportCSV={this.exportCSV} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} searchCurrentList={this.searchCurrentList} confirmAction={this.openConfirmNotification}/>
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
               <ContactsTable results={this.state.results} />

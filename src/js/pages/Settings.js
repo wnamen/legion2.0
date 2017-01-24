@@ -4,6 +4,7 @@ import Integrations               from "../components/settings/Integrations";
 import EmailConfiguration         from "../components/settings/EmailConfiguration";
 import Billing                    from "../components/settings/Billing";
 import Logout                     from "../components/settings/Logout";
+import ActionSaved                from "../components/notifications/ActionSaved"
 import $ from "jquery";
 import { CubeGrid } from "better-react-spinkit"
 import cookie from "react-cookie";
@@ -14,6 +15,7 @@ class Settings extends Component {
     super(props);
 
     this.state = {
+      notification: false,
       userInfo: "",
       emails: []
     };
@@ -23,6 +25,7 @@ class Settings extends Component {
   handleModalClose = () => {
     console.log("clicked");
     $(".modal-close").trigger("click");
+    this.setState({message: "Your password has been successfully changed!", notification: true})
     this.updateSettings();
   };
 
@@ -64,6 +67,10 @@ class Settings extends Component {
     this.context.http.post('settings', { new_card: token }).then(response => this.updateSettings());
   };
 
+  closeNotification = () => {
+    this.setState({notification: false})
+  }
+
   render() {
     const { userInfo, emails } = this.state;
 
@@ -71,7 +78,7 @@ class Settings extends Component {
       <div class="ten offset-by-three white-background settingsCard">
         <h6>Settings</h6>
         <br />
-
+        { this.state.notification && <ActionSaved message={this.state.message} closeNotification={this.closeNotification}/> }
         {!userInfo ? <CubeGrid size={50} color="#36b7ea"/> :
         <div>
           <MyAccount userInfo={userInfo} sendUniqueCode={this.sendUniqueCode} handleModalClose={this.handleModalClose} />

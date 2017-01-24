@@ -2,7 +2,7 @@ import React from "react";
 import $ from "jquery";
 import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize";
 
-import UploadContactsModal from "../modals/UploadContactsModal";
+import UploadContactsModal from "../../modals/UploadContactsModal";
 
 export default class ContactsBar extends React.Component {
   constructor(props) {
