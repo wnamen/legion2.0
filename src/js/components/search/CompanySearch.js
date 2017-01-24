@@ -25,26 +25,37 @@ class CompanySearch extends Component {
 	}
 
   handleSelected = (e) => {
-    let selectedLength = e.target.selectedOptions.length;
-    let selectedName = e.target.name;
-    const { selected } = this.state;
+    let current_tags = this.state.current_tags != undefined ? this.state.current_tags: [];
+    let selectedName = `${e.target.name}__`;
 
-    let clearState = selected.filter(v => v.name !== selectedName);
-
-    for (let i = 0; i < selectedLength; i++) {
-      let option = e.target.selectedOptions[i];
-
-      clearState.push({
-        name: selectedName,
-        value: option.value
-      })
+    var nums = [];
+    for (var i = 0; i < e.target.selectedOptions.length; i++) {
+      var options = e.target.selectedOptions[i].value.split("-");
+      for (var k = 0; k < options.length; k++) {
+        nums.push(parseFloat(options[k]));
     }
+  }
 
-    this.props.filterBy(clearState, e.target.dataset.id);
+    console.log(nums);
+    var min_of_array = Math.min.apply(Math, nums);
+    var max_of_array = Math.max.apply(Math, nums);
 
-    this.setState({
-      selected: clearState
-    });
+    current_tags.push({
+      id: current_tags.length > 0 ? current_tags[current_tags.length-1].id + 1 : 1,
+      name: selectedName+"gte",
+      value: min_of_array
+    })
+
+    if (nums.length % 2 == 0) {  // didn't append a result with one option
+      current_tags.push({
+        id: current_tags.length > 0 ? current_tags[current_tags.length-1].id + 1 : 1,
+        name: selectedName+"lte",
+        value: max_of_array
+      })
+
+    }
+    this.setState({ inputTags: current_tags });
+    this.getSearch();
   };
 
 
