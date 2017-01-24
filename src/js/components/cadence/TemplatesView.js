@@ -90,6 +90,8 @@ export default class TemplateViews extends React.Component {
     let delays = this.state.currentDelays || this.props.currentDelays;
     let mappedTemplates;
 
+    console.log(delays);
+
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {

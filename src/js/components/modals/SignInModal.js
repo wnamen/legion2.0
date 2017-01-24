@@ -5,7 +5,7 @@ import cookie from "react-cookie";
 import PasswordResetModal from "../modals/PasswordResetModal"
 
 class SignInModal extends Component {
-  
+
   constructor(props) {
     super(props);
   }
@@ -22,11 +22,12 @@ class SignInModal extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     const { http } = this.context;
-    
+
     http.post('login', {
       username: email,
       password: password
     }).then(response => this.cookieSaver(response.data))
+    .catch(response => console.log(response))
   };
 
   cookieSaver = (response) => {
@@ -50,7 +51,7 @@ class SignInModal extends Component {
           <div class="eight columns text-center smallModal">
           		<img class="modalIcon" src="/src/img/logInIcon.png" />
           		<h1 class="modalTitle gray">Secure Sign In</h1>
-            
+
           		<form id="billingModalForm" onSubmit={this.signIn}>
       	          <Input type="email" placeholder="Email Address" onChange={this.handleEmailChange} required/>
       	          <Input type="password" placeholder="Password" onChange={this.handlePasswordChange} required/>

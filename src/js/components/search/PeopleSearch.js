@@ -25,16 +25,27 @@ export default class PeopleSearch extends React.Component {
 	}
 
   handleSelected(e) {
-    e.stopPropagation()
+    let current_tags = this.state.current_tags;
+    let selections = this.state.selections;
     let selectedLength = e.target.selectedOptions.length;
-    let selectedName = e.target.name;
-    let selected = this.state.selected || [];
+    let selectedName = `${e.target.name}__`;
+    let selectedValue = e.target.value;
 
-    for (let i = 0; i < selectedLength; i++) {
-      let option = e.target.selectedOptions[i];
-      selected.push({name: selectedName, value: option.value})
-    }
-    // this.setState({selected: selected})
+    console.log(current_tags);
+    console.log(selectedLength);
+    console.log(selectedName);
+    console.log(selectedValue);
+
+    current_tags.push({
+      id: current_tags.length > 0 ? current_tags[current_tags.length-1].id + 1 : 1,
+      name: selectedName,
+      value: selectedValue
+    })
+
+    console.log(current_tags);
+
+    // this.setState({ inputTags: current_tags });
+    // this.getSearch();
   }
 
   socialCheck(e) {
@@ -42,7 +53,6 @@ export default class PeopleSearch extends React.Component {
     let status = e.target.checked;
     let name = e.target.name;
     let target_id = parseInt(e.target.value);
-    console.log(status);
 
     if (status) {
       current_tags.push({
@@ -104,7 +114,7 @@ export default class PeopleSearch extends React.Component {
     e.target.value = "";
   }
 
-  getSearch() {
+  getSearch(search) {
     let query = "";
     this.state.inputTags.forEach((target) => {
       query = query + `${target.name}=${target.value}&`;
