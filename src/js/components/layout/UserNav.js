@@ -69,6 +69,7 @@ class UserNav extends Component {
 
   render() {
     let currentCredits = (this.state.currentCredits).toLocaleString();
+    console.log(this.state.currentBilling);
 
     return (
         <div class="nav-wrapper medium-vertical-padding">
@@ -96,15 +97,15 @@ class UserNav extends Component {
                   trigger={
                   <a>{ currentCredits } credits <i id ="credit-angle-icon" class="fa fa-angle-down" aria-hidden="true"></i><span id="buy-more" class="electric-blue">Buy More</span></a>
                 }>
-                  <NavItem>25k Credits - $6,250 <CreditButtonHandler credits={25000} cost={6250} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>10k Credits - $3,300 <CreditButtonHandler credits={10000} cost={3300} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>5k Credits - $2,500 <CreditButtonHandler credits={5000} cost={2500} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>3k Credits - $1,800 <CreditButtonHandler credits={3000} cost={1800} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>1k Credits - $750 <CreditButtonHandler credits={1000} cost={750} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>500 Credits - $400 <CreditButtonHandler credits={500} cost={400} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>200 Credits - $170 <CreditButtonHandler credits={200} cost={170} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>100 Credits - $100 <CreditButtonHandler credits={100} cost={100} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
-                  <NavItem>50 Credits - $60 <CreditButtonHandler credits={50} cost={60} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.props.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>25k Credits - $6,250 <CreditButtonHandler credits={25000} cost={6250} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>10k Credits - $3,300 <CreditButtonHandler credits={10000} cost={3300} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>5k Credits - $2,500 <CreditButtonHandler credits={5000} cost={2500} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>3k Credits - $1,800 <CreditButtonHandler credits={3000} cost={1800} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>1k Credits - $750 <CreditButtonHandler credits={1000} cost={750} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>500 Credits - $400 <CreditButtonHandler credits={500} cost={400} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>200 Credits - $170 <CreditButtonHandler credits={200} cost={170} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>100 Credits - $100 <CreditButtonHandler credits={100} cost={100} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
+                  <NavItem>50 Credits - $60 <CreditButtonHandler credits={50} cost={60} loadCurrentCredits={this.loadCurrentCredits} currentBilling={this.state.currentBilling} handleModalOpen={this.handleModalOpen}/></NavItem>
                 </Dropdown>
               </li>
               <li id="settings-button" class="large-right-margin nav-hover">
