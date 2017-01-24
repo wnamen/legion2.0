@@ -43,6 +43,7 @@ export default class ContactsBar extends React.Component {
         path = $(this).val();
         filename = path.replace(/^.*\\/, "");
         $('.fileName').text(filename);
+        console.log(file);
         self.props.uploadCSV(file, filename)
     });
 
