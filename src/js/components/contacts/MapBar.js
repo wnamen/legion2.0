@@ -25,6 +25,7 @@ export default class ContactsBar extends React.Component {
 
 
   completeMapping = () => {
+    $(".contact-upload").text("Uploading...");
     this.props.mapCSV();
     this.props.updateMappingStatus();
   }

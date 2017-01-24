@@ -18,7 +18,8 @@ export default class Template extends React.Component {
       id: null,
       name_of_template: null,
       subject: null,
-      html: null
+      html: null,
+      placeholder: "edit me"
     }
     this.handleModelChange = this.handleModelChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -79,6 +80,16 @@ export default class Template extends React.Component {
       })
     }
 
+    $(function() {
+      $('div#froala-editor')
+        .on('froalaEditor.initialized', function (e, editor) {
+          editor.events.bindClick($('body'), 'option#cfn', function () {
+            editor.html.insert('{{first_name| there}}');
+            editor.events.focus();
+          });
+        })
+    });
+
     return(
       <div>
         <div class="sixteen">
@@ -114,17 +125,10 @@ export default class Template extends React.Component {
                 <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.onTemplateSave}>Save</div>
                 <div class="working chooseTemplate pTags">
                   <Input type='select' name="whichEmail" onChange={this.handleSelected}>
-                    <option value="">Personalized Tags</option>
-                    <option value="first_name">contact.first_name</option>
-                    <option value="last_name">contact.last_name</option>
-                    <option value="age">contact.age</option>
-                    <option value="city">contact.city</option>
-                    <option value="state">contact.state</option>
-                    <option value="email_address">contact.email_address</option>
-                    <option value="company_name">company.name</option>
-                    <option value="company_city">company.city</option>
-                    <option value="company_state">company.state</option>
-                    <option value="company_phone_number">company.phone_number</option>
+                    <option value="" disabled>Personalized Tags</option>
+                    <option class="templateTag" id="cfn" value="contactFirstName">Contact's First Name</option>
+                    <option class="templateTag" id="cln" value="contactLastName">Contact's Last Name</option>
+                    <option class="templateTag" id="cn" value="companyName">Company Name</option>
                   </Input>
                 </div>
                 <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>

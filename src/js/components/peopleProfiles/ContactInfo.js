@@ -14,9 +14,15 @@ const ContactInfo = ({ data: { name, jobs, location }, user }) => {
     <div class="profile-card whiteCard" id="contact-card">
 
       <h1 class="adjustedH1">{name}</h1>
+<<<<<<< HEAD
 
       <p class="gray meta"><span className="capitalize">{job ? job.title : '**********'}</span>{` at ${job ? job.company_name : '**********'}`}</p>
 
+=======
+      
+      <p class="gray meta"><span className="capitalize">{job ? job.title : 'Unknown'}</span>{` at ${job ? job.company_name : 'Unknown'}`}</p>
+      
+>>>>>>> 1bd4055b3c6e2e92876ac67b0cb8de21a2534ba4
       <h6 class="gray meta local">{location}</h6>
 
       <div className={classNames({ hidden: user })} >

@@ -12,7 +12,7 @@ const ServerError = () => {
           <h1 class="modalTitle electric-blue onbTitle"><strong class="largeText">Server Error</strong></h1>
           <h1 class="modalTitle electric-blue onbTitle">We're sorry you're experiencing this, <br /> our developers
             have been notified.</h1>
-          <IndexLink to="/" class="active">Take me home!</IndexLink>
+          <IndexLink to="/search" class="active">Take me home!</IndexLink>
         </div>
       </div>
     </div>

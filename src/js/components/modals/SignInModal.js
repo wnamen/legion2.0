@@ -24,11 +24,19 @@ class SignInModal extends Component {
     const { http } = this.context;
 
     http.post('login', {
+<<<<<<< HEAD
       username: email,
       password: password
     }).then(response => this.cookieSaver(response.data))
     .catch(response => console.log(response))
   };
+=======
+       username: email,
+       password: password
+     }).then(response => this.cookieSaver(response.data))
+     .catch(response => this.errorValidation())
+   };
+>>>>>>> 1bd4055b3c6e2e92876ac67b0cb8de21a2534ba4
 
   cookieSaver = (response) => {
     const { router } = this.context;
@@ -38,7 +46,15 @@ class SignInModal extends Component {
     router.push("/search");
   };
 
+  errorValidation = (e) => {
+    $(".canValidate").addClass("failedValidation");
+      window.setTimeout(function(){
+        $(".canValidate").removeClass("failedValidation");
+      },1000);
+  };
+
   render() {
+
     const modalTrigger =
       <div>
         <small class="text-center">
@@ -53,8 +69,8 @@ class SignInModal extends Component {
           		<h1 class="modalTitle gray">Secure Sign In</h1>
 
           		<form id="billingModalForm" onSubmit={this.signIn}>
-      	          <Input type="email" placeholder="Email Address" onChange={this.handleEmailChange} required/>
-      	          <Input type="password" placeholder="Password" onChange={this.handlePasswordChange} required/>
+      	          <Input type="email" placeholder="Email Address" class="canValidate" onChange={this.handleEmailChange} required/>
+      	          <Input type="password" placeholder="Password" class="canValidate" onChange={this.handlePasswordChange} required/>
                   <Modal trigger={modalTrigger}>
                     <PasswordResetModal />
                   </Modal>

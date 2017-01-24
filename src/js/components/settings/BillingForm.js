@@ -35,11 +35,13 @@ export default class BillingForm extends React.Component {
 	}
 
   handleToken = (e) => {
+    $(".cardSave").text("Saving...");
     let self = this;
 
     Stripe.createToken(this.state.card, function (status, response) {
       console.log( status, response );
       self.handleSave(response.id);
+
     });
 
   }
@@ -55,6 +57,7 @@ export default class BillingForm extends React.Component {
     $("#cardYearField").val("");
     $("#cardZipCodeField").val("");
     $("#cardCVCField").val("");
+    $(".cardSave").text("Saved");
   }
 
   render(){
