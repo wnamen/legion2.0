@@ -18,8 +18,7 @@ export default class Template extends React.Component {
       id: null,
       name_of_template: null,
       subject: null,
-      html: null,
-      placeholder: "edit me"
+      html: null
     }
     this.handleModelChange = this.handleModelChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
