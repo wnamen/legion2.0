@@ -12,7 +12,10 @@ export default class CreditButtonHandler extends React.Component {
   }
 
   handleSelection = (e) => {
-    if (this.state.selected) {
+    if (this.props.currentBilling === false) {
+      console.log("null");
+      this.props.handleModalOpen();
+    } else if ((this.state.selected) && (this.props.currentBilling)) {
       let tokenHeader = `Token ${this.state.token}`;
       console.log("purchased");
 
@@ -27,7 +30,6 @@ export default class CreditButtonHandler extends React.Component {
         error: (response) => {
           console.log(response);
         }
-
       })
     }
     this.setState({selected: !this.state.selected});
