@@ -25,27 +25,37 @@ export default class PeopleSearch extends React.Component {
 	}
 
   handleSelected(e) {
-    let current_tags = this.state.current_tags;
-    let selections = this.state.selections;
-    let selectedLength = e.target.selectedOptions.length;
+    let current_tags = this.state.current_tags != undefined ? this.state.current_tags: [];
     let selectedName = `${e.target.name}__`;
-    let selectedValue = e.target.value;
 
-    console.log(current_tags);
-    console.log(selectedLength);
-    console.log(selectedName);
-    console.log(selectedValue);
+    var nums = [];
+    for (var i = 0; i < e.target.selectedOptions.length; i++) {
+      var options = e.target.selectedOptions[i].value.split("-");
+      for (var k = 0; k < options.length; k++) {
+        nums.push(parseFloat(options[k]));
+    }
+  }
+
+    console.log(nums);
+    var min_of_array = Math.min.apply(Math, nums);
+    var max_of_array = Math.max.apply(Math, nums);
 
     current_tags.push({
       id: current_tags.length > 0 ? current_tags[current_tags.length-1].id + 1 : 1,
-      name: selectedName,
-      value: selectedValue
+      name: selectedName+"gte",
+      value: min_of_array
     })
 
-    console.log(current_tags);
+    if (nums.length % 2 == 0) {  // didn't append a result with one option
+      current_tags.push({
+        id: current_tags.length > 0 ? current_tags[current_tags.length-1].id + 1 : 1,
+        name: selectedName+"lte",
+        value: max_of_array
+      })
 
-    // this.setState({ inputTags: current_tags });
-    // this.getSearch();
+    }
+    this.setState({ inputTags: current_tags });
+    this.getSearch();
   }
 
   socialCheck(e) {
@@ -268,7 +278,7 @@ export default class PeopleSearch extends React.Component {
             </div>
 
             <label>Person's Age {advanced_filter}</label>
-            <Input type='select' name="person_age" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
+            <Input type='select' name="age" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="18-22">18-22</option>
               <option value="23-30">23-30</option>
               <option value="31-35">31-35</option>
