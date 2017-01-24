@@ -1,4 +1,4 @@
-https://www.legionanalytics.com/profiles/person/2750326import React, { PropTypes } from "react"
+import React, { PropTypes } from "react"
 import { Link } from "react-router"
 import classNames from "classnames";
 

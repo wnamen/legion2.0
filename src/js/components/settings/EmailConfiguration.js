@@ -56,6 +56,10 @@ class EmailConfiguration extends Component {
   };
 
   handleSave = () => {
+    $(".emailConfigSave").text("Saving...");
+    setTimeout(function(){
+      $(".emailConfigSave").text("Saved");
+    },1000);
     let { emails, saveAlias } = this.props;
     let { newName, newEmail, newCheck, currentEmailID } = this.state;
 
@@ -71,6 +75,10 @@ class EmailConfiguration extends Component {
   };
 
   handleRemove = () => {
+    $(".emailConfigRemove").text("Removing...");
+    setTimeout(function(){
+      $(".emailConfigRemove").text("Removed");
+    },1000);
     let { emails, removeAlias } = this.props;
     let { currentEmailID } = this.state;
     removeAlias({
@@ -120,8 +128,8 @@ class EmailConfiguration extends Component {
           { currentControls }
         </div>
         <div class="btnContainer five columns offset-by-two">
-          <div onClick={this.handleSave} class="lgnBtn settingsBtn smoothBkgd electric-blue-background white">Save</div>
-          <div onClick={this.handleRemove} class="lgnBtn settingsBtn smoothBkgd white-background small-border gray-border">Remove</div>
+          <div onClick={this.handleSave} class="lgnBtn settingsBtn smoothBkgd electric-blue-background white emailConfigSave">Save</div>
+          <div onClick={this.handleRemove} class="lgnBtn settingsBtn smoothBkgd white-background small-border gray-border emailConfigRemove">Remove</div>
         </div>
 
       </div>

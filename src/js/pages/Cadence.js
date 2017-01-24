@@ -4,7 +4,7 @@ import cookie               from "react-cookie";
 
 import CadenceMenu          from "../components/cadence/CadenceMenu"
 import CadenceViews         from "../components/cadence/CadenceViews"
-import CampaignEngagment    from "../components/cadence/CampaignEngagement"
+import CampaignEngagement    from "../components/cadence/CampaignEngagement"
 
 export default class Cadence extends React.Component {
   constructor(props) {
@@ -17,6 +17,7 @@ export default class Cadence extends React.Component {
     }
     this.loadAvailableCampaigns = this.loadAvailableCampaigns.bind(this);
     this.loadAvailableTemplates = this.loadAvailableTemplates.bind(this);
+    this.loadCampaignEngagements = this.loadCampaignEngagements.bind(this);
     this.findSelectedCampaign = this.findSelectedCampaign.bind(this);
     this.findNewCampaignTemplates = this.findNewCampaignTemplates.bind(this);
     this.findSelectedTemplate = this.findSelectedTemplate.bind(this);
@@ -29,7 +30,8 @@ export default class Cadence extends React.Component {
     this.createNewCampaign = this.createNewCampaign.bind(this);
     this.saveCampaign = this.saveCampaign.bind(this);
     this.makeCampaign = this.makeCampaign.bind(this);
-    // this.updateCampaign = this.updateCampaign.bind(this);
+    this.updateCampaign = this.updateCampaign.bind(this);
+    this.deleteCampaign = this.deleteCampaign.bind(this);
   }
 
   componentWillMount = () => {
@@ -38,8 +40,9 @@ export default class Cadence extends React.Component {
   }
 
   // LOAD THE USERS CURRENT CAMPAIGNS
-  loadAvailableCampaigns = () => {
+  loadAvailableCampaigns = (id) => {
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(id);
 
     $.get({
       url: "https://api.legionanalytics.com/my-cadences?page_size=1000",
@@ -47,12 +50,11 @@ export default class Cadence extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
-        console.log(response);
         this.setState({
           cadenceData: response
         })
-
-        if (this.state.renderState === "campaign") {
+        console.log(id);
+        if ((this.state.renderState === "campaign") && (id !== undefined)) {
           this.findSelectedCampaign(id);
         }
       },
@@ -72,7 +74,6 @@ export default class Cadence extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
-        console.log(response);
         this.setState({
           templateData: response,
         })
@@ -80,6 +81,28 @@ export default class Cadence extends React.Component {
         if (this.state.renderState === "campaign") {
           this.findNewCampaignTemplates(id)
         }
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
+
+  // LOAD CAMPAIGN ENGAGEMENTS
+  loadCampaignEngagements = (id) => {
+    let tokenHeader = `Token ${this.state.token}`;
+    console.log(id);
+
+    $.get({
+      url: `https://api.legionanalytics.com/cadence-engagement/${id}?page_size=1000`,
+      dataType: "JSON",
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        this.setState({
+          engagementData: response.results,
+        })
       },
       error: (response) => {
         console.log(response);
@@ -112,15 +135,16 @@ export default class Cadence extends React.Component {
     })
 
     templateList.length >= 2 ? disableSave = false : disableSave = true;
-    console.log(templateList);
 
     this.setState({renderState: "campaign", currentTemplates: currentTemplates, campaignTemplateList: templateList, disableSave: disableSave});
   }
 
   // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
   findSelectedCampaign = (e) => {
+    let id = isNaN(e) ? e.target.id : e;
     this.state.cadenceData.forEach((cadence) => {
-      if (parseInt(cadence.id) === parseInt(e.target.id || e)) {
+      if (parseInt(cadence.id) === parseInt(id)) {
+        this.loadCampaignEngagements(cadence.id)
         this.findCampaignTemplates(cadence, cadence.settings.templates)
       }
     })
@@ -180,21 +204,61 @@ export default class Cadence extends React.Component {
 
   // DETERMINE CAMPAIGN UPDATE/CREATE
   saveCampaign = (campaign) => {
-    // if (this.state.currentView.id === null) {
+    console.log(this.state.currentView.id);
+    if (this.state.currentView.id === null) {
       this.makeCampaign(campaign);
-    // } else {
-    //   this.updateCampaign(campaign);
-    // }
+    } else {
+      this.updateCampaign(campaign);
+    }
   }
 
   // CREATE NEW CAMPAIGN
   makeCampaign = (campaign) => {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(campaign);
 
     $.post({
       url: "https://api.legionanalytics.com/make-cadence",
       data: campaign,
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(response);
+        this.loadAvailableCampaigns(response.id);
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
+  // UPDATE CAMPAIGN
+  updateCampaign = (campaign) => {
+    let tokenHeader = `Token ${this.state.token}`;
+    campaign["id"] = this.state.currentView.id
+    console.log(campaign);
+
+    $.post({
+      url: "https://api.legionanalytics.com/update-cadence",
+      data: campaign,
+      crossDomain:true,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        console.log(response);
+        this.loadAvailableCampaigns(response.id);
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
+  // DELETE SELECTED CAMPAIGN
+  deleteCampaign = (id) => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.post({
+      url: "https://api.legionanalytics.com/delete-cadence",
+      data: {id: id},
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
@@ -206,45 +270,6 @@ export default class Cadence extends React.Component {
       }
     });
   }
-
-  // UPDATE TEMPLATE
-  updateTemplate = (cadence) => {
-    let tokenHeader = `Token ${this.state.token}`;
-    console.log(template);
-
-    $.post({
-      url: "https://api.legionanalytics.com/update-template",
-      data: {id: template.id, name: (template.templateName || null), subject: (template.subject || null), html: (template.html || null)},
-      crossDomain:true,
-      headers: {"Authorization": tokenHeader },
-      success: (response) => {
-        console.log(response);
-        this.loadAvailableTemplates(response.id);
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
-  }
-
-  // DELETE SELECTED TEMPLATE
-  // deleteTemplate = (id) => {
-  //   let tokenHeader = `Token ${this.state.token}`;
-  //
-  //   $.post({
-  //     url: "https://api.legionanalytics.com/delete-template",
-  //     data: {id: id},
-  //     crossDomain:true,
-  //     headers: {"Authorization": tokenHeader },
-  //     success: (response) => {
-  //       console.log(response);
-  //       this.loadAvailableTemplates();
-  //     },
-  //     error: (response) => {
-  //       console.log(response);
-  //     }
-  //   });
-  // }
 
   // INTIALIZE A NEW TEMPLATE
   createNewTemplate = () => {
@@ -266,7 +291,8 @@ export default class Cadence extends React.Component {
 
   // DETERMINE TEMPLATE UPDATE/CREATE
   saveTemplate = (template) => {
-    if (template.id === null) {
+    console.log(template);
+    if ((template.id === null) || (template.id === undefined)) {
       this.makeTemplate(template);
     } else {
       this.updateTemplate(template);
@@ -299,7 +325,7 @@ export default class Cadence extends React.Component {
 
     $.post({
       url: "https://api.legionanalytics.com/update-template",
-      data: {id: template.id, name: (template.templateName || null), subject: (template.subject || null), html: (template.html || null)},
+      data: {id: template.id, name: (template.name_of_template || null), subject: (template.subject || null), html: (template.html || null)},
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
@@ -335,9 +361,9 @@ export default class Cadence extends React.Component {
     return (
         <div class="gray-light-background">
           <div class="sixteen columns">
-            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} />
+            <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} deleteCampaign={this.deleteCampaign} />
             <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList}/>
-            <CampaignEngagment />
+            <CampaignEngagement engagementData={this.state.engagementData}/>
           </div>
         </div>
 

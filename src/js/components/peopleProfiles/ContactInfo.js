@@ -15,7 +15,7 @@ const ContactInfo = ({ data: { name, jobs, location }, user }) => {
       
       <h1 class="adjustedH1">{name}</h1>
       
-      <p class="gray meta"><span className="capitalize">{job ? job.title : ''}</span>{` at ${job ? job.company_name : ''}`}</p>
+      <p class="gray meta"><span className="capitalize">{job ? job.title : 'Unknown'}</span>{` at ${job ? job.company_name : 'Unknown'}`}</p>
       
       <h6 class="gray meta local">{location}</h6>
       

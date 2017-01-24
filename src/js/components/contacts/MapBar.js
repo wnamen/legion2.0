@@ -11,8 +11,6 @@ export default class ContactsBar extends React.Component {
       isSelected:false
     };
 
-    // this.getTag = debounce(850, this.getTag.bind(this));
-    this.handleDebouncer = this.handleDebouncer.bind(this);
     this.completeMapping = this.completeMapping.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
   }
@@ -22,15 +20,13 @@ export default class ContactsBar extends React.Component {
   }
 
   handleModalClose = () => {
-    console.log("clicked");
     $(".modal-close").trigger("click");
   }
 
-  handleDebouncer(e) {
-    e.persist();
-  }
 
   completeMapping = () => {
+    $("contact-upload").text("Uploading...");
+    this.props.mapCSV();
     this.props.updateMappingStatus();
   }
 
@@ -52,7 +48,7 @@ export default class ContactsBar extends React.Component {
         <nav class="navbar white-background small-border gray-border">
           <div id="map-bar" class="nav-wrapper">
             <ul class="left">
-              <li id="upload-file-name" class="right-actions black">my_contacts.csv</li>
+              <li id="upload-file-name" class="right-actions black">{this.props.filename}</li>
             </ul>
             { uploadModal }
 

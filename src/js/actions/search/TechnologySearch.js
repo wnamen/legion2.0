@@ -16,7 +16,7 @@ export default class TechonologySearch extends React.Component {
     let tokenHeader = `Token ${this.props.userToken}`;
 
     $.ajax({
-      url: 'https://api.legionanalytics.com/search/technology/?page_size=150',
+      url: 'https://api.legionanalytics.com/search/technology/?page_size=1000',
       headers: {"Authorization": tokenHeader},
       dataType:'json',
       cache:false,
@@ -29,6 +29,7 @@ export default class TechonologySearch extends React.Component {
   }
 
   handleTechnologySearch(query) {
+    let tokenHeader = `Token ${this.props.userToken}`;
     query = query.text
 
     $.ajax({
@@ -48,7 +49,7 @@ export default class TechonologySearch extends React.Component {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    let text_search = `search_text=${value}`.trim();
+    let text_search = `name=${value}`.trim();
     this.handleTechnologySearch({ text: text_search });
 
     return inputLength === 0 ? [] : this.state.technologySuggestions.results.filter(result =>
@@ -59,7 +60,7 @@ export default class TechonologySearch extends React.Component {
   getTechnologySuggestionValue = suggestion => "";
 
   renderTechnologySuggestion = suggestion => (
-    <option value={suggestion.id} title="technology">{suggestion.name}</option>
+    <option value={suggestion.name} title="technologies">{suggestion.name}</option>
   );
 
   onTechnologySuggestionSearch = (event, { newValue }) => {

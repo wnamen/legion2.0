@@ -24,8 +24,8 @@ export default class BillingForm extends React.Component {
   }
 
   componentDidMount = () => {
-  	// Stripe.setPublishableKey('pk_live_dOwIuwJIzpJSQrgYCPDNgUy1'); // set your test public key
-    Stripe.setPublishableKey('pk_test_hlppy9I1vUFGVYBltYq75eAW'); // set your test public key
+  	Stripe.setPublishableKey('pk_live_dOwIuwJIzpJSQrgYCPDNgUy1'); // set your test public key
+    // Stripe.setPublishableKey('pk_test_hlppy9I1vUFGVYBltYq75eAW'); // set your test public key
   }
 
 	handleChange = (e) => {
@@ -35,11 +35,13 @@ export default class BillingForm extends React.Component {
 	}
 
   handleToken = (e) => {
+    $(".cardSave").text("Saving...");
     let self = this;
 
     Stripe.createToken(this.state.card, function (status, response) {
       console.log( status, response );
       self.handleSave(response.id);
+
     });
 
   }
@@ -55,6 +57,7 @@ export default class BillingForm extends React.Component {
     $("#cardYearField").val("");
     $("#cardZipCodeField").val("");
     $("#cardCVCField").val("");
+    $(".cardSave").text("Saved");
   }
 
   render(){

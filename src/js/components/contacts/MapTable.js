@@ -4,20 +4,34 @@ import { Input } from "react-materialize";
 import MapResults from "./MapResults";
 
 export default class MapTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.captureColumn = this.captureColumn.bind(this);
+  }
+
+  captureColumn = (e) => {
+    this.props.handleCaptureColumn(e.target.name, e.target.value)
+  }
+
   render(){
     let column_count;
-    let contacts = this.props.contacts.map((contact, i) => {
-      column_count = Object.keys(contact).length;
-      return (
-        <MapResults key={contact.id} name={contact.name} jobTitle={contact.jobTitle} company={contact.company} employees={contact.employees} industry={contact.industry} city={contact.city} phone={contact.phone} email={contact.email} age={contact.age} education={contact.education} interests={contact.interests}/>
-      )
-    })
+    let contacts;
+
+
+    if (this.props.contacts !== undefined) {
+      contacts = this.props.contacts.map((contact, i) => {
+        column_count = Object.keys(contact).length;
+        return (
+          <MapResults key={i} contact={contact}/>
+        )
+      })
+    }
 
     let columnHead = [];
-    for (var i = 0; i < column_count - 1; i++) {
+    for (var i = 0; i < column_count; i++) {
       columnHead.push(
         <th key={i}>
-          <Input class="map-head-cell black" type='select'>
+          <Input class="map-head-cell black" type='select' name={i} onChange={this.captureColumn}>
             <option value="name">Name</option>
             <option value="jobTitle">Job Title</option>
             <option value="age">Age</option>
@@ -39,6 +53,7 @@ export default class MapTable extends React.Component {
             <option value="companyLinkedin">Company Linkedin</option>
             <option value="companyTwitter">Company Twitter</option>
             <option value="companyHomePage">Company Home</option>
+            <option value="other">Other</option>
           </Input>
         </th>
       )
@@ -53,7 +68,7 @@ export default class MapTable extends React.Component {
           </thead>
 
           <tbody>
-            {contacts}
+            { contacts }
           </tbody>
         </table>
       </div>

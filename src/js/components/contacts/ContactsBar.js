@@ -1,6 +1,7 @@
 import React, { PropTypes, Component, Children } from 'react';
 import { Dropdown, NavItem, Input, Button, Modal } from "react-materialize"
-import $ from 'jquery'
+import { debounce } from 'throttle-debounce';
+
 import UploadContactsModal from "../modals/UploadContactsModal";
 import NewListModal from "../modals/NewListModal";
 
@@ -11,8 +12,8 @@ export default class ContactsBar extends React.Component {
       selectedListView: "All My Contacts"
     };
 
-    // this.getTag = debounce(850, this.getTag.bind(this));
     this.handleDebouncer = this.handleDebouncer.bind(this);
+    this.searchContacts = debounce(500, this.searchContacts.bind(this));
     this.getCSV = this.getCSV.bind(this);
     this.beginMapping = this.beginMapping.bind(this);
     this.handleNewListView = this.handleNewListView.bind(this);
@@ -24,6 +25,11 @@ export default class ContactsBar extends React.Component {
 
   handleDebouncer = (e) => {
     e.persist();
+    this.searchContacts(e);
+  }
+
+  searchContacts = (e) => {
+    this.props.searchCurrentList(e.target.value);
   }
 
   getCSV = (e) => {
@@ -123,7 +129,7 @@ export default class ContactsBar extends React.Component {
 
             <ul class="right">
               <li onClick={this.deleteCurrentList} class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="red">Delete List</div></li>
-              <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray">Export CSV</div></li>
+              <li class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><div class="gray" onClick={this.props.exportCSV()}>Export CSV</div></li>
 
               { this.context.isSelected &&
                 <li id="contacts-list-selector" class="lgnBtn smoothBkgd white-background small-border gray-border medium-right-margin contactsBtn"><Dropdown trigger={

@@ -52,8 +52,8 @@ class SignInModal extends Component {
           		<h1 class="modalTitle gray">Secure Sign In</h1>
             
           		<form id="billingModalForm" onSubmit={this.signIn}>
-      	          <Input type="email" placeholder="Email Address" onChange={this.handleEmailChange} required/>
-      	          <Input type="password" placeholder="Password" onChange={this.handlePasswordChange} required/>
+      	          <Input type="email" placeholder="Email Address" class="failedValidation" onChange={this.handleEmailChange} required/>
+      	          <Input type="password" placeholder="Password" class="failedValidation" onChange={this.handlePasswordChange} required/>
                   <Modal trigger={modalTrigger}>
                     <PasswordResetModal />
                   </Modal>

@@ -17,17 +17,23 @@ export default class Contacts extends React.Component {
       token: cookie.load("token"),
       loading: false,
       mapping: false,
+      mappedArray: [],
+      mappedColumns: {},
       results: [],
       tmLists: [],
       defaultListView: "All My Contacts"
     }
     this.updateMappingStatus = this.updateMappingStatus.bind(this);
     this.uploadCSV = this.uploadCSV.bind(this);
+    this.exportCSV = this.exportCSV.bind(this);
+    this.mapCSV = this.mapCSV.bind(this);
+    this.handleCaptureColumn = this.handleCaptureColumn.bind(this);
     this.changeListView = this.changeListView.bind(this);
     this.getNewListView = this.getNewListView.bind(this);
     this.loadInitialListView = this.loadInitialListView.bind(this);
     this.loadAvailableLists = this.loadAvailableLists.bind(this);
     this.deleteCurrentList = this.deleteCurrentList.bind(this);
+    this.searchCurrentList = this.searchCurrentList.bind(this);
   }
 
   static childContextTypes = {
@@ -49,14 +55,13 @@ export default class Contacts extends React.Component {
         if (checked.length === 0) {
           return checked.push(id);
         }
-        
+
         checked.indexOf(id) !== -1 ? checked.splice(checked.indexOf(id), 1) : checked.push(id);
       },
 
       copySelected: (id) => {
         let params = {tm_id: id, prospect_ids: checked};
         http.post('/copy-contacts-to-tm', params: params)
-          .then(response => console.log(response))
       },
 
       removeSelected: () => {
@@ -64,8 +69,6 @@ export default class Contacts extends React.Component {
         let params = {tm_id: this.state.currentViewId, prospect_ids: checked};
         http.post('/remove-contacts-from-tm', params: params)
           .then(response => {
-            console.log(self);
-            console.log(self.state.currentViewId);
             self.getNewListView(self.state.currentViewId)
           })
       }
@@ -89,7 +92,6 @@ export default class Contacts extends React.Component {
       crossDomain: true,
       cache:false,
       success:function(response){
-        console.log(response);
         this.loadInitialListView(response.results);
         this.setState({
           tmLists:response.results
@@ -113,7 +115,6 @@ export default class Contacts extends React.Component {
           crossDomain: true,
           cache:false,
           success:function(results){
-            console.log(results);
             this.setState({
               results:results,
               loading: false,
@@ -131,7 +132,6 @@ export default class Contacts extends React.Component {
   getNewListView = (listID) => {
     this.setState({loading:true});
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(listID);
 
     $.get({
       url:`https://api.legionanalytics.com/contacts/${listID}?page_size=50`,
@@ -163,16 +163,49 @@ export default class Contacts extends React.Component {
           headers: {"Authorization": tokenHeader },
           data: {id: list.id},
           success: (response) => {
-            console.log(response);
             this.loadAvailableLists();
           },
           error: (response) => {
-            console.log(response);
           }
 
         })
       }
     });
+  }
+
+  // SEARCH THE CURRENT LIST VIEW
+  searchCurrentList = (query) => {
+    this.setState({loading:true});
+
+    let tokenHeader = `Token ${this.state.token}`;
+
+    $.get({
+      url: `https://api.legionanalytics.com/contacts/${this.state.currentViewId}?page_size=1000&keyword=${query}`,
+      headers: {"Authorization": tokenHeader },
+      success: (response) => {
+        this.setState({
+          results:response,
+          loading: false
+        });
+      },
+      error: (response) => {
+      }
+
+    })
+  }
+
+  //EXPORTS CSV TO BACKEND TO BEGIN MAPPING
+  exportCSV = () => {
+    let tokenHeader = `Token ${this.state.token}`;
+    $.get({
+      url: `https://api.legionanalytics.com/export-list/${this.state.currentViewId}`,
+      headers: {"Authorization": tokenHeader},
+      processData: false,
+      success: (response) => {
+      },
+      error: (response) => {
+      }
+    })
   }
 
   //UPLOADS CSV TO BACKEND TO BEGIN MAPPING
@@ -184,21 +217,43 @@ export default class Contacts extends React.Component {
       data: file,
       processData: false,
       success: (response) => {
-        console.log(response);
         this.setState({
-          importedSample: response
+          documentID: response.id,
+          importedSample: response.results,
+          mappedArray: new Array(response.results.length),
+          mapFileName: filename
         })
       },
       error: (response) => {
-        console.log(response);
       }
-
     })
+  }
+
+  mapCSV = () => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+
+    $.post({
+      url: "https://api.legionanalytics.com/update-document",
+      headers: {"Authorization": tokenHeader},
+      data: {document_id: this.state.documentID, document_head: this.state.mappedArray},
+      success: (response) => {
+      },
+      error: (response) => {
+      }
+    })
+  }
+
+  // CAPTURE MAPPED COLUMNS
+  handleCaptureColumn = (column, value) => {
+    let mappedArray = this.state.mappedArray;
+    mappedArray[column] = value;
+    this.setState({mappedArray});
   }
 
   // TOGGLE FOR MAPPING NEW CSVS
   updateMappingStatus = () => {
-    this.setState({mapping: !this.state.mapping})
+    this.state.mapping ? this.setState({mapping: !this.state.mapping}) : this.setState({mapping: !this.state.mapping, mappedColumns: {}});
   }
 
   // FINDS THE NEW SELECTED LIST VIEW AND CALLS THE FN TO UPDATE THE VIEW
@@ -217,15 +272,15 @@ export default class Contacts extends React.Component {
     if (this.state.mapping) {
       currentView = (
         <div class="sixteen columns">
-          <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus}/>
-          <MapTable contacts={this.state.importedSample}/>
+          <MapBar mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} filename={this.state.mapFileName} mapCSV={this.mapCSV}/>
+          <MapTable contacts={this.state.importedSample} handleCaptureColumn={this.handleCaptureColumn}/>
           <MapResults />
         </div>
       )
     } else {
       currentView = (
         <div class="sixteen columns">
-          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} />
+          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} exportCSV={this.exportCSV} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} searchCurrentList={this.searchCurrentList}/>
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
               <ContactsTable results={this.state.results} />

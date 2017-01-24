@@ -1,13 +1,14 @@
-import React from "react"
-import { Input, Tag, Chip } from 'react-materialize'
-import { debounce } from 'throttle-debounce';
+import React, { Component } from "react";
+import { Input, Tag, Chip } from 'react-materialize';
+import { Link } from 'react-router';
 import Autosuggest from 'react-autosuggest';
 import $ from 'jquery'
 
 import PeopleSearch from "./PeopleSearch"
 import CompanySearch from "./CompanySearch"
 
-export default class SearchMenu extends React.Component {
+class SearchMenu extends Component {
+
   constructor(props) {
 		super(props);
 		this.state = {
@@ -33,7 +34,7 @@ export default class SearchMenu extends React.Component {
     this.setState({
       menuView: type,
       inputTags:[]
-    })
+    });
     this.getSearch(type);
   }
 
@@ -52,6 +53,9 @@ export default class SearchMenu extends React.Component {
   }
 
   render(){
+    const { userToken, onSearchChange, searchFilters, checked, filterBy } = this.props;
+    const { menuView } = this.state;
+    
     return(
       <div class="nav navbar-default offset-by-one three columns gray">
         <div class="container-fluid white-background small-border large-padding gray-border">
@@ -61,12 +65,15 @@ export default class SearchMenu extends React.Component {
 
             <div class="filter">
               <label>Type</label>
-              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="job" value="job" type="radio" label="People" defaultChecked/>
-              <Input checked={this.props.checked} onChange={this.typeCheck} name="type" id="company" value="company" type="radio" label="Company"/>
+              <Input checked={checked} onChange={this.typeCheck} name="type" id="job" value="job" type="radio" label="People" defaultChecked/>
+              <Input checked={checked} onChange={this.typeCheck} name="type" id="company" value="company" type="radio" label="Company"/>
             </div>
 
-            { this.state.menuView === "job" && <PeopleSearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} searchFilters={this.props.searchFilters} /> }
-            { this.state.menuView === "company" && <CompanySearch userToken={this.props.userToken} onSearchChange={this.props.onSearchChange} searchFilters={this.props.searchFilters} /> }
+            { menuView === "job" && <PeopleSearch userToken={userToken} onSearchChange={onSearchChange} searchFilters={searchFilters} /> }
+            { menuView === "company" && <CompanySearch
+              userToken={userToken} onSearchChange={onSearchChange} searchFilters={searchFilters}
+              filterBy={filterBy}
+            /> }
 
           </form>
         </div>
@@ -74,3 +81,5 @@ export default class SearchMenu extends React.Component {
     )
   }
 }
+
+export default SearchMenu;

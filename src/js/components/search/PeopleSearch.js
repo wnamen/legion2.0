@@ -25,6 +25,7 @@ export default class PeopleSearch extends React.Component {
 	}
 
   handleSelected(e) {
+    e.stopPropagation()
     let selectedLength = e.target.selectedOptions.length;
     let selectedName = e.target.name;
     let selected = this.state.selected || [];
@@ -33,7 +34,7 @@ export default class PeopleSearch extends React.Component {
       let option = e.target.selectedOptions[i];
       selected.push({name: selectedName, value: option.value})
     }
-    this.setState({selected: selected})
+    // this.setState({selected: selected})
   }
 
   socialCheck(e) {
@@ -41,6 +42,7 @@ export default class PeopleSearch extends React.Component {
     let status = e.target.checked;
     let name = e.target.name;
     let target_id = parseInt(e.target.value);
+    console.log(status);
 
     if (status) {
       current_tags.push({
@@ -83,12 +85,11 @@ export default class PeopleSearch extends React.Component {
       return
     }
 
-    if ((e.target.title === 'industry') || (e.target.title === 'interest') ) {
+    if ((e.target.title === 'industries') || (e.target.title === 'interests') ) {
       new_tags.push({
         id: new_tags.length > 0 ? new_tags[new_tags.length-1].id + 1 : 1,
         name: e.target.title,
-        value: e.target.label,
-        index: e.target.value
+        value: e.target.value
       });
     } else {
       new_tags.push({
@@ -106,11 +107,7 @@ export default class PeopleSearch extends React.Component {
   getSearch() {
     let query = "";
     this.state.inputTags.forEach((target) => {
-      if ((target.name === 'industry') || (target.name === 'interest') ||(target.name === 'technology')) {
-        query = query + `${target.name}=${target.index}&`;
-      } else {
-        query = query + `${target.name}=${target.value}&`;
-      }
+      query = query + `${target.name}=${target.value}&`;
     });
 
     this.setState({ query: query });
@@ -189,7 +186,7 @@ export default class PeopleSearch extends React.Component {
               <label>Industry</label>
               <IndustrySearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} />
               <div class="tag-container">
-                {tags.industry}
+                {tags.industries}
               </div>
             </div>
 
@@ -273,19 +270,19 @@ export default class PeopleSearch extends React.Component {
               <label>Interest <small>Advanced Filter</small></label>
               <InterestSearch onDebouncer={this.handleDebouncer} userToken={this.props.userToken} disabled={this.props.searchFilters} />
               <div class="tag-container">
-                {tags.interest}
+                {tags.interests}
               </div>
             </div>
 
             <div class="filter">
               <label>Social Profiles <small>Advanced Filter</small></label>
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='facebook' type='checkbox' value="0" label='Facebook' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='linkedin' type='checkbox' value="1" label='Linkedin' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='angellist' type='checkbox' value="4" label='Angellist' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='crunchbase' type='checkbox' value="3" label='Crunchbase' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='twitter' type='checkbox' value="2" label='Twitter' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='instagram' type='checkbox' value="5" label='Instagram' disabled={this.props.searchFilters} />
-              <Input checked={this.props.checked} onChange={this.socialCheck} name='wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_facebook' type='checkbox' value="0" label='Facebook' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_linkedin' type='checkbox' value="1" label='Linkedin' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_angellist' type='checkbox' value="4" label='Angellist' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_crunchbase' type='checkbox' value="3" label='Crunchbase' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_twitter' type='checkbox' value="2" label='Twitter' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_instagram' type='checkbox' value="5" label='Instagram' disabled={this.props.searchFilters} />
+              <Input checked={this.props.checked} onChange={this.socialCheck} name='has_wikipedia' type='checkbox' value="6" label='Wikipedia' disabled={this.props.searchFilters} />
             </div>
           </div>
     )

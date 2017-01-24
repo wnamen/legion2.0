@@ -9,7 +9,8 @@ import SizeFilterRenderer from "./SizeFilterRenderer";
 import RevenueFundingFilterRenderer from "./RevenueFundingFilterRenderer";
 
 
-export default class ResultsTable extends React.Component {
+class ResultsTable extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -199,3 +200,5 @@ export default class ResultsTable extends React.Component {
     );
   }
 }
+
+export default ResultsTable;

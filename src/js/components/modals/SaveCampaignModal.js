@@ -1,6 +1,6 @@
-import React, { Component } from "react"
+import React, { PropTypes, Component, Children } from 'react';
 import { Input } from 'react-materialize'
-
+import cookie from "react-cookie";
 
 class SaveCampaignModal extends Component {
 
@@ -11,22 +11,62 @@ class SaveCampaignModal extends Component {
         credential_id: "",
         name: "",
         date_started: "",
-        only_business_days: "",
-        target_market_id: ""
+        only_business_days: true,
+        target_market_id: "",
+        offset: ((new Date()).getTimezoneOffset()/-60),
       },
       date: {
-        date: "",
-        hour: "",
-        minute: "",
-        meridiem: "",
-        tz: ((new Date()).getTimezoneOffset()/-60),
+        format: "",
+        hour: "1",
+        minute: "00",
+        meridiem: "AM"
       }
     }
     this.handleSelected = this.handleSelected.bind(this);
     this.handleDate = this.handleDate.bind(this);
+    this.handleChecked = this.handleChecked.bind(this);
     this.triggerModalClose = this.triggerModalClose.bind(this);
     this.dateAnalyzer = this.dateAnalyzer.bind(this);
     this.handleCampaignUpdate = this.handleCampaignUpdate.bind(this);
+
+    this.loadLists = this.loadLists.bind(this);
+    this.loadEmails = this.loadEmails.bind(this);
+  }
+
+  componentDidMount = () => {
+    this.loadLists();
+    this.loadEmails();
+  };
+
+  loadEmails = () => {
+    this.context.http.get('me', {
+      headers: {
+        'Authorization': `Token ${cookie.load('token')}`
+      }
+    }).then(response =>
+      this.setState({
+        emails: response.data.emails,
+        credential_id: response.data.emails[0].id
+      })
+    );
+  }
+
+  loadLists = () => {
+    $.get({
+      url: "https://api.legionanalytics.com/tm-list/?page_size=1000",
+      dataType: "JSON",
+      crossDomain:true,
+      headers: {"Authorization": `Token ${cookie.load("token")}` },
+      success: (response) => {
+        this.setState({
+          tmLists:response.results,
+          target_market_id: response.results[0].id
+        })
+      },
+      error: (response) => {
+        console.log(response);
+      }
+    });
   }
 
   triggerModalClose = () => {
@@ -34,10 +74,16 @@ class SaveCampaignModal extends Component {
   };
 
 	handleDate = (e) => {
-    let campaignDetails = this.state.campaignDetails;
-    campaignDetails[e.target.name] = e.target.value;
-    this.setState(campaignDetails);
+    let dateDetails = this.state.date;
+    dateDetails[e.target.name] = e.target.value;
+    this.setState(dateDetails);
 	}
+
+  handleChecked = (e) => {
+    let campaignDetails = this.state.campaignDetails;
+    campaignDetails[e.target.name] = !this.state.campaignDetails.only_business_days;
+    this.setState({campaignDetails})
+  }
 
 	handleSelected = (e) => {
     let campaignDetails = this.state.campaignDetails;
@@ -46,14 +92,22 @@ class SaveCampaignModal extends Component {
 	}
 
   handleCampaignUpdate = (e) => {
+    e.preventDefault();
     let date_started = this.dateAnalyzer()
-    console.log(date_started);
-
+    let campaignDetails = this.state.campaignDetails;
+    campaignDetails.date_started = date_started;
+    this.props.handleCampaignUpdate(campaignDetails)
+    this.triggerModalClose();
   }
 
   dateAnalyzer = () => {
     let date = this.state.date;
-    console.log(date);
+    let meridiem = date.meridiem === "am" ? 0 : 12;
+    let formated = date.format.split("/").reverse().map((k, v) => {
+      return parseInt(k)
+    })
+    let date_started = `${formated.join("-")}T${parseInt(date.hour) + meridiem}:${date.minute}:00Z`
+    return date_started;
   }
 
   validateDate = (testdate) => {
@@ -62,7 +116,6 @@ class SaveCampaignModal extends Component {
 }
 
   render() {
-
     return (
         <div class="sixteen modalContainer">
          	<div class="thirteen columns text-center smallModal">
@@ -71,7 +124,7 @@ class SaveCampaignModal extends Component {
         		<form>
 	        		<div class="gray inlineFlex">
 	        			<div class="preText">Start this campaign on</div>
-	        			<input type="text" name="date" placeholder="MM/DD/YYYY" class="datePicker inline-block" onChange={this.handleDate} />
+	        			<input type="text" name="format" placeholder="DD/MM/YYYY" class="datePicker inline-block" onChange={this.handleDate} />
 	        			at
 	        			<Input type='select' name="hour" id="hour" onChange={this.handleDate}>
 			                <option value="1">1</option>
@@ -157,8 +210,11 @@ class SaveCampaignModal extends Component {
 	        		<div class="gray inlineFlex bigger">Send this campaign to
 	        			<Input type='select' name="target_market_id" onChange={this.handleSelected}>
 			                <option value="">Choose List</option>
-			                <option value="13">My first List</option>
-			                <option value="1234">Other List</option>
+                      { this.state.tmLists ? this.state.tmLists.map(list =>
+                          <option key={list.id} value={list.id}>
+                            { list.name }
+                          </option>) : <option>No Lists Connected</option>
+                           }
 			            </Input>
 	        		</div>
 	        		<div class="gray inlineFlex bigger">Name this campaign
@@ -166,13 +222,16 @@ class SaveCampaignModal extends Component {
 	        		</div>
 	        		<div class="gray inlineFlex bigger topMargin1em">
 	        			Send this campaign on Saturday & Sunday
-		        		<Input class="medium-left-margin" name='only_business_days' type='checkbox' label=" " value="0" />
+		        		<Input class="medium-left-margin" name='only_business_days' type='checkbox' label=" " value="0" onChange={this.handleChecked} />
 		        	</div>
 	        		<div class="gray inlineFlex bigger whatEmailSend topMargin1em">Send with
-				        <Input type='select' name="credential_id" id="chooseEmail" onChange={this.handleSelected}>
-			                <option value="jamasen@legionanalytics.com">jamasen@legionanalytics.com</option>
-			                <option value="jamasen@kylie.ai">jamasen@kylie.ai</option>
-			            </Input>
+                  <Input type='select' name="credential_id" id="chooseEmail" onChange={this.handleSelected} >
+                    { this.state.emails ? this.state.emails.map(email =>
+                        <option key={email.id} value={email.id}>
+                          { email.credential_handle }
+                        </option>) :
+                        <option>No Emails Connected</option> }
+                  </Input>
 	        		</div>
 			        <button type="submit" onClick={this.handleCampaignUpdate} class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Save & Schedule</button>
 		        </form>
@@ -183,3 +242,7 @@ class SaveCampaignModal extends Component {
 }
 
 export default SaveCampaignModal;
+
+SaveCampaignModal.contextTypes = {
+  http: PropTypes.func.isRequired
+};

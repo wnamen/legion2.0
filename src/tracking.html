@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Legion Analytics</title>
+
+    <!-- VENDOR SCRIPTS -->
+    <script type="text/javascript" src="/src/vendors/jquery.min.js"></script>
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1532281.js"></script>
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="/src/css/main.css">
+  </head>
+  <body class="gray-light-background">
+    <script>
+      var currentPath = window.location.pathname;
+      var trackingType;
+      var id;
+
+      if (currentPath.indexOf("/r/") !== -1) {
+        trackingType = "link-track";
+        id = {link_tracking_id: currentPath.replace("/legion/r/", "")}
+      } else if (currentPath.indexOf("/e/") !== -1) {
+        trackingType = "email-track";
+        id = {email_tracking_id: currentPath.replace("/legion/e/", "")}
+      }
+
+      $.post({
+        url: "https://api.legionanalytics.com/" + trackingType,
+        data: id,
+        success: function(response) {
+          console.log(response);
+          if (trackingType === "link-track") {
+            window.location.replace(response.location);
+          }
+        },
+        error: function(response) {
+          console.log(response);
+        }
+      })
+    </script>
+  </body>
+</html>

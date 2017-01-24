@@ -1,6 +1,6 @@
-import React from "react"
+import React, { Component } from "react"
 
-export default class RevenueFundingFilterRenderer extends React.Component {
+class RevenueFundingFilterRenderer extends Component {
   constructor(props){
     super(props);
   }
@@ -13,3 +13,5 @@ export default class RevenueFundingFilterRenderer extends React.Component {
     )
   }
 }
+
+export default RevenueFundingFilterRenderer;

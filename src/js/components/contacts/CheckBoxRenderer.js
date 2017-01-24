@@ -9,7 +9,6 @@ export default class CheckBoxRenderer extends React.Component {
 
   // CAPTURE'S THE ROW ID THAT IS SELECTED
   handleSelected = (e) => {
-    console.log(e.target.id);
     this.context.captureSelected(parseInt(e.target.id));
   }
 
