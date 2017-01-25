@@ -43,9 +43,10 @@ export default class TemplateViews extends React.Component {
     let delays = this.state.currentDelays || this.props.currentDelays;
     delays.forEach((item, index) => {
       if (index === parseInt(id)) {
-        return (item.delay = delay);
+        return (delays[index] = delay);
       }
     })
+    console.log(delays);
     this.setState({currentDelays: delays})
   }
 
@@ -98,7 +99,7 @@ export default class TemplateViews extends React.Component {
         console.log(template);
         if ((this.props.renderState === "campaign") && (template !== undefined)) {
           return (
-            <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index] !== undefined ? delays[index].delay : null} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} />
+            <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index] !== undefined ? delays[index] : null} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} />
           )
         } else if (template !== undefined) {
           return (

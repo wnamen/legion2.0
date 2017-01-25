@@ -30,6 +30,7 @@ export default class Template extends React.Component {
   }
 
   handleDelayChange = (e) => {
+    console.log((this.props.dataIndex), parseInt(e.target.value));
     this.props.onDelayChange((this.props.dataIndex), parseInt(e.target.value));
   }
 
@@ -66,6 +67,9 @@ export default class Template extends React.Component {
     let templates = this.props.templateData;
     let mappedTemplates;
     let delayValue;
+
+    console.log(this.props.currentDelay);
+    console.log(this.props.currentDelays);
 
     if (this.props.currentDelay !== null ) {
       delayValue = this.state.currentDelay || this.props.currentDelay;
