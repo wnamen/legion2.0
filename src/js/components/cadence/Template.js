@@ -27,6 +27,7 @@ export default class Template extends React.Component {
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
     this.clearTemplate = this.clearTemplate.bind(this);
     this.handleDelayChange = this.handleDelayChange.bind(this);
+    this.handleTestEmail = this.handleTestEmail.bind(this);
   }
 
   handleDelayChange = (e) => {
@@ -63,7 +64,11 @@ export default class Template extends React.Component {
     this.setState({name_of_template: " ", subject: " ", html: " "})
   }
 
-  render(){
+  handleTestEmail = () => {
+    this.props.sendTestEmail(this.state.id || this.props.data.id);
+  }
+
+  render() {
     let templates = this.props.templateData;
     let mappedTemplates;
     let delayValue;
@@ -142,7 +147,7 @@ export default class Template extends React.Component {
                   </Input>
                 </div>
                 <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>
-                <a href="#" class="active pushRight sendTestEmail">Send Test Email</a>
+                <a class="active pushRight sendTestEmail" onClick={this.handleTestEmail}>Send Test Email</a>
               </div>
           </div>
         </div>

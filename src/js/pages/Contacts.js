@@ -9,6 +9,7 @@ import ContactsTable    from "../components/contacts/ContactsTable";
 import MapBar           from "../components/contacts/MapBar";
 import MapTable         from "../components/contacts/MapTable";
 import MapResults       from "../components/contacts/MapResults";
+
 import ActionSaved      from "../components/notifications/ActionSaved"
 import ActionConfirmation      from "../components/notifications/ActionConfirmation"
 
@@ -316,6 +317,7 @@ export default class Contacts extends React.Component {
         <div class="sixteen columns">
           { this.state.notification.confirmation && <ActionConfirmation message={this.state.message} closeNotification={this.closeConfirmationNotification}/> }
           { this.state.notification.success && <ActionSaved message={this.state.message} closeNotification={this.closeSuccessNotification}/> }
+
           <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} exportCSV={this.exportCSV} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} searchCurrentList={this.searchCurrentList} confirmAction={this.openConfirmNotification}/>
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
