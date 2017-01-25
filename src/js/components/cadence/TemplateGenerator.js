@@ -14,9 +14,7 @@ export default class TemplateGenerator extends React.Component {
         subject: null,
         html: null
       },
-      currentDelays: {
-        delay: 1
-      }
+      currentDelay: 1
     }
     this.handleRenderSelection = this.handleRenderSelection.bind(this);
     this.appendNewTemplate = this.appendNewTemplate.bind(this);
@@ -34,7 +32,7 @@ export default class TemplateGenerator extends React.Component {
     let delays = this.props.currentDelays;
 
     templates.push(this.state.currentTemplates);
-    delays.push(this.state.currentDelays);
+    delays.push(this.state.currentDelay);
     this.props.onAppendTemplate(templates, delays);
   }
 

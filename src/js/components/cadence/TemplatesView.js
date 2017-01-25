@@ -32,21 +32,23 @@ export default class TemplateViews extends React.Component {
     let campaignTemplateList = [];
 
     templates.forEach((template) => {
-      console.log(template);
       (template.id !== undefined && template.id !== null) ? campaignTemplateList.push(template.id) : "";
     })
 
     this.setState({currentTemplates: templates, currentDelays: delays, campaignTemplateList: campaignTemplateList })
   }
 
-  onDelayChange = (id, delay) => {
+  onDelayChange = (index, delay, templateID) => {
     let delays = this.state.currentDelays || this.props.currentDelays;
-    delays.forEach((item, index) => {
-      if (index === parseInt(id)) {
-        return (delays[index] = delay);
+    delays.forEach((item, idx) => {
+      if (idx === parseInt(index)) {
+        return (delays[idx] = delay);
       }
     })
-    console.log(delays);
+    if ((templateID > 0) && (this.props.currentView.id > 0)) {
+      this.props.saveCampaign({id: this.props.currentView.id, tempate_id: templateID, delay: delay})
+    }
+
     this.setState({currentDelays: delays})
   }
 
