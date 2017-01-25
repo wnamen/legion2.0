@@ -159,9 +159,7 @@ export default class Cadence extends React.Component {
     templates.forEach((template) => {
       currentTemplates.push(this.findTemplateData(template[0]));
       campaignTemplateList.push(parseInt(template[0]));
-      if (template[1] !== -1) {
-        currentDelays.push(template[1]);
-      }
+      currentDelays.push(template[1]);
     })
     this.setState({renderState: "campaign", currentView: campaign, currentDelays: currentDelays, campaignTemplateList: campaignTemplateList, currentTemplates: currentTemplates});
   }

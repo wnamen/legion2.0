@@ -95,6 +95,14 @@ export default class Template extends React.Component {
 
     return(
       <div>
+        { (this.props.currentDelay > 0) &&
+          <div class="sixteen text-center">
+            <div class="gray inlineFlex delayAdjuster">
+              <div class="preText">If I don't receive a response after </div>
+              <input type="number" min="1" max="30" class="delayPicker inline-block" value={delayValue} id={this.props.dataIndex} onChange={this.handleDelayChange}/> days, then send the following template
+            </div>
+          </div>
+        }
         <div class="sixteen">
           <div class="gray-border small-border workingTemplate">
               <div class="gray small-bottom-border gray-border workingRow">
@@ -139,14 +147,6 @@ export default class Template extends React.Component {
               </div>
           </div>
         </div>
-        { this.props.currentDelay !== null &&
-          <div class="sixteen text-center">
-            <div class="gray inlineFlex delayAdjuster">
-              <div class="preText">If I don't receive a response after </div>
-              <input type="number" min="1" max="30" class="delayPicker inline-block" value={delayValue} id={this.props.dataIndex} onChange={this.handleDelayChange}/> days, then send the following template
-            </div>
-          </div>
-        }
       </div>
     )
   }
