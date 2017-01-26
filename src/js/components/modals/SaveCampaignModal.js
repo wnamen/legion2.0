@@ -31,11 +31,14 @@ class SaveCampaignModal extends Component {
 
     this.loadLists = this.loadLists.bind(this);
     this.loadEmails = this.loadEmails.bind(this);
+    this.setCurrentDate = this.setCurrentDate.bind(this);
   }
+
 
   componentDidMount = () => {
     this.loadLists();
     this.loadEmails();
+    this.setCurrentDate();
   };
 
   loadEmails = () => {
@@ -72,6 +75,20 @@ class SaveCampaignModal extends Component {
   triggerModalClose = () => {
     this.props.handleModalClose();
   };
+
+  setCurrentDate = () => {
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1
+    let yyyy = today.getFullYear();
+
+    dd < 10 ? dd = `0${dd}` : dd = dd;
+    mm < 10 ? mm = `0${mm}` : mm = mm;
+
+    this.setState({
+      date: {format: `${dd}/${mm}/${yyyy}`}
+    })
+  }
 
 	handleDate = (e) => {
     let dateDetails = this.state.date;
@@ -110,10 +127,10 @@ class SaveCampaignModal extends Component {
     return date_started;
   }
 
-  validateDate = (testdate) => {
-    let date_regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
-    return date_regex.test(testdate);
-}
+//   validateDate = (testdate) => {
+//     let date_regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
+//     return date_regex.test(testdate);
+// }
 
   render() {
     return (
@@ -124,7 +141,7 @@ class SaveCampaignModal extends Component {
         		<form>
 	        		<div class="gray inlineFlex">
 	        			<div class="preText">Start this campaign on</div>
-	        			<input type="text" name="format" placeholder="DD/MM/YYYY" class="datePicker inline-block" onChange={this.handleDate} />
+	        			<input type="text" name="format" placeholder="DD/MM/YYYY" class="datePicker inline-block" value={this.state.date.format} onChange={this.handleDate} />
 	        			at
 	        			<Input type='select' name="hour" id="hour" onChange={this.handleDate}>
 			                <option value="1">1</option>

@@ -3,14 +3,13 @@ import { IndexLink, Link } from "react-router";
 import { Dropdown, NavItem, Button, Modal } from "react-materialize";
 import $ from "jquery";
 
-
 import SignUpModal from "../modals/SignUpModal";
 import SignInModal from "../modals/SignInModal";
 
 export default class GuestNav extends React.Component {
   render() {
     const modalTrigger1 = <div class="smlBtn smlBtnLg smoothBkgd electric-blue white-background electric-blue-border">Create My Free Account</div>
-    const modalTrigger2 = <a>Sign In</a>
+    const modalTrigger2 = <a id="sign-in">Sign In</a>
 
     return (
         <div class="nav-wrapper medium-vertical-padding">

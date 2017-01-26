@@ -2,75 +2,63 @@ import React, { Component, PropTypes } from "react";
 import { Modal, Input } from 'react-materialize';
 import cookie from "react-cookie";
 
-import PasswordResetModal from "../modals/PasswordResetModal"
+import SignIn from "./signin/SignIn"
+import PasswordReset from "./signin/PasswordReset"
+import SendUniqueCode from "./signin/SendUniqueCode"
 
 class SignInModal extends Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      readyToReset: false,
+      modalView: true,
+      resetSuccess: false
+    }
+
+    this.handleModalView = this.handleModalView.bind(this);
+    this.handleResetView = this.handleResetView.bind(this);
+    this.handleResetSuccess = this.handleResetSuccess.bind(this);
   }
 
-  handleEmailChange = (e) => {
-    this.setState({email: e.target.value});
-  };
+  componentDidMount = () => {
+    this.setState({
+      readyToReset: false,
+      modalView: true,
+      resetSuccess: false
+    })
+  }
 
-  handlePasswordChange = (e) => {
-    this.setState({password: e.target.value});
-  };
+  handleModalView = () => {
+    this.setState({modalView: !this.state.modalView})
+  }
 
-  signIn = (e) => {
-    e.preventDefault();
-    const { email, password } = this.state;
-    const { http } = this.context;
+  handleResetView = () => {
+    this.setState({readyToReset: !this.state.readyToReset})
+  }
 
-    http.post('login', {
-
-       username: email,
-       password: password
-     }).then(response => this.cookieSaver(response.data))
-     .catch(response => this.errorValidation())
-   };
-
-  cookieSaver = (response) => {
-    const { router } = this.context;
-    const modal = document.querySelectorAll('.modal-close');
-    cookie.save("token", response.token, { path: "/" });
-    Object.keys(modal).map(v => modal[v].click());
-    router.push("/search");
-  };
-
-  errorValidation = (e) => {
-    $(".canValidate").addClass("failedValidation");
-      window.setTimeout(function(){
-        $(".canValidate").removeClass("failedValidation");
-      },1000);
-  };
+  handleResetSuccess = () => {
+    this.setState({resetSuccess: !this.state.resetSuccess})
+  }
 
   render() {
+    const { modalView, readyToReset, resetSuccess } = this.state;
+    let currentView;
 
-    const modalTrigger =
-      <div>
-        <small class="text-center">
-          <a href="#" class="active">Forgot Password</a>
-        </small>
-      </div>;
+    if (modalView) {
+      currentView = <SignIn handleModalView={this.handleModalView} resetSuccess={resetSuccess}/>
+    } else {
+      if (readyToReset) {
+        currentView = <PasswordReset handleResetView={this.handleResetView} handleModalView={this.handleModalView} handleResetSuccess={this.handleResetSuccess}/>;
+      } else {
+        currentView = <SendUniqueCode handleResetView={this.handleResetView} />
+      }
+    }
 
     return (
-        <div class="sixteen modalContainer">
-          <div class="eight columns text-center smallModal">
-          		<img class="modalIcon" src="/src/img/logInIcon.png" />
-          		<h1 class="modalTitle gray">Secure Sign In</h1>
-
-          		<form id="billingModalForm" onSubmit={this.signIn}>
-      	          <Input type="email" placeholder="Email Address" class="canValidate" onChange={this.handleEmailChange} required/>
-      	          <Input type="password" placeholder="Password" class="canValidate" onChange={this.handlePasswordChange} required/>
-                  <Modal trigger={modalTrigger}>
-                    <PasswordResetModal />
-                  </Modal>
-      	          <button type="submit" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Sign In</button>
-    	        </form>
-        	</div>
-        </div>
+      <div>
+        { currentView }
+      </div>
     )
   }
 }

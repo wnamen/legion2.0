@@ -45,22 +45,23 @@ export default class TemplateViews extends React.Component {
         return (delays[idx] = delay);
       }
     })
-    if ((templateID > 0) && (this.props.currentView.id > 0)) {
-      this.props.saveCampaign({id: this.props.currentView.id, tempate_id: templateID, delay: delay})
+    if ((templateID > 0) && (this.props.currentView.id > 0 )) {
+      this.props.saveCampaign({id: this.props.currentView.id, templates: this.props.campaignTemplateList, delays: delays})
     }
 
     this.setState({currentDelays: delays})
   }
 
   handleCampaignSave = () => {
-    if (this.props.currentView.id === null) {
-      let delays = [];
-      this.props.currentDelays.forEach((item) => {
-        delays.push(item.delay)
-      })
-      let campaign = {templates: this.props.campaignTemplateList, delays: delays}
-      this.props.saveCampaign(campaign)
-    }
+    let delays = [];
+    this.props.currentDelays.forEach((item) => {
+      if (item !== -1) {
+        delays.push(item)
+      }
+    })
+    let campaign = {templates: this.props.campaignTemplateList, delays: delays}
+    console.log(campaign);
+    this.props.saveCampaign(campaign)
     this.activateModal();
   }
 
@@ -85,7 +86,7 @@ export default class TemplateViews extends React.Component {
       <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
       <button class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn" disabled={this.props.disableSave} onClick={this.handleCampaignSave}>Save Campaign</button>
       <Modal trigger={<div id="uploadOpen" ></div>}>
-        <SaveCampaignModal handleCampaignUpdate={this.handleCampaignUpdate} handleModalClose={this.handleModalClose}/>
+        <SaveCampaignModal currentView={this.props.currentView} handleCampaignUpdate={this.handleCampaignUpdate} handleModalClose={this.handleModalClose}/>
       </Modal>
     </div></div>)
 
@@ -93,12 +94,10 @@ export default class TemplateViews extends React.Component {
     let delays = this.state.currentDelays || this.props.currentDelays;
     let mappedTemplates;
 
-    console.log(delays);
-
+    console.log(templates);
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {
-        console.log(template);
         if ((this.props.renderState === "campaign") && (template !== undefined)) {
           return (
             <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index]} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail}/>

@@ -69,6 +69,7 @@ export default class Cadence extends React.Component {
   // LOAD THE USERS CURRENT TEMPLATES
   loadAvailableTemplates = (id) => {
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(id);
 
     $.get({
       url: "https://api.legionanalytics.com/my-templates?page_size=1000",
@@ -118,6 +119,17 @@ export default class Cadence extends React.Component {
     this.setState({renderState: "template", currentView: currentTemplate, currentTemplates: currentTemplate});
   }
 
+  // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
+  findSelectedCampaign = (e) => {
+    let id = isNaN(e) ? e.target.id : e;
+    this.state.cadenceData.forEach((cadence) => {
+      if (parseInt(cadence.id) === parseInt(id)) {
+        this.loadCampaignEngagements(cadence.id)
+        this.findCampaignTemplates(cadence, cadence.settings.templates)
+      }
+    })
+  }
+
   // CAPTURES THE SELECTED CAMPAIGN TEMPLATE TO BE RENDERED
   findNewCampaignTemplates = (id) => {
     let templateList = this.state.campaignTemplateList
@@ -132,17 +144,6 @@ export default class Cadence extends React.Component {
     templateList.length >= 2 ? disableSave = false : disableSave = true;
 
     this.setState({renderState: "campaign", currentTemplates: currentTemplates, campaignTemplateList: templateList, disableSave: disableSave});
-  }
-
-  // CAPTURES THE SELECTED CAMPAIGN TO BE RENDERED
-  findSelectedCampaign = (e) => {
-    let id = isNaN(e) ? e.target.id : e;
-    this.state.cadenceData.forEach((cadence) => {
-      if (parseInt(cadence.id) === parseInt(id)) {
-        this.loadCampaignEngagements(cadence.id)
-        this.findCampaignTemplates(cadence, cadence.settings.templates)
-      }
-    })
   }
 
   // HANDLES THE TEMPLATE SEARCH FOR A CAMPAIGN AND SAVES THE NEW STATE
@@ -177,7 +178,7 @@ export default class Cadence extends React.Component {
       renderState: "campaign",
       disableSave: true,
       campaignTemplateList: [],
-      currentDelays: [],
+      currentDelays: [-1],
       currentView: {
         id: null,
         name:"",
@@ -231,8 +232,8 @@ export default class Cadence extends React.Component {
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         this.setState({
-          notification: {success},
-          message: "Your update has been saved!"
+          notification: {success: true},
+          message: "Your campaign has been updated!"
         });
         this.loadAvailableCampaigns(response.id);
       }
@@ -253,7 +254,7 @@ export default class Cadence extends React.Component {
         this.setState({
           notification: {success: true},
           currentView: null,
-          message: "You your campaign has been deleted!"
+          message: "Your campaign has been deleted!"
         })
       }
     });
@@ -279,6 +280,7 @@ export default class Cadence extends React.Component {
 
   // DETERMINE TEMPLATE UPDATE/CREATE
   saveTemplate = (template) => {
+    console.log(template);
     if ((template.id === null) || (template.id === undefined)) {
       this.makeTemplate(template);
     } else {
@@ -304,6 +306,7 @@ export default class Cadence extends React.Component {
   // UPDATE TEMPLATE
   updateTemplate = (template) => {
     let tokenHeader = `Token ${this.state.token}`;
+    console.log(template);
 
     $.post({
       url: "https://api.legionanalytics.com/update-template",
@@ -312,10 +315,10 @@ export default class Cadence extends React.Component {
       headers: {"Authorization": tokenHeader },
       success: (response) => {
         this.setState({
-          notification: {success},
+          notification: {success: true},
           message: "Your update has been saved!"
         })
-        this.loadAvailableTemplates();
+        this.loadAvailableTemplates(template.id);
       }
     });
   }
@@ -353,7 +356,7 @@ export default class Cadence extends React.Component {
 
     $.post({
       url: "https://api.legionanalytics.com/test-email",
-      data: {credential_id: this.state.currentView.credential_id, template_id: id},
+      data: {template_id: id},
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
