@@ -360,9 +360,38 @@ export default class Cadence extends React.Component {
       crossDomain:true,
       headers: {"Authorization": tokenHeader },
       success: (response) => {
+        this.setState({
+          notification: {success: true},
+          message: "A test email has been sent to your primary email address on file."
+        })
         console.log(response);
       }
     });
+  }
+
+  exportToLists = (id) => {
+    let tokenHeader = `Token ${this.state.token}`;
+
+    if ((id === undefined) || (id === null)) {
+      this.setState({
+        notification: {success: true},
+        message: "Please select a campaign to export your engagements to a list."
+      })
+    } else {
+      $.post({
+        url: "https://api.legionanalytics.com/open-click-cadence",
+        data: {cadence_id: id},
+        crossDomain:true,
+        headers: {"Authorization": tokenHeader },
+        success: (response) => {
+          this.setState({
+            notification: {success: true},
+            message: "Your engagements have been exported to your contacts!"
+          })
+          console.log(response);
+        }
+      });
+    }
   }
 
   // OPENS CONFIRMATION NOTIFICATION
@@ -395,7 +424,7 @@ export default class Cadence extends React.Component {
 
             <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} deleteCampaign={this.deleteCampaign} />
             <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList} sendTestEmail={this.sendTestEmail}/>
-            <CampaignEngagement engagementData={this.state.engagementData}/>
+            <CampaignEngagement currentView={this.state.currentView} engagementData={this.state.engagementData} exportToLists={this.exportToLists}/>
           </div>
         </div>
 

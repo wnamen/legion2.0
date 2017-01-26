@@ -61,7 +61,7 @@ class SignIn extends Component {
           		<form id="billingModalForm" onSubmit={this.signIn}>
       	          <Input type="email" placeholder="Email Address" class="canValidate" onChange={this.handleEmailChange} required/>
       	          <Input type="password" placeholder="Password" class="canValidate" onChange={this.handlePasswordChange} required/>
-                  <small class="text-center">
+                  <small class="text-center" style={{"display":"block"}}>
                     <a id="password-reset" class="active" onClick={this.changeModalView}>Forgot Password</a>
                   </small>
       	          <button type="submit" class="lgnBtn settingsBtn lgnBtnLg smoothBkgd electric-blue-background white inline-block signupBtn">Sign In</button>

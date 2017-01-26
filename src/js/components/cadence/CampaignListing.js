@@ -21,13 +21,13 @@ export default class CampaignListing extends React.Component {
   }
 
   render(){
-    const running = <small class="running" id={this.props.campaignID} onClick={this.handleRenderCampaign}>(Running)</small>;
-    const paused = <small class="running red" id={this.props.campaignID} onClick={this.handleRenderCampaign}>(Paused)</small>;
+    const running = <small class="running" id={this.props.campaignID} onClick={this.handleRenderCampaign} style={{"text-transform": "capitalize"}}>({this.props.campaignStatus})</small>;
+    const paused = <small class="running red" id={this.props.campaignID} onClick={this.handleRenderCampaign} style={{"text-transform": "capitalize"}}>({this.props.campaignStatus})</small>;
 
     return(
       <div id={this.props.campaignID} onClick={this.handleRenderCampaign} class="sixteen campaignListing gray">
         <div id={this.props.campaignID} class="text-left inline-block full-width" onClick={this.handleRenderCampaign}>
-          { this.props.campaignName } { this.props.campaignStatus ? running : paused }
+          { this.props.campaignName } { this.props.campaignStatus !== "paused" ? running : paused }
           <span id={this.props.campaignID} onClick={this.handleDeleteCampaign} class="text-right">&times;</span>
         </div>
       </div>
