@@ -13,7 +13,7 @@ export default class TemplateViews extends React.Component {
     this.state = {
       campaignActivated: true,
     }
-    this.onCampaignToggle = this.onCampaignToggle.bind(this);
+    this.onCampaignStatusToggle = this.onCampaignStatusToggle.bind(this);
     this.onAppendTemplate = this.onAppendTemplate.bind(this);
     this.onDelayChange = this.onDelayChange.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
@@ -24,8 +24,12 @@ export default class TemplateViews extends React.Component {
     $(".modal-close").trigger("click");
   }
 
-  onCampaignToggle = () => {
-    this.setState({campaignActivated: !this.state.campaignActivated});
+  onCampaignStatusToggle = () => {
+    if (this.props.currentView.status === "paused") {
+      this.props.saveCampaign({id: this.props.currentView.id, paused: false});
+    } else {
+      this.props.saveCampaign({id: this.props.currentView.id, paused: true});
+    }
   }
 
   onAppendTemplate = (templates, delays) => {
@@ -60,7 +64,7 @@ export default class TemplateViews extends React.Component {
       }
     })
     let campaign = {templates: this.props.campaignTemplateList, delays: delays}
-    console.log(campaign);
+
     this.props.saveCampaign(campaign)
     this.activateModal();
   }
@@ -78,12 +82,14 @@ export default class TemplateViews extends React.Component {
   }
 
   render(){
+
+    console.log(this.props.currentView.status);
     const play = <i class="fa fa-play electric-blue"></i>;
     const pause = <i class="fa fa-pause electric-blue"></i>;
 
     const header = (<div><div class="gray activeCampaignName">{this.props.currentView.name}</div>
     <div class="topCampaignBtns">
-      <div onClick={this.onCampaignToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.state.campaignActivated ? pause : play }</div>
+      <div onClick={this.onCampaignStatusToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.props.currentView.status === "paused" ? play : pause }</div>
       <button class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn" disabled={this.props.disableSave} onClick={this.handleCampaignSave}>Save Campaign</button>
       <Modal trigger={<div id="uploadOpen" ></div>}>
         <SaveCampaignModal currentView={this.props.currentView} handleCampaignUpdate={this.handleCampaignUpdate} handleModalClose={this.handleModalClose}/>
@@ -93,8 +99,6 @@ export default class TemplateViews extends React.Component {
     let templates = this.state.currentTemplates || this.props.currentTemplates;
     let delays = this.state.currentDelays || this.props.currentDelays;
     let mappedTemplates;
-
-    console.log(templates);
 
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {

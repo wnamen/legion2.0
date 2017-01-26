@@ -52,7 +52,7 @@ export default class CampaignEngagement extends React.Component {
     return(
       <div class="three columns">
         <div class="profile-card engagement">
-          <h6 class="black">Engagement<li><a class="contact-upload" onClick={this.exportToLists}>Export to lists</a></li></h6>
+          <h6 class="black">Engagement<a class="export-engagements large-left-margin" onClick={this.exportToLists}>Export to lists</a></h6>
           {mappedEngagments}
         </div>
       </div>
