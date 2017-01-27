@@ -51,8 +51,9 @@ export default class PeopleSearch extends React.Component {
         name: selectedName+"lte",
         value: max_of_array
       })
-
     }
+
+    console.log(current_tags);
     this.setState({ inputTags: current_tags });
     this.getSearch();
   }
@@ -60,8 +61,7 @@ export default class PeopleSearch extends React.Component {
   handleDepartmentSelected = (e) => {
     let current_tags = this.state.current_tags != undefined ? this.state.current_tags: [];
     let jobs = this.props.departments[e.target.value];
-
-    console.log(jobs);
+    console.log(this.state.current_tags);
 
     jobs.forEach((job) => {
       current_tags.push({
@@ -70,6 +70,8 @@ export default class PeopleSearch extends React.Component {
         value: job
       })
     })
+
+    console.log(current_tags);
 
     this.setState({ inputTags: current_tags });
     this.getSearch();
