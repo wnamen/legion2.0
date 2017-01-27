@@ -22,7 +22,7 @@ export default class TemplateGenerator extends React.Component {
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
-        return this.setState({id: template.id, name_of_template: template.name_of_template, subject: template.subject, html: template.html})
+        return this.setState({currentTemplates: {id: template.id, name_of_template: template.name_of_template, subject: template.subject, html: template.html}})
       }
     })
   }
