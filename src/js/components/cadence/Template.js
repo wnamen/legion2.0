@@ -13,7 +13,8 @@ export default class Template extends React.Component {
         toolbarInline: true,
         toolbarVisibleWithoutSelection: true,
         charCounterCount: false,
-        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', '-', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', '-', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink']
+        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', '-', 'formatOL', 'formatUL', 'indent', 'outdent', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink'],
+        imageInsertButtons: ['imageBack', '|', 'imageUpload', 'imageByURL']
       },
       id: null,
       name_of_template: null,
@@ -28,6 +29,14 @@ export default class Template extends React.Component {
     this.clearTemplate = this.clearTemplate.bind(this);
     this.handleDelayChange = this.handleDelayChange.bind(this);
     this.handleTestEmail = this.handleTestEmail.bind(this);
+  }
+
+  componentDidMount = () => {
+    this.setState({
+       subject: this.props.data.subject,
+       name_of_template: this.props.data.name_of_template,
+       html: this.props.data.html
+    })
   }
 
   handleDelayChange = (e) => {
@@ -61,14 +70,25 @@ export default class Template extends React.Component {
   }
 
   clearTemplate = () => {
-    this.setState({name_of_template: " ", subject: " ", html: " "})
+    this.setState({name_of_template: " ", subject: " ", html: "   "})
   }
 
   handleTestEmail = () => {
     this.props.sendTestEmail(this.state.id || this.props.data.id);
   }
 
+  handleSelectedInsert = (e) => {
+    $('div#froala-editor')
+    .on('froalaEditor.initialized', function (e, editor) {
+      editor.events.bindClick($('body'), 'option#cfn', function () {
+        editor.html.insert(e.target.value);
+        editor.events.focus();
+      });
+    })
+  }
+
   render() {
+    console.log(this.state);
     let templates = this.props.templateData;
     let mappedTemplates;
     let delayValue;
@@ -85,16 +105,6 @@ export default class Template extends React.Component {
       })
     }
 
-    $(function() {
-      $('div#froala-editor')
-        .on('froalaEditor.initialized', function (e, editor) {
-          editor.events.bindClick($('body'), 'option#cfn', function () {
-            editor.html.insert('{{first_name| there}}');
-            editor.events.focus();
-          });
-        })
-    });
-
     return(
       <div>
         { (this.props.currentDelay > 0) &&
@@ -110,7 +120,7 @@ export default class Template extends React.Component {
               <div class="gray small-bottom-border gray-border workingRow">
                 <div class="inline-block">Template Name: </div>
                 <div class="inline-block templateNameContainer">
-                  <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.name_of_template || this.props.data.name_of_template}/>
+                  <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={this.state.name_of_template}/>
                 </div>
                 <div class="working chooseTemplate">
                   <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
@@ -122,7 +132,7 @@ export default class Template extends React.Component {
               <div class="gray small-bottom-border gray-border workingRow">
                 <div class="inline-block">Subject: </div>
                 <div class="inline-block templateNameContainer">
-                  <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.subject || this.props.data.subject}>
+                  <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.subject}>
                   </Input>
                 </div>
               </div>
@@ -130,18 +140,18 @@ export default class Template extends React.Component {
                 <FroalaEditor
                   tag="textarea"
                   config={this.state.config}
-                  model={this.state.html || this.props.data.html}
+                  model={this.state.html}
                   onModelChange={this.handleModelChange}
                 />
               </div>
               <div class="gray small-bottom-border gray-border workingRow bottomRow">
                 <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.onTemplateSave}>Save</div>
                 <div class="working chooseTemplate pTags">
-                  <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+                  <Input type='select' name="whichEmail" onChange={this.handleSelectedInsert}>
                     <option value="" disabled>Personalized Tags</option>
-                    <option class="templateTag" id="cfn" value="contactFirstName">Contact's First Name</option>
-                    <option class="templateTag" id="cln" value="contactLastName">Contact's Last Name</option>
-                    <option class="templateTag" id="cn" value="companyName">Company Name</option>
+                    <option class="templateTag" id="cfn" value="{{first_name | there}}">Contact's First Name</option>
+                    <option class="templateTag" id="cln" value="{{last_name | there}}">Contact's Last Name</option>
+                    <option class="templateTag" id="cn" value="{{company_name | your company}}">Company Name</option>
                   </Input>
                 </div>
                 <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>

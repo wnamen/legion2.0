@@ -181,17 +181,16 @@ export default class Cadence extends React.Component {
       currentDelays: [-1],
       currentView: {
         id: null,
-        name:"",
-        started: false,
+        name:" ",
         settings: {
           templates: []
         }
       },
       currentTemplates: [{
         id: null,
-        html:"",
-        subject:"",
-        name_of_template:""
+        html:" ",
+        subject:" ",
+        name_of_template:" "
       }]
     });
   }

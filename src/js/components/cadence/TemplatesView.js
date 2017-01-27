@@ -26,9 +26,9 @@ export default class TemplateViews extends React.Component {
 
   onCampaignStatusToggle = () => {
     if (this.props.currentView.status === "paused") {
-      this.props.saveCampaign({id: this.props.currentView.id, paused: false});
+      this.props.saveCampaign({id: this.props.currentView.id, pause: false});
     } else {
-      this.props.saveCampaign({id: this.props.currentView.id, paused: true});
+      this.props.saveCampaign({id: this.props.currentView.id, pause: true});
     }
   }
 
@@ -83,7 +83,7 @@ export default class TemplateViews extends React.Component {
 
   render(){
 
-    console.log(this.props.currentView.status);
+    console.log(this.props.currentView);
     const play = <i class="fa fa-play electric-blue"></i>;
     const pause = <i class="fa fa-pause electric-blue"></i>;
 
@@ -104,11 +104,11 @@ export default class TemplateViews extends React.Component {
       mappedTemplates = templates.map((template, index) => {
         if ((this.props.renderState === "campaign") && (template !== undefined)) {
           return (
-            <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index]} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail}/>
+            <Template key={`template ${template.id || index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index]} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail}/>
           )
         } else if (template !== undefined) {
           return (
-            <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={null} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail}/>
+            <Template key={`template ${template.id || index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={null} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail}/>
           )
         }
       })

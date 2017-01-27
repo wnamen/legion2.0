@@ -6,22 +6,7 @@ class SaveCampaignModal extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      campaignDetails: {
-        credential_id: "",
-        name: "",
-        date_started: "",
-        only_business_days: true,
-        target_market_id: "",
-        offset: ((new Date()).getTimezoneOffset()/-60),
-      },
-      date: {
-        format: "",
-        hour: "1",
-        minute: "00",
-        meridiem: "AM"
-      }
-    }
+
     this.handleSelected = this.handleSelected.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleChecked = this.handleChecked.bind(this);
@@ -34,12 +19,47 @@ class SaveCampaignModal extends Component {
     this.setCurrentDate = this.setCurrentDate.bind(this);
   }
 
-
-  componentDidMount = () => {
+  componentWillMount = () => {
     this.loadLists();
     this.loadEmails();
-    this.setCurrentDate();
+    this.setState({
+      campaignDetails: {
+        credential_id: "",
+        name: "",
+        only_business_days: true,
+        target_market_id: "",
+        offset: ((new Date()).getTimezoneOffset()/-60),
+      },
+      date: {
+        format: this.setCurrentDate(),
+        hour: "1",
+        minute: "00",
+        meridiem: "AM"
+      }
+    })
   };
+
+  componentWillReceiveProps = () => {
+    const { data } = this.props.currentView;
+
+    console.log(data);
+    if (data !== undefined){
+      this.setState({
+        campaignDetails: {
+          credential_id: data.credential_id,
+          name: data.name,
+          only_business_days: data.only_business_days,
+          target_market_id: data.target_market_id
+        },
+        date: {
+          format: `${data.month}/${data.day}/${data.year}`,
+          hour: data.hour % 12,
+          minute: data.minute,
+          merdiem: data.hour > 12 ? "pm" : "am"
+        }
+      })
+    }
+  }
 
   loadEmails = () => {
     this.context.http.get('me', {
@@ -85,9 +105,7 @@ class SaveCampaignModal extends Component {
     dd < 10 ? dd = `0${dd}` : dd = dd;
     mm < 10 ? mm = `0${mm}` : mm = mm;
 
-    this.setState({
-      date: {format: `${dd}/${mm}/${yyyy}`}
-    })
+    return `${mm}/${dd}/${yyyy}`
   }
 
 	handleDate = (e) => {
@@ -110,29 +128,32 @@ class SaveCampaignModal extends Component {
 
   handleCampaignUpdate = (e) => {
     e.preventDefault();
-    let date_started = this.dateAnalyzer()
-    let campaignDetails = this.state.campaignDetails;
-    campaignDetails.date_started = date_started;
-    this.props.handleCampaignUpdate(campaignDetails)
-    this.triggerModalClose();
+    if (validateDate(this.state.date.format)) {
+      let date_started = this.dateAnalyzer()
+      let campaignDetails = this.state.campaignDetails;
+      campaignDetails.date_started = date_started;
+      this.props.handleCampaignUpdate(campaignDetails)
+      this.triggerModalClose();
+    }
   }
 
   dateAnalyzer = () => {
     let date = this.state.date;
     let meridiem = date.meridiem === "am" ? 0 : 12;
-    let formated = date.format.split("/").reverse().map((k, v) => {
-      return parseInt(k)
-    })
-    let date_started = `${formated.join("-")}T${parseInt(date.hour) + meridiem}:${date.minute}:00Z`
+    let formatArray = date.format.split("/");
+    formated = `${formatedArray[2]}-${formatedArray[0]}-${formatedArray[1]}`
+    let date_started = `${formated}T${parseInt(date.hour) + meridiem}:${date.minute}:00Z`
     return date_started;
   }
 
-//   validateDate = (testdate) => {
-//     let date_regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
-//     return date_regex.test(testdate);
-// }
+  validateDate = (testdate) => {
+    let date_regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
+    return date_regex.test(testdate);
+  }
 
   render() {
+    console.log(this.props.currentView);
+    console.log(this.state.campaignDetails, this.state.date);
     return (
         <div class="sixteen modalContainer">
          	<div class="thirteen columns text-center smallModal">
@@ -141,9 +162,9 @@ class SaveCampaignModal extends Component {
         		<form>
 	        		<div class="gray inlineFlex">
 	        			<div class="preText">Start this campaign on</div>
-	        			<input type="text" name="format" placeholder="DD/MM/YYYY" class="datePicker inline-block" value={this.state.date.format} onChange={this.handleDate} />
+	        			<input type="text" name="format" placeholder="MM/DD/YYYY" class="datePicker inline-block" value={this.state.date.format} onChange={this.handleDate} />
 	        			at
-	        			<Input type='select' name="hour" id="hour" onChange={this.handleDate}>
+	        			<Input type='select' name="hour" id="hour" value={this.state.date.hour} onChange={this.handleDate}>
 			                <option value="1">1</option>
 			                <option value="2">2</option>
 			                <option value="3">3</option>
@@ -157,7 +178,7 @@ class SaveCampaignModal extends Component {
 			                <option value="11">11</option>
 			                <option value="12">12</option>
 			            </Input>
-			            <Input type='select' name="minute" id="minute" onChange={this.handleDate}>
+			            <Input type='select' name="minute" id="minute" value={this.state.date.minute} onChange={this.handleDate}>
 			                <option value="00">00</option>
 			                <option value="01">01</option>
 			                <option value="02">02</option>
@@ -219,13 +240,13 @@ class SaveCampaignModal extends Component {
 			                <option value="58">58</option>
 			                <option value="59">59</option>
 			            </Input>
-			            <Input type='select' name="meridiem" id="meridiem" onChange={this.handleDate}>
+			            <Input type='select' name="meridiem" id="meridiem" value={this.state.date.meridiem} onChange={this.handleDate}>
 			                <option value="am">AM</option>
 			                <option value="pm">PM</option>
 			            </Input>
 	        		</div>
 	        		<div class="gray inlineFlex bigger">Send this campaign to
-	        			<Input type='select' name="target_market_id" onChange={this.handleSelected}>
+	        			<Input type='select' name="target_market_id" value={this.state.campaignDetails.target_market_id} onChange={this.handleSelected}>
 			                <option value="">Choose List</option>
                       { this.state.tmLists ? this.state.tmLists.map(list =>
                           <option key={list.id} value={list.id}>
@@ -235,14 +256,14 @@ class SaveCampaignModal extends Component {
 			            </Input>
 	        		</div>
 	        		<div class="gray inlineFlex bigger">Name this campaign
-	        			<Input type='text' name="name" placeholder="My Campaign" onChange={this.handleSelected} />
+	        			<Input type='text' name="name" placeholder="My Campaign" value={this.state.campaignDetails.name} onChange={this.handleSelected} />
 	        		</div>
 	        		<div class="gray inlineFlex bigger topMargin1em">
 	        			Send this campaign on Saturday & Sunday
-		        		<Input class="medium-left-margin" name='only_business_days' type='checkbox' label=" " value="0" onChange={this.handleChecked} />
+		        		<Input class="medium-left-margin" name='only_business_days' type='checkbox' label=" " value={this.state.campaignDetails.only_business_days} onChange={this.handleChecked} />
 		        	</div>
 	        		<div class="gray inlineFlex bigger whatEmailSend topMargin1em">Send with
-                  <Input type='select' name="credential_id" id="chooseEmail" onChange={this.handleSelected} >
+                  <Input type='select' name="credential_id" id="chooseEmail" value={this.state.campaignDetails.credential_id} onChange={this.handleSelected} >
                     { this.state.emails ? this.state.emails.map(email =>
                         <option key={email.id} value={email.id}>
                           { email.credential_handle }
