@@ -18,7 +18,6 @@ export default class CampaignEngagement extends React.Component {
   render(){
     let engagements = this.props.engagementData;
     let mappedEngagments;
-    console.log(engagements);
 
     if (engagements !== undefined) {
       mappedEngagments = engagements.map((engagement, index) => {
