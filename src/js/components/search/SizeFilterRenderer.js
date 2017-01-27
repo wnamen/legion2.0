@@ -20,7 +20,7 @@ class SizeFilterRenderer extends Component {
     ]
 
     const results = [
-      "<10",
+      `${less_than}10`,
       "11-50",
       "51-200",
       "201-500",
