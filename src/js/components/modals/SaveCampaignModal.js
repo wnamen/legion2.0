@@ -17,9 +17,9 @@ class SaveCampaignModal extends Component {
       },
       date: {
         format: "",
-        hour: "",
-        minute: "",
-        meridiem: ""
+        hour: "1",
+        minute: "00",
+        meridiem: "am"
       }
     }
 
@@ -55,8 +55,8 @@ class SaveCampaignModal extends Component {
         },
         date: {
           format: data.year ? `${data.month}/${data.day}/${data.year}` : this.setCurrentDate(),
-          hour: data.hour % 12,
-          minute: data.minute,
+          hour: (data.hour % 12) || this.state.date.hour,
+          minute: (data.minute) || this.state.date.minute,
           merdiem: data.hour > 12 ? "pm" : "am"
         }
       })

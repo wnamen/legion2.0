@@ -76,7 +76,7 @@ export default class TemplateViews extends React.Component {
 
   // ACTIVATES THE SAVE CAMPAGIN MODAL
   activateModal = () => {
-    $("#uploadOpen").trigger("click");
+    setTimeout(() => {$("#uploadOpen").trigger("click")}, 500)
   }
 
   // UPDATES THE CURRENT CAMPAIGN
@@ -95,7 +95,7 @@ export default class TemplateViews extends React.Component {
     const pause = <i class="fa fa-pause electric-blue"></i>;
     const header = (<div><div class="gray activeCampaignName">{this.props.currentView.name}</div>
     <div class="topCampaignBtns">
-      { this.props.currentView.status !== "pending" && <div onClick={this.onCampaignStatusToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.props.currentView.status === "paused" ? play : pause }</div> }
+      { ((this.props.currentView.status !== "pending") && (this.props.currentView.status !== "incomplete")) && <div onClick={this.onCampaignStatusToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.props.currentView.status === "paused" ? play : pause }</div> }
       <button class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn" disabled={this.props.disableSave} onClick={this.handleCampaignSave}>Save Campaign</button>
       <Modal trigger={<div id="uploadOpen" ></div>}>
         <SaveCampaignModal key={this.props.currentView.id} currentView={this.props.currentView} handleCampaignUpdate={this.handleCampaignUpdate} handleModalClose={this.handleModalClose}/>

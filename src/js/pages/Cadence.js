@@ -182,6 +182,7 @@ export default class Cadence extends React.Component {
       currentView: {
         id: null,
         name:" ",
+        status: "incomplete",
         settings: {
           templates: []
         }
