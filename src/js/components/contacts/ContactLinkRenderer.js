@@ -8,7 +8,6 @@ export default class CellContactLinkRenderer extends React.Component {
   }
 
   render(){
-    console.log(this.props.data);
     return(
       <a class="active" href={this.props.value} target="_blank">{this.props.value}</a>
     )

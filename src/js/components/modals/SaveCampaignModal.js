@@ -7,6 +7,22 @@ class SaveCampaignModal extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      campaignDetails: {
+        credential_id: "",
+        name: "",
+        only_business_days: true,
+        target_market_id: "",
+        offset: ((new Date()).getTimezoneOffset()/-60),
+      },
+      date: {
+        format: "",
+        hour: "",
+        minute: "",
+        meridiem: ""
+      }
+    }
+
     this.handleSelected = this.handleSelected.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleChecked = this.handleChecked.bind(this);
@@ -19,40 +35,26 @@ class SaveCampaignModal extends Component {
     this.setCurrentDate = this.setCurrentDate.bind(this);
   }
 
+  // INITIAL DATA CALLS
   componentWillMount = () => {
     this.loadLists();
     this.loadEmails();
-    this.setState({
-      campaignDetails: {
-        credential_id: "",
-        name: "",
-        only_business_days: true,
-        target_market_id: "",
-        offset: ((new Date()).getTimezoneOffset()/-60),
-      },
-      date: {
-        format: this.setCurrentDate(),
-        hour: "1",
-        minute: "00",
-        meridiem: "AM"
-      }
-    })
   };
 
+  // UPDATES THE COMPONENTS WITH THE CAMPAIGNS CURRENT DATA
   componentWillReceiveProps = () => {
-    const { data } = this.props.currentView;
+    let data = this.props.currentView;
 
-    console.log(data);
     if (data !== undefined){
       this.setState({
         campaignDetails: {
           credential_id: data.credential_id,
           name: data.name,
-          only_business_days: data.only_business_days,
+          only_business_days: !data.only_business_days,
           target_market_id: data.target_market_id
         },
         date: {
-          format: `${data.month}/${data.day}/${data.year}`,
+          format: data.year ? `${data.month}/${data.day}/${data.year}` : this.setCurrentDate(),
           hour: data.hour % 12,
           minute: data.minute,
           merdiem: data.hour > 12 ? "pm" : "am"
@@ -61,6 +63,7 @@ class SaveCampaignModal extends Component {
     }
   }
 
+  // LOADS THE USERS AVAILABLE CREDENTIALS
   loadEmails = () => {
     this.context.http.get('me', {
       headers: {
@@ -74,6 +77,7 @@ class SaveCampaignModal extends Component {
     );
   }
 
+  // LOADS THE USERS AVAILABLE LISTS
   loadLists = () => {
     $.get({
       url: "https://api.legionanalytics.com/tm-list/?page_size=1000",
@@ -85,17 +89,16 @@ class SaveCampaignModal extends Component {
           tmLists:response.results,
           target_market_id: response.results[0].id
         })
-      },
-      error: (response) => {
-        console.log(response);
       }
     });
   }
 
+  // CLOSES THE MODAL
   triggerModalClose = () => {
     this.props.handleModalClose();
   };
 
+  // SETS THE CURRENT DATE IF NONE ARE AVAILABLE
   setCurrentDate = () => {
     let today = new Date();
     let dd = today.getDate();
@@ -108,27 +111,31 @@ class SaveCampaignModal extends Component {
     return `${mm}/${dd}/${yyyy}`
   }
 
+  // CAPTURES DATE DATA CHANGES
 	handleDate = (e) => {
     let dateDetails = this.state.date;
     dateDetails[e.target.name] = e.target.value;
     this.setState(dateDetails);
 	}
 
+  // CAPTURES CHECK CHANGES
   handleChecked = (e) => {
     let campaignDetails = this.state.campaignDetails;
     campaignDetails[e.target.name] = !this.state.campaignDetails.only_business_days;
     this.setState({campaignDetails})
   }
 
+  // CAPTURES CAMPAIGN DETAIL CHANGES
 	handleSelected = (e) => {
     let campaignDetails = this.state.campaignDetails;
     campaignDetails[e.target.name] = e.target.value;
     this.setState(campaignDetails);
 	}
 
+  // HANDLES THE CAMPAIGN UPDATE
   handleCampaignUpdate = (e) => {
     e.preventDefault();
-    if (validateDate(this.state.date.format)) {
+    if (this.validateDate(this.state.date.format)) {
       let date_started = this.dateAnalyzer()
       let campaignDetails = this.state.campaignDetails;
       campaignDetails.date_started = date_started;
@@ -137,23 +144,24 @@ class SaveCampaignModal extends Component {
     }
   }
 
+  // PARSES THE DATE AND SETS IT TO PROPER FORMAT FOR UPDATES
   dateAnalyzer = () => {
     let date = this.state.date;
     let meridiem = date.meridiem === "am" ? 0 : 12;
     let formatArray = date.format.split("/");
-    formated = `${formatedArray[2]}-${formatedArray[0]}-${formatedArray[1]}`
+    let formated = `${formatArray[2]}-${formatArray[0]}-${formatArray[1]}`
     let date_started = `${formated}T${parseInt(date.hour) + meridiem}:${date.minute}:00Z`
     return date_started;
   }
 
+  // INSURES A PROPER DATE IS SET
   validateDate = (testdate) => {
     let date_regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
     return date_regex.test(testdate);
   }
 
   render() {
-    console.log(this.props.currentView);
-    console.log(this.state.campaignDetails, this.state.date);
+
     return (
         <div class="sixteen modalContainer">
          	<div class="thirteen columns text-center smallModal">

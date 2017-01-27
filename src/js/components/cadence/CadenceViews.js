@@ -14,7 +14,6 @@ export default class CadenceViews extends React.Component {
   render(){
     let current_view = this.props.currentView;
 
-    console.log(this.props);
     return(
       <div class="eight columns">
         <div class="profile-card whiteCard campaignEditorCard">

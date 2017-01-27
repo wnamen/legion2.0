@@ -31,6 +31,7 @@ export default class Template extends React.Component {
     this.handleTestEmail = this.handleTestEmail.bind(this);
   }
 
+  // SETS THE INITIAL STATE ON LOAD
   componentDidMount = () => {
     this.setState({
        subject: this.props.data.subject,
@@ -39,28 +40,34 @@ export default class Template extends React.Component {
     })
   }
 
+  // CAPTURES AND SETS THE DELAY CHANGES
   handleDelayChange = (e) => {
     let templateID = this.state.id || this.props.data.id
     this.props.onDelayChange((this.props.dataIndex), parseInt(e.target.value), templateID);
   }
 
+  // CAPTURES THE EMAIL HTML CHANGES
   handleModelChange = (html) => {
     this.setState({html: html});
   }
 
+  // CAPTURES THE TEMPLATE NAME CHANGES
   handleNameChange = (e) => {
     this.setState({name_of_template: e.target.value})
   }
 
+  // CAPTURES THE TEMPLATE SUBJECT CHANGES
   handleSubjectChange = (e) => {
     this.setState({subject: e.target.value})
   }
 
+  // HANDLES THE TEMPLATE SAVE
   onTemplateSave = () => {
     let templateChanges = {id: (this.state.id || this.props.data.id), name_of_template: this.state.name_of_template || this.props.data.name_of_template, subject: this.state.subject || this.props.data.subject, html: this.state.html || this.props.data.html};
     this.props.handleTemplateSave(templateChanges)
   }
 
+  // RENDERS THE SELECTED TEMPLATE DATA
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
@@ -69,10 +76,12 @@ export default class Template extends React.Component {
     })
   }
 
+  // CLEARS THE TEMPLATE DATA
   clearTemplate = () => {
     this.setState({name_of_template: " ", subject: " ", html: "   "})
   }
 
+  // INITIALIZES THE TEST EMAIL CALL
   handleTestEmail = () => {
     this.props.sendTestEmail(this.state.id || this.props.data.id);
   }
@@ -88,7 +97,6 @@ export default class Template extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     let templates = this.props.templateData;
     let mappedTemplates;
     let delayValue;

@@ -10,7 +10,7 @@ import ResultsTable           from "../components/search/ResultsTable"
 import ActionSaved            from "../components/notifications/ActionSaved"
 
 export default class Search extends React.Component {
- 
+
   constructor(props){
     super(props);
 
@@ -162,57 +162,57 @@ export default class Search extends React.Component {
     });
   }
 
-  filterBy(data, type){
-    const { resultsArray, pureResult } = this.state;
-
-
-      let bySize = data.filter(v => v.name === 'company_size').length ?
-
-        data.filter(v => v.name === 'company_size').reduce((previousValue, currentValue) => {
-
-            return pureResult.filter(c =>
-              c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-            ).concat(previousValue)
-
-      }, []) : null;
-
-      let byRevenue = data.filter(v => v.name === 'revenue').length ?
-
-        data.filter(v => v.name === 'revenue').reduce((previousValue, currentValue) => {
-            let filtered = bySize ? bySize : pureResult;
-            let ready = filtered.filter(c =>
-              c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-            ).concat(previousValue);
-
-            bySize = null;
-            return ready;
-
-      }, []) : null;
-
-      let byFunding = data.filter(v => v.name === 'funding').length ?
-
-        data.filter(v => v.name === 'funding').reduce((previousValue, currentValue) => {
-            let filtered = !byRevenue ? bySize ? bySize : pureResult : byRevenue ;
-
-            let ready = filtered.filter(c =>
-              c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-            ).concat(previousValue);
-
-            bySize = null;
-            byRevenue = null;
-            return ready;
-
-      }, []) : null;
-
-    const filteredCheck = [bySize, byRevenue, byFunding].filter(v => v)[0];
-    let filtered = !data.length ? pureResult : filteredCheck;
-
-    this.setState({
-      resultsArray: filtered
-    })
-
-    this.forceUpdate();
-  };
+  // filterBy(data, type){
+  //   const { resultsArray, pureResult } = this.state;
+  //
+  //
+  //     let bySize = data.filter(v => v.name === 'company_size').length ?
+  //
+  //       data.filter(v => v.name === 'company_size').reduce((previousValue, currentValue) => {
+  //
+  //           return pureResult.filter(c =>
+  //             c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
+  //           ).concat(previousValue)
+  //
+  //     }, []) : null;
+  //
+  //     let byRevenue = data.filter(v => v.name === 'revenue').length ?
+  //
+  //       data.filter(v => v.name === 'revenue').reduce((previousValue, currentValue) => {
+  //           let filtered = bySize ? bySize : pureResult;
+  //           let ready = filtered.filter(c =>
+  //             c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
+  //           ).concat(previousValue);
+  //
+  //           bySize = null;
+  //           return ready;
+  //
+  //     }, []) : null;
+  //
+  //     let byFunding = data.filter(v => v.name === 'funding').length ?
+  //
+  //       data.filter(v => v.name === 'funding').reduce((previousValue, currentValue) => {
+  //           let filtered = !byRevenue ? bySize ? bySize : pureResult : byRevenue ;
+  //
+  //           let ready = filtered.filter(c =>
+  //             c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
+  //           ).concat(previousValue);
+  //
+  //           bySize = null;
+  //           byRevenue = null;
+  //           return ready;
+  //
+  //     }, []) : null;
+  //
+  //   const filteredCheck = [bySize, byRevenue, byFunding].filter(v => v)[0];
+  //   let filtered = !data.length ? pureResult : filteredCheck;
+  //
+  //   this.setState({
+  //     resultsArray: filtered
+  //   })
+  //
+  //   this.forceUpdate();
+  // };
 
   closeNotification = () => {
     this.setState({notification: false})
