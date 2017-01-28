@@ -39,6 +39,7 @@ export default class Cadence extends React.Component {
     this.makeCampaign = this.makeCampaign.bind(this);
     this.updateCampaign = this.updateCampaign.bind(this);
     this.deleteCampaign = this.deleteCampaign.bind(this);
+    this.copiedToClipBoard = this.copiedToClipBoard.bind(this);
   }
 
   componentWillMount = () => {
@@ -394,6 +395,16 @@ export default class Cadence extends React.Component {
     }
   }
 
+  // ACTIVATES NOTIFICATION TO NOTIFY THE USERS
+  copiedToClipBoard = () => {
+    this.setState({
+      message: "Your Selection has been copied to your clipboard!",
+      notification: {
+        success: true
+      }
+    })
+  }
+
   // OPENS CONFIRMATION NOTIFICATION
   openConfirmNotification = (message, list) => {
     this.setState({
@@ -423,7 +434,7 @@ export default class Cadence extends React.Component {
             { this.state.notification.success && <ActionSaved message={this.state.message} closeNotification={this.closeSuccessNotification}/> }
 
             <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} deleteCampaign={this.deleteCampaign} />
-            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList} sendTestEmail={this.sendTestEmail}/>
+            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList} sendTestEmail={this.sendTestEmail} copiedToClipBoard={this.copiedToClipBoard}/>
             <CampaignEngagement currentView={this.state.currentView} engagementData={this.state.engagementData} exportToLists={this.exportToLists}/>
           </div>
         </div>

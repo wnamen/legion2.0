@@ -86,13 +86,25 @@ export default class Template extends React.Component {
   }
 
   handleSelectedInsert = (e) => {
-    $('div#froala-editor')
-    .on('froalaEditor.initialized', function (e, editor) {
-      editor.events.bindClick($('body'), 'option#cfn', function () {
-        editor.html.insert(e.target.value);
-        editor.events.focus();
-      });
-    })
+    // Create a "hidden" input
+    var aux = document.createElement("input");
+
+    // Assign it the value of the specified element
+    aux.setAttribute("value", e.target.value);
+
+    // Append it to the body
+    document.body.appendChild(aux);
+
+    // Highlight its content
+    aux.select();
+
+    // Copy the highlighted text
+    document.execCommand("copy");
+
+    // Remove it from the body
+    document.body.removeChild(aux);
+
+    this.props.copiedToClipBoard();
   }
 
   render() {
