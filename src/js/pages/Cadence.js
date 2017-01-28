@@ -70,7 +70,6 @@ export default class Cadence extends React.Component {
   // LOAD THE USERS CURRENT TEMPLATES
   loadAvailableTemplates = (id) => {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(id);
 
     $.get({
       url: "https://api.legionanalytics.com/my-templates?page_size=1000",
@@ -281,7 +280,6 @@ export default class Cadence extends React.Component {
 
   // DETERMINE TEMPLATE UPDATE/CREATE
   saveTemplate = (template) => {
-    console.log(template);
     if ((template.id === null) || (template.id === undefined)) {
       this.makeTemplate(template);
     } else {
@@ -307,7 +305,6 @@ export default class Cadence extends React.Component {
   // UPDATE TEMPLATE
   updateTemplate = (template) => {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(template);
 
     $.post({
       url: "https://api.legionanalytics.com/update-template",
@@ -365,7 +362,6 @@ export default class Cadence extends React.Component {
           notification: {success: true},
           message: "A test email has been sent to your primary email address on file."
         })
-        console.log(response);
       }
     });
   }
@@ -389,7 +385,6 @@ export default class Cadence extends React.Component {
             notification: {success: true},
             message: "Your engagements have been exported to your contacts!"
           })
-          console.log(response);
         }
       });
     }

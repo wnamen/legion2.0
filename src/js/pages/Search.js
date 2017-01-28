@@ -17,6 +17,7 @@ export default class Search extends React.Component {
     this.state = {
       token: cookie.load("token"),
       loading: false,
+      notification: false,
       apiState: {
         job: true,
         company: false
@@ -127,13 +128,20 @@ export default class Search extends React.Component {
       dataType:'json',
       cache:false,
       success:function(results){
-        this.setState({
-          results: results,
-          resultsCount: results.count,
-          resultsArray: this.state.resultsArray.concat(results.results),
-          pureResult: this.state.resultsArray.concat(results.results),
-          loading: false
-        });
+        if (results === "failed") {
+          this.setState({
+            notification: true,
+            message: "It looks like your monthly search limit has been reached... Upgrade now to keep searching!"
+          })
+        } else {
+          this.setState({
+            results: results,
+            resultsCount: results.count,
+            resultsArray: this.state.resultsArray.concat(results.results),
+            pureResult: this.state.resultsArray.concat(results.results),
+            loading: false
+          });
+        }
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
@@ -149,12 +157,19 @@ export default class Search extends React.Component {
       dataType:'json',
       cache:false,
       success:function(results){
-        this.setState({
-          results: results,
-          resultsCount: results.count,
-          resultsArray: this.state.resultsArray.concat(results.results),
-          pureResult: this.state.pureResult.concat(results.results)
-        });
+        if (results === "failed") {
+          this.setState({
+            notification: true,
+            message: "It looks like your monthly search limit has been reached... Upgrade now to keep searching!"
+          })
+        } else {
+          this.setState({
+            results: results,
+            resultsCount: results.count,
+            resultsArray: this.state.resultsArray.concat(results.results),
+            pureResult: this.state.pureResult.concat(results.results)
+          });
+        }
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
@@ -172,7 +187,7 @@ export default class Search extends React.Component {
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
-          { this.state.notification && <ActionSaved response={this.state.purchaseSelected} message={this.state.message} closeNotification={this.closeNotification}/> }
+          { this.state.notification && <ActionSaved message={this.state.message} closeNotification={this.closeNotification}/> }
           <SearchMenu
             searchFilters={searchFilters}
             interestSuggestions={interestSuggestions}

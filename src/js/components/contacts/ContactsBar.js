@@ -122,7 +122,7 @@ export default class ContactsBar extends React.Component {
                 }>
                   { userLists }
                   <Modal trigger={modalTrigger}>
-                    <NewListModal handleModalClose={this.handleModalClose} loadAvailableLists={this.props.loadAvailableLists}/>
+                    <NewListModal handleModalClose={this.handleModalClose} loadAvailableLists={this.props.loadAvailableLists} tmLimitReached={this.props.tmLimitReached}/>
                   </Modal>
                 </Dropdown>
               </li>

@@ -41,6 +41,7 @@ export default class Contacts extends React.Component {
     this.loadAvailableLists = this.loadAvailableLists.bind(this);
     this.deleteCurrentList = this.deleteCurrentList.bind(this);
     this.searchCurrentList = this.searchCurrentList.bind(this);
+    this.tmLimitReached = this.tmLimitReached.bind(this);
   }
 
   static childContextTypes = {
@@ -278,6 +279,16 @@ export default class Contacts extends React.Component {
     });
   }
 
+  // TM LIMIT REACHED NOTIFICATION
+  tmLimitReached = () => {
+    this.setState({
+      message: "It looks like you have reached your limit of Lists to create... Upgrade now to keep creating!",
+      notification : {
+        success: true
+      }
+    })
+  }
+
   // OPENS CONFIRMATION NOTIFICATION
   openConfirmNotification = (message, list) => {
     this.setState({
@@ -318,7 +329,7 @@ export default class Contacts extends React.Component {
           { this.state.notification.confirmation && <ActionConfirmation message={this.state.message} closeNotification={this.closeConfirmationNotification}/> }
           { this.state.notification.success && <ActionSaved message={this.state.message} closeNotification={this.closeSuccessNotification}/> }
 
-          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} exportCSV={this.exportCSV} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} searchCurrentList={this.searchCurrentList} confirmAction={this.openConfirmNotification}/>
+          <ContactsBar resultsCount={this.state.results.count} lists={this.state.tmLists} onNewListView={this.changeListView} loadAvailableLists={this.loadAvailableLists} deleteCurrentList={this.deleteCurrentList} exportCSV={this.exportCSV} uploadCSV={this.uploadCSV} mapping={this.state.mapping} updateMappingStatus={this.updateMappingStatus} searchCurrentList={this.searchCurrentList} confirmAction={this.openConfirmNotification} tmLimitReached={this.tmLimitReached}/>
             { this.state.loading ?
               <div class="sixteen columns"><div id="loaderContainer" class="white-background small-border gray-border large-top-margin small-horizontal-padding"><CubeGrid size={50} color="#36b7ea" /></div></div> :
               <ContactsTable results={this.state.results} />
