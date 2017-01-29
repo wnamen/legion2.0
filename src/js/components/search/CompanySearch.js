@@ -191,6 +191,7 @@ class CompanySearch extends Component {
             <label>Revenue {advanced_filter}</label>
             <Input type='select' name="revenue" data-id="revenue" onChange={this.handleSelected} disabled={searchFilters} multiple>
               <option value="0-500000">{less_than}$500K</option>
+              <option value="500000-1000000">$500K-$1M</option>
               <option value="1000000-5000000">$1M-$5M</option>
               <option value="5000000-10000000">$5M-$10M</option>
               <option value="10000000-25000000">$10M-$25M</option>
@@ -207,6 +208,7 @@ class CompanySearch extends Component {
             <label>Funding {advanced_filter}</label>
             <Input type='select' name="funding" data-id="funding" onChange={this.handleSelected} disabled={searchFilters} multiple>
               <option value="0-500000">{less_than}$500K</option>
+              <option value="500000-1000000">$500K-$1M</option>
               <option value="1000000-5000000">$1M-$5M</option>
               <option value="5000000-10000000">$5M-$10M</option>
               <option value="10000000-25000000">$10M-$25M</option>

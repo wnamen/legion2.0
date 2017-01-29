@@ -39,6 +39,7 @@ export default class Cadence extends React.Component {
     this.makeCampaign = this.makeCampaign.bind(this);
     this.updateCampaign = this.updateCampaign.bind(this);
     this.deleteCampaign = this.deleteCampaign.bind(this);
+    this.copiedToClipBoard = this.copiedToClipBoard.bind(this);
   }
 
   componentWillMount = () => {
@@ -69,7 +70,6 @@ export default class Cadence extends React.Component {
   // LOAD THE USERS CURRENT TEMPLATES
   loadAvailableTemplates = (id) => {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(id);
 
     $.get({
       url: "https://api.legionanalytics.com/my-templates?page_size=1000",
@@ -181,17 +181,17 @@ export default class Cadence extends React.Component {
       currentDelays: [-1],
       currentView: {
         id: null,
-        name:"",
-        started: false,
+        name:" ",
+        status: "incomplete",
         settings: {
           templates: []
         }
       },
       currentTemplates: [{
         id: null,
-        html:"",
-        subject:"",
-        name_of_template:""
+        html:" ",
+        subject:" ",
+        name_of_template:" "
       }]
     });
   }
@@ -280,7 +280,6 @@ export default class Cadence extends React.Component {
 
   // DETERMINE TEMPLATE UPDATE/CREATE
   saveTemplate = (template) => {
-    console.log(template);
     if ((template.id === null) || (template.id === undefined)) {
       this.makeTemplate(template);
     } else {
@@ -306,7 +305,6 @@ export default class Cadence extends React.Component {
   // UPDATE TEMPLATE
   updateTemplate = (template) => {
     let tokenHeader = `Token ${this.state.token}`;
-    console.log(template);
 
     $.post({
       url: "https://api.legionanalytics.com/update-template",
@@ -364,7 +362,6 @@ export default class Cadence extends React.Component {
           notification: {success: true},
           message: "A test email has been sent to your primary email address on file."
         })
-        console.log(response);
       }
     });
   }
@@ -388,10 +385,19 @@ export default class Cadence extends React.Component {
             notification: {success: true},
             message: "Your engagements have been exported to your contacts!"
           })
-          console.log(response);
         }
       });
     }
+  }
+
+  // ACTIVATES NOTIFICATION TO NOTIFY THE USERS
+  copiedToClipBoard = () => {
+    this.setState({
+      message: "Your Selection has been copied to your clipboard!",
+      notification: {
+        success: true
+      }
+    })
   }
 
   // OPENS CONFIRMATION NOTIFICATION
@@ -423,7 +429,7 @@ export default class Cadence extends React.Component {
             { this.state.notification.success && <ActionSaved message={this.state.message} closeNotification={this.closeSuccessNotification}/> }
 
             <CadenceMenu cadenceData={this.state.cadenceData} templateData={this.state.templateData} renderCampaign={this.findSelectedCampaign} renderTemplate={this.findSelectedTemplate} createNewCampaign={this.createNewCampaign} createNewTemplate={this.createNewTemplate} deleteTemplate={this.deleteTemplate} deleteCampaign={this.deleteCampaign} />
-            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList} sendTestEmail={this.sendTestEmail}/>
+            <CadenceViews currentView={this.state.currentView} templateData={this.state.templateData} currentTemplates={this.state.currentTemplates} currentDelays={this.state.currentDelays} saveTemplate={this.saveTemplate} saveCampaign={this.saveCampaign} renderState={this.state.renderState} disableSave={this.state.disableSave} campaignTemplateList={this.state.campaignTemplateList} sendTestEmail={this.sendTestEmail} copiedToClipBoard={this.copiedToClipBoard}/>
             <CampaignEngagement currentView={this.state.currentView} engagementData={this.state.engagementData} exportToLists={this.exportToLists}/>
           </div>
         </div>

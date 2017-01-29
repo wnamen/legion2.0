@@ -66,7 +66,7 @@ class SearchMenu extends Component {
   }
 
   render(){
-    const { userToken, onSearchChange, searchFilters, checked, filterBy } = this.props;
+    const { userToken, onSearchChange, searchFilters, checked } = this.props;
     const { menuView } = this.state;
 
     return(
@@ -85,7 +85,7 @@ class SearchMenu extends Component {
             { menuView === "job" && <PeopleSearch userToken={userToken} onSearchChange={onSearchChange} searchFilters={searchFilters} departments={this.state.departmentList} /> }
             { menuView === "company" && <CompanySearch
               userToken={userToken} onSearchChange={onSearchChange} searchFilters={searchFilters}
-              filterBy={filterBy} departments={this.state.departmentList}
+              departments={this.state.departmentList}
             /> }
 
           </form>

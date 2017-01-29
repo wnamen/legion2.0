@@ -20,18 +20,21 @@ export default class TemplateViews extends React.Component {
     this.handleCampaignSave = this.handleCampaignSave.bind(this);
   }
 
+  // CLOSES THE MODAL
   handleModalClose = () => {
     $(".modal-close").trigger("click");
   }
 
+  // HANDLES THE CAMPAIGN STATUS
   onCampaignStatusToggle = () => {
     if (this.props.currentView.status === "paused") {
-      this.props.saveCampaign({id: this.props.currentView.id, paused: false});
+      this.props.saveCampaign({id: this.props.currentView.id, pause: false});
     } else {
-      this.props.saveCampaign({id: this.props.currentView.id, paused: true});
+      this.props.saveCampaign({id: this.props.currentView.id, pause: true});
     }
   }
 
+  // ADDS A TEMPORARY TEMPLATE TO THE ACTIVE CAMPAIGN LIST
   onAppendTemplate = (templates, delays) => {
     let campaignTemplateList = [];
 
@@ -42,6 +45,7 @@ export default class TemplateViews extends React.Component {
     this.setState({currentTemplates: templates, currentDelays: delays, campaignTemplateList: campaignTemplateList })
   }
 
+  // ADDS A DELAY CHANGE TO THE ACTIVE DELAYS AND UPDATES THE CAMPAIGN
   onDelayChange = (index, delay, templateID) => {
     let delays = this.state.currentDelays || this.props.currentDelays;
     delays.forEach((item, idx) => {
@@ -56,6 +60,7 @@ export default class TemplateViews extends React.Component {
     this.setState({currentDelays: delays})
   }
 
+  // SAVES THE CAMPAIGN
   handleCampaignSave = () => {
     let delays = [];
     this.props.currentDelays.forEach((item) => {
@@ -69,30 +74,31 @@ export default class TemplateViews extends React.Component {
     this.activateModal();
   }
 
+  // ACTIVATES THE SAVE CAMPAGIN MODAL
   activateModal = () => {
-    $("#uploadOpen").trigger("click");
+    setTimeout(() => {$("#uploadOpen").trigger("click")}, 500)
   }
 
+  // UPDATES THE CURRENT CAMPAIGN
   handleCampaignUpdate = (campaign) => {
     this.props.saveCampaign(campaign)
   }
 
+  // SAVES THE TEMPLATE
   handleTemplateSave = (templateChanges) => {
     this.props.saveTemplate(templateChanges);
   }
 
   render(){
 
-    console.log(this.props.currentView.status);
     const play = <i class="fa fa-play electric-blue"></i>;
     const pause = <i class="fa fa-pause electric-blue"></i>;
-
     const header = (<div><div class="gray activeCampaignName">{this.props.currentView.name}</div>
     <div class="topCampaignBtns">
-      <div onClick={this.onCampaignStatusToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.props.currentView.status === "paused" ? play : pause }</div>
+      { ((this.props.currentView.status !== "pending") && (this.props.currentView.status !== "incomplete")) && <div onClick={this.onCampaignStatusToggle} class="lgnBtn smoothBkgd white-background small-border gray-border pauseBtn">{ this.props.currentView.status === "paused" ? play : pause }</div> }
       <button class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn" disabled={this.props.disableSave} onClick={this.handleCampaignSave}>Save Campaign</button>
       <Modal trigger={<div id="uploadOpen" ></div>}>
-        <SaveCampaignModal currentView={this.props.currentView} handleCampaignUpdate={this.handleCampaignUpdate} handleModalClose={this.handleModalClose}/>
+        <SaveCampaignModal key={this.props.currentView.id} currentView={this.props.currentView} handleCampaignUpdate={this.handleCampaignUpdate} handleModalClose={this.handleModalClose}/>
       </Modal>
     </div></div>)
 
@@ -100,15 +106,16 @@ export default class TemplateViews extends React.Component {
     let delays = this.state.currentDelays || this.props.currentDelays;
     let mappedTemplates;
 
+    // MAPS THE ACTIVE TEMPLATES TO THE VIEW
     if (templates !== null) {
       mappedTemplates = templates.map((template, index) => {
         if ((this.props.renderState === "campaign") && (template !== undefined)) {
           return (
-            <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index]} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail}/>
+            <Template key={`template ${template.id || index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={delays[index]} onDelayChange={this.onDelayChange} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail} copiedToClipBoard={this.props.copiedToClipBoard}/>
           )
         } else if (template !== undefined) {
           return (
-            <Template key={template.id || `newTemplate ${index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={null} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail}/>
+            <Template key={`template ${template.id || index}`} data={template} dataIndex={index} templateData={this.props.templateData} handleTemplateSave={this.handleTemplateSave} currentDelay={null} currentTemplates={this.state.currentTemplates || this.props.currentTemplates} currentDelays={this.state.currentDelays || this.props.currentDelays} onAppendTemplate={this.onAppendTemplate} sendTestEmail={this.props.sendTestEmail} copiedToClipBoard={this.props.copiedToClipBoard}/>
           )
         }
       })

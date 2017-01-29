@@ -8,12 +8,12 @@ export default class Template extends React.Component {
     super(props);
     this.state = {
       config: {
-        pluginsEnabled: ['image', 'link', "align", "charCounter", "codeBeautifier", "codeView", "colors", "draggable", "entities", "file", "fontFamily", "fontSize", "fullscreen", "image", "imageManager", "inlineStyle", "lineBreaker", "link", "lists", "paragraphFormat", "paragraphStyle", "quote", "save", "table", "url", "video"],
+        pluginsEnabled: ['link', "align", "charCounter", "codeBeautifier", "codeView", "colors", "draggable", "entities", "file", "fontFamily", "fontSize", "fullscreen", "inlineStyle", "lineBreaker", "link", "lists", "paragraphFormat", "paragraphStyle", "quote", "save", "table", "url", "video"],
         quickInsert: false,
         toolbarInline: true,
         toolbarVisibleWithoutSelection: true,
         charCounterCount: false,
-        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', '-', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', '-', 'quote', 'clearFormatting', 'html', 'insertImage', 'insertLink']
+        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', '-', 'align', 'formatOL', 'formatUL', 'indent', 'outdent', 'quote', 'clearFormatting', 'html', 'insertLink'],
       },
       id: null,
       name_of_template: null,
@@ -30,28 +30,43 @@ export default class Template extends React.Component {
     this.handleTestEmail = this.handleTestEmail.bind(this);
   }
 
+  // SETS THE INITIAL STATE ON LOAD
+  componentDidMount = () => {
+    this.setState({
+       subject: this.props.data.subject,
+       name_of_template: this.props.data.name_of_template,
+       html: this.props.data.html
+    })
+  }
+
+  // CAPTURES AND SETS THE DELAY CHANGES
   handleDelayChange = (e) => {
     let templateID = this.state.id || this.props.data.id
     this.props.onDelayChange((this.props.dataIndex), parseInt(e.target.value), templateID);
   }
 
+  // CAPTURES THE EMAIL HTML CHANGES
   handleModelChange = (html) => {
     this.setState({html: html});
   }
 
+  // CAPTURES THE TEMPLATE NAME CHANGES
   handleNameChange = (e) => {
     this.setState({name_of_template: e.target.value})
   }
 
+  // CAPTURES THE TEMPLATE SUBJECT CHANGES
   handleSubjectChange = (e) => {
     this.setState({subject: e.target.value})
   }
 
+  // HANDLES THE TEMPLATE SAVE
   onTemplateSave = () => {
     let templateChanges = {id: (this.state.id || this.props.data.id), name_of_template: this.state.name_of_template || this.props.data.name_of_template, subject: this.state.subject || this.props.data.subject, html: this.state.html || this.props.data.html};
     this.props.handleTemplateSave(templateChanges)
   }
 
+  // RENDERS THE SELECTED TEMPLATE DATA
   handleRenderSelection = (e) => {
     this.props.templateData.forEach((template) => {
       if (parseInt(e.target.value) === parseInt(template.id)) {
@@ -60,12 +75,36 @@ export default class Template extends React.Component {
     })
   }
 
+  // CLEARS THE TEMPLATE DATA
   clearTemplate = () => {
-    this.setState({name_of_template: " ", subject: " ", html: " "})
+    this.setState({name_of_template: " ", subject: " ", html: "   "})
   }
 
+  // INITIALIZES THE TEST EMAIL CALL
   handleTestEmail = () => {
     this.props.sendTestEmail(this.state.id || this.props.data.id);
+  }
+
+  handleSelectedInsert = (e) => {
+    // Create a "hidden" input
+    var aux = document.createElement("input");
+
+    // Assign it the value of the specified element
+    aux.setAttribute("value", e.target.value);
+
+    // Append it to the body
+    document.body.appendChild(aux);
+
+    // Highlight its content
+    aux.select();
+
+    // Copy the highlighted text
+    document.execCommand("copy");
+
+    // Remove it from the body
+    document.body.removeChild(aux);
+
+    this.props.copiedToClipBoard();
   }
 
   render() {
@@ -85,16 +124,6 @@ export default class Template extends React.Component {
       })
     }
 
-    $(function() {
-      $('div#froala-editor')
-        .on('froalaEditor.initialized', function (e, editor) {
-          editor.events.bindClick($('body'), 'option#cfn', function () {
-            editor.html.insert('{{first_name| there}}');
-            editor.events.focus();
-          });
-        })
-    });
-
     return(
       <div>
         { (this.props.currentDelay > 0) &&
@@ -110,7 +139,7 @@ export default class Template extends React.Component {
               <div class="gray small-bottom-border gray-border workingRow">
                 <div class="inline-block">Template Name: </div>
                 <div class="inline-block templateNameContainer">
-                  <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={ this.state.name_of_template || this.props.data.name_of_template}/>
+                  <Input type='text' name="newTemplateName" onChange={this.handleNameChange} value={this.state.name_of_template}/>
                 </div>
                 <div class="working chooseTemplate">
                   <Input type='select' name="whichEmail" onChange={this.handleRenderSelection}>
@@ -122,7 +151,7 @@ export default class Template extends React.Component {
               <div class="gray small-bottom-border gray-border workingRow">
                 <div class="inline-block">Subject: </div>
                 <div class="inline-block templateNameContainer">
-                  <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.subject || this.props.data.subject}>
+                  <Input type='text' name="newSubjectName" onChange={this.handleSubjectChange} value={this.state.subject}>
                   </Input>
                 </div>
               </div>
@@ -130,18 +159,18 @@ export default class Template extends React.Component {
                 <FroalaEditor
                   tag="textarea"
                   config={this.state.config}
-                  model={this.state.html || this.props.data.html}
+                  model={this.state.html}
                   onModelChange={this.handleModelChange}
                 />
               </div>
               <div class="gray small-bottom-border gray-border workingRow bottomRow">
                 <div class="lgnBtn smoothBkgd electric-blue-background saveCampaignBtn saveTempTemp" onClick={this.onTemplateSave}>Save</div>
                 <div class="working chooseTemplate pTags">
-                  <Input type='select' name="whichEmail" onChange={this.handleSelected}>
+                  <Input type='select' name="whichEmail" onChange={this.handleSelectedInsert}>
                     <option value="" disabled>Personalized Tags</option>
-                    <option class="templateTag" id="cfn" value="contactFirstName">Contact's First Name</option>
-                    <option class="templateTag" id="cln" value="contactLastName">Contact's Last Name</option>
-                    <option class="templateTag" id="cn" value="companyName">Company Name</option>
+                    <option class="templateTag" id="cfn" value="{{first_name | there}}">Contact's First Name</option>
+                    <option class="templateTag" id="cln" value="{{last_name | there}}">Contact's Last Name</option>
+                    <option class="templateTag" id="cn" value="{{company_name | your company}}">Company Name</option>
                   </Input>
                 </div>
                 <div class="lgnBtn smoothBkgd white-background small-border gray-border clearBtn" onClick={this.clearTemplate}>Clear</div>

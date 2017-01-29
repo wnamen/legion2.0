@@ -19,7 +19,7 @@ class UploadContactsModal extends Component {
     const { http } = this.context;
     const { loadAvailableLists, handleModalClose } = this.props;
 
-    http.post('create-tm', { name: listName }).then(response => loadAvailableLists())
+    http.post('create-tm', { name: listName }).then(response => loadAvailableLists()).catch(error => this.props.tmLimitReached())
 
     handleModalClose();
   };

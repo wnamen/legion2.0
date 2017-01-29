@@ -51,8 +51,9 @@ export default class PeopleSearch extends React.Component {
         name: selectedName+"lte",
         value: max_of_array
       })
-
     }
+
+    console.log(current_tags);
     this.setState({ inputTags: current_tags });
     this.getSearch();
   }
@@ -60,8 +61,7 @@ export default class PeopleSearch extends React.Component {
   handleDepartmentSelected = (e) => {
     let current_tags = this.state.current_tags != undefined ? this.state.current_tags: [];
     let jobs = this.props.departments[e.target.value];
-
-    console.log(jobs);
+    console.log(this.state.current_tags);
 
     jobs.forEach((job) => {
       current_tags.push({
@@ -70,6 +70,8 @@ export default class PeopleSearch extends React.Component {
         value: job
       })
     })
+
+    console.log(current_tags);
 
     this.setState({ inputTags: current_tags });
     this.getSearch();
@@ -257,6 +259,7 @@ export default class PeopleSearch extends React.Component {
             <label>Revenue {advanced_filter}</label>
             <Input type='select' name="revenue" data-id="revenue" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="0-500000">{less_than}$500K</option>
+              <option value="500000-1000000">$500K-$1M</option>
               <option value="1000000-5000000">$1M-$5M</option>
               <option value="5000000-10000000">$5M-$10M</option>
               <option value="10000000-25000000">$10M-$25M</option>
@@ -273,6 +276,7 @@ export default class PeopleSearch extends React.Component {
             <label>Funding {advanced_filter}</label>
             <Input type='select' name="funding" data-id="funding" onChange={this.handleSelected} disabled={this.props.searchFilters} multiple>
               <option value="0-500000">{less_than}$500K</option>
+              <option value="500000-1000000">$500K-$1M</option>
               <option value="1000000-5000000">$1M-$5M</option>
               <option value="5000000-10000000">$5M-$10M</option>
               <option value="10000000-25000000">$10M-$25M</option>

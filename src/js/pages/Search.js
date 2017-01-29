@@ -10,13 +10,14 @@ import ResultsTable           from "../components/search/ResultsTable"
 import ActionSaved            from "../components/notifications/ActionSaved"
 
 export default class Search extends React.Component {
- 
+
   constructor(props){
     super(props);
 
     this.state = {
       token: cookie.load("token"),
       loading: false,
+      notification: false,
       apiState: {
         job: true,
         company: false
@@ -32,7 +33,6 @@ export default class Search extends React.Component {
     this.setApiState = this.setApiState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.nextSearch = this.nextSearch.bind(this);
-    this.filterBy = this.filterBy.bind(this);
   }
 
   setApiState() {
@@ -128,13 +128,20 @@ export default class Search extends React.Component {
       dataType:'json',
       cache:false,
       success:function(results){
-        this.setState({
-          results: results,
-          resultsCount: results.count,
-          resultsArray: this.state.resultsArray.concat(results.results),
-          pureResult: this.state.resultsArray.concat(results.results),
-          loading: false
-        });
+        if (results === "failed") {
+          this.setState({
+            notification: true,
+            message: "It looks like your monthly search limit has been reached... Upgrade now to keep searching!"
+          })
+        } else {
+          this.setState({
+            results: results,
+            resultsCount: results.count,
+            resultsArray: this.state.resultsArray.concat(results.results),
+            pureResult: this.state.resultsArray.concat(results.results),
+            loading: false
+          });
+        }
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
@@ -150,69 +157,24 @@ export default class Search extends React.Component {
       dataType:'json',
       cache:false,
       success:function(results){
-        this.setState({
-          results: results,
-          resultsCount: results.count,
-          resultsArray: this.state.resultsArray.concat(results.results),
-          pureResult: this.state.pureResult.concat(results.results)
-        });
+        if (results === "failed") {
+          this.setState({
+            notification: true,
+            message: "It looks like your monthly search limit has been reached... Upgrade now to keep searching!"
+          })
+        } else {
+          this.setState({
+            results: results,
+            resultsCount: results.count,
+            resultsArray: this.state.resultsArray.concat(results.results),
+            pureResult: this.state.pureResult.concat(results.results)
+          });
+        }
       }.bind(this),
       error:function(xhr, status, err){
       }.bind(this)
     });
   }
-
-  filterBy(data, type){
-    const { resultsArray, pureResult } = this.state;
-
-
-      let bySize = data.filter(v => v.name === 'company_size').length ?
-
-        data.filter(v => v.name === 'company_size').reduce((previousValue, currentValue) => {
-
-            return pureResult.filter(c =>
-              c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-            ).concat(previousValue)
-
-      }, []) : null;
-
-      let byRevenue = data.filter(v => v.name === 'revenue').length ?
-
-        data.filter(v => v.name === 'revenue').reduce((previousValue, currentValue) => {
-            let filtered = bySize ? bySize : pureResult;
-            let ready = filtered.filter(c =>
-              c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-            ).concat(previousValue);
-
-            bySize = null;
-            return ready;
-
-      }, []) : null;
-
-      let byFunding = data.filter(v => v.name === 'funding').length ?
-
-        data.filter(v => v.name === 'funding').reduce((previousValue, currentValue) => {
-            let filtered = !byRevenue ? bySize ? bySize : pureResult : byRevenue ;
-
-            let ready = filtered.filter(c =>
-              c[currentValue.name] > Number(currentValue.value.split('-')[0]) && c[currentValue.name] < Number(currentValue.value.split('-')[1])
-            ).concat(previousValue);
-
-            bySize = null;
-            byRevenue = null;
-            return ready;
-
-      }, []) : null;
-
-    const filteredCheck = [bySize, byRevenue, byFunding].filter(v => v)[0];
-    let filtered = !data.length ? pureResult : filteredCheck;
-
-    this.setState({
-      resultsArray: filtered
-    })
-
-    this.forceUpdate();
-  };
 
   closeNotification = () => {
     this.setState({notification: false})
@@ -225,14 +187,13 @@ export default class Search extends React.Component {
     return (
       <div class="page-container gray-light-background">
         <div class="sixteen columns">
-          { this.state.notification && <ActionSaved response={this.state.purchaseSelected} message={this.state.message} closeNotification={this.closeNotification}/> }
+          { this.state.notification && <ActionSaved message={this.state.message} closeNotification={this.closeNotification}/> }
           <SearchMenu
             searchFilters={searchFilters}
             interestSuggestions={interestSuggestions}
             apiState={apiState}
             userToken={token}
             setApiState={this.setApiState}
-            filterBy={this.filterBy}
             onSearchChange={this.handleSearch}
             onInterestSearch={this.handleInterestSearch}
           />
