@@ -9,7 +9,7 @@ export default class PersonLinkRenderer extends React.Component {
 
   render(){
     return(
-      <IndexLink class="active" to={`/profiles/person/${this.props.data.id}`}>{this.props.value}</IndexLink>
+      <IndexLink class="active" to={`/profiles/person/${this.props.data.person_id}`}>{this.props.value}</IndexLink>
     )
   }
 }

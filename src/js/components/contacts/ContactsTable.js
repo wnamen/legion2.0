@@ -89,6 +89,7 @@ export default class ContactsTable extends React.Component {
           {
             id: result.id,
             company_id: result.company.id,
+            person_id: result.person.id,
             name: result.person.name ? result.person.name : "",
             jobTitle: result.job.title ? result.job.title : "",
             companyName: result.company.name ? result.company.name : "",
